@@ -179,7 +179,6 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
       GradientEndColor = clMoneyGreen
       Images = DataModulo1.ImageList2
       TabOrder = 2
-      ExplicitTop = -5
       object mes: TDBLookupComboBox
         Left = 0
         Top = 2

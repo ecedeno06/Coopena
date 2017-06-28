@@ -468,7 +468,7 @@ inherited frmSocios: TfrmSocios
     Top = 2
     Width = 843
     Height = 615
-    ActivePage = TabSheet5
+    ActivePage = TabSheet2
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     MultiLine = True
@@ -477,10 +477,6 @@ inherited frmSocios: TfrmSocios
     object TabSheet1: TTabSheet
       Caption = 'Generales'
       ImageIndex = 35
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object ScrollBox1: TScrollBox
         AlignWithMargins = True
         Left = 3
@@ -3128,7 +3124,7 @@ inherited frmSocios: TfrmSocios
               Left = 564
               Top = 145
               Width = 34
-              Height = 21
+              Height = 22
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3149,7 +3145,7 @@ inherited frmSocios: TfrmSocios
               Left = 608
               Top = 145
               Width = 34
-              Height = 21
+              Height = 22
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3170,7 +3166,7 @@ inherited frmSocios: TfrmSocios
               Left = 652
               Top = 145
               Width = 46
-              Height = 21
+              Height = 22
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3974,10 +3970,6 @@ inherited frmSocios: TfrmSocios
     object tsPerfiles: TTabSheet
       Caption = 'Perfiles Financieros'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PageControl2: TPageControl
         Left = 0
         Top = 0
@@ -3988,10 +3980,6 @@ inherited frmSocios: TfrmSocios
         TabOrder = 0
         object tsPerfilFijo: TTabSheet
           Caption = 'Perfil Fijo'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object grpIngresosVariables: TGroupBox
             AlignWithMargins = True
             Left = 3
@@ -4594,10 +4582,6 @@ inherited frmSocios: TfrmSocios
                 TabOrder = 2
                 object tsIF_Geografia: TTabSheet
                   Caption = 'Origenes '
-                  ExplicitLeft = 0
-                  ExplicitTop = 0
-                  ExplicitWidth = 0
-                  ExplicitHeight = 0
                   object grp_IF_Direcciones: TGroupBox
                     Left = 0
                     Top = 0
@@ -4778,10 +4762,6 @@ inherited frmSocios: TfrmSocios
                 object tsIF_Egresos: TTabSheet
                   Caption = 'Egresos'
                   ImageIndex = 1
-                  ExplicitLeft = 0
-                  ExplicitTop = 0
-                  ExplicitWidth = 0
-                  ExplicitHeight = 0
                   object GroupBox19: TGroupBox
                     Left = 0
                     Top = 0
@@ -4994,10 +4974,6 @@ inherited frmSocios: TfrmSocios
         object tsPerfilVariable: TTabSheet
           Caption = 'Perfil Variable'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object GroupBox17: TGroupBox
             AlignWithMargins = True
             Left = 3
@@ -5600,10 +5576,6 @@ inherited frmSocios: TfrmSocios
                 TabOrder = 2
                 object TabSheet10: TTabSheet
                   Caption = 'Origenes '
-                  ExplicitLeft = 0
-                  ExplicitTop = 0
-                  ExplicitWidth = 0
-                  ExplicitHeight = 0
                   object grp_IV_Direcciones: TGroupBox
                     Left = 0
                     Top = 0
@@ -5790,10 +5762,6 @@ inherited frmSocios: TfrmSocios
                 object TabSheet12: TTabSheet
                   Caption = 'Egresos'
                   ImageIndex = 1
-                  ExplicitLeft = 0
-                  ExplicitTop = 0
-                  ExplicitWidth = 0
-                  ExplicitHeight = 0
                   object grpEgresosIV: TGroupBox
                     Left = 0
                     Top = 0
@@ -6009,10 +5977,6 @@ inherited frmSocios: TfrmSocios
     object tbsDependientes: TTabSheet
       Caption = 'Dependientes'
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       DesignSize = (
         835
         587)
@@ -6029,10 +5993,6 @@ inherited frmSocios: TfrmSocios
     object TabSheet3: TTabSheet
       Caption = 'Herederos'
       ImageIndex = 36
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Image1: TImage
         Left = -4
         Top = 229
@@ -7750,10 +7710,6 @@ inherited frmSocios: TfrmSocios
     object TabSheet2: TTabSheet
       Caption = 'Cuentas'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox10: TGroupBox
         Left = 0
         Top = 0
@@ -7853,10 +7809,6 @@ inherited frmSocios: TfrmSocios
         object TabSheet9: TTabSheet
           Caption = 'Detalles de La Cuenta'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object GroupBox11: TGroupBox
             Left = 0
             Top = 41
@@ -8446,10 +8398,6 @@ inherited frmSocios: TfrmSocios
         object tsFiador: TTabSheet
           Caption = 'Fiadores'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object pnNoFiadores: TPanel
             Left = 144
             Top = 177
@@ -8550,10 +8498,6 @@ inherited frmSocios: TfrmSocios
               OnMouseLeave = PageControl3MouseLeave
               object TabSheet11: TTabSheet
                 Caption = 'Inf. de Fiador'
-                ExplicitLeft = 0
-                ExplicitTop = 0
-                ExplicitWidth = 0
-                ExplicitHeight = 0
                 object GroupBox13: TGroupBox
                   AlignWithMargins = True
                   Left = 3
@@ -8831,10 +8775,6 @@ inherited frmSocios: TfrmSocios
         end
         object TabSheet7: TTabSheet
           Caption = 'Movimientos de la Cuenta'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object GroupBox9: TGroupBox
             Left = 0
             Top = 0
@@ -9103,7 +9043,7 @@ inherited frmSocios: TfrmSocios
                   Title.Font.Height = -11
                   Title.Font.Name = 'Tahoma'
                   Title.Font.Style = [fsBold]
-                  Visible = False
+                  Visible = True
                 end
                 item
                   Expanded = False
@@ -9292,10 +9232,6 @@ inherited frmSocios: TfrmSocios
         object tsProductoPlanPago: TTabSheet
           Caption = 'Plan de Pago'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object grp_PPP: TGroupBox
             AlignWithMargins = True
             Left = 3
@@ -9562,10 +9498,6 @@ inherited frmSocios: TfrmSocios
       AlignWithMargins = True
       Caption = 'Datos Financieros'
       ImageIndex = 40
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid3: TDBGrid
         Left = 0
         Top = 35
@@ -9703,10 +9635,6 @@ inherited frmSocios: TfrmSocios
       ImageIndex = 47
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid2: TDBGrid
         Left = 3
         Top = 34

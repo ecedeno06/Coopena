@@ -1738,10 +1738,10 @@ inherited frmCheques: TfrmCheques
         Caption = 'Vista Preliminar'
         ImageIndex = 1
         object Memo1: TMemo
-          Left = 168
-          Top = 224
-          Width = 33
-          Height = 25
+          Left = 32
+          Top = 48
+          Width = 625
+          Height = 217
           Lines.Strings = (
             'Me'
             'mo1')

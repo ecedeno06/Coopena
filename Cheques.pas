@@ -238,13 +238,21 @@ begin
 end;
 
 procedure TfrmCheques.CargarDetalle;
+ var
+ _subCuenta : integer;
 begin
 //---
   DataModulo1.cheque_det.Close;
   DataModulo1.cheque_det.sql.Clear;
-  DataModulo1.cheque_det.sql.Add('Select * From transaccion_det ');
+  DataModulo1.cheque_det.sql.Add('Select T.* , P.verAuxiliar ');
+  DataModulo1.cheque_det.sql.Add(',(case when (t.num_cuenta) is not null and p.verAuxiliar = 1 then 1 else ');
+  DataModulo1.cheque_det.sql.Add('(case when (t.num_cuenta) = ' + quotedstr('0') + ' then 1 else 0 end ) end)  as ver ');
+  DataModulo1.cheque_det.sql.Add('From transaccion_det T ');
+  DataModulo1.cheque_det.sql.Add('Left Join maes_aux M on T.num_cuenta  = M.num_cuenta');
+  DataModulo1.cheque_det.sql.Add('Left join productoTrx P on m.subcuenta = P.idProducto and t.cuenta = p.cuenta');
   DataModulo1.cheque_det.sql.Add('Where Tipo_documento = ' + coma + 'CHQ' + coma ) ;
   DataModulo1.cheque_det.sql.Add(' and Documento = 1773 ' ) ; //+ m_Chk_Generados_documento.AsString);
+  Memo1.Text :=   DataModulo1.cheque_det.sql.text;
   DataModulo1.cheque_det.Open;
 
   if not DataModulo1.cheque_det.eof then
@@ -254,21 +262,29 @@ begin
     mTransaccion.Open;
     while not DataModulo1.cheque_det.eof do
     begin
-
-      mTransaccion.Append;
-      mTransaccionimputable.AsBoolean := false;
-      mTransaccionDocumento.AsInteger := DataModulo1.cheque_det.FieldByName('Documento').AsInteger ;
-      mTransaccionFECHA.AsDateTime    := DataModulo1.cheque_det.FieldByName('Fecha_doc').AsDateTime ;
-      mTransaccionTipoDoc.AsString    := DataModulo1.cheque_det.FieldByName('tipo_Documento').AsString ;
-      mTransaccionNum_Cuenta.AsString := DataModulo1.cheque_det.FieldByName('Num_cuenta').AsString;
-      mTransaccionCuenta.AsString     := DataModulo1.cheque_det.FieldByName('Cuenta').AsString;
-      mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
-      mTransaccionMonto.AsFloat       := DataModulo1.cheque_det.FieldByName('Monto').AsFloat ;
-      mTransaccionOrden.AsString      := DataModulo1.cheque_det.FieldByName('Orden').AsString ;
-//      mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
-//      mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
-//      mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
+      //---  Aqui se debe validar si se trata de una cuenta de asociado
+      //     de tal forma que se busque la cuenta contable en el trx y
+      //     ubique si se debe mostrar o no, si no se debe mostrar, entocees
+      //     no hace el append de este registro.
       //---
+
+      if DataModulo1.cheque_det.FieldByName('ver').AsInteger = 1 then
+      Begin
+          mTransaccion.Append;
+          mTransaccionimputable.AsBoolean := false;
+          mTransaccionDocumento.AsInteger := DataModulo1.cheque_det.FieldByName('Documento').AsInteger ;
+          mTransaccionFECHA.AsDateTime    := DataModulo1.cheque_det.FieldByName('Fecha_doc').AsDateTime ;
+          mTransaccionTipoDoc.AsString    := DataModulo1.cheque_det.FieldByName('tipo_Documento').AsString ;
+          mTransaccionNum_Cuenta.AsString := DataModulo1.cheque_det.FieldByName('Num_cuenta').AsString;
+          mTransaccionCuenta.AsString     := DataModulo1.cheque_det.FieldByName('Cuenta').AsString;
+          mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
+          mTransaccionMonto.AsFloat       := DataModulo1.cheque_det.FieldByName('Monto').AsFloat ;
+          mTransaccionOrden.AsString      := DataModulo1.cheque_det.FieldByName('Orden').AsString ;
+    //      mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
+    //      mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
+    //      mTransaccionNaturaleza.AsString := DataModulo1.cheque_det.FieldByName('Naturaleza').AsString ;
+        //---
+      end;
       DataModulo1.cheque_det.next
     end;
 

@@ -55,7 +55,7 @@ inherited frmTipoProducto: TfrmTipoProducto
     Top = 0
     Width = 647
     Height = 693
-    ActivePage = tsBanco
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     Images = DataModulo1.ImageList2
     TabOrder = 2
@@ -410,8 +410,6 @@ inherited frmTipoProducto: TfrmTipoProducto
               Align = alBottom
               Caption = 'Producto Aplica Para:'
               TabOrder = 8
-              ExplicitLeft = -1
-              ExplicitTop = 287
               object GroupBox3: TGroupBox
                 Left = 12
                 Top = 28
@@ -516,7 +514,6 @@ inherited frmTipoProducto: TfrmTipoProducto
           Align = alTop
           Anchors = [akLeft, akTop, akRight, akBottom]
           TabOrder = 1
-          ExplicitTop = 455
           object Image2: TImage
             Left = 11
             Top = 58
@@ -936,10 +933,10 @@ inherited frmTipoProducto: TfrmTipoProducto
         end
       end
       object grpTrx: TGroupBox
-        Left = 0
-        Top = 43
+        Left = 1
+        Top = 48
         Width = 622
-        Height = 614
+        Height = 613
         Align = alCustom
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = 'Movimiento Transaccion'
@@ -950,27 +947,26 @@ inherited frmTipoProducto: TfrmTipoProducto
         TabOrder = 1
         DesignSize = (
           622
-          614)
+          613)
         object Label6: TLabel
-          Left = 4
+          Left = 49
           Top = 22
           Width = 39
-          Height = 13
+          Height = 18
           Caption = 'Cuenta:'
         end
         object lblDC: TLabel
-          Left = 580
+          Left = 540
           Top = 22
           Width = 24
           Height = 13
           Anchors = [akTop, akRight]
           Caption = 'lblDC'
-          ExplicitLeft = 519
         end
         object edCuentaTrx: TDBLookupComboBox
-          Left = 49
+          Left = 94
           Top = 19
-          Width = 525
+          Width = 427
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           DataField = 'cuenta'
@@ -979,6 +975,7 @@ inherited frmTipoProducto: TfrmTipoProducto
           ListField = 'nombre'
           ListSource = dtsMaestroContableCombo
           TabOrder = 0
+          OnClick = edCuentaTrxClick
         end
         object DBCheckBox2: TDBCheckBox
           Left = 49
@@ -1069,12 +1066,25 @@ inherited frmTipoProducto: TfrmTipoProducto
           DataSource = dtsproductoTrx
           TabOrder = 8
         end
+        object DBCheckBox4: TDBCheckBox
+          Left = 488
+          Top = 46
+          Width = 113
+          Height = 17
+          Hint = 'Permite visualizar en Detalle de Cheques / Trasnferencias'
+          Caption = 'Ver en Chq/Trans.'
+          DataField = 'verChk_Tran'
+          DataSource = dtsproductoTrx
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 9
+        end
       end
       object dbgTrx: TDBGrid
         Left = 0
         Top = 171
         Width = 620
-        Height = 474
+        Height = 473
         Anchors = [akLeft, akTop, akRight, akBottom]
         DataSource = dtsproductoTrx
         DrawingStyle = gdsGradient
@@ -1253,7 +1263,6 @@ inherited frmTipoProducto: TfrmTipoProducto
   end
   object dtsproductoTrx: TDataSource
     DataSet = DataModulo1.productoTrx2
-    OnDataChange = dtsproductoTrxDataChange
     Left = 188
     Top = 425
   end

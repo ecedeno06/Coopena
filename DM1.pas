@@ -1688,6 +1688,9 @@ type
     cheque_dettipoTransaccion: TStringField;
     cheque_detimputable: TBooleanField;
     cheque_detorden: TStringField;
+    cheque_detver: TIntegerField;
+    productoTrx2guid: TStringField;
+    productoTrx2verChk_Tran: TBooleanField;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;

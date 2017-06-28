@@ -142,7 +142,7 @@ object DataModulo1: TDataModulo1
     Left = 400
     Top = 4
     Bitmap = {
-      494C01013100A80070041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
+      494C01013100A80078041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       000000000000000000000000000000000000E4E4E4FF050004FF0B0004FF0B00
       04FF0B0004FF0B0004FF0B0004FF0C0004FF130007FFFFFFFFFFFFFFFFFFFFFF
@@ -1909,7 +1909,7 @@ object DataModulo1: TDataModulo1
     Left = 459
     Top = 5
     Bitmap = {
-      494C010131009802C40610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010131009802CC0610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -8507,7 +8507,7 @@ object DataModulo1: TDataModulo1
     SQL.Strings = (
       'Select  * from productoTrx'
       'where idProducto = :idProducto '
-      'order by orden')
+      'order by orden,cuenta')
     Left = 1602
     Top = 563
     ParamData = <
@@ -8515,7 +8515,7 @@ object DataModulo1: TDataModulo1
         Name = 'IDPRODUCTO'
         DataType = ftString
         ParamType = ptInput
-        Value = '3'
+        Value = '28'
       end>
     object productoTrx2idTrx: TFDAutoIncField
       FieldName = 'idTrx'
@@ -8612,6 +8612,15 @@ object DataModulo1: TDataModulo1
     object productoTrx2esImputable: TBooleanField
       FieldName = 'esImputable'
       Origin = 'esImputable'
+    end
+    object productoTrx2guid: TStringField
+      FieldName = 'guid'
+      Origin = 'guid'
+      Size = 50
+    end
+    object productoTrx2verChk_Tran: TBooleanField
+      FieldName = 'verChk_Tran'
+      Origin = 'verChk_Tran'
     end
   end
   object ChequesCaja: TFDQuery
@@ -12858,7 +12867,23 @@ object DataModulo1: TDataModulo1
   object cheque_det: TFDQuery
     Connection = cnn2
     SQL.Strings = (
-      'select * from transaccion_det where 1=2')
+      '--select * from transaccion_det where 1=2'
+      '/*'
+      'Select T.* '
+      ',P.verAuxiliar'
+      
+        ',(case when (t.num_cuenta) is not null and p.verAuxiliar = 1 the' +
+        'n 1 else'
+      
+        '   (case when (t.num_cuenta) = '#39'0'#39' then 1 else 0 end ) end)  as ' +
+        'ver '
+      'From transaccion_det T '
+      'Left Join maes_aux M on T.num_cuenta  = M.num_cuenta'
+      
+        'left join productoTrx P on m.subcuenta = P.idProducto and t.cuen' +
+        'ta = p.cuenta '
+      'Where Tipo_documento = '#39'CHQ'#39'  and Documento = 1773 '
+      '*/')
     Left = 312
     Top = 1248
     object cheque_dettipo_documento: TWideStringField
@@ -12944,6 +12969,12 @@ object DataModulo1: TDataModulo1
       Origin = 'orden'
       FixedChar = True
       Size = 1
+    end
+    object cheque_detver: TIntegerField
+      FieldName = 'ver'
+      Origin = 'ver'
+      ReadOnly = True
+      Required = True
     end
   end
 end

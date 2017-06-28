@@ -92,6 +92,7 @@ type
     DBCheckBox11: TDBCheckBox;
     ed_mora: TDBEdit;
     Label11: TLabel;
+    DBCheckBox4: TDBCheckBox;
     procedure FormShow(Sender: TObject);
     procedure btnNuevo1Click(Sender: TObject);
     procedure btnSalvar1Click(Sender: TObject);
@@ -116,11 +117,12 @@ type
     procedure dbgTrxDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure dbgTrxKeyPress(Sender: TObject; var Key: Char);
-    procedure dtsproductoTrxDataChange(Sender: TObject; Field: TField);
     procedure cbx_calcula_moraClick(Sender: TObject);
+    procedure edCuentaTrxClick(Sender: TObject);
   private
     Function Siguiente() : Integer;
     Procedure CargaDisponibles;
+    Procedure CargarTrx;
     { Private declarations }
   public
     { Public declarations }
@@ -250,6 +252,8 @@ begin
 end;
 
 procedure TfrmTipoProducto.btnSalvarCuentaClick(Sender: TObject);
+var
+  _idtrx : integer;
 begin
   inherited;
 
@@ -259,8 +263,14 @@ begin
 
    DataModulo1.productoTrx2idProducto.Value :=
                DataModulo1.TipoProducto.FieldByName('subCuenta').Value;
+   _idtrx := DataModulo1.productoTrx2idTrx.AsInteger ;
 
    DataModulo1.productoTrx2.post;
+   CargarTrx;
+   DataModulo1.productoTrx2.Locate('idTrx',_idTrx,[]);
+
+
+
   except
    on E:Exception do
    begin
@@ -370,6 +380,14 @@ begin
 end;
 
 
+procedure TfrmTipoProducto.CargarTrx;
+begin
+  DataModulo1.productoTrx2.Close;
+  DataModulo1.productoTrx2.Params[0].Value := DataModulo1.TipoProductosubcuenta.Value ;
+  DataModulo1.productoTrx2.open;
+  DataModulo1.productoTrx2.First;
+end;
+
 procedure TfrmTipoProducto.cbx_calcula_moraClick(Sender: TObject);
 begin
   inherited;
@@ -438,6 +456,14 @@ begin
 
 end;
 
+procedure TfrmTipoProducto.edCuentaTrxClick(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.productoTrx2.FieldByName('descripcion').AsString :=
+       DataModulo1.maestroContableCombo.FieldByName('Nombre').AsString ;
+//---
+end;
+
 procedure TfrmTipoProducto.esPrestamoClick(Sender: TObject);
 begin
   inherited;
@@ -466,14 +492,6 @@ begin
  // grpTrx.Enabled := false;
 //  DataModulo1.productoTrxdescripcion.AsString := DataModulo1.maestroContableCombo.FieldByName('Nombre').AsString
 //  DataModulo1.productoTrxcuenta.AsString := DataModulo1.maestroContableCombocuenta.AsString ;
-end;
-
-procedure TfrmTipoProducto.dtsproductoTrxDataChange(Sender: TObject;
-  Field: TField);
-begin
-  inherited;
-//  DataModulo1.productoTrx2.FieldByName('descripcion').AsString :=
-//       DataModulo1.maestroContableCombo.FieldByName('Nombre').AsString ;
 end;
 
 procedure TfrmTipoProducto.dtsTipoProductoData(Sender: TObject;
