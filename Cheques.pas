@@ -431,6 +431,7 @@ begin
   DataModulo1.cheque_enc.open;
   mTransaccion.Close;
   mTransaccion.Open;
+  DBGrid1.Refresh;
 
 
   DataModulo1.cheque_enc.append;
