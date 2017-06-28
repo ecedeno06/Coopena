@@ -1,0 +1,29 @@
+object frmVentana: TfrmVentana
+  Left = 0
+  Top = 0
+  Caption = 'frmVentana'
+  ClientHeight = 462
+  ClientWidth = 784
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Visible = True
+  OnClose = FormClose
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 443
+    Width = 784
+    Height = 19
+    Panels = <>
+    ExplicitTop = 366
+    ExplicitWidth = 763
+  end
+end
