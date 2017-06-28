@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls, Data.DB, Vcl.Mask, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, frxClass, Vcl.ExtCtrls;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, frxClass, Vcl.ExtCtrls, Vcl.Buttons;
 
 type
   TfrmCheques = class(TfrmVentana)
@@ -103,6 +103,7 @@ type
     ed_chk_benef: TButtonedEdit;
     Label9: TLabel;
     Memo1: TMemo;
+    SpeedButton1: TSpeedButton;
     procedure btn_chk_NuevoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ed_chk_MontoKeyPress(Sender: TObject; var Key: Char);

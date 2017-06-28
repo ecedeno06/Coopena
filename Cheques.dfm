@@ -1630,11 +1630,26 @@ inherited frmCheques: TfrmCheques
             Height = 16
             Caption = 'Documento:'
           end
+          object SpeedButton1: TSpeedButton
+            Left = 375
+            Top = 55
+            Width = 23
+            Height = 22
+            Glyph.Data = {
+              F6000000424DF600000000000000760000002800000010000000100000000100
+              0400000000008000000000000000000000001000000000000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555550000000
+              00055555578888888805555557FFFFFFF805555557FFFFFFF805555557FFFFFF
+              F805555557FFFFFFF805555557FFFFFFF805555557FFFFFFF805555557FFFFFF
+              F805557F77FF7FF000055557B7F7FFF8F75555557FBFFFF8755555577BFF7777
+              55555557B7B7F5555555557F57F575555555555557F557F55555}
+          end
           object dbl_chk_Beneficiario: TDBLookupComboBox
             AlignWithMargins = True
             Left = 89
             Top = 54
-            Width = 310
+            Width = 280
             Height = 24
             DataField = '_beneficiario'
             DataSource = dts_cheque_enc
