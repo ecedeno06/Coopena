@@ -169,7 +169,6 @@ type
     Procedure CalculaTotal;
     procedure edMontoTotalChange(Sender: TObject);
     procedure DBGrid1ColExit(Sender: TObject);
-    procedure DBGrid1Exit(Sender: TObject);
     Procedure Buscar;
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -985,11 +984,7 @@ begin
   DBGrid1.DefaultDrawColumnCell(rect,DataCol,Column,State);
 end;
 
-procedure TfrmCaja.DBGrid1Exit(Sender: TObject);
-begin
-  inherited;
 
-end;
 
 //------------------------------------------------------------------------------
 //                         DBGrid1 KeyPress

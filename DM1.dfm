@@ -5247,6 +5247,7 @@ object DataModulo1: TDataModulo1
       Origin = 'num_cuenta'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
+      EditMask = '!00-000000-00;0;_'
       Size = 12
     end
     object SocioProductossocio: TIntegerField
@@ -12364,8 +12365,6 @@ object DataModulo1: TDataModulo1
       FieldName = 'monto_gral'
       Origin = 'monto_gral'
       DisplayFormat = '#,##0.00'
-      MaxValue = 999999999999999.000000000000000000
-      MinValue = 0.010000000000000000
     end
     object cheque_encpagare: TWideStringField
       FieldName = 'pagare'
@@ -12928,6 +12927,7 @@ object DataModulo1: TDataModulo1
     object cheque_detmonto: TFloatField
       FieldName = 'monto'
       Origin = 'monto'
+      DisplayFormat = '#,##0.00'
     end
     object cheque_detusuario: TWideStringField
       FieldName = 'usuario'
@@ -12941,6 +12941,7 @@ object DataModulo1: TDataModulo1
     object cheque_detEfectivo: TFloatField
       FieldName = 'Efectivo'
       Origin = 'Efectivo'
+      DisplayFormat = '#,##0.00'
     end
     object cheque_detCheque: TFloatField
       FieldName = 'Cheque'

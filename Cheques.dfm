@@ -7,6 +7,7 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
+  ExplicitLeft = -243
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -1296,7 +1297,7 @@ inherited frmCheques: TfrmCheques
           Stretch = True
           Visible = False
         end
-        object tb_Cheque_Generacion: TToolBar
+        object tb_Chk_Enc: TToolBar
           AlignWithMargins = True
           Left = 3
           Top = 3
@@ -1350,7 +1351,7 @@ inherited frmCheques: TfrmCheques
           Font.Style = []
           ParentFont = False
           TabOrder = 1
-          object tb_chk_detalle: TToolBar
+          object tb_chk_det: TToolBar
             AlignWithMargins = True
             Left = 5
             Top = 21
@@ -1363,11 +1364,13 @@ inherited frmCheques: TfrmCheques
             GradientStartColor = clWhite
             Images = DataModulo1.ImageList2
             TabOrder = 0
-            object ToolButton1: TToolButton
+            ExplicitLeft = 7
+            ExplicitTop = 18
+            object btn_chk_det_InsertarCuenta: TToolButton
               Left = 0
               Top = 0
               ImageIndex = 44
-              OnClick = btn_chk_NuevoClick
+              OnClick = btn_chk_det_InsertarCuentaClick
             end
             object ToolButton4: TToolButton
               Left = 32
@@ -1377,11 +1380,12 @@ inherited frmCheques: TfrmCheques
               ImageIndex = 6
               Style = tbsSeparator
             end
-            object ToolButton5: TToolButton
+            object btn_chk_det_borrar: TToolButton
               Left = 38
               Top = 0
-              Caption = 'ToolButton5'
+              Caption = 'btn_chk_det_borrar'
               ImageIndex = 7
+              OnClick = btn_chk_det_borrarClick
             end
             object ToolButton2: TToolButton
               Left = 70
@@ -1395,6 +1399,37 @@ inherited frmCheques: TfrmCheques
               Left = 129
               Top = 0
               ImageIndex = 17
+            end
+            object ToolButton6: TToolButton
+              Left = 161
+              Top = 0
+              Width = 240
+              Caption = 'ToolButton6'
+              ImageIndex = 18
+              Style = tbsSeparator
+            end
+            object Panel3: TPanel
+              Left = 401
+              Top = 0
+              Width = 297
+              Height = 32
+              TabOrder = 0
+              object Label10: TLabel
+                Left = 107
+                Top = 8
+                Width = 62
+                Height = 16
+                Caption = 'Diferencia:'
+              end
+              object ed_chk_diferencia: TEdit
+                Left = 173
+                Top = 4
+                Width = 121
+                Height = 24
+                Alignment = taCenter
+                Enabled = False
+                TabOrder = 0
+              end
             end
           end
           object DBGrid1: TDBGrid
@@ -1417,44 +1452,10 @@ inherited frmCheques: TfrmCheques
             TitleFont.Name = 'Tahoma'
             TitleFont.Style = []
             OnCellClick = DBGrid1CellClick
+            OnColExit = DBGrid1ColExit
             OnDrawColumnCell = DBGrid1DrawColumnCell
+            OnKeyPress = DBGrid1KeyPress
             Columns = <
-              item
-                Alignment = taLeftJustify
-                Expanded = False
-                FieldName = 'Documento'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                Title.Alignment = taCenter
-                Title.Caption = 'Doc.'
-                Title.Font.Charset = DEFAULT_CHARSET
-                Title.Font.Color = clGreen
-                Title.Font.Height = -11
-                Title.Font.Name = 'Tahoma'
-                Title.Font.Style = [fsBold]
-                Width = 53
-                Visible = True
-              end
-              item
-                Expanded = False
-                FieldName = 'TipoDoc'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                Title.Alignment = taCenter
-                Title.Font.Charset = DEFAULT_CHARSET
-                Title.Font.Color = clGreen
-                Title.Font.Height = -11
-                Title.Font.Name = 'Tahoma'
-                Title.Font.Style = [fsBold]
-                Width = 54
-                Visible = True
-              end
               item
                 Expanded = False
                 FieldName = 'Num_Cuenta'
@@ -1482,7 +1483,7 @@ inherited frmCheques: TfrmCheques
                 Title.Font.Height = -11
                 Title.Font.Name = 'Tahoma'
                 Title.Font.Style = [fsBold]
-                Width = 102
+                Width = 87
                 Visible = True
               end
               item
@@ -1500,7 +1501,7 @@ inherited frmCheques: TfrmCheques
                 Title.Font.Height = -11
                 Title.Font.Name = 'Tahoma'
                 Title.Font.Style = [fsBold]
-                Width = 230
+                Width = 217
                 Visible = True
               end
               item
@@ -1610,7 +1611,7 @@ inherited frmCheques: TfrmCheques
             Caption = 'Beneficiario:'
           end
           object Label1: TLabel
-            Left = 405
+            Left = 410
             Top = 57
             Width = 40
             Height = 16
@@ -1674,6 +1675,9 @@ inherited frmCheques: TfrmCheques
             DataField = 'monto_gral'
             DataSource = dts_cheque_enc
             TabOrder = 2
+            OnClick = ed_chk_MontoClick
+            OnEnter = ed_chk_MontoEnter
+            OnExit = ed_chk_MontoExit
             OnKeyPress = ed_chk_MontoKeyPress
           end
           object GroupBox3: TGroupBox
@@ -1837,7 +1841,7 @@ inherited frmCheques: TfrmCheques
     end
     object mTransaccionEfectivo: TFloatField
       FieldName = 'Efectivo'
-      MaxValue = 999999999999999.000000000000000000
+      DisplayFormat = '#,##0.00'
     end
     object mTransaccionCheque: TFloatField
       FieldName = 'Cheque'
@@ -1962,6 +1966,9 @@ inherited frmCheques: TfrmCheques
     object m_Chk_Generados_nombreCompleto: TStringField
       FieldName = '_nombreCompleto'
       Size = 100
+    end
+    object m_Chk_Generados_impreso: TIntegerField
+      FieldName = '_impreso'
     end
   end
   object dts_Chk_Generados: TDataSource

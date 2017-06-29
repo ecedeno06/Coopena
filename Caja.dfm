@@ -11550,8 +11550,8 @@ inherited frmCaja: TfrmCaja
         object GroupBox1: TGroupBox
           Left = 3
           Top = 1
-          Width = 556
-          Height = 68
+          Width = 552
+          Height = 64
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Buscar Por:'
           Font.Charset = DEFAULT_CHARSET
@@ -11562,10 +11562,10 @@ inherited frmCaja: TfrmCaja
           ParentFont = False
           TabOrder = 0
           DesignSize = (
-            556
-            68)
+            552
+            64)
           object btnBuscar: TSpeedButton
-            Left = 522
+            Left = 518
             Top = 15
             Width = 26
             Height = 30
@@ -11645,7 +11645,7 @@ inherited frmCaja: TfrmCaja
             OnClick = rbCuentaClick
           end
           object pnFiltro1: TPanel
-            Left = 140
+            Left = 136
             Top = 48
             Width = 207
             Height = 31
@@ -11676,7 +11676,7 @@ inherited frmCaja: TfrmCaja
             end
           end
           object pnFiltro2: TPanel
-            Left = 268
+            Left = 265
             Top = 48
             Width = 208
             Height = 30
@@ -12010,7 +12010,6 @@ inherited frmCaja: TfrmCaja
               OnDblClick = DBGrid1DblClick
               OnDragDrop = DBGrid1DragDrop
               OnDragOver = DBGrid1DragOver
-              OnExit = DBGrid1Exit
               OnKeyPress = DBGrid1KeyPress
               OnMouseUp = DBGrid1MouseUp
               Columns = <

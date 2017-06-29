@@ -49,16 +49,16 @@ type
     Panel2: TPanel;
     PageControl1: TPageControl;
     ts_Cheque_Confeccion: TTabSheet;
-    tb_Cheque_Generacion: TToolBar;
+    tb_Chk_Enc: TToolBar;
     btn_chk_Nuevo: TToolButton;
     ToolButton10: TToolButton;
     btn_chk_Salvar: TToolButton;
     btn_chk_Undo_Enca: TToolButton;
     grp_chk_Detalle: TGroupBox;
-    tb_chk_detalle: TToolBar;
-    ToolButton1: TToolButton;
+    tb_chk_det: TToolBar;
+    btn_chk_det_InsertarCuenta: TToolButton;
     ToolButton4: TToolButton;
-    ToolButton5: TToolButton;
+    btn_chk_det_borrar: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
     DBGrid1: TDBGrid;
@@ -104,6 +104,11 @@ type
     Label9: TLabel;
     Memo1: TMemo;
     SpeedButton1: TSpeedButton;
+    Panel3: TPanel;
+    ToolButton6: TToolButton;
+    Label10: TLabel;
+    ed_chk_diferencia: TEdit;
+    m_Chk_Generados_impreso: TIntegerField;
     procedure btn_chk_NuevoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ed_chk_MontoKeyPress(Sender: TObject; var Key: Char);
@@ -113,7 +118,7 @@ type
     procedure DBGrid1CellClick(Column: TColumn);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
-    Procedure CargarChequesNoImpresos;
+//    Procedure CargarChequesNoImpresos;
     procedure dbg_chk_generadosCellClick(Column: TColumn);
     procedure dbg_chk_generadosDrawColumnCell(Sender: TObject;
       const Rect: TRect; DataCol: Integer; Column: TColumn;
@@ -122,8 +127,17 @@ type
     procedure ed_chk_benefRightButtonClick(Sender: TObject);
 
     //---
+    procedure CargarCheques;
     Procedure CargarCheque;
     Procedure CargarDetalle;
+    procedure btn_chk_det_InsertarCuentaClick(Sender: TObject);
+    procedure ed_chk_MontoClick(Sender: TObject);
+    procedure ed_chk_MontoExit(Sender: TObject);
+    procedure DBGrid1ColExit(Sender: TObject);
+    Procedure ValidarMontos;
+    procedure DBGrid1KeyPress(Sender: TObject; var Key: Char);
+    procedure ed_chk_MontoEnter(Sender: TObject);
+    procedure btn_chk_det_borrarClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -133,12 +147,12 @@ type
 
 var
   frmCheques: TfrmCheques;
-
+  _documento,_cheque : integer;
 implementation
 
 {$R *.dfm}
 
-uses DM1;
+uses DM1, cuentas;
 
 procedure TfrmCheques.btn_chk_SalvarClick(Sender: TObject);
 begin
@@ -172,7 +186,7 @@ begin
 
 end;
 
-procedure TfrmCheques.CargarChequesNoImpresos;
+procedure TfrmCheques.CargarCheques;
 var
 _desde,_hasta : TDateTime;
 
@@ -221,14 +235,16 @@ begin
      m_Chk_Generados_aNombreDe.AsInteger  := DataModulo1.chequesGeneradosanombrede.AsInteger;
      m_Chk_Generados_monto.AsFloat        := DataModulo1.chequesGeneradosMonto.asFloat;
      m_Chk_Generados_documento.AsInteger  := DataModulo1.chequesGeneradosdocumento.AsInteger ;
+     m_Chk_Generados_impreso.asinteger    := DataModulo1.chequesGeneradosimpreso.asinteger;
+
      if Length(trim(DataModulo1.chequesGeneradosBenef1.AsString)) > 0 then
      begin
         m_Chk_Generados_beneficiario.AsString := trim(DataModulo1.chequesGeneradosBenef1.AsString);
      end
      else
-       if Length(trim(DataModulo1.chequesGeneradosBenef2.AsString))  > 0  then
+       if Length(trim(DataModulo1.chequesGeneradosBenef2.AsString)) > 0  then
        begin
-        m_Chk_Generados_beneficiario.AsString := trim(DataModulo1.chequesGeneradosBenef2.AsString);
+         m_Chk_Generados_beneficiario.AsString := trim(DataModulo1.chequesGeneradosBenef2.AsString);
        end;
 
      DataModulo1.chequesgenerados.next;
@@ -244,14 +260,14 @@ begin
 //---
   DataModulo1.cheque_det.Close;
   DataModulo1.cheque_det.sql.Clear;
-  DataModulo1.cheque_det.sql.Add('Select T.* , P.verAuxiliar ');
-  DataModulo1.cheque_det.sql.Add(',(case when (t.num_cuenta) is not null and p.verAuxiliar = 1 then 1 else ');
+  DataModulo1.cheque_det.sql.Add('Select T.* ');
+  DataModulo1.cheque_det.sql.Add(',(case when (t.num_cuenta) is not null and p.verchk_tran = 1 then 1 else ');
   DataModulo1.cheque_det.sql.Add('(case when (t.num_cuenta) = ' + quotedstr('0') + ' then 1 else 0 end ) end)  as ver ');
   DataModulo1.cheque_det.sql.Add('From transaccion_det T ');
   DataModulo1.cheque_det.sql.Add('Left Join maes_aux M on T.num_cuenta  = M.num_cuenta');
   DataModulo1.cheque_det.sql.Add('Left join productoTrx P on m.subcuenta = P.idProducto and t.cuenta = p.cuenta');
   DataModulo1.cheque_det.sql.Add('Where Tipo_documento = ' + coma + 'CHQ' + coma ) ;
-  DataModulo1.cheque_det.sql.Add(' and Documento = 1773 ' ) ; //+ m_Chk_Generados_documento.AsString);
+  DataModulo1.cheque_det.sql.Add(' and Documento = '       + m_Chk_Generados_documento.AsString);
   Memo1.Text :=   DataModulo1.cheque_det.sql.text;
   DataModulo1.cheque_det.Open;
 
@@ -304,10 +320,22 @@ begin
     begin
       DBGrid1.Options := DBGrid1.Options + [dgEditing];  // Adds dbEditing option
     end;
-
-   //DBGrid1.Hint := mTransaccionnombreCuenta.AsString;
-
   end;
+end;
+
+procedure TfrmCheques.DBGrid1ColExit(Sender: TObject);
+begin
+  inherited;
+ // DBGrid1.Options := DBGrid1.Options - [dgEditing];
+
+  if (mTransaccionimputable.AsBoolean = true) then
+  begin
+    if   (DBGrid1.SelectedField.FieldName   = 'Efectivo')  then
+    begin
+      ValidarMontos;
+    end;
+  end;
+
 end;
 
 procedure TfrmCheques.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -321,11 +349,51 @@ begin
          DBGrid1.Canvas.Brush.color := clMoneyGreen
      else
      begin
-       DBGrid1.Canvas.Font.Color := clGray ;
+  //     DBGrid1.Canvas.Font.Color := clGray ;
      end;
   End;
 
   DBGrid1.DefaultDrawColumnCell(rect,DataCol,Column,State);
+end;
+
+procedure TfrmCheques.DBGrid1KeyPress(Sender: TObject; var Key: Char);
+var
+ _index : integer;
+begin
+  inherited;
+
+  inherited;
+  if (DBGRid1.DataSource.DataSet.FieldByName('Imputable').asBoolean)  then
+  begin
+    if  not length(trim(mTransaccionNum_Cuenta.AsString)) <=0  then
+    begin
+
+      if not (Key in [#8, '0'..'9','.',#13,#9]) then
+      begin
+         Key := #0;
+      end;
+    end;
+
+    if (key = #13) or (key = #9) then
+    begin
+
+      if key = #9 then
+      begin
+         DBGrid1.Options := DBGrid1.Options - [dgEditing];
+      end;
+
+      // AplicaDeposito;
+      ValidarMontos;
+    end;
+  end;
+
+  _index := DBGRid1.SelectedField.FieldNo;
+  if (key = #9 ) then
+  begin
+    showmessage(DBGRid1.Columns[_index].FieldName );
+    if mTransaccion.eof then
+       btn_chk_det_InsertarCuenta.Click ;
+  end;
 end;
 
 procedure TfrmCheques.dbg_chk_generadosCellClick(Column: TColumn);
@@ -345,6 +413,17 @@ begin
    m_Chk_Generados.Post
   end;
 
+  if m_Chk_Generados_impreso.AsInteger  = 1 then
+  begin
+    tb_chk_enc.Enabled := False;
+    tb_chk_det.Enabled := False;
+  end
+  else
+  begin
+    tb_chk_enc.Enabled := true;
+    tb_chk_det.Enabled := true;
+  end;
+
   CargarCheque;
 
 end;
@@ -354,6 +433,7 @@ procedure TfrmCheques.dbg_chk_generadosDrawColumnCell(Sender: TObject;
 var
   Bmp: TBitmap;
   L, T: Integer;
+
 begin
   inherited;
  //  Si es la columna donde deseas poner la imagen...
@@ -378,36 +458,15 @@ end;
 
 procedure TfrmCheques.dbl_chk_cuentaClick(Sender: TObject);
 var
- _cuenta : string;
- _documento,_cheque : integer;
+ _cuenta,_guid : string;
 
-begin
+ begin
   inherited;
-  if mTransaccion.Locate ('Orden','P',[])  then
-  begin
-    mTransaccion.Delete;
-  end;
+
 
   _cuenta := DataModulo1.CuentasChequeracuenta.AsString ;
-  mTransaccion.Append;
-
-//  DataModulo1.Generico.Close;
-//  DataModulo1.Generico.SQL.Clear;
-//  DataModulo1.Generico.SQL.Add('Select  secuencia as sec ,secuencia_auto as inc from tipo_doc ');
-//  DataModulo1.Generico.SQL.Add(' where tipo_doc = ' + quotedstr('CHQ') ) ;
-//  DataModulo1.Generico.Open;
-//
-//  //---- Obtiene el consecutivo de Documento para el registro en transaccion_enc/det
-//  if  DataModulo1.Generico.FieldByName('Sec').AsInteger > 0 then
-//  begin
-//    _documento := DataModulo1.Generico.FieldByName('Sec').AsInteger +
-//               DataModulo1.Generico.FieldByName('inc').AsInteger ;
-//  end
-//  else
-//    _documento := 1;
 
   //----- Obtiene el Consecutivo de Cheque dependiendo del No de Chequera - Cuenta Corriente
-
   DataModulo1.Generico.Close;
   DataModulo1.Generico.SQL.Clear;
   DataModulo1.Generico.SQL.Add('Select  seq_chq  as cheque from chq_cuenta ');
@@ -415,21 +474,35 @@ begin
      quotedStr(DataModulo1.CuentasChequerano_cuenta.AsString));
   DataModulo1.Generico.Open;
 
+
   if DataModulo1.Generico.FieldByName('Cheque').AsInteger > 0 then
   begin
-    _cheque := DataModulo1.Generico.FieldByName('Cheque').AsInteger + 1;
+    _documento := DataModulo1.Generico.FieldByName('Cheque').AsInteger + 1;
   end
   else
-    _cheque := 1;
+    _documento := 1;
 
-  DataModulo1.cheque_encdocumento.AsInteger := _cheque;
+  DataModulo1.cheque_encdocumento.AsInteger := _documento;
+
+  _guid := mTransaccionguid.AsString ;
+  if mTransaccion.Locate ('Orden','P',[])  then
+  begin
+    mTransaccion.delete;
+   end;
+
+  mTransaccion.First;
+  mTransaccion.Insert;
 
   mTransaccionFECHA.AsDateTime    := _fechaSistema;
-  mTransaccionTipoDoc.AsString    := 'CHQ';
-  mTransaccionDocumento.AsInteger := _cheque;
+  mTransaccionDocumento.AsInteger := _documento;
   mTransaccionCuenta.AsString     := _cuenta;
   mTransaccionimputable.AsBoolean := False;
   mTransaccionOrden.AsString      := 'P';
+  mTransaccionNaturaleza.AsString := 'C';
+  mTransaccionTipoDoc.AsString    := 'CHQ';
+  mTransaccionEfectivo.AsFloat    := DataModulo1.cheque_encmonto_gral.AsFloat;
+  mTransaccionguid.AsString       := DataModulo1._guid();
+  ValidarMontos;
   DBGrid1.Refresh;
 
 end;
@@ -437,7 +510,7 @@ end;
 procedure TfrmCheques.btn_chk_lista_buscarClick(Sender: TObject);
 begin
   inherited;
-  CargarChequesNoImpresos;
+  CargarCheques;
 end;
 
 procedure TfrmCheques.btn_chk_NuevoClick(Sender: TObject);
@@ -459,12 +532,40 @@ begin
   btn_chk_Salvar.Enabled    := True;
   btn_chk_Nuevo.Enabled     := False;
   btn_chk_Undo_Enca.Enabled := true;
+  dbl_chk_cuenta.SetFocus ;
 end;
 
 procedure TfrmCheques.ed_chk_benefRightButtonClick(Sender: TObject);
 begin
   inherited;
   ed_chk_benef.Clear;
+end;
+
+procedure TfrmCheques.ed_chk_MontoClick(Sender: TObject);
+begin
+  inherited;
+//---
+end;
+
+procedure TfrmCheques.ed_chk_MontoEnter(Sender: TObject);
+begin
+  inherited;
+  ed_chk_Monto.Text := FormatFloat('0.00',DataModulo1.cheque_encmonto_gral.AsFloat);
+  ed_chk_Monto.SelectAll;
+end;
+
+procedure TfrmCheques.ed_chk_MontoExit(Sender: TObject);
+begin
+  inherited;
+   if not VarIsNull (DataModulo1.cheque_encnCuentaCheque.AsString)  then
+  begin
+    if mTransaccion.Locate('Orden','P',[]) then
+    begin
+      mTransaccion.Edit;
+      mTransaccionEfectivo.AsFloat := DataModulo1.cheque_encmonto_gral.AsFloat;
+      ValidarMontos;
+    end;
+  end;
 end;
 
 procedure TfrmCheques.ed_chk_MontoKeyPress(Sender: TObject; var Key: Char);
@@ -480,7 +581,10 @@ begin
 
       if key = #9 then
          DBGrid1.Options := DBGrid1.Options - [dgEditing];
-    end;
+  end;
+
+  ValidarMontos;
+
 end;
 
 procedure TfrmCheques.FormDestroy(Sender: TObject);
@@ -512,6 +616,68 @@ begin
 
   ed_chk_fecha.Text := FormatDateTime('dd/MMM/yyy',_fechaSistema);
 
+
+end;
+
+procedure TfrmCheques.btn_chk_det_borrarClick(Sender: TObject);
+begin
+  inherited;
+ //--- Borrar La linea
+ mTransaccion.Delete;
+ ValidarMontos;
+end;
+
+procedure TfrmCheques.btn_chk_det_InsertarCuentaClick(Sender: TObject);
+begin
+  inherited;
+  //---Aqui debe adicionar una cuenta del catalogo contable.
+  //---hacer llamado a venta de cuentas.
+    Application.CreateForm(Tfrmcuentas, frmcuentas);
+    if frmcuentas.ShowModal = mrOk then
+    begin
+      mTransaccion.Append;
+      mTransaccionFECHA.AsDateTime    := _fechaSistema ;
+      mTransaccionDocumento.AsInteger := _documento;
+      mTransaccionTipoDoc.AsString    := 'CHQ';
+      mTransaccionCuenta.AsString     := DataModulo1.CuentaContableFull.FieldByName('cuenta').AsString ;
+      mTransaccionimputable.AsBoolean := True;
+      mTransaccionOrden.AsString      := 'X';
+      mTransaccionguid.AsString       := DataModulo1._guid();
+
+      if frmCuentas.esDebito.Checked  then
+         mTransaccionNaturaleza.AsString := 'D';
+
+      if frmCuentas.esCredito.checked  then
+           mTransaccionNaturaleza.AsString := 'C';
+
+    end;
+end;
+
+procedure TfrmCheques.ValidarMontos;
+var
+  _Diferencia : Double;
+  _guid       : string;
+
+begin
+//---
+
+ _guid        := mTransaccionguid.AsString;
+ _diferencia  := 0.00;
+
+ mTransaccion.First;
+ while not mTransaccion.Eof do
+ Begin
+   if mTransaccionNaturaleza.asstring = 'C' then
+     _diferencia := _diferencia + mTransaccionEfectivo.AsFloat
+   else
+     _diferencia := _diferencia - mTransaccionEfectivo.AsFloat;
+
+  mTransaccion.Next;
+ End;
+
+ ed_chk_diferencia.Text  := FormatFloat('#,##0.00',_diferencia);
+
+ mTransaccion.Locate('guid',_guid,[]);
 
 end;
 
