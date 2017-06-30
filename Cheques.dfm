@@ -7,7 +7,7 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -243
+  ExplicitTop = -176
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -1452,6 +1452,7 @@ inherited frmCheques: TfrmCheques
             TitleFont.Name = 'Tahoma'
             TitleFont.Style = []
             OnCellClick = DBGrid1CellClick
+            OnColEnter = DBGrid1ColEnter
             OnColExit = DBGrid1ColExit
             OnDrawColumnCell = DBGrid1DrawColumnCell
             OnKeyPress = DBGrid1KeyPress

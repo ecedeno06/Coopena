@@ -138,6 +138,7 @@ type
     procedure DBGrid1KeyPress(Sender: TObject; var Key: Char);
     procedure ed_chk_MontoEnter(Sender: TObject);
     procedure btn_chk_det_borrarClick(Sender: TObject);
+    procedure DBGrid1ColEnter(Sender: TObject);
 
   private
     { Private declarations }
@@ -316,11 +317,26 @@ begin
 
   if (mTransaccionimputable.AsBoolean = true) then
   begin
-    if   (DBGrid1.SelectedField.FieldName   = 'Efectivo')  then
+    if   (DBGrid1.SelectedField.FieldName   = 'Efectivo') or
+         (DBGrid1.SelectedField.FieldName   = 'nombreCuentafull') or
+         (DBGrid1.SelectedField.FieldName   = 'Naturaleza')  then
     begin
       DBGrid1.Options := DBGrid1.Options + [dgEditing];  // Adds dbEditing option
     end;
   end;
+end;
+
+procedure TfrmCheques.DBGrid1ColEnter(Sender: TObject);
+begin
+  inherited;
+ if   (DBGrid1.SelectedField.FieldName   = 'Efectivo') or
+      (DBGrid1.SelectedField.FieldName   = 'Naturaleza')  then
+      Begin
+         DBGrid1.Options := DBGrid1.Options + [dgEditing];
+      End
+      Else
+       DBGrid1.Options := DBGrid1.Options - [dgEditing];
+
 end;
 
 procedure TfrmCheques.DBGrid1ColExit(Sender: TObject);
@@ -363,37 +379,51 @@ begin
   inherited;
 
   inherited;
-  if (DBGRid1.DataSource.DataSet.FieldByName('Imputable').asBoolean)  then
-  begin
-    if  not length(trim(mTransaccionNum_Cuenta.AsString)) <=0  then
-    begin
 
+  if (DBGRid1.DataSource.DataSet.FieldByName('Imputable').asBoolean) and
+     (not varisnull(mTransaccionNum_Cuenta.AsString)) then
+  begin
+    //--- Verifica si se esta editando la columand de efectivo
+    if (DBGrid1.SelectedField.FieldName   = 'Efectivo') then
+    begin
       if not (Key in [#8, '0'..'9','.',#13,#9]) then
       begin
-         Key := #0;
-      end;
-    end;
+        Key := #0;
+       end;
+
+    end // Fin Efectivo
+    Else
+      if (DBGrid1.SelectedField.FieldName   = 'Naturaleza') then
+      begin
+        Key := UpCase(Key) ;
+        if not (Key in [#8, 'D','C',#13,#9]) then
+        begin
+          Key := #0;
+        end
+        Else
+        if key in ['D','C'] then
+        begin
+          mTransaccion.Edit;
+          mTransaccionNaturaleza.AsString := Key;
+        end;
+      End  // Fin Naturaleza
+     Else
+      key := #0;
 
     if (key = #13) or (key = #9) then
     begin
 
       if key = #9 then
       begin
-         DBGrid1.Options := DBGrid1.Options - [dgEditing];
+        DBGrid1.Options := DBGrid1.Options - [dgEditing];
       end;
-
-      // AplicaDeposito;
+       // AplicaDeposito;
       ValidarMontos;
     end;
   end;
 
-  _index := DBGRid1.SelectedField.FieldNo;
-  if (key = #9 ) then
-  begin
-    showmessage(DBGRid1.Columns[_index].FieldName );
-    if mTransaccion.eof then
-       btn_chk_det_InsertarCuenta.Click ;
-  end;
+ //   ValidarMontos;
+
 end;
 
 procedure TfrmCheques.dbg_chk_generadosCellClick(Column: TColumn);
@@ -630,27 +660,34 @@ end;
 procedure TfrmCheques.btn_chk_det_InsertarCuentaClick(Sender: TObject);
 begin
   inherited;
+  //--- Validar si se ha seleccionado cuenta corriente y se ha establecido monto
+  if (DataModulo1.cheque_encnCuentaCheque.AsString <> '')
+     and (DataModulo1.cheque_encmonto_gral.AsFloat > 0) then
+  Begin
+
   //---Aqui debe adicionar una cuenta del catalogo contable.
-  //---hacer llamado a venta de cuentas.
-    Application.CreateForm(Tfrmcuentas, frmcuentas);
-    if frmcuentas.ShowModal = mrOk then
+  //---hacer llamado a ventana de cuentas.
+  //  Application.CreateForm(Tfrmcuentas, frmcuentas);
+  //    if frmcuentas.ShowModal = mrOk then
     begin
       mTransaccion.Append;
       mTransaccionFECHA.AsDateTime    := _fechaSistema ;
       mTransaccionDocumento.AsInteger := _documento;
       mTransaccionTipoDoc.AsString    := 'CHQ';
-      mTransaccionCuenta.AsString     := DataModulo1.CuentaContableFull.FieldByName('cuenta').AsString ;
+//      mTransaccionCuenta.AsString     := DataModulo1.CuentaContableFull.FieldByName('cuenta').AsString ;
       mTransaccionimputable.AsBoolean := True;
       mTransaccionOrden.AsString      := 'X';
       mTransaccionguid.AsString       := DataModulo1._guid();
-
-      if frmCuentas.esDebito.Checked  then
-         mTransaccionNaturaleza.AsString := 'D';
-
-      if frmCuentas.esCredito.checked  then
-           mTransaccionNaturaleza.AsString := 'C';
+      DBGrid1.Columns[2].field.FocusControl;
+//      DBGrid1.Columns[2].field.
+//      if frmCuentas.esDebito.Checked  then
+//         mTransaccionNaturaleza.AsString := 'D';
+//
+//      if frmCuentas.esCredito.checked  then
+//           mTransaccionNaturaleza.AsString := 'C';
 
     end;
+  End;
 end;
 
 procedure TfrmCheques.ValidarMontos;
