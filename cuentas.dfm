@@ -78,7 +78,7 @@ object frmCuentas: TfrmCuentas
   end
   object dtsCuentas: TDataSource
     DataSet = DataModulo1.CuentaContableFull
-    Left = 296
-    Top = 71
+    Left = 288
+    Top = 55
   end
 end

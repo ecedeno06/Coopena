@@ -7,7 +7,8 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitTop = -176
+  ExplicitLeft = -240
+  ExplicitTop = -126
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -1413,9 +1414,10 @@ inherited frmCheques: TfrmCheques
               Top = 0
               Width = 297
               Height = 32
+              ParentColor = True
               TabOrder = 0
               object Label10: TLabel
-                Left = 107
+                Left = 105
                 Top = 8
                 Width = 62
                 Height = 16
@@ -1455,6 +1457,7 @@ inherited frmCheques: TfrmCheques
             OnColEnter = DBGrid1ColEnter
             OnColExit = DBGrid1ColExit
             OnDrawColumnCell = DBGrid1DrawColumnCell
+            OnKeyDown = DBGrid1KeyDown
             OnKeyPress = DBGrid1KeyPress
             Columns = <
               item

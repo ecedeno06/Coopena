@@ -9222,7 +9222,9 @@ object DataModulo1: TDataModulo1
       'select '
       '  cuenta'
       '  ,cuenta + '#39' - '#39' + nombre as CuentaNombre'
+      ',*'
       'from maescont'
+      'where tipo = '#39'D'#39
       '')
     Left = 311
     Top = 875
