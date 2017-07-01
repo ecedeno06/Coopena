@@ -7,8 +7,6 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -240
-  ExplicitTop = -126
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -1365,8 +1363,6 @@ inherited frmCheques: TfrmCheques
             GradientStartColor = clWhite
             Images = DataModulo1.ImageList2
             TabOrder = 0
-            ExplicitLeft = 7
-            ExplicitTop = 18
             object btn_chk_det_InsertarCuenta: TToolButton
               Left = 0
               Top = 0

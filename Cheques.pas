@@ -201,6 +201,7 @@ begin
   grp_chk_Detalle.Enabled := true;
   if DataModulo1.cheque_encimpreso.AsInteger >= 1 then
   begin
+    //--- deshabilita el bonton de nuevo
     btn_chk_Nuevo.Enabled   := false;
   end;
 
@@ -728,8 +729,9 @@ begin
       if frmCuentas.esCredito.checked  then
            mTransaccionNaturaleza.AsString := 'C';
 
-
+      DBGrid1.Columns[3].
     end;
+
   End;
 end;
 
