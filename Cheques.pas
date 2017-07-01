@@ -693,8 +693,11 @@ procedure TfrmCheques.btn_chk_det_borrarClick(Sender: TObject);
 begin
   inherited;
  //--- Borrar La linea
- mTransaccion.Delete;
- ValidarMontos;
+ if mTransaccionimputable.AsBoolean  then
+ Begin
+   mTransaccion.Delete;
+   ValidarMontos;
+ End;
 end;
 
 procedure TfrmCheques.btn_chk_det_InsertarCuentaClick(Sender: TObject);
