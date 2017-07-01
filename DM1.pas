@@ -1691,6 +1691,7 @@ type
     cheque_detver: TIntegerField;
     productoTrx2guid: TStringField;
     productoTrx2verChk_Tran: TBooleanField;
+    FDQuery2: TFDQuery;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;

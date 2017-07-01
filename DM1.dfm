@@ -142,7 +142,7 @@ object DataModulo1: TDataModulo1
     Left = 400
     Top = 4
     Bitmap = {
-      494C01013100A80078041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
+      494C01013100A8007C041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       000000000000000000000000000000000000E4E4E4FF050004FF0B0004FF0B00
       04FF0B0004FF0B0004FF0B0004FF0C0004FF130007FFFFFFFFFFFFFFFFFFFFFF
@@ -1909,7 +1909,7 @@ object DataModulo1: TDataModulo1
     Left = 459
     Top = 5
     Bitmap = {
-      494C010131009802CC0610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010131009802D00610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -12979,5 +12979,29 @@ object DataModulo1: TDataModulo1
       ReadOnly = True
       Required = True
     end
+  end
+  object FDQuery2: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'Select '
+      'm.num_cuenta '
+      ',S.nombreCompleto'
+      ''
+      'from maes_aux  M Left Join socios S on M.socio  = S.idSocio'
+      'where '
+      '   s.nombre        like '#39'%'#39' + :cadena + '#39'%'#39' '
+      '   or m.num_cuenta like '#39'%'#39' + :cadena + '#39'%'#39
+      '   or s.Nombre     like '#39'%'#39' + :cadena + '#39'%'#39'    '
+      '   or s.Apellido   like '#39'%'#39' + :cadena + '#39'%'#39'  '
+      '   or Cast(s.idSocio AS varchar(10)) like '#39'%'#39' + :cadena + '#39'%'#39'  ')
+    Left = 304
+    Top = 1320
+    ParamData = <
+      item
+        Name = 'CADENA'
+        DataType = ftString
+        ParamType = ptInput
+        Value = 'Pere'
+      end>
   end
 end
