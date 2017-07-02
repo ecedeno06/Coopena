@@ -1397,6 +1397,7 @@ inherited frmCheques: TfrmCheques
               Top = 0
               ImageIndex = 17
               OnClick = btn_chk_det_socioClick
+              OnDragOver = btn_chk_det_socioDragOver
             end
             object ToolButton6: TToolButton
               Left = 161
@@ -1454,6 +1455,8 @@ inherited frmCheques: TfrmCheques
             OnColEnter = DBGrid1ColEnter
             OnColExit = DBGrid1ColExit
             OnDrawColumnCell = DBGrid1DrawColumnCell
+            OnDragDrop = DBGrid1DragDrop
+            OnDragOver = DBGrid1DragOver
             OnKeyDown = DBGrid1KeyDown
             OnKeyPress = DBGrid1KeyPress
             Columns = <

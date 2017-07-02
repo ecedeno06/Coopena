@@ -12,7 +12,7 @@ uses
 type
   TfrmSocioCuentas = class(TForm)
     GroupBox1: TGroupBox;
-    Button1: TButton;
+    btn_Aceptar: TButton;
     Button2: TButton;
     mCuenta: TFDMemTable;
     mCuenta_Cuenta: TStringField;
@@ -26,6 +26,12 @@ type
     procedure ed_socioCuentas_FiltroKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormShow(Sender: TObject);
+    procedure lv_socioCuentasClick(Sender: TObject);
+    procedure lv_socioCuentasDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure lv_socioCuentasDrawItem(Sender: TCustomListView; Item: TListItem;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure lv_socioCuentasDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,7 +45,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM1;
+uses DM1, Cheques;
 
 procedure TfrmSocioCuentas.ed_socioCuentas_FiltroChange(Sender: TObject);
 
@@ -110,6 +116,32 @@ end;
 procedure TfrmSocioCuentas.FormShow(Sender: TObject);
 begin
   ed_socioCuentas_Filtro.SetFocus;
+end;
+
+procedure TfrmSocioCuentas.lv_socioCuentasClick(Sender: TObject);
+begin
+  DataModulo1.socioCuentas.Locate('num_cuenta',trim(lv_socioCuentas.Selected.Caption)) ;
+end;
+
+procedure TfrmSocioCuentas.lv_socioCuentasDblClick(Sender: TObject);
+begin
+  DataModulo1.socioCuentas.Locate('num_cuenta',trim(lv_socioCuentas.Selected.Caption)) ;
+  btn_Aceptar.OnClick (Sender);
+end;
+
+procedure TfrmSocioCuentas.lv_socioCuentasDragOver(Sender, Source: TObject; X,
+  Y: Integer; State: TDragState; var Accept: Boolean);
+begin
+  Cheques._Origen := 'Cuentas';
+  cheques._accept := true;
+  accept := true;
+end;
+
+procedure TfrmSocioCuentas.lv_socioCuentasDrawItem(Sender: TCustomListView;
+  Item: TListItem; Rect: TRect; State: TOwnerDrawState);
+begin
+  Cheques._Origen := 'Cuentas';
+  cheques._accept := true;
 end;
 
 end.

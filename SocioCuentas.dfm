@@ -24,14 +24,12 @@ object frmSocioCuentas: TfrmSocioCuentas
     Align = alClient
     Caption = 'Seleccion de la Cuenta'
     TabOrder = 0
-    ExplicitWidth = 417
-    ExplicitHeight = 257
     DesignSize = (
       603
       255)
-    object Button1: TButton
+    object btn_Aceptar: TButton
       Left = 3
-      Top = 229
+      Top = 227
       Width = 75
       Height = 25
       Caption = 'Aceptar'
@@ -47,7 +45,6 @@ object frmSocioCuentas: TfrmSocioCuentas
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1
-      ExplicitLeft = 339
     end
     object ed_socioCuentas_Filtro: TButtonedEdit
       Left = 3
@@ -71,11 +68,10 @@ object frmSocioCuentas: TfrmSocioCuentas
       OnKeyPress = ed_socioCuentas_FiltroKeyPress
       OnLeftButtonClick = ed_socioCuentas_FiltroLeftButtonClick
       OnRightButtonClick = ed_socioCuentas_FiltroRightButtonClick
-      ExplicitWidth = 411
     end
     object lv_socioCuentas: TListView
       Left = 3
-      Top = 48
+      Top = 50
       Width = 597
       Height = 173
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -98,8 +94,10 @@ object frmSocioCuentas: TfrmSocioCuentas
       StateImages = DataModulo1.ImageList2
       TabOrder = 3
       ViewStyle = vsReport
-      ExplicitWidth = 411
-      ExplicitHeight = 175
+      OnClick = lv_socioCuentasClick
+      OnDblClick = lv_socioCuentasDblClick
+      OnDrawItem = lv_socioCuentasDrawItem
+      OnDragOver = lv_socioCuentasDragOver
     end
   end
   object mCuenta: TFDMemTable

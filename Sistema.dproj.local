@@ -176,8 +176,8 @@
     <Transaction>2017/05/30 10:57:00.000.128,D:\Sistemas\COOPENA\20170102\Fuentes\MantenimientoTipoIngresos.dfm=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.dfm</Transaction>
     <Transaction>2017/05/30 10:57:00.000.128,D:\Sistemas\COOPENA\20170102\Fuentes\MantenimientoTipoIngresos.pas=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.pas</Transaction>
     <Transaction>2017/05/30 11:26:01.000.936,=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.pas</Transaction>
-    <Transaction>2017/05/30 11:26:57.000.744,D:\Sistemas\COOPENA\20170102\Fuentes\MantenimientoActividadEconomica.pas=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.pas</Transaction>
     <Transaction>2017/05/30 11:26:57.000.744,D:\Sistemas\COOPENA\20170102\Fuentes\MantenimientoActividadEconomica.dfm=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.dfm</Transaction>
+    <Transaction>2017/05/30 11:26:57.000.744,D:\Sistemas\COOPENA\20170102\Fuentes\MantenimientoActividadEconomica.pas=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.pas</Transaction>
     <Transaction>2017/06/05 18:47:34.000.670,=D:\Sistemas\COOPENA\20170102\Fuentes\Unit2.pas</Transaction>
     <Transaction>2017/06/05 18:48:27.000.003,=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.pas</Transaction>
     <Transaction>2017/06/05 18:48:56.000.661,D:\Sistemas\COOPENA\20170102\Fuentes\ModuloDatos.dfm=D:\Sistemas\COOPENA\20170102\Fuentes\Unit1.dfm</Transaction>
@@ -187,11 +187,11 @@
     <Transaction>2017/06/26 11:32:15.000.852,=D:\Coopena\Fuentes\Unit1.pas</Transaction>
     <Transaction>2017/06/26 11:55:32.000.182,D:\Coopena\Fuentes\Cheques.dfm=D:\Coopena\Fuentes\Unit1.dfm</Transaction>
     <Transaction>2017/06/26 11:55:32.000.182,D:\Coopena\Fuentes\Cheques.pas=D:\Coopena\Fuentes\Unit1.pas</Transaction>
-    <Transaction>2017/07/01 18:16:01.893,=D:\sistemas\coopena\Unit2.pas</Transaction>
-    <Transaction>2017/07/01 18:17:33.818,D:\sistemas\coopena\SocioCuentas.pas=D:\sistemas\coopena\Unit2.pas</Transaction>
-    <Transaction>2017/07/01 18:17:33.818,D:\sistemas\coopena\SocioCuentas.dfm=D:\sistemas\coopena\Unit2.dfm</Transaction>
+    <Transaction>2017/07/01 18:16:01.000.893,=D:\sistemas\coopena\Unit2.pas</Transaction>
+    <Transaction>2017/07/01 18:17:33.000.818,D:\sistemas\coopena\SocioCuentas.pas=D:\sistemas\coopena\Unit2.pas</Transaction>
+    <Transaction>2017/07/01 18:17:33.000.818,D:\sistemas\coopena\SocioCuentas.dfm=D:\sistemas\coopena\Unit2.dfm</Transaction>
   </Transactions>
-	<ProjectSortOrder AutoSort="0" SortType="1">
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="Asociaciones.pas"/>
     <File Path="Asociaciones.dfm"/>
     <File Path="Bancos.pas"/>

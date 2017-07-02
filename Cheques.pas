@@ -142,17 +142,25 @@ type
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btn_chk_det_socioClick(Sender: TObject);
+    procedure btn_chk_det_socioDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure DBGrid1DragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure DBGrid1DragDrop(Sender, Source: TObject; X, Y: Integer);
 
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure _ArrastrarCuenta;
   end;
 
 var
   frmCheques: TfrmCheques;
   _documento,_cheque : integer;
    ntecla : word;
+   _Origen,_Destino : String;
+   _accept : boolean;
 implementation
 
 {$R *.dfm}
@@ -375,6 +383,23 @@ begin
     end;
   end;
 
+end;
+
+procedure TfrmCheques.DBGrid1DragDrop(Sender, Source: TObject; X, Y: Integer);
+begin
+  inherited;
+ if _origen = 'Cuentas' then
+ begin
+   //     _ArrastrarDocumento ;
+ end;
+
+end;
+
+procedure TfrmCheques.DBGrid1DragOver(Sender, Source: TObject; X, Y: Integer;
+  State: TDragState; var Accept: Boolean);
+begin
+  inherited;
+  accept := true;
 end;
 
 procedure TfrmCheques.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -742,8 +767,16 @@ begin
     Application.CreateForm(TfrmSocioCuentas , frmSociocuentas);
     if frmSociocuentas.ShowModal = mrOk then
     Begin
-
+     //---agregar aqui el codigo para cuenta de asociado
+     _ArrastrarCuenta ;
     End;
+end;
+
+procedure TfrmCheques.btn_chk_det_socioDragOver(Sender, Source: TObject; X,
+  Y: Integer; State: TDragState; var Accept: Boolean);
+begin
+  inherited;
+  Accept := _accept ;
 end;
 
 procedure TfrmCheques.ValidarMontos;
@@ -771,6 +804,26 @@ begin
  ed_chk_diferencia.Text  := FormatFloat('#,##0.00',_diferencia);
 
  mTransaccion.Locate('guid',_guid,[]);
+
+end;
+
+procedure TfrmCheques._ArrastrarCuenta;
+begin
+      mTransaccion.Append;
+      mTransaccionFECHA.AsDateTime    := _fechaSistema ;
+      mTransaccionDocumento.AsInteger := _documento;
+      mTransaccionTipoDoc.AsString    := 'CHQ';
+//      mtransaccionNum_Cuenta.AsString :=
+      // mTransaccionCuenta.AsString     := DataModulo1.CuentaContableFull.FieldByName('cuenta').AsString ;
+      mTransaccionimputable.AsBoolean := True;
+      mTransaccionOrden.AsString      := 'X';
+      mTransaccionguid.AsString       := DataModulo1._guid();
+
+//      if frmCuentas.esDebito.Checked  then
+//         mTransaccionNaturaleza.AsString := 'D';
+//
+//      if frmCuentas.esCredito.checked  then
+//           mTransaccionNaturaleza.AsString := 'C';
 
 end;
 

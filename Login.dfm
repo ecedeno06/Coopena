@@ -9298,7 +9298,7 @@ object frmLogin: TfrmLogin
       end
       object gbCambio: TGroupBox
         Left = 16
-        Top = 110
+        Top = 108
         Width = 334
         Height = 140
         Anchors = []
@@ -9503,7 +9503,7 @@ object frmLogin: TfrmLogin
       end
       object SolicitarClave: TGroupBox
         Left = 19
-        Top = 226
+        Top = 224
         Width = 334
         Height = 121
         Anchors = []
@@ -9761,7 +9761,7 @@ object frmLogin: TfrmLogin
     Left = 115
     Top = 88
     Bitmap = {
-      494C010107009802900310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010107009802980310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

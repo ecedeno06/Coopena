@@ -645,7 +645,6 @@ procedure TfrmCaja.tvHBDragOver(Sender, Source: TObject; X, Y: Integer;
   State: TDragState; var Accept: Boolean);
 begin
   inherited;
-//  _target := 'tvHB';
 end;
 
 

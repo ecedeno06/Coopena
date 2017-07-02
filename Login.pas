@@ -1165,7 +1165,6 @@ begin
   SolicitarClave.Top      := 111;
   SolicitarClave.left     := 24;
   Result := true;
-
 end;
 
 procedure TfrmLogin.SpeedButton1Click(Sender: TObject);
