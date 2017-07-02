@@ -648,7 +648,7 @@ end;
 procedure TfrmCheques.ed_chk_MontoEnter(Sender: TObject);
 begin
   inherited;
-  ed_chk_Monto.Text := FormatFloat('0.00',DataModulo1.cheque_encmonto_gral.AsFloat);
+  ed_chk_Monto.Clear;
   ed_chk_Monto.SelectAll;
 end;
 

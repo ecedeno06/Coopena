@@ -100,6 +100,7 @@ object frmSocioCuentas: TfrmSocioCuentas
       TabOrder = 3
       ViewStyle = vsReport
       OnClick = lv_socioCuentasClick
+      OnDblClick = lv_socioCuentasDblClick
       OnDrawItem = lv_socioCuentasDrawItem
       OnDragOver = lv_socioCuentasDragOver
     end
