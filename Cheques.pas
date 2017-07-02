@@ -104,11 +104,12 @@ type
     Label9: TLabel;
     Memo1: TMemo;
     SpeedButton1: TSpeedButton;
-    pn_Diferencia: TPanel;
     ToolButton6: TToolButton;
-    Label10: TLabel;
-    ed_chk_diferencia: TEdit;
     m_Chk_Generados_impreso: TIntegerField;
+    Label10: TLabel;
+    GroupBox1: TGroupBox;
+    ed_chk_diferencia: TEdit;
+    Label11: TLabel;
     procedure btn_chk_NuevoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ed_chk_MontoKeyPress(Sender: TObject; var Key: Char);
@@ -147,6 +148,7 @@ type
     procedure DBGrid1DragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
     procedure DBGrid1DragDrop(Sender, Source: TObject; X, Y: Integer);
+    procedure btn_chk_Undo_EncaClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -193,6 +195,21 @@ begin
 //  btn_chk_Salvar.Enabled  := False;
   btn_chk_Nuevo.Enabled   := True;
   btn_chk_Undo_Enca.Enabled := False;
+end;
+
+procedure TfrmCheques.btn_chk_Undo_EncaClick(Sender: TObject);
+begin
+  inherited;
+  mTransaccion.Close;
+  mTransaccion.Open;
+  DataModulo1.cheque_enc.Close;
+  DataModulo1.cheque_enc.Open;
+
+  btn_chk_Nuevo.Enabled   := True;
+  btn_chk_Salvar.Enabled  := false;
+  grp_chk_enc.Enabled     := false;
+
+  grp_chk_Detalle.Enabled := true;
 end;
 
 procedure TfrmCheques.CargarCheque;
@@ -242,7 +259,8 @@ begin
  if Length(trim(ed_chk_benef.Text )) > 0 then
  begin
    DataModulo1.chequesGenerados.SQL.Add( ' and (( s.nombrecompleto like ' + quotedStr('%' + trim(ed_chk_benef.Text )+ '%' ) + ')' );
-   DataModulo1.chequesGenerados.SQL.Add( ' or    ( C.nombre        like ' + quotedStr('%' + trim(ed_chk_benef.Text )+ '%' ) + '))');
+   DataModulo1.chequesGenerados.SQL.Add( ' or    ( C.nombre        like ' + quotedStr('%' + trim(ed_chk_benef.Text )+ '%' ) + ')');
+   DataModulo1.chequesGenerados.SQL.Add( ' or    ( Cast(monto_gral as varchar(max)) like ' + quotedstr('%' + trim(ed_chk_benef.Text )+ '%' ) + '))');
  end;
 
  Memo1.Text := DataModulo1.chequesgenerados.SQL.Text ;

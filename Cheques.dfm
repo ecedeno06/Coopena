@@ -1,5 +1,4 @@
 inherited frmCheques: TfrmCheques
-  BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Modulo de Cheques'
   ClientHeight = 652
@@ -7,7 +6,6 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -144
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -34,6 +32,9 @@ inherited frmCheques: TfrmCheques
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Panel1'
     TabOrder = 1
+    DesignSize = (
+      296
+      632)
     object grp_chk_generados: TGroupBox
       Left = 1
       Top = 1
@@ -41,6 +42,8 @@ inherited frmCheques: TfrmCheques
       Height = 145
       Align = alTop
       TabOrder = 0
+      ExplicitLeft = 2
+      ExplicitTop = 11
       object Label7: TLabel
         Left = 16
         Top = 17
@@ -148,11 +151,11 @@ inherited frmCheques: TfrmCheques
       end
     end
     object dbg_chk_generados: TDBGrid
-      Left = 1
-      Top = 146
-      Width = 294
-      Height = 485
-      Align = alClient
+      Left = 2
+      Top = 148
+      Width = 292
+      Height = 482
+      Anchors = [akLeft, akTop, akRight, akBottom]
       DataSource = dts_Chk_Generados
       DrawingStyle = gdsGradient
       FixedColor = clMoneyGreen
@@ -240,6 +243,13 @@ inherited frmCheques: TfrmCheques
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Panel2'
     TabOrder = 2
+    object Label10: TLabel
+      Left = 616
+      Top = 264
+      Width = 37
+      Height = 13
+      Caption = 'Label10'
+    end
     object PageControl1: TPageControl
       Left = 0
       Top = 9
@@ -1334,13 +1344,14 @@ inherited frmCheques: TfrmCheques
             Left = 81
             Top = 0
             ImageIndex = 31
+            OnClick = btn_chk_Undo_EncaClick
           end
         end
         object grp_chk_Detalle: TGroupBox
           Left = 0
           Top = 199
           Width = 718
-          Height = 398
+          Height = 395
           Align = alTop
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Detalle:'
@@ -1356,8 +1367,8 @@ inherited frmCheques: TfrmCheques
             Left = 5
             Top = 21
             Width = 708
-            Height = 35
-            ButtonHeight = 32
+            Height = 29
+            ButtonHeight = 28
             ButtonWidth = 32
             DrawingStyle = dsGradient
             GradientEndColor = clMoneyGreen
@@ -1373,59 +1384,59 @@ inherited frmCheques: TfrmCheques
             object ToolButton4: TToolButton
               Left = 32
               Top = 0
-              Width = 6
+              Width = 15
               Caption = 'ToolButton4'
               ImageIndex = 6
               Style = tbsSeparator
             end
             object btn_chk_det_borrar: TToolButton
-              Left = 38
+              Left = 47
               Top = 0
               Caption = 'btn_chk_det_borrar'
               ImageIndex = 7
               OnClick = btn_chk_det_borrarClick
             end
             object ToolButton2: TToolButton
-              Left = 70
+              Left = 79
               Top = 0
-              Width = 59
+              Width = 18
               Caption = 'ToolButton10'
               ImageIndex = 41
               Style = tbsSeparator
             end
             object btn_chk_det_socio: TToolButton
-              Left = 129
+              Left = 97
               Top = 0
               ImageIndex = 17
               OnClick = btn_chk_det_socioClick
               OnDragOver = btn_chk_det_socioDragOver
             end
             object ToolButton6: TToolButton
-              Left = 161
+              Left = 129
               Top = 0
-              Width = 240
+              Width = 296
               Caption = 'ToolButton6'
               ImageIndex = 18
               Style = tbsSeparator
             end
-            object pn_Diferencia: TPanel
-              Left = 401
+            object GroupBox1: TGroupBox
+              Left = 425
               Top = 0
-              Width = 297
-              Height = 32
-              ParentColor = True
+              Width = 224
+              Height = 28
               TabOrder = 0
-              object Label10: TLabel
-                Left = 105
-                Top = 8
+              object Label11: TLabel
+                Left = 16
+                Top = 5
                 Width = 62
                 Height = 16
                 Caption = 'Diferencia:'
               end
               object ed_chk_diferencia: TEdit
-                Left = 173
-                Top = 4
-                Width = 121
+                AlignWithMargins = True
+                Left = 85
+                Top = 2
+                Width = 134
                 Height = 24
                 Alignment = taCenter
                 Enabled = False
@@ -1435,9 +1446,9 @@ inherited frmCheques: TfrmCheques
           end
           object DBGrid1: TDBGrid
             Left = 2
-            Top = 59
+            Top = 53
             Width = 714
-            Height = 337
+            Height = 340
             Align = alClient
             DataSource = dtstransaccion
             FixedColor = clMoneyGreen
