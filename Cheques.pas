@@ -104,7 +104,7 @@ type
     Label9: TLabel;
     Memo1: TMemo;
     SpeedButton1: TSpeedButton;
-    Panel3: TPanel;
+    pn_Diferencia: TPanel;
     ToolButton6: TToolButton;
     Label10: TLabel;
     ed_chk_diferencia: TEdit;
@@ -408,12 +408,13 @@ begin
   inherited;
   if Column.Field.Dataset.FieldbyName('imputable').AsBoolean then
   begin
-     if (DBGrid1.Columns[DataCol].FieldName = 'Efectivo') then
+     if   (DBGrid1.Columns[DataCol].FieldName = 'Efectivo')
+       or (DBGrid1.Columns[DataCol].FieldName = 'Naturaleza') then
          //--- cambia al color verde money
          DBGrid1.Canvas.Brush.color := clMoneyGreen
      else
      begin
-  //     DBGrid1.Canvas.Font.Color := clGray ;
+     //    DBGrid1.Canvas.Brush.Color := clGray ;
      end;
   End;
 
@@ -676,11 +677,10 @@ begin
   if (key = #13) or (key = #9) then
   begin
 
-      if key = #9 then
-         DBGrid1.Options := DBGrid1.Options - [dgEditing];
+    if key = #9 then
+       DBGrid1.Options := DBGrid1.Options - [dgEditing];
+    ValidarMontos;
   end;
-
-  ValidarMontos;
 
 end;
 
@@ -809,22 +809,41 @@ end;
 
 procedure TfrmCheques._ArrastrarCuenta;
 begin
-      mTransaccion.Append;
-      mTransaccionFECHA.AsDateTime    := _fechaSistema ;
-      mTransaccionDocumento.AsInteger := _documento;
-      mTransaccionTipoDoc.AsString    := 'CHQ';
-//      mtransaccionNum_Cuenta.AsString :=
-      // mTransaccionCuenta.AsString     := DataModulo1.CuentaContableFull.FieldByName('cuenta').AsString ;
-      mTransaccionimputable.AsBoolean := True;
-      mTransaccionOrden.AsString      := 'X';
-      mTransaccionguid.AsString       := DataModulo1._guid();
+  DataModulo1.productoTrx2.Close;
+  Datamodulo1.productoTrx2.Params [0].AsInteger :=
+      DataModulo1.socioCuentassubcuenta.AsInteger ;
+  DataModulo1.productoTrx2.Open;
 
-//      if frmCuentas.esDebito.Checked  then
-//         mTransaccionNaturaleza.AsString := 'D';
-//
-//      if frmCuentas.esCredito.checked  then
-//           mTransaccionNaturaleza.AsString := 'C';
+//  if DataModulo1.socioCuentasprestamo_S_N.AsString = 'S' then
+  begin
+    //--- Validar contra el productoTRX las cuentas que se ven afectadas
+    //--- Se debe mostrar Intereses y Mora
 
+    if not DataModulo1.productoTrx2.eof  then
+    Begin
+      DataModulo1.productoTrx2.first;
+      while not DataModulo1.productoTrx2.eof do
+      Begin
+
+       //--- Agrega  solo las que se veran en el cheque/Transferencia
+       if DataModulo1.productoTrx2verChk_Tran.AsBoolean then
+       begin
+
+         mTransaccion.Append;
+         mTransaccionFECHA.AsDateTime    := _fechaSistema ;
+         mTransaccionDocumento.AsInteger := _documento;
+         mTransaccionCuenta.AsString     := DataModulo1.productoTrx2cuenta.AsString;
+         mTransaccionTipoDoc.AsString    := 'CHQ';
+         mTransaccionNum_Cuenta.AsString := DataModulo1.sociocuentas.FieldByName('num_cuenta').AsString ;
+         mTransaccionimputable.AsBoolean := DataModulo1.productoTrx2esImputable.AsBoolean ;
+         mTransaccionOrden.AsString      := 'X';
+         mTransaccionguid.AsString       := DataModulo1._guid();
+         mTransaccionNaturaleza.AsString := DataModulo1.productoTrx2DC.AsString;
+       end;
+       DataModulo1.productoTrx2.next
+      End;
+    end;
+  end;
 end;
 
 end.

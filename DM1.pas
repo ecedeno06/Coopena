@@ -1694,6 +1694,9 @@ type
     socioCuentasnum_cuenta: TWideStringField;
     socioCuentasnombreCompleto: TStringField;
     dts_socioCuentas: TDataSource;
+    socioCuentasnombreSubCuenta: TWideStringField;
+    socioCuentasprestamo_S_N: TWideStringField;
+    socioCuentassubcuenta: TSmallintField;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;

@@ -5,7 +5,7 @@ object frmSocioCuentas: TfrmSocioCuentas
   BorderStyle = bsSingle
   Caption = 'Listado de Cuentas'
   ClientHeight = 255
-  ClientWidth = 603
+  ClientWidth = 756
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,13 +19,14 @@ object frmSocioCuentas: TfrmSocioCuentas
   object GroupBox1: TGroupBox
     Left = 0
     Top = 0
-    Width = 603
+    Width = 756
     Height = 255
     Align = alClient
     Caption = 'Seleccion de la Cuenta'
     TabOrder = 0
+    ExplicitWidth = 603
     DesignSize = (
-      603
+      756
       255)
     object btn_Aceptar: TButton
       Left = 3
@@ -37,7 +38,7 @@ object frmSocioCuentas: TfrmSocioCuentas
       TabOrder = 0
     end
     object Button2: TButton
-      Left = 524
+      Left = 677
       Top = 229
       Width = 75
       Height = 25
@@ -45,11 +46,12 @@ object frmSocioCuentas: TfrmSocioCuentas
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1
+      ExplicitLeft = 524
     end
     object ed_socioCuentas_Filtro: TButtonedEdit
       Left = 3
       Top = 24
-      Width = 596
+      Width = 749
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Images = DataModulo1.ImageList2
@@ -68,11 +70,12 @@ object frmSocioCuentas: TfrmSocioCuentas
       OnKeyPress = ed_socioCuentas_FiltroKeyPress
       OnLeftButtonClick = ed_socioCuentas_FiltroLeftButtonClick
       OnRightButtonClick = ed_socioCuentas_FiltroRightButtonClick
+      ExplicitWidth = 596
     end
     object lv_socioCuentas: TListView
       Left = 3
       Top = 50
-      Width = 597
+      Width = 750
       Height = 173
       Anchors = [akLeft, akTop, akRight, akBottom]
       Columns = <
@@ -80,6 +83,11 @@ object frmSocioCuentas: TfrmSocioCuentas
           Caption = 'Cuenta'
           ImageIndex = 4
           Width = 150
+        end
+        item
+          Caption = 'Producto'
+          ImageIndex = 3
+          Width = 250
         end
         item
           Caption = 'nombre'
@@ -95,9 +103,9 @@ object frmSocioCuentas: TfrmSocioCuentas
       TabOrder = 3
       ViewStyle = vsReport
       OnClick = lv_socioCuentasClick
-      OnDblClick = lv_socioCuentasDblClick
       OnDrawItem = lv_socioCuentasDrawItem
       OnDragOver = lv_socioCuentasDragOver
+      ExplicitWidth = 597
     end
   end
   object mCuenta: TFDMemTable
@@ -107,15 +115,15 @@ object frmSocioCuentas: TfrmSocioCuentas
     ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
-    Left = 184
-    Top = 168
+    Left = 256
+    Top = 112
     object mCuenta_Cuenta: TStringField
       FieldName = '_Cuenta'
     end
   end
   object dts_mCuenta: TDataSource
     DataSet = mCuenta
-    Left = 344
+    Left = 352
     Top = 112
   end
 end

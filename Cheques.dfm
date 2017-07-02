@@ -7,6 +7,7 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
+  ExplicitLeft = -243
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -1407,7 +1408,7 @@ inherited frmCheques: TfrmCheques
               ImageIndex = 18
               Style = tbsSeparator
             end
-            object Panel3: TPanel
+            object pn_Diferencia: TPanel
               Left = 401
               Top = 0
               Width = 297
@@ -1509,6 +1510,7 @@ inherited frmCheques: TfrmCheques
                 Visible = True
               end
               item
+                Alignment = taCenter
                 Expanded = False
                 FieldName = 'Naturaleza'
                 Font.Charset = DEFAULT_CHARSET

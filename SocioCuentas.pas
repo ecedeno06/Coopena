@@ -31,7 +31,6 @@ type
       State: TDragState; var Accept: Boolean);
     procedure lv_socioCuentasDrawItem(Sender: TCustomListView; Item: TListItem;
       Rect: TRect; State: TOwnerDrawState);
-    procedure lv_socioCuentasDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -97,6 +96,7 @@ begin
 
        _item := lv_socioCuentas.Items.Add;
        _item.Caption := (DataModulo1.socioCuentasnum_cuenta.AsString);
+       _item.SubItems.Add(DataModulo1.socioCuentasnombresubCuenta.AsString);
        _item.SubItems.Add(DataModulo1.socioCuentasnombreCompleto.AsString);
 
        DataModulo1.socioCuentas.next;
@@ -121,12 +121,6 @@ end;
 procedure TfrmSocioCuentas.lv_socioCuentasClick(Sender: TObject);
 begin
   DataModulo1.socioCuentas.Locate('num_cuenta',trim(lv_socioCuentas.Selected.Caption)) ;
-end;
-
-procedure TfrmSocioCuentas.lv_socioCuentasDblClick(Sender: TObject);
-begin
-  DataModulo1.socioCuentas.Locate('num_cuenta',trim(lv_socioCuentas.Selected.Caption)) ;
-  btn_Aceptar.OnClick (Sender);
 end;
 
 procedure TfrmSocioCuentas.lv_socioCuentasDragOver(Sender, Source: TObject; X,

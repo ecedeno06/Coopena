@@ -142,7 +142,7 @@ object DataModulo1: TDataModulo1
     Left = 400
     Top = 4
     Bitmap = {
-      494C01013100A8007C041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
+      494C01013100A80080041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       000000000000000000000000000000000000E4E4E4FF050004FF0B0004FF0B00
       04FF0B0004FF0B0004FF0B0004FF0C0004FF130007FFFFFFFFFFFFFFFFFFFFFF
@@ -1909,7 +1909,7 @@ object DataModulo1: TDataModulo1
     Left = 459
     Top = 5
     Bitmap = {
-      494C010131009802D00610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010131009802D40610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -12981,14 +12981,20 @@ object DataModulo1: TDataModulo1
       'Select '
       'm.num_cuenta '
       ',S.nombreCompleto'
-      ''
-      'from maes_aux  M Left Join socios S on M.socio  = S.idSocio'
+      ',P.nombreSubCuenta'
+      ',P.subcuenta '
+      ',P.prestamo_S_N'
+      'from maes_aux  M '
+      'Left Join socios S on M.socio  = S.idSocio'
+      'Left Join subCuenta P on m.subCuenta = p.subcuenta'
       'where '
       '   s.nombre        like '#39'%'#39' + :cadena + '#39'%'#39' '
       '   or m.num_cuenta like '#39'%'#39' + :cadena + '#39'%'#39
       '   or s.Nombre     like '#39'%'#39' + :cadena + '#39'%'#39'    '
       '   or s.Apellido   like '#39'%'#39' + :cadena + '#39'%'#39'  '
-      '   or Cast(s.idSocio AS varchar(10)) like '#39'%'#39' + :cadena + '#39'%'#39'  ')
+      '   or Cast(s.idSocio AS varchar(10)) like '#39'%'#39' + :cadena + '#39'%'#39'  '
+      '   or p.nombreSubCuenta Like '#39'%'#39' + :cadena + '#39'%'#39' '
+      '    ')
     Left = 1920
     Top = 1464
     ParamData = <
@@ -13010,10 +13016,24 @@ object DataModulo1: TDataModulo1
       Origin = 'nombreCompleto'
       Size = 100
     end
+    object socioCuentasnombreSubCuenta: TWideStringField
+      FieldName = 'nombreSubCuenta'
+      Origin = 'nombreSubCuenta'
+      Size = 50
+    end
+    object socioCuentasprestamo_S_N: TWideStringField
+      FieldName = 'prestamo_S_N'
+      Origin = 'prestamo_S_N'
+      Size = 1
+    end
+    object socioCuentassubcuenta: TSmallintField
+      FieldName = 'subcuenta'
+      Origin = 'subcuenta'
+    end
   end
   object dts_socioCuentas: TDataSource
     DataSet = socioCuentas
-    Left = 1928
+    Left = 1960
     Top = 1464
   end
 end
