@@ -165,7 +165,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM1, cuentas, SocioCuentas;
+uses DM1, cuentas, SocioCuentas, CatalogoContable;
 
 function GetCharFromVirtualKey(Key: Word): string;
 var
@@ -720,7 +720,7 @@ procedure TfrmCheques.btn_chk_det_borrarClick(Sender: TObject);
 begin
   inherited;
  //--- Borrar La linea
- if mTransaccionimputable.AsBoolean  then
+ if mTransaccionOrden.AsString = 'P' then
  Begin
    mTransaccion.Delete;
    ValidarMontos;
@@ -737,27 +737,29 @@ begin
 
   //---Aqui debe adicionar una cuenta del catalogo contable.
   //---hacer llamado a ventana de cuentas.
-    Application.CreateForm(Tfrmcuentas, frmcuentas);
-    if frmcuentas.ShowModal = mrOk then
-    begin
-      mTransaccion.Append;
-      mTransaccionFECHA.AsDateTime    := _fechaSistema ;
-      mTransaccionDocumento.AsInteger := _documento;
-      mTransaccionTipoDoc.AsString    := 'CHQ';
-      mTransaccionCuenta.AsString     := DataModulo1.CuentaContableFull.FieldByName('cuenta').AsString ;
-      mTransaccionimputable.AsBoolean := True;
-      mTransaccionOrden.AsString      := 'X';
-      mTransaccionguid.AsString       := DataModulo1._guid();
 
-      if frmCuentas.esDebito.Checked  then
-         mTransaccionNaturaleza.AsString := 'D';
+    Application.CreateForm(TfrmCatalogoContable, frmCatalogoContable);
+    try
+      if frmCatalogoContable.ShowModal = mrOk then
+      begin
 
-      if frmCuentas.esCredito.checked  then
-           mTransaccionNaturaleza.AsString := 'C';
+        DataModulo1.catalogo.Locate('cuenta',catalogoContable._Cuenta,[]);
 
-    //  DBGrid1.Columns[3].
+        mTransaccion.Append;
+        mTransaccionFECHA.AsDateTime    := _fechaSistema ;
+        mTransaccionDocumento.AsInteger := _documento;
+        mTransaccionTipoDoc.AsString    := 'CHQ';
+        mTransaccionCuenta.AsString     := DataModulo1.catalogo.FieldByName('cuenta').AsString ;
+        mTransaccionimputable.AsBoolean := True;
+        mTransaccionOrden.AsString      := 'X';
+        mTransaccionguid.AsString       := DataModulo1._guid();
+        mTransaccionNaturaleza.AsString := CatalogoContable._DC;
+
+      end;
+
+    finally
+      frmCatalogoContable.Free;
     end;
-
   End;
 end;
 

@@ -279,7 +279,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="CatalogoContable.pas">
-            <Form>Form2</Form>
+            <Form>frmCatalogoContable</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

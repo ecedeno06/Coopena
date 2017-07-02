@@ -7,7 +7,6 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -243
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
