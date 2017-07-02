@@ -6,7 +6,6 @@ inherited frmTipoProducto: TfrmTipoProducto
   Position = poDesigned
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -124
   ExplicitWidth = 911
   ExplicitHeight = 750
   PixelsPerInch = 96
@@ -55,7 +54,7 @@ inherited frmTipoProducto: TfrmTipoProducto
     Top = 0
     Width = 647
     Height = 693
-    ActivePage = TabSheet1
+    ActivePage = tsBanco
     Anchors = [akLeft, akTop, akRight, akBottom]
     Images = DataModulo1.ImageList2
     TabOrder = 2
@@ -936,7 +935,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         Left = 1
         Top = 48
         Width = 622
-        Height = 613
+        Height = 612
         Align = alCustom
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = 'Movimiento Transaccion'
@@ -947,12 +946,12 @@ inherited frmTipoProducto: TfrmTipoProducto
         TabOrder = 1
         DesignSize = (
           622
-          613)
+          612)
         object Label6: TLabel
           Left = 49
           Top = 22
           Width = 39
-          Height = 18
+          Height = 13
           Caption = 'Cuenta:'
         end
         object lblDC: TLabel
@@ -1084,7 +1083,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         Left = 0
         Top = 171
         Width = 620
-        Height = 473
+        Height = 472
         Anchors = [akLeft, akTop, akRight, akBottom]
         DataSource = dtsproductoTrx
         DrawingStyle = gdsGradient

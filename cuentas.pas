@@ -19,6 +19,8 @@ type
     Button2: TButton;
     esDebito: TRadioButton;
     esCredito: TRadioButton;
+    mCuenta: TFDMemTable;
+    mCuenta_Cuenta: TStringField;
   private
     { Private declarations }
   public

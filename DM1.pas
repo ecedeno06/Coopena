@@ -1552,7 +1552,6 @@ type
     procesosusuario_au: TStringField;
     procesosfechaFinCierre: TSQLTimeStampField;
     SocioProductos_NombreProducto: TStringField;
-    FDQuery1: TFDQuery;
     cheque_enc: TFDQuery;
     cheque_enctipo_documento: TWideStringField;
     cheque_encdocumento: TIntegerField;
@@ -1691,7 +1690,10 @@ type
     cheque_detver: TIntegerField;
     productoTrx2guid: TStringField;
     productoTrx2verChk_Tran: TBooleanField;
-    FDQuery2: TFDQuery;
+    socioCuentas: TFDQuery;
+    socioCuentasnum_cuenta: TWideStringField;
+    socioCuentasnombreCompleto: TStringField;
+    dts_socioCuentas: TDataSource;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;

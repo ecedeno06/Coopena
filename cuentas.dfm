@@ -2,7 +2,8 @@ object frmCuentas: TfrmCuentas
   Left = 0
   Top = 0
   AutoSize = True
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Cuentas'
   ClientHeight = 105
   ClientWidth = 417
@@ -31,7 +32,7 @@ object frmCuentas: TfrmCuentas
       Caption = 'Cuenta:'
     end
     object edCuenta: TDBLookupComboBox
-      Left = 50
+      Left = 53
       Top = 23
       Width = 358
       Height = 21
@@ -48,7 +49,7 @@ object frmCuentas: TfrmCuentas
       Caption = 'Aceptar'
       Default = True
       ModalResult = 1
-      TabOrder = 1
+      TabOrder = 3
     end
     object Button2: TButton
       Left = 339
@@ -57,7 +58,7 @@ object frmCuentas: TfrmCuentas
       Height = 25
       Caption = 'Cancelar'
       ModalResult = 2
-      TabOrder = 2
+      TabOrder = 4
     end
     object esDebito: TRadioButton
       Left = 101
@@ -65,7 +66,7 @@ object frmCuentas: TfrmCuentas
       Width = 113
       Height = 17
       Caption = 'Debito'
-      TabOrder = 3
+      TabOrder = 1
     end
     object esCredito: TRadioButton
       Left = 220
@@ -73,12 +74,25 @@ object frmCuentas: TfrmCuentas
       Width = 113
       Height = 17
       Caption = 'Credito'
-      TabOrder = 4
+      TabOrder = 2
     end
   end
   object dtsCuentas: TDataSource
     DataSet = DataModulo1.CuentaContableFull
     Left = 288
     Top = 55
+  end
+  object mCuenta: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    Left = 176
+    Top = 48
+    object mCuenta_Cuenta: TStringField
+      FieldName = '_Cuenta'
+    end
   end
 end

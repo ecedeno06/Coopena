@@ -468,7 +468,7 @@ inherited frmSocios: TfrmSocios
     Top = 2
     Width = 843
     Height = 615
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     MultiLine = True

@@ -60,7 +60,7 @@ type
     ToolButton4: TToolButton;
     btn_chk_det_borrar: TToolButton;
     ToolButton2: TToolButton;
-    ToolButton3: TToolButton;
+    btn_chk_det_socio: TToolButton;
     DBGrid1: TDBGrid;
     grp_chk_enc: TGroupBox;
     Label4: TLabel;
@@ -141,6 +141,7 @@ type
     procedure DBGrid1ColEnter(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btn_chk_det_socioClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -156,7 +157,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM1, cuentas;
+uses DM1, cuentas, SocioCuentas;
 
 function GetCharFromVirtualKey(Key: Word): string;
 var
@@ -729,10 +730,20 @@ begin
       if frmCuentas.esCredito.checked  then
            mTransaccionNaturaleza.AsString := 'C';
 
-      DBGrid1.Columns[3].
+    //  DBGrid1.Columns[3].
     end;
 
   End;
+end;
+
+procedure TfrmCheques.btn_chk_det_socioClick(Sender: TObject);
+begin
+  inherited;
+    Application.CreateForm(TfrmSocioCuentas , frmSociocuentas);
+    if frmSociocuentas.ShowModal = mrOk then
+    Begin
+
+    End;
 end;
 
 procedure TfrmCheques.ValidarMontos;

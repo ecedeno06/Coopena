@@ -1392,10 +1392,11 @@ inherited frmCheques: TfrmCheques
               ImageIndex = 41
               Style = tbsSeparator
             end
-            object ToolButton3: TToolButton
+            object btn_chk_det_socio: TToolButton
               Left = 129
               Top = 0
               ImageIndex = 17
+              OnClick = btn_chk_det_socioClick
             end
             object ToolButton6: TToolButton
               Left = 161

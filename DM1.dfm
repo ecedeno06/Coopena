@@ -12296,11 +12296,6 @@ object DataModulo1: TDataModulo1
       Origin = 'fechaFinCierre'
     end
   end
-  object FDQuery1: TFDQuery
-    Connection = cnn2
-    Left = 1448
-    Top = 776
-  end
   object cheque_enc: TFDQuery
     Connection = cnn2
     SQL.Strings = (
@@ -12980,7 +12975,7 @@ object DataModulo1: TDataModulo1
       Required = True
     end
   end
-  object FDQuery2: TFDQuery
+  object socioCuentas: TFDQuery
     Connection = cnn2
     SQL.Strings = (
       'Select '
@@ -12994,8 +12989,8 @@ object DataModulo1: TDataModulo1
       '   or s.Nombre     like '#39'%'#39' + :cadena + '#39'%'#39'    '
       '   or s.Apellido   like '#39'%'#39' + :cadena + '#39'%'#39'  '
       '   or Cast(s.idSocio AS varchar(10)) like '#39'%'#39' + :cadena + '#39'%'#39'  ')
-    Left = 304
-    Top = 1320
+    Left = 1920
+    Top = 1464
     ParamData = <
       item
         Name = 'CADENA'
@@ -13003,5 +12998,22 @@ object DataModulo1: TDataModulo1
         ParamType = ptInput
         Value = 'Pere'
       end>
+    object socioCuentasnum_cuenta: TWideStringField
+      FieldName = 'num_cuenta'
+      Origin = 'num_cuenta'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 12
+    end
+    object socioCuentasnombreCompleto: TStringField
+      FieldName = 'nombreCompleto'
+      Origin = 'nombreCompleto'
+      Size = 100
+    end
+  end
+  object dts_socioCuentas: TDataSource
+    DataSet = socioCuentas
+    Left = 1928
+    Top = 1464
   end
 end
