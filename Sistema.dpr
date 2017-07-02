@@ -46,7 +46,8 @@ uses
   MantenimientoTipoIngresos in 'MantenimientoTipoIngresos.pas' {frmTipoIngreso},
   MantenimientoActividadEconomica in 'MantenimientoActividadEconomica.pas' {frmActividadEconimca},
   Cheques in 'Cheques.pas' {frmCheques},
-  SocioCuentas in 'SocioCuentas.pas' {frmSocioCuentas};
+  SocioCuentas in 'SocioCuentas.pas' {frmSocioCuentas},
+  CatalogoContable in 'CatalogoContable.pas' {Form2};
 
 {$R *.res}
 
@@ -58,5 +59,6 @@ begin
   Application.CreateForm(TDM2, DM2);
   Application.CreateForm(Tds, ds);
   Application.CreateForm(TfrmSocioCuentas, frmSocioCuentas);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.

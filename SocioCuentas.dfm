@@ -24,7 +24,6 @@ object frmSocioCuentas: TfrmSocioCuentas
     Align = alClient
     Caption = 'Seleccion de la Cuenta'
     TabOrder = 0
-    ExplicitWidth = 603
     DesignSize = (
       756
       255)
@@ -46,11 +45,10 @@ object frmSocioCuentas: TfrmSocioCuentas
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1
-      ExplicitLeft = 524
     end
     object ed_socioCuentas_Filtro: TButtonedEdit
       Left = 3
-      Top = 24
+      Top = 23
       Width = 749
       Height = 21
       Anchors = [akLeft, akTop, akRight]
@@ -70,7 +68,6 @@ object frmSocioCuentas: TfrmSocioCuentas
       OnKeyPress = ed_socioCuentas_FiltroKeyPress
       OnLeftButtonClick = ed_socioCuentas_FiltroLeftButtonClick
       OnRightButtonClick = ed_socioCuentas_FiltroRightButtonClick
-      ExplicitWidth = 596
     end
     object lv_socioCuentas: TListView
       Left = 3
@@ -105,7 +102,6 @@ object frmSocioCuentas: TfrmSocioCuentas
       OnClick = lv_socioCuentasClick
       OnDrawItem = lv_socioCuentasDrawItem
       OnDragOver = lv_socioCuentasDragOver
-      ExplicitWidth = 597
     end
   end
   object mCuenta: TFDMemTable

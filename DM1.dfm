@@ -142,7 +142,7 @@ object DataModulo1: TDataModulo1
     Left = 400
     Top = 4
     Bitmap = {
-      494C01013100A80080041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
+      494C01013100A80088041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       000000000000000000000000000000000000E4E4E4FF050004FF0B0004FF0B00
       04FF0B0004FF0B0004FF0B0004FF0C0004FF130007FFFFFFFFFFFFFFFFFFFFFF
@@ -1909,7 +1909,7 @@ object DataModulo1: TDataModulo1
     Left = 459
     Top = 5
     Bitmap = {
-      494C010131009802D40610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010131009802DC0610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -13035,5 +13035,65 @@ object DataModulo1: TDataModulo1
     DataSet = socioCuentas
     Left = 1960
     Top = 1464
+  end
+  object catalogo: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'select * from maescont'
+      'where tipo = '#39'D'#39
+      'and (nombre like '#39'%'#39' + :Cadena +'#39'%'#39' '
+      '     or cuenta like '#39'%'#39' + :cadena + '#39'%'#39')')
+    Left = 312
+    Top = 1328
+    ParamData = <
+      item
+        Name = 'CADENA'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '41101'
+      end>
+    object catalogocuenta: TWideStringField
+      FieldName = 'cuenta'
+      Origin = 'cuenta'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object catalogonombre: TWideStringField
+      FieldName = 'nombre'
+      Origin = 'nombre'
+      Size = 50
+    end
+    object catalogonaturaleza: TWideStringField
+      FieldName = 'naturaleza'
+      Origin = 'naturaleza'
+      Size = 1
+    end
+    object catalogotipo_maescont: TSmallintField
+      FieldName = 'tipo_maescont'
+      Origin = 'tipo_maescont'
+    end
+    object catalogomov_auxiliar: TWideStringField
+      FieldName = 'mov_auxiliar'
+      Origin = 'mov_auxiliar'
+      Size = 1
+    end
+    object catalogocuenta_madre: TWideStringField
+      FieldName = 'cuenta_madre'
+      Origin = 'cuenta_madre'
+    end
+    object catalogotipo: TWideStringField
+      FieldName = 'tipo'
+      Origin = 'tipo'
+      Size = 1
+    end
+    object catalogofecha_aud: TSQLTimeStampField
+      FieldName = 'fecha_aud'
+      Origin = 'fecha_aud'
+    end
+    object catalogousuario: TWideStringField
+      FieldName = 'usuario'
+      Origin = 'usuario'
+      Size = 10
+    end
   end
 end

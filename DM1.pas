@@ -1697,6 +1697,16 @@ type
     socioCuentasnombreSubCuenta: TWideStringField;
     socioCuentasprestamo_S_N: TWideStringField;
     socioCuentassubcuenta: TSmallintField;
+    catalogo: TFDQuery;
+    catalogocuenta: TWideStringField;
+    catalogonombre: TWideStringField;
+    catalogonaturaleza: TWideStringField;
+    catalogotipo_maescont: TSmallintField;
+    catalogomov_auxiliar: TWideStringField;
+    catalogocuenta_madre: TWideStringField;
+    catalogotipo: TWideStringField;
+    catalogofecha_aud: TSQLTimeStampField;
+    catalogousuario: TWideStringField;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;
