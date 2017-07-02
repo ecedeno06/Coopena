@@ -720,7 +720,7 @@ procedure TfrmCheques.btn_chk_det_borrarClick(Sender: TObject);
 begin
   inherited;
  //--- Borrar La linea
- if mTransaccionOrden.AsString = 'P' then
+// if mTransaccionOrden.AsString = 'P' then
  Begin
    mTransaccion.Delete;
    ValidarMontos;
