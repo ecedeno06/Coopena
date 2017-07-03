@@ -6,6 +6,7 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
+  ExplicitLeft = -215
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -42,8 +43,6 @@ inherited frmCheques: TfrmCheques
       Height = 145
       Align = alTop
       TabOrder = 0
-      ExplicitLeft = 2
-      ExplicitTop = 11
       object Label7: TLabel
         Left = 16
         Top = 17
@@ -1368,7 +1367,6 @@ inherited frmCheques: TfrmCheques
             Top = 21
             Width = 708
             Height = 29
-            ButtonHeight = 28
             ButtonWidth = 32
             DrawingStyle = dsGradient
             GradientEndColor = clMoneyGreen
@@ -1419,29 +1417,22 @@ inherited frmCheques: TfrmCheques
               ImageIndex = 18
               Style = tbsSeparator
             end
-            object GroupBox1: TGroupBox
+            object TLabel
               Left = 425
               Top = 0
-              Width = 224
-              Height = 28
+              Width = 62
+              Height = 22
+              Caption = 'Diferencia:'
+            end
+            object ed_chk_diferencia: TEdit
+              AlignWithMargins = True
+              Left = 487
+              Top = 0
+              Width = 134
+              Height = 22
+              Alignment = taCenter
+              Enabled = False
               TabOrder = 0
-              object Label11: TLabel
-                Left = 16
-                Top = 5
-                Width = 62
-                Height = 16
-                Caption = 'Diferencia:'
-              end
-              object ed_chk_diferencia: TEdit
-                AlignWithMargins = True
-                Left = 85
-                Top = 2
-                Width = 134
-                Height = 24
-                Alignment = taCenter
-                Enabled = False
-                TabOrder = 0
-              end
             end
           end
           object DBGrid1: TDBGrid

@@ -107,9 +107,7 @@ type
     ToolButton6: TToolButton;
     m_Chk_Generados_impreso: TIntegerField;
     Label10: TLabel;
-    GroupBox1: TGroupBox;
     ed_chk_diferencia: TEdit;
-    Label11: TLabel;
     procedure btn_chk_NuevoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ed_chk_MontoKeyPress(Sender: TObject; var Key: Char);
@@ -258,9 +256,10 @@ begin
  //--- Si coloca beneficiario
  if Length(trim(ed_chk_benef.Text )) > 0 then
  begin
-   DataModulo1.chequesGenerados.SQL.Add( ' and (( s.nombrecompleto like ' + quotedStr('%' + trim(ed_chk_benef.Text )+ '%' ) + ')' );
-   DataModulo1.chequesGenerados.SQL.Add( ' or    ( C.nombre        like ' + quotedStr('%' + trim(ed_chk_benef.Text )+ '%' ) + ')');
-   DataModulo1.chequesGenerados.SQL.Add( ' or    ( Cast(monto_gral as varchar(max)) like ' + quotedstr('%' + trim(ed_chk_benef.Text )+ '%' ) + '))');
+   DataModulo1.chequesGenerados.SQL.Add( ' and (( s.nombrecompleto like '                  + quotedStr('%' + trim(ed_chk_benef.Text ) + '%' ) + ')' );
+   DataModulo1.chequesGenerados.SQL.Add( ' or    ( C.nombre        like '                  + quotedStr('%' + trim(ed_chk_benef.Text ) + '%' ) + ')' );
+   DataModulo1.chequesGenerados.SQL.Add( ' or    ( Cast(monto_gral as varchar(max)) like ' + quotedstr('%' + trim(ed_chk_benef.Text ) + '%' ) + ')' );
+   DataModulo1.chequesGenerados.SQL.Add( ' or    ( Cast(documento as varchar(max))  like ' + quotedstr('%' + trim(ed_chk_benef.Text ) + '%' ) + '))');
  end;
 
  Memo1.Text := DataModulo1.chequesgenerados.SQL.Text ;
