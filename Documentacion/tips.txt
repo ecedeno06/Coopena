@@ -2,3 +2,115 @@
 
 
 http://www.delphibr.com.br/mostradica.php?id=398
+
+http://www.trucomania.org/trucomania/indicetrucos.cgi?esp
+
+  
+----------------------------------------------------------------------------------------------------
+Convertir Numeros Decimales -> Números Romanos  
+
+Enviado Por: Q3 Team 
+Web : http://www.q3.nu 
+Email: dlib@q3.nu 
+Fecha: 13/12/99	
+Truco accedido 368 veces
+
+
+
+ function DecToRoman( Decimal: LongInt ): String;
+ const
+   Numeros: Array[1..13] of Integer =
+     ( 1, 4, 5, 9, 10, 40, 50, 90, 100,
+       400, 500, 900, 1000);
+   Romanos:  Array[1..13] of String =
+     ( 'I', 'IV', 'V', 'IX', 'X', 'XL',
+       'L', 'XC', 'C', 'CD', 'D', 'CM', 'M' );
+ var
+   i: Integer;
+ begin
+   Result := '';
+   for i := 13 downto 1 do
+     while ( Decimal >= Numeros[i] ) do
+     begin
+       Decimal := Decimal - Numeros[i];
+       Result := Result + Romanos[i];
+     end;
+ end;
+
+
+
+Ejemplo de llamada: 
+
+
+       Label1.Caption:=DecToRoman(1999);
+
+-------------------------------------------------------------------------------------------
+Mostrar de otro color una columna de un DBGrid  
+
+Enviado Por: Radikal (Q3 Team) 
+Web : http://www.q3.nu 
+Email: radikal@q3.nu 
+Fecha: 10/08/00	
+Truco accedido 356 veces
+
+   
+
+ 
+ 
+
+Primero, pon la propiedad DefaultDrawing del DBGrid a FALSE 
+Luego, pon este codigo en el evento OnDrawDatCell del DBGrid: 
+
+                      procedure TForm1.DBGrid1DrawDataCell(Sender: TObject; const Rect: TRect;
+                        Field: TField; State: TGridDrawState);
+                      begin
+                        { NOMBRE es el nombre del campo a pintar de otro color }
+                        { NOMBRE this the field name to paint in a diferent color }
+                        if Field.FieldName = 'NOMBRE' then
+                          (Sender as TDBGrid).Canvas.Font.Color := clRed;  { En rojo / in red }
+                          (Sender as TDBGrid).Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2,
+                                                            Field.AsString);
+                      end;
+------------------------------------------------------------------------------------------------------
+Añadir columnas en una ListBox  
+
+Enviado Por: Q3 Team 
+Web : www.q3.nu 
+Email: dlib@q3.nu 
+Fecha: 17/12/99	
+Truco accedido 315 veces
+
+   
+
+ 
+ 
+
+Pon la propiedad TabWidth al valor del ancho en pixels (prueba con 100, por ejemplo) 
+Cuando insertes una linea en el ListBox inserta separa las columnas con ^I 
+
+Ejemplo: 
+
+
+ 	   ListBox1.Items.Add('Column1'^I'Column2'^I'Column3');
+
+-----------------------------------------------------------------------------------------------------
+Hints de varias lineas  
+
+Enviado Por: Q3 Team 
+Web : http://www.q3.nu 
+Email: dlib@q3.nu 
+Fecha: 09/07/99	
+Truco accedido 340 veces
+
+   
+
+ 
+ 
+
+Simplemente, separa cada linea con #13#10 
+
+Ejemplo: 
+
+
+     Button1.Hint := 'Linea1/Line 1'#13#10'Linea 2/Line 2';
+----------------------------------------------------------------------------------------------------

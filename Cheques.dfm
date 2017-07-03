@@ -6,7 +6,6 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -215
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -1833,7 +1832,7 @@ inherited frmCheques: TfrmCheques
     end
     object mTransaccionMonto: TFloatField
       FieldName = 'Monto'
-      DisplayFormat = '#,##0.00;(#,##0.00)'
+      DisplayFormat = '#,###.##;(#,###.##)'
       EditFormat = '#,##0.00'
     end
     object mTransaccionFecha_Aud: TDateTimeField

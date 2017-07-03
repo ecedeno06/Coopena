@@ -447,7 +447,7 @@ procedure TfrmCheques.DBGrid1KeyDown(Sender: TObject; var Key: Word;
 begin
   inherited;  _key := Char(key);
 //  GetCharFromVirtualKey(Key); //key ; //#113;
- DBGrid1.OnKeypress (sender,_key);
+// DBGrid1.OnKeypress (sender,_key);
  // dbgrid1.OnKeyPress (DBGrid1,'d');
 end;
 
@@ -472,6 +472,7 @@ begin
 
     end // Fin Efectivo
     Else
+    begin
       if (DBGrid1.SelectedField.FieldName   = 'Naturaleza') then
       begin
 
@@ -490,8 +491,9 @@ begin
         Else
              DBGrid1.Options := DBGrid1.Options - [dgEditing];
       End  // Fin Naturaleza
-     Else
-      key := #0;
+      Else
+       key := #0;
+    end;
 
     if (key = #13) or (key = #9) then
     begin
@@ -501,7 +503,20 @@ begin
         key := #0;
 //        DBGrid1.Options := DBGrid1.Options - [dgEditing];
       end;
-       // AplicaDeposito;
+
+      if Key = #13 then                                                 { if it's an enter key }
+        if not (ActiveControl is TDBGrid) then
+        begin       { if not on a TDBGrid }
+           Key := #0;                                                        { eat enter key }
+           Perform(WM_NEXTDLGCTL, 0, 0);                 { move to next control }
+        end
+      else if (ActiveControl is TDBGrid) then                { if it is a TDBGrid }
+         with TDBGrid(ActiveControl) do
+         if selectedindex < (fieldcount -1) then             { increment the field }
+           selectedindex := selectedindex +1
+         else
+           selectedindex := 0;
+
       ValidarMontos;
     end;
 
