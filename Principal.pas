@@ -124,7 +124,6 @@ type
     ImpresiondeCheque1: TMenuItem;
     N20: TMenuItem;
     AnularCheque1: TMenuItem;
-    ChequesCaja1: TMenuItem;
     N21: TMenuItem;
     N22: TMenuItem;
     mnuArchivoPaises: TMenuItem;

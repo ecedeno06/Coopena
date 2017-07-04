@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
   FireDAC.Phys.MSSQLDef, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
   FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.VCLUI.Wait,
-  IniFiles,Dialogs, FireDAC.Phys.MSAcc, FireDAC.Phys.MSAccDef;
+  IniFiles,Dialogs, FireDAC.Phys.MSAcc, FireDAC.Phys.MSAccDef,System.DateUtils;
 
 type
   TDataModulo1 = class(TDataModule)
@@ -1728,6 +1728,8 @@ type
     function _guid() : String;
     function _diaMes(_fecha : tdateTime) : Integer;
     function _ultimoDiaMes(ano,mes : integer) : integer;
+    Function Dias360(des,has : tdateTime) : integer;
+
     { Public declarations }
   end;
 const
@@ -1752,6 +1754,9 @@ implementation
 uses DTS, Socios, ProcesoMorisidad;
 
 {$R *.dfm}
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
 function TDataModulo1.calculoPeriodo(desde, Hasta: Tdatetime): string;
 var A, AA, M, MM, D, DD: Word;
   Anio, Mes, Dia: double;
@@ -2111,6 +2116,39 @@ begin
        //
      end;
    end;
+end;
+
+
+
+function TDataModulo1.Dias360(des, has: tdateTime): integer;
+var
+  dd,dm,dh,da: Integer;
+begin
+  if DayOf(Des) = 31 then Des:= IncDay(Des, -1); // mes de 30 días
+  if Abs(YearOf(Has)-YearOf(Des)) = 0 then  // mismo año
+  begin
+    // días que faltan para completar mes (Des)
+    dd:= 30 - DayOf(Des);
+    // días comprendidos entre meses
+    dm:= (Abs(MonthOf(Des)-MonthOf(Has))-1)*30;
+    // días transcurridos del mes (Has)
+    dh:= DayOf(Has);
+    // sumar días
+    Result:= dd + dm + dh;
+  end
+  else    // años diferentes
+  begin
+    // días transcurridos entre años
+    da:= Abs(YearOf(Has)-YearOf(Des)-1)*360;
+    // (total dias del 1 año) - dias transcurridos fecha (Des)
+    dd:= 360 - MonthOf(Des)*30;
+    // total días transcurridos meses fecha Has + los días fecha (Has)
+    dm:= (MonthOf(Has)-1)*30 + DayOf(Has);
+    // diás faltantes  para completar mes (Des)
+    dh:= 30 - DayOf(Des);
+    // sumar días
+    Result:= da + dd + dm + dh;
+  end
 end;
 
 procedure TDataModulo1.dsdireccionIngresoFDataChange(Sender: TObject;

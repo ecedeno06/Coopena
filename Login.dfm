@@ -9298,7 +9298,7 @@ object frmLogin: TfrmLogin
       end
       object gbCambio: TGroupBox
         Left = 16
-        Top = 108
+        Top = 107
         Width = 334
         Height = 140
         Anchors = []
@@ -9503,7 +9503,7 @@ object frmLogin: TfrmLogin
       end
       object SolicitarClave: TGroupBox
         Left = 19
-        Top = 224
+        Top = 223
         Width = 334
         Height = 121
         Anchors = []
@@ -9586,11 +9586,14 @@ object frmLogin: TfrmLogin
     object TabSheet2: TTabSheet
       Caption = 'Informaci'#243'n'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object CategoryPanelGroup1: TCategoryPanelGroup
         Left = 0
         Top = 0
         Width = 414
-        Height = 349
         VertScrollBar.Tracking = True
         Align = alClient
         GradientBaseColor = clGreen
@@ -9607,6 +9610,7 @@ object frmLogin: TfrmLogin
           Height = 130
           Caption = 'Mision'
           TabOrder = 0
+          ExplicitWidth = 185
           object mMision: TMemo
             Left = 5
             Top = 19
@@ -9628,6 +9632,7 @@ object frmLogin: TfrmLogin
           Height = 88
           Caption = 'Vision'
           TabOrder = 1
+          ExplicitWidth = 185
           object mVision: TMemo
             Left = 5
             Top = 3
@@ -9655,6 +9660,7 @@ object frmLogin: TfrmLogin
           ExpandedImageIndex = 2
           ExpandedPressedImageIndex = 2
           TabOrder = 2
+          ExplicitWidth = 412
           object GroupBox2: TGroupBox
             Left = 5
             Top = 54
@@ -9761,7 +9767,7 @@ object frmLogin: TfrmLogin
     Left = 115
     Top = 88
     Bitmap = {
-      494C010107009802980310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101070098029C0310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

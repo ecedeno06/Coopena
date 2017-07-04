@@ -245,6 +245,7 @@ var
  montoCapital     : Double;
 
  _tipoOperacion   : string;
+ _guid2           : string;
 
 implementation
 
@@ -557,6 +558,7 @@ begin
     if frmcuentas.ShowModal = mrOk then
     begin
       mTransaccion.Append;
+      mTransaccionguid.AsString       := DataModulo1._guid();
       mTransaccionFECHA.AsDateTime    := _fechaTrx;
       mTransaccionCuenta.AsString     := DataModulo1.CuentaContableFull.FieldByName('cuenta').AsString ;
       mTransaccionimputable.AsBoolean := True;
@@ -571,21 +573,6 @@ begin
       rbRetiro.Enabled   := false;
     end;
    end;
-
-
-
-//   if DataModulo1.tblSociosfecha_nacimiento.AsString <> '' then
-//     // frmcuentas.Fechas.Date := DataModulo1.tblSociosfecha_nacimiento.AsDateTime
-//   else
-//      frmCalendario.Fechas.Date := Date;
-//
-//   if frmCalendario.ShowModal = mrOk then
-//   begin
-//      DataModulo1.tblSocios.Edit;
-//      DataModulo1.tblSociosfecha_nacimiento.AsDateTime  := frmCalendario.Fechas.Date;
-//      lbEdad.Caption:=CalculaEdadCompleta(DataModulo1.tblSociosfecha_nacimiento.AsDateTime);
-//   end;
-
 
 end;
 
@@ -916,10 +903,11 @@ _totalCheque : double;
 _respuesta   : Integer;
 begin
   inherited;
-    if  (DBGrid1.SelectedField.FieldName   = 'Cheque') and
-        (mTransaccionimputable.AsBoolean)              and
-        ((_tipoOperacion = 'D') or (_tipoOperacion ='P')) then
-    Begin
+  _guid2 := mTransaccionguid.AsString ;
+  if  (DBGrid1.SelectedField.FieldName   = 'Cheque') and
+      (mTransaccionimputable.AsBoolean)              and
+      ((_tipoOperacion = 'D') or (_tipoOperacion ='P')) then
+  Begin
       //--- Ingresa monto por cheques
       Application.CreateForm(TfrmChequesCaja, frmChequesCaja);
       _respuesta := frmChequesCaja.ShowModal;
@@ -936,9 +924,9 @@ begin
       mTransaccion.Edit;
       mTransaccionCheque.AsFloat := _totalCheque;
 
-    end;
-    AplicaDeposito;
-    CalculaTotal;
+  end;
+  AplicaDeposito;
+  CalculaTotal;
 end;
 
 procedure TfrmCaja.DBGrid1DragDrop(Sender, Source: TObject; X, Y: Integer);
@@ -995,6 +983,9 @@ var
 begin
 
   inherited;
+
+  _guid2 := mTransaccionguid.AsString ;
+
   if (DBGRid1.DataSource.DataSet.FieldByName('Imputable').asBoolean)  then
   begin
     if  not length(trim(mTransaccionNum_Cuenta.AsString)) <=0  then
@@ -1012,6 +1003,7 @@ begin
       if key = #9 then
          DBGrid1.Options := DBGrid1.Options - [dgEditing];
 
+      //ShowMessage('Al Editar la Linea ' + mTransaccionguid.AsString);
       AplicaDeposito;
       CalculaTotal;
     end;
@@ -1088,11 +1080,12 @@ var
   _totalEfectivo : Double;
   _totalCheque   : Double;
   _cuenta : String;
-  _guid   : string;
+//  _guid   : string;
 begin
   _cuenta := DBGRid1.DataSource.DataSet.FieldByName('Num_Cuenta').AsString ;
-  _guid   := DBGRid1.DataSource.DataSet.FieldByName('guid').AsString ;
-
+//  _guid   := DBGRid1.DataSource.DataSet.FieldByName('guid').AsString ;
+//  _guid   := mTransaccionguid.AsString;
+//  ShowMessage('Calcula Total  ' + _guid);
   DBGRid1.DataSource.DataSet.First ;
   _total  := 0.00;
   _totalEfectivo := 0.00;
@@ -1133,7 +1126,7 @@ begin
 //  end;
 
   edMontoTotal.Text := FormatFloat('#,##0.00',_total);
-  mTransaccion.Locate('guid',_guid,[]);
+  mTransaccion.Locate('guid',_guid2,[]);
 
 
 //
@@ -1657,6 +1650,7 @@ begin
           //--- Inserta desde la plantilla de Transaccion, las cuentas en la
           //--- transaccion.
           mTransaccion.append;
+          mTransaccionguid.AsString       := DataModulo1._guid();
           mTransaccionCuenta.AsString     := DataModulo1.productoTrxcuenta.AsString ;
           mTransaccionimputable.AsBoolean := DataModulo1.productoTrxesimputable.AsBoolean ;
           mTransaccionNum_Cuenta.AsString := _numCuenta;
@@ -1870,7 +1864,7 @@ end;
 //                           Calcula Interes del Prestamo
 //...edw:2017-03-04
 //------------------------------------------------------------------------------
-function TfrmCaja.CalculaInteres(numCuenta: String; cuenta: String; interesSobre: String): double;
+function TfrmCaja.CalculaInteres(NumCuenta: String; cuenta: String; interesSobre: String): double;
 var
  _tasa      : Double;
  _intereses : Double;
@@ -1878,18 +1872,22 @@ var
  _saldo     : Double;  // Saldo del Prestamo a la ultima fecha de pago
  _fechaPago : TDateTime;
  _dias      : Int16;
+ _Producto  : string;
 begin
  // Buscar el Interes en el  SPC
   _tasa :=  DataModulo1.SPC.FieldByName('tasa').AsFloat;
-
+  _Producto := DataModulo1.SPC.FieldByName('subCuenta').AsString;
  // debe ubicar el ultimo pago realizado, esto verificando cuenta en el transaccional y
  // que el numero de cuenta sea igual a numCuenta (Cuenta Principal)
 
  DataModulo1.Generico.Close;
  DataModulo1.Generico.SQL.Clear;
- DataModulo1.Generico.SQL.Add('Select max(fecha_doc) as FechaPago from transaccion_det ') ;
+ DataModulo1.Generico.SQL.Add('Select max(d.fecha_doc) as FechaPago from   transaccion_det D ') ;
+ DataModulo1.Generico.SQL.Add(' left join transaccion_enc E on D.documento = E.documento and D.tipo_documento = E.tipo_documento ');
  DataModulo1.Generico.SQL.Add(' where num_cuenta = ' + QuotedStr(numCuenta)) ;
  DataModulo1.Generico.SQL.Add(' and cuenta = '       + QuotedStr(cuenta));
+ DataModulo1.Generico.SQL.Add(' and e.anulado = 0 and e.fecha_doc = d.fecha_doc ');
+
  DataModulo1.Generico.Open;
 
  _intereses := 0.00;
@@ -1899,26 +1897,54 @@ begin
  if not DataModulo1.Generico.eof  then
  Begin
    _fechaPago := DataModulo1.Generico.FieldByName('FechaPago').AsDateTime;
-   _dias      := trunc(dpFecha.Date  - _fechaPago + 1 );  // se suma uno (1)
-                                                          // ya que incluye el dia actual
-                                                          // como parte del calculo
-    DataModulo1.Generico.Close;
-    DataModulo1.Generico.SQL.Clear;
-    DataModulo1.Generico.SQL.Add('Select ');
-    DataModulo1.Generico.SQL.Add(' Sum(Case naturaleza When ' + quotedStr('D') + ' Then monto Else 0 End) as Debito ') ;
-    DataModulo1.Generico.SQL.Add(',Sum(Case naturaleza When ' + quotedStr('C') + ' Then monto Else 0 End) as Credito ') ;
-    DataModulo1.Generico.SQL.Add('From Transaccion_det ') ;
-    DataModulo1.Generico.SQL.Add('where num_cuenta     = '  + quotedstr(numCuenta));
-    DataModulo1.Generico.SQL.Add('      and     cuenta = '  + QuotedStr(cuenta));
-    DataModulo1.Generico.SQL.Add('      and     cuenta = '  + QuotedStr(cuenta));
-    DataModulo1.Generico.SQL.Add('      and fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd',_fechaPago)));
+  // _dias      := trunc(dpFecha.Date  - _fechaPago + 1 );  // se suma uno (1)
+   //---------------------------------------------------------------------------
+   //  LLamado a funcion de dias360
+    _dias := DataModulo1.Dias360(_fechaPago,_FechaSistema);
+
+   //---------------------------------------------------------------------------
+   //  Calculo del saldo a la ultima fecha de pago
+   //
+   //
+   DataModulo1.Generico.Close;
+   DataModulo1.Generico.SQL.Clear;
+   DataModulo1.Generico.SQL.Add('Select ' + quotedstr('SaldoCapital') +' as Campo');
+   //------- Saldo de Capital --------------------------------------------------
+
+   DataModulo1.Generico.SQL.Add(',(Sum(Case naturaleza When ' + quotedStr('D') + ' Then monto Else 0 End) - '        ) ;
+   DataModulo1.Generico.SQL.Add('  Sum(Case naturaleza When ' + quotedStr('C') + ' Then monto Else 0 End)) as Saldo ' );
+
+   //------- Saldo en Intereses Atrasados --------------------------------------
+   DataModulo1.Generico.SQL.Add(',(Select Sum(Case naturaleza When ' + quotedstr('D') + ' Then monto Else 0 End)  - ');
+   DataModulo1.Generico.SQL.Add('         Sum(Case naturaleza When ' + quotedstr('C') + ' Then monto Else 0 End) '   );
+   DataModulo1.Generico.SQL.Add('  From  Transaccion_Det D1 Left Join transaccion_enc E1 on D1.documento = E1.documento ');
+   DataModulo1.Generico.SQL.Add('        and d1.tipo_documento = e1.tipo_documento');
+   DataModulo1.Generico.SQL.Add('  Where num_cuenta = ' + quotedstr(numCuenta));
+   DataModulo1.Generico.SQL.Add('        and  cuenta = ' ) ;
+   DataModulo1.Generico.SQL.Add('            (Select cuenta From Productotrx where idproducto = ' + _producto + ' and esInteres = 1 )' );
+   DataModulo1.Generico.SQL.Add('        and d1.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd',_fechaPago)));
+   DataModulo1.Generico.SQL.Add('        and E1.anulado = 0 ' );
+   DataModulo1.Generico.SQL.Add('        and E1.fecha_doc = D1.fecha_doc ) as Intereses_Atrasados  ');
+
+
+   DataModulo1.Generico.SQL.Add('From Transaccion_det D');
+   DataModulo1.Generico.SQL.Add('     Left Join transaccion_enc E on D.documento = E.documento ');
+   DataModulo1.Generico.SQL.Add('     and D.tipo_documento = E.tipo_documento');
+
+
+   DataModulo1.Generico.SQL.Add('where num_cuenta = '  + quotedstr(numCuenta));
+   DataModulo1.Generico.SQL.Add(' and  cuenta     = '  + QuotedStr(cuenta));
+   DataModulo1.Generico.SQL.Add(' and D.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd',_fechaPago)));
+   DataModulo1.Generico.SQL.Add(' and e.anulado   = 0');
+   DataModulo1.Generico.SQL.Add(' and e.fecha_doc = d.fecha_doc');
+   //---------------------------------------------------------------------------
+
+    memo2.Text :=     DataModulo1.Generico.sql.Text;
     DataModulo1.Generico.Open;
 
     if not DataModulo1.Generico.eof  then
     begin
-      //---
-      _saldo := DataModulo1.Generico.FieldByName('Debito').AsFloat  -
-                DataModulo1.Generico.FieldByName('Credito').AsFloat;
+      _saldo := DataModulo1.Generico.FieldByName('Saldo').AsFloat;
     end;
 
     //--------------------------------------------------------------------------

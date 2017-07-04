@@ -30952,10 +30952,6 @@ object frmPrincipal: TfrmPrincipal
       object N6: TMenuItem
         Caption = '-'
       end
-      object ChequesCaja1: TMenuItem
-        Caption = 'Cheques Caja'
-        OnClick = ChequesCaja1Click
-      end
     end
     object N11: TMenuItem
       Caption = '-'

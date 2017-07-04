@@ -155,12 +155,14 @@ type
     procedure _ArrastrarCuenta;
   end;
 
+//--- Variables Globales
 var
   frmCheques: TfrmCheques;
   _documento,_cheque : integer;
    ntecla : word;
-   _Origen,_Destino : String;
-   _accept : boolean;
+  _Origen,_Destino : String;
+  _accept : boolean;
+  montoInteres, montoMora : Double ;
 implementation
 
 {$R *.dfm}
@@ -842,6 +844,9 @@ begin
 end;
 
 procedure TfrmCheques._ArrastrarCuenta;
+var
+_append : Boolean ;
+
 begin
   DataModulo1.productoTrx2.Close;
   Datamodulo1.productoTrx2.Params [0].AsInteger :=
@@ -863,16 +868,44 @@ begin
        if DataModulo1.productoTrx2verChk_Tran.AsBoolean then
        begin
 
-         mTransaccion.Append;
-         mTransaccionFECHA.AsDateTime    := _fechaSistema ;
-         mTransaccionDocumento.AsInteger := _documento;
-         mTransaccionCuenta.AsString     := DataModulo1.productoTrx2cuenta.AsString;
-         mTransaccionTipoDoc.AsString    := 'CHQ';
-         mTransaccionNum_Cuenta.AsString := DataModulo1.sociocuentas.FieldByName('num_cuenta').AsString ;
-         mTransaccionimputable.AsBoolean := DataModulo1.productoTrx2esImputable.AsBoolean ;
-         mTransaccionOrden.AsString      := 'X';
-         mTransaccionguid.AsString       := DataModulo1._guid();
-         mTransaccionNaturaleza.AsString := DataModulo1.productoTrx2DC.AsString;
+         //---- por defecto el registro se debe agregar a la transaccion
+         //     No se agregara dependiendo de las condiciones de mora e interes
+         _append :=  true;
+
+         montoInteres := 0.00; montoMora := 0.00;
+         //---Valida si la linea calcula Intereses (productoTRX.esInteres)
+         if DataModulo1.productoTrx2.FieldByName('esInteres').AsBoolean then
+         begin
+            //-- CalculoDeIntereses;
+            if montoInteres = 0.00 then
+               _append := false;  {No habilita el append , ya que no calculo intereses}
+         end;
+
+         //---Valida si la linea calcula mora (productoTRX.esMora)
+         if DataModulo1.productoTrx2.FieldByName('esMora').AsBoolean then
+         begin
+            //--CalculoDeMorosidad;
+           //-- CalculoDeIntereses;
+            if montoMora = 0.00 then
+               _append := false;  {No habilita el append , ya que no calculo intereses}
+
+         end;
+
+         if _append then
+         Begin
+
+           mTransaccion.Append;
+           mTransaccionFECHA.AsDateTime    := _fechaSistema ;
+           mTransaccionDocumento.AsInteger := _documento;
+           mTransaccionCuenta.AsString     := DataModulo1.productoTrx2cuenta.AsString;
+           mTransaccionTipoDoc.AsString    := 'CHQ';
+           mTransaccionNum_Cuenta.AsString := DataModulo1.sociocuentas.FieldByName('num_cuenta').AsString ;
+           mTransaccionimputable.AsBoolean := DataModulo1.productoTrx2esImputable.AsBoolean ;
+           mTransaccionOrden.AsString      := 'X';
+           mTransaccionguid.AsString       := DataModulo1._guid();
+           mTransaccionNaturaleza.AsString := DataModulo1.productoTrx2DC.AsString;
+
+         End;
        end;
        DataModulo1.productoTrx2.next
       End;

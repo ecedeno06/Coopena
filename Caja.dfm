@@ -10,6 +10,7 @@ inherited frmCaja: TfrmCaja
   Position = poDesigned
   WindowState = wsMaximized
   OnShow = FormShow
+  ExplicitLeft = -77
   ExplicitWidth = 864
   ExplicitHeight = 557
   PixelsPerInch = 96
@@ -11550,8 +11551,8 @@ inherited frmCaja: TfrmCaja
         object GroupBox1: TGroupBox
           Left = 3
           Top = 8
-          Width = 548
-          Height = 86
+          Width = 540
+          Height = 78
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Buscar Por:'
           Font.Charset = DEFAULT_CHARSET
@@ -11562,10 +11563,10 @@ inherited frmCaja: TfrmCaja
           ParentFont = False
           TabOrder = 0
           DesignSize = (
-            548
-            86)
+            540
+            78)
           object btnBuscar: TSpeedButton
-            Left = 514
+            Left = 506
             Top = 15
             Width = 26
             Height = 30
@@ -11645,7 +11646,7 @@ inherited frmCaja: TfrmCaja
             OnClick = rbCuentaClick
           end
           object pnFiltro1: TPanel
-            Left = 132
+            Left = 124
             Top = 48
             Width = 207
             Height = 31
@@ -11676,7 +11677,7 @@ inherited frmCaja: TfrmCaja
             end
           end
           object pnFiltro2: TPanel
-            Left = 262
+            Left = 256
             Top = 48
             Width = 208
             Height = 30
@@ -11732,7 +11733,7 @@ inherited frmCaja: TfrmCaja
           object rbPasaporteRuc: TRadioButton
             Left = 12
             Top = 48
-            Width = 129
+            Width = 112
             Height = 22
             Caption = 'Pasaporte / Ruc'
             TabOrder = 6

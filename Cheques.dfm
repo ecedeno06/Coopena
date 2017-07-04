@@ -1366,6 +1366,7 @@ inherited frmCheques: TfrmCheques
             Top = 21
             Width = 708
             Height = 29
+            ButtonHeight = 24
             ButtonWidth = 32
             DrawingStyle = dsGradient
             GradientEndColor = clMoneyGreen
@@ -1420,7 +1421,7 @@ inherited frmCheques: TfrmCheques
               Left = 425
               Top = 0
               Width = 62
-              Height = 22
+              Height = 24
               Caption = 'Diferencia:'
             end
             object ed_chk_diferencia: TEdit
@@ -1428,7 +1429,7 @@ inherited frmCheques: TfrmCheques
               Left = 487
               Top = 0
               Width = 134
-              Height = 22
+              Height = 24
               Alignment = taCenter
               Enabled = False
               TabOrder = 0
