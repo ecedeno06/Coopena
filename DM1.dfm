@@ -7167,12 +7167,12 @@ object DataModulo1: TDataModulo1
       ''
       '--- Intereses '
       
-        'montoInteres  = (case  when  TX.debito   = '#39'montoInteres'#39'  then ' +
-        't.monto '
-      '                 else '
-      #9#9'    case  when  TX.credito  = '#39'montoInteres'#39'  then t.monto '
-      #9#9'    else 0 '
-      '                    end'
+        'montoInteres  = (case  when  TX.debito = '#39'montoInteres'#39' or tx.cr' +
+        'edito = '#39'montoInteres'#39' then t.monto '
+      '                 else 0'
+      #9'--'#9'    case  when  TX.credito  = '#39'montoInteres'#39'  then t.monto '
+      #9'--'#9'    else 0 '
+      '        --            end'
       #9#9' end),'
       '0.0 as saldoInteres,'
       ''
@@ -7241,7 +7241,7 @@ object DataModulo1: TDataModulo1
         Name = 'CUENTA'
         DataType = ftString
         ParamType = ptInput
-        Value = '0300001901'
+        Value = '0500001901'
       end>
     object movimientosCuentatipo_documento: TWideStringField
       FieldName = 'tipo_documento'

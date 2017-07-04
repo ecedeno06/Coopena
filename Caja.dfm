@@ -11,6 +11,7 @@ inherited frmCaja: TfrmCaja
   WindowState = wsMaximized
   OnShow = FormShow
   ExplicitLeft = -77
+  ExplicitTop = -80
   ExplicitWidth = 864
   ExplicitHeight = 557
   PixelsPerInch = 96
@@ -11746,7 +11747,7 @@ inherited frmCaja: TfrmCaja
         Top = 113
         Width = 620
         Height = 383
-        ActivePage = TabSheet1
+        ActivePage = TabSheet3
         Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
         Font.Charset = DEFAULT_CHARSET

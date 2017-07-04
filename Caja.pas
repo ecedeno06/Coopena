@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Vcl.Grids, Vcl.DBGrids, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Mask,
-  Vcl.Samples.Spin, FireDAC.Stan.Async, FireDAC.DApt, Vcl.DBCtrls;
+  Vcl.Samples.Spin, FireDAC.Stan.Async, FireDAC.DApt, Vcl.DBCtrls,system.DateUtils;
 
 type
   TfrmCaja = class(TfrmVentana)
@@ -1281,6 +1281,7 @@ begin
         begin
             //--- Mantiene el mismo signo con el que se configuro
             //    en la tabla de productosTrx (mantenimiento de productos)
+
             if mMovimientosSigno.AsString = '-' then
             begin
               _signo := -1
@@ -1299,14 +1300,6 @@ begin
             else
               _signo := -1
         end;
-
-
-//        if mMovimientos_dc.AsString = mMovimientosnaturaleza.AsString then
-//        begin
-//          _signo := 1;
-//        end
-//        else
-//          _signo := -1;
 
         mMovimientosmontoCapital.Value := mMovimientosmontoCapital.Value * _signo;
         mMovimientosmontoInteres.Value := mMovimientosmontoInteres.Value * _signo;
@@ -1873,6 +1866,7 @@ var
  _fechaPago : TDateTime;
  _dias      : Int16;
  _Producto  : string;
+ _d,_m,_y   : word;
 begin
  // Buscar el Interes en el  SPC
   _tasa :=  DataModulo1.SPC.FieldByName('tasa').AsFloat;
@@ -1897,10 +1891,13 @@ begin
  if not DataModulo1.Generico.eof  then
  Begin
    _fechaPago := DataModulo1.Generico.FieldByName('FechaPago').AsDateTime;
-  // _dias      := trunc(dpFecha.Date  - _fechaPago + 1 );  // se suma uno (1)
+   // _dias      := trunc(dpFecha.Date  - _fechaPago + 1 );  // se suma uno (1)
    //---------------------------------------------------------------------------
    //  LLamado a funcion de dias360
     _dias := DataModulo1.Dias360(_fechaPago,_FechaSistema);
+
+    DecodeDate(_fechapago,_y,_m,_d);
+    _fechaPago := EncodeDateTime(_y,_m,_d,23,59,59,0);
 
    //---------------------------------------------------------------------------
    //  Calculo del saldo a la ultima fecha de pago
@@ -1922,7 +1919,7 @@ begin
    DataModulo1.Generico.SQL.Add('  Where num_cuenta = ' + quotedstr(numCuenta));
    DataModulo1.Generico.SQL.Add('        and  cuenta = ' ) ;
    DataModulo1.Generico.SQL.Add('            (Select cuenta From Productotrx where idproducto = ' + _producto + ' and esInteres = 1 )' );
-   DataModulo1.Generico.SQL.Add('        and d1.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd',_fechaPago)));
+   DataModulo1.Generico.SQL.Add('        and d1.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd hh:mm:ss',_fechaPago)));
    DataModulo1.Generico.SQL.Add('        and E1.anulado = 0 ' );
    DataModulo1.Generico.SQL.Add('        and E1.fecha_doc = D1.fecha_doc ) as Intereses_Atrasados  ');
 
@@ -1934,7 +1931,7 @@ begin
 
    DataModulo1.Generico.SQL.Add('where num_cuenta = '  + quotedstr(numCuenta));
    DataModulo1.Generico.SQL.Add(' and  cuenta     = '  + QuotedStr(cuenta));
-   DataModulo1.Generico.SQL.Add(' and D.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd',_fechaPago)));
+   DataModulo1.Generico.SQL.Add(' and D.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd hh:mm:ss',_fechaPago)));
    DataModulo1.Generico.SQL.Add(' and e.anulado   = 0');
    DataModulo1.Generico.SQL.Add(' and e.fecha_doc = d.fecha_doc');
    //---------------------------------------------------------------------------
@@ -1949,7 +1946,8 @@ begin
 
     //--------------------------------------------------------------------------
     // calculo del interes
-    _intereses := (_saldo * ((_tasa / 360 ) / 100) * _dias );
+    if _saldo > 0  then
+      _intereses := (_saldo * ((_tasa / 360 ) / 100) * _dias );
 
 
  End; //--- Fin
