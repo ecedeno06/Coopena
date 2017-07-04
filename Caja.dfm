@@ -10,8 +10,7 @@ inherited frmCaja: TfrmCaja
   Position = poDesigned
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -77
-  ExplicitTop = -80
+  ExplicitTop = -171
   ExplicitWidth = 864
   ExplicitHeight = 557
   PixelsPerInch = 96
@@ -11552,8 +11551,8 @@ inherited frmCaja: TfrmCaja
         object GroupBox1: TGroupBox
           Left = 3
           Top = 8
-          Width = 540
-          Height = 78
+          Width = 532
+          Height = 70
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Buscar Por:'
           Font.Charset = DEFAULT_CHARSET
@@ -11564,10 +11563,10 @@ inherited frmCaja: TfrmCaja
           ParentFont = False
           TabOrder = 0
           DesignSize = (
-            540
-            78)
+            532
+            70)
           object btnBuscar: TSpeedButton
-            Left = 506
+            Left = 498
             Top = 15
             Width = 26
             Height = 30
@@ -11647,7 +11646,7 @@ inherited frmCaja: TfrmCaja
             OnClick = rbCuentaClick
           end
           object pnFiltro1: TPanel
-            Left = 124
+            Left = 116
             Top = 48
             Width = 207
             Height = 31
@@ -11678,7 +11677,7 @@ inherited frmCaja: TfrmCaja
             end
           end
           object pnFiltro2: TPanel
-            Left = 256
+            Left = 250
             Top = 48
             Width = 208
             Height = 30
@@ -11747,7 +11746,7 @@ inherited frmCaja: TfrmCaja
         Top = 113
         Width = 620
         Height = 383
-        ActivePage = TabSheet3
+        ActivePage = TabSheet1
         Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
         Font.Charset = DEFAULT_CHARSET
@@ -11826,7 +11825,7 @@ inherited frmCaja: TfrmCaja
                 TabOrder = 0
               end
               object rbDeposito: TRadioButton
-                Left = 7
+                Left = 3
                 Top = 45
                 Width = 130
                 Height = 17
@@ -11923,14 +11922,20 @@ inherited frmCaja: TfrmCaja
               ImageIndex = 43
               Style = tbsSeparator
             end
+            object btn_trx_det_suspenso: TToolButton
+              Left = 233
+              Top = 0
+              Caption = 'btn_trx_det_suspenso'
+              ImageIndex = 43
+              OnClick = btn_trx_det_suspensoClick
+            end
           end
           object pnTotal: TPanel
             Left = 0
-            Top = 297
+            Top = 300
             Width = 612
             Height = 52
-            Align = alTop
-            Anchors = [akLeft, akTop, akRight, akBottom]
+            Align = alBottom
             Color = clMoneyGreen
             ParentBackground = False
             TabOrder = 2
@@ -11984,14 +11989,15 @@ inherited frmCaja: TfrmCaja
             Left = 0
             Top = 105
             Width = 612
-            Height = 192
+            Height = 195
             Align = alTop
+            Anchors = [akLeft, akTop, akRight, akBottom]
             TabOrder = 4
             object DBGrid1: TDBGrid
               Left = 1
               Top = 1
               Width = 610
-              Height = 190
+              Height = 193
               Align = alClient
               DataSource = dtstransaccion
               FixedColor = clMoneyGreen
@@ -12705,6 +12711,7 @@ inherited frmCaja: TfrmCaja
     end
     object mTransaccionNum_Cuenta: TStringField
       FieldName = 'Num_Cuenta'
+      EditMask = '!00-000000-00;0;_'
       Size = 12
     end
     object mTransaccionCuenta: TStringField
@@ -12736,10 +12743,14 @@ inherited frmCaja: TfrmCaja
     end
     object mTransaccionEfectivo: TFloatField
       FieldName = 'Efectivo'
+      DisplayFormat = '#,##0.00'
+      EditFormat = '###0.00'
       MaxValue = 999999999999999.000000000000000000
     end
     object mTransaccionCheque: TFloatField
       FieldName = 'Cheque'
+      DisplayFormat = '#,##0.00'
+      EditFormat = '###0.00'
       MaxValue = 99999999999999.000000000000000000
     end
     object mTransaccionNumCheque: TIntegerField

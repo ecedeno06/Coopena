@@ -153,6 +153,7 @@ type
     Panel9: TPanel;
     Label5: TLabel;
     lbl_PPP_Cuenta: TEdit;
+    btn_trx_det_suspenso: TToolButton;
     procedure edFiltroRightButtonClick(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     Procedure CargarVista;
@@ -217,6 +218,7 @@ type
 
     //-------------------------------------------------
     Function Pagos (Num_Cuenta : string) : double ;
+    procedure btn_trx_det_suspensoClick(Sender: TObject);
 
 
 //    Function insertarDetalleTrx(
@@ -276,6 +278,15 @@ procedure TfrmCaja.btnEliminarClick(Sender: TObject);
  // _numCuenta : string ;
 begin
   inherited;
+  if not (DBGRid1.DataSource.DataSet.FieldByName('Orden').asString = 'T' ) then
+     mTransaccion.Delete;
+
+  if mTransaccion.Eof then
+  begin
+    rbDeposito.Enabled := true;
+    rbRetiro.Enabled   := true;
+  end;
+
 //
 //  if (DBGRid1.DataSource.DataSet.FieldByName('Imputable').asBoolean) then
 //  begin
@@ -292,14 +303,10 @@ begin
 //  end;
 
 
-  mTransaccion.Delete;
+
 
 //  mTransaccion.First;
-  if mTransaccion.Eof then
-  begin
-    rbDeposito.Enabled := true;
-    rbRetiro.Enabled   := true;
-  end;
+
 
 end;
 
@@ -513,6 +520,20 @@ begin
   mTransaccion.Open;
   rbDeposito.Enabled := true;
   rbRetiro.Enabled   := true;
+end;
+
+//------------------------------------------------------------------------------
+//                        Colocar en Suspenso la transaccion
+//
+//------------------------------------------------------------------------------
+//  Creada:                    |    Modificada:
+//------------------------------------------------------------------------------
+//...edw: 2017-07-04 , 4:07pm  |
+//------------------------------------------------------------------------------
+procedure TfrmCaja.btn_trx_det_suspensoClick(Sender: TObject);
+begin
+  inherited;
+  //---
 end;
 
 //------------------------------------------------------------------------------
@@ -1004,6 +1025,7 @@ begin
          DBGrid1.Options := DBGrid1.Options - [dgEditing];
 
       //ShowMessage('Al Editar la Linea ' + mTransaccionguid.AsString);
+
       AplicaDeposito;
       CalculaTotal;
     end;
@@ -1627,6 +1649,7 @@ begin
         mTransaccionCuenta.AsString     := DataModulo1.tipoTransaccioncuentaContable.AsString ;
         mTransaccionNaturaleza.AsString := DataModulo1.tipoTransaccionorden.AsString ;
         mTransaccionimputable.AsBoolean := false;
+        mTransaccionOrden.AsString := 'T';
       end;
 
       //--- Selecciona los datos del asiento contable de productoTrx ---
@@ -1731,7 +1754,7 @@ begin
             Begin
 
               mTransaccionSaldoO.AsFloat :=  DataModulo1.CuentaSaldoDebito.AsFloat -
-                                           DataModulo1.CuentaSaldoCredito.AsFloat ;
+                                             DataModulo1.CuentaSaldoCredito.AsFloat ;
               mTransaccionSaldo.AsFloat  :=  mTransaccionSaldoO.AsFloat;
               mTransaccionSaldoT.AsFloat :=  mTransaccionSaldoO.AsFloat;
             End;

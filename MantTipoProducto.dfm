@@ -22,11 +22,13 @@ inherited frmTipoProducto: TfrmTipoProducto
   end
   object dbgProfesion: TDBGrid
     Left = 1
-    Top = -5
+    Top = 8
     Width = 266
     Height = 696
     Anchors = [akLeft, akTop, akBottom]
     DataSource = dtsTipoProducto
+    DrawingStyle = gdsGradient
+    GradientEndColor = clMoneyGreen
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -43,8 +45,29 @@ inherited frmTipoProducto: TfrmTipoProducto
     Columns = <
       item
         Expanded = False
+        FieldName = 'subcuenta'
+        Title.Alignment = taCenter
+        Title.Caption = 'ID'
+        Title.Color = clGreen
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clGreen
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 30
+        Visible = True
+      end
+      item
+        Expanded = False
         FieldName = 'nombresubcuenta'
+        Title.Alignment = taCenter
         Title.Caption = 'Listado de Productos'
+        Title.Color = clGreen
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clGreen
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 240
         Visible = True
       end>
@@ -432,9 +455,11 @@ inherited frmTipoProducto: TfrmTipoProducto
                       Caption = 'ID'
                       Width = 30
                     end>
+                  GridLines = True
                   TabOrder = 0
                   ViewStyle = vsReport
                   OnSelectItem = lvDisponibleSelectItem
+                  ExplicitTop = 14
                 end
               end
               object Button2: TButton
@@ -478,6 +503,7 @@ inherited frmTipoProducto: TfrmTipoProducto
                       Caption = 'ID'
                       Width = 30
                     end>
+                  GridLines = True
                   TabOrder = 0
                   ViewStyle = vsReport
                 end
@@ -935,7 +961,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         Left = 1
         Top = 48
         Width = 622
-        Height = 612
+        Height = 611
         Align = alCustom
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = 'Movimiento Transaccion'
@@ -946,7 +972,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         TabOrder = 1
         DesignSize = (
           622
-          612)
+          611)
         object Label6: TLabel
           Left = 49
           Top = 22
@@ -1083,7 +1109,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         Left = 0
         Top = 171
         Width = 620
-        Height = 472
+        Height = 471
         Anchors = [akLeft, akTop, akRight, akBottom]
         DataSource = dtsproductoTrx
         DrawingStyle = gdsGradient
@@ -1252,23 +1278,23 @@ inherited frmTipoProducto: TfrmTipoProducto
   object dtsTipoProducto: TDataSource
     DataSet = DataModulo1.TipoProducto
     OnDataChange = dtsTipoProductoData
-    Left = 120
-    Top = 104
+    Left = 56
+    Top = 184
   end
   object dtscontra: TDataSource
     DataSet = DataModulo1.ContraCuenta
-    Left = 96
-    Top = 424
+    Left = 56
+    Top = 312
   end
   object dtsproductoTrx: TDataSource
     DataSet = DataModulo1.productoTrx2
-    Left = 188
-    Top = 425
+    Left = 172
+    Top = 313
   end
   object dtsMaestroContableCombo: TDataSource
     DataSet = DataModulo1.maestroContableCombo
     OnDataChange = dtsMaestroContableComboDataChange
-    Left = 120
-    Top = 224
+    Left = 176
+    Top = 184
   end
 end
