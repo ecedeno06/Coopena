@@ -1,7 +1,7 @@
 object DataModulo1: TDataModulo1
   OldCreateOrder = False
   OnCreate = tblso
-  Height = 1590
+  Height = 1774
   Width = 2925
   object tblUsuarios: TADOQuery
     Connection = Cnn
@@ -13093,5 +13093,30 @@ object DataModulo1: TDataModulo1
       Origin = 'usuario'
       Size = 10
     end
+  end
+  object Secuencial: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'Select'
+      'cast(:tipo as Char(3)) tipo_doc, '
+      
+        '(case when (Select secuencia_auto from tipo_doc where tipo_doc =' +
+        ' :tipo ) = 1 '
+      
+        '      then (Select Max(E.Documento) + 1  from transaccion_enc E ' +
+        'where E.tipo_documento = :tipo) '
+      
+        '      else  0 -- <-- Esto quiere decir que el secuencial es gene' +
+        'rado en otro modulo (Cheque o transferencias)'
+      ' end) as documento')
+    Left = 1920
+    Top = 1536
+    ParamData = <
+      item
+        Name = 'TIPO'
+        DataType = ftString
+        ParamType = ptInput
+        Value = 'AJC'
+      end>
   end
 end

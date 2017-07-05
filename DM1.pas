@@ -1707,6 +1707,7 @@ type
     catalogotipo: TWideStringField;
     catalogofecha_aud: TSQLTimeStampField;
     catalogousuario: TWideStringField;
+    Secuencial: TFDQuery;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;

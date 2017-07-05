@@ -10,7 +10,6 @@ inherited frmCaja: TfrmCaja
   Position = poDesigned
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitTop = -171
   ExplicitWidth = 864
   ExplicitHeight = 557
   PixelsPerInch = 96

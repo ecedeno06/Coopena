@@ -237,6 +237,7 @@ var
  _NumCuenta  : string;
  _accept     : boolean;
  _pagos      : Double;
+ _tipo_doc   : String;
  //---------------------------------------
  //  Variables fijas de calculos
  //
@@ -543,6 +544,7 @@ end;
 function TfrmCaja.SigNumeroRecibo: Integer;
 begin
 //--
+
   DataModulo1.Generico.Close;
   DataModulo1.Generico.Sql.Clear;
   DataModulo1.Generico.sql.Add('Select Max(Documento) + 1  NumRec from transaccion_enc');
@@ -1532,6 +1534,8 @@ begin
      mTransaccion.Open;
 
      _tipoOperacion := 'D';
+     _tipo_doc      := 'REC';
+
      DataModulo1.tipoTransaccion.Close;
      DataModulo1.tipoTransaccion.Params[0].AsString  := _tipoOperacion;
      DataModulo1.tipoTransaccion.Open;
@@ -1579,6 +1583,8 @@ begin
 
 
      _tipoOperacion := 'R';
+     _tipo_doc      := 'RRE';
+
      DataModulo1.tipoTransaccion.Close; // busca el tipo de transaccion para determinar la cuenta de caja
      DataModulo1.tipoTransaccion.Params[0].asstring := _tipoOperacion;
      DataModulo1.tipoTransaccion.Open;
