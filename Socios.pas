@@ -611,6 +611,7 @@ type
     dbg_PPP: TDBGrid;
     Label96: TLabel;
     ToolButton37: TToolButton;
+    mMovimientossubcuenta: TSmallintField;
     procedure FormCreate(Sender: TObject);
     procedure btnSocioNuevo1Click(Sender: TObject);
     procedure dblTipoSocioClick(Sender: TObject);
@@ -2129,11 +2130,6 @@ begin
   inherited;
   mMovimientos.Close;
   mMovimientos.Open;
-//
-//  DataModulo1.Producto.Locate('subCuenta',DataModulo1.SocioProductossubcuenta.AsString  ,[]);
-//  showMessage(
-//  DataModulo1.SocioProductossubcuenta.AsString + '  ' +
-//  DataModulo1.Productonombresubcuenta.AsString );
   CargaMov;
   CargarPlanPago;
 end;
@@ -2527,10 +2523,11 @@ end;
 procedure TfrmSocios.FormCreate(Sender: TObject);
 begin
   inherited;
+//  showMessage('FormCreate 1');
   DataModulo1.Paises2.Open ;
   DataModulo1.tblSocios.Open;
   DataModulo1.tblSocios.first;
-
+//  showMessage('FormCreate 2');
   DataModulo1.cargos.Open;
   DataModulo1.Estatus.Open;
   DataModulo1.profesiones.Open;
@@ -2550,7 +2547,7 @@ begin
   DataModulo1.Fiadores.Open;
   DataModulo1.mFiadores.Open;         //... tabla de memoria para Fiadores del Prestamo
   DataModulo1.Finalidad.Open;         //... tabla Finalidad
-//
+
 
 
 end;
@@ -2566,16 +2563,18 @@ begin
   grpSocioCorreos.Enabled   := True;
   grpSocioTelefonos.Enabled := True;
   grpSocioDireccion.Enabled := True;
-
+ //showmessage('1');
   //----- Abre la tabla de tipo de planilla
   DataModulo1.tipoPlanilla.Close;
   DataModulo1.tipoPlanilla.Open;
+ // showmessage('2');
   //----- Abre la tabla de Periocidad
   DataModulo1.periocidad.Close;
   DataModulo1.periocidad.Open;
 
   DataModulo1.estatusProducto.close;
   DataModulo1.estatusProducto.Open;
+
 
 end;
 

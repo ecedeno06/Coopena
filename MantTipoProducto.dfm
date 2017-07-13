@@ -1,30 +1,32 @@
 inherited frmTipoProducto: TfrmTipoProducto
   Left = 49
+  BorderStyle = bsSingle
   Caption = 'Mantenimiento a Tipo de Productos'
-  ClientHeight = 712
-  ClientWidth = 895
+  ClientHeight = 722
+  ClientWidth = 1066
   Position = poDesigned
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitWidth = 911
+  ExplicitLeft = -71
+  ExplicitWidth = 1072
   ExplicitHeight = 750
   PixelsPerInch = 96
   TextHeight = 13
   inherited StatusBar1: TStatusBar
-    Top = 693
-    Width = 895
+    Top = 703
+    Width = 1066
     Panels = <
       item
         Width = 50
       end>
-    ExplicitTop = 693
-    ExplicitWidth = 895
+    ExplicitTop = 703
+    ExplicitWidth = 913
   end
   object dbgProfesion: TDBGrid
     Left = 1
     Top = 8
     Width = 266
-    Height = 696
+    Height = 706
     Anchors = [akLeft, akTop, akBottom]
     DataSource = dtsTipoProducto
     DrawingStyle = gdsGradient
@@ -73,22 +75,25 @@ inherited frmTipoProducto: TfrmTipoProducto
       end>
   end
   object PageControl1: TPageControl
-    Left = 268
-    Top = 0
-    Width = 647
-    Height = 693
-    ActivePage = tsBanco
+    Left = 273
+    Top = 8
+    Width = 785
+    Height = 694
+    ActivePage = TabSheet1
+    Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     Images = DataModulo1.ImageList2
     TabOrder = 2
+    ExplicitWidth = 632
     object tsBanco: TTabSheet
       Caption = 'Producto'
       ImageIndex = 23
+      ExplicitWidth = 764
       object ToolBar8: TToolBar
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 633
+        Width = 771
         Height = 35
         BorderWidth = 1
         ButtonHeight = 30
@@ -98,6 +103,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         GradientEndColor = clMoneyGreen
         Images = DataModulo1.ImageList2
         TabOrder = 0
+        ExplicitWidth = 758
         object btnNuevo1: TToolButton
           Left = 0
           Top = 0
@@ -124,22 +130,24 @@ inherited frmTipoProducto: TfrmTipoProducto
       object Panel1: TPanel
         Left = 0
         Top = 41
-        Width = 639
-        Height = 623
+        Width = 777
+        Height = 624
         Align = alClient
         TabOrder = 1
+        ExplicitWidth = 764
         object Panel3: TPanel
           Left = 1
           Top = 1
-          Width = 637
+          Width = 775
           Height = 424
           Align = alTop
           Caption = 'Panel3'
           TabOrder = 0
+          ExplicitWidth = 762
           object GroupBox1: TGroupBox
             Left = 1
             Top = 1
-            Width = 635
+            Width = 773
             Height = 416
             Align = alTop
             Caption = 'Informaci'#243'n del Producto'
@@ -147,8 +155,9 @@ inherited frmTipoProducto: TfrmTipoProducto
             ParentBackground = False
             ParentColor = False
             TabOrder = 0
+            ExplicitWidth = 760
             DesignSize = (
-              635
+              773
               416)
             object Label1: TLabel
               Left = 4
@@ -225,12 +234,13 @@ inherited frmTipoProducto: TfrmTipoProducto
             object edNombre: TDBEdit
               Left = 222
               Top = 18
-              Width = 346
+              Width = 484
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               DataField = 'nombresubcuenta'
               DataSource = dtsTipoProducto
               TabOrder = 1
+              ExplicitWidth = 471
             end
             object edAbre: TDBEdit
               Left = 70
@@ -245,12 +255,13 @@ inherited frmTipoProducto: TfrmTipoProducto
             object edCuenta: TDBEdit
               Left = 224
               Top = 45
-              Width = 344
+              Width = 482
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               DataField = 'cuenta'
               DataSource = dtsTipoProducto
               TabOrder = 3
+              ExplicitWidth = 469
             end
             object edPeriodoTasa: TDBEdit
               Left = 71
@@ -427,11 +438,12 @@ inherited frmTipoProducto: TfrmTipoProducto
             object GroupBox6: TGroupBox
               Left = 2
               Top = 254
-              Width = 631
+              Width = 769
               Height = 160
               Align = alBottom
               Caption = 'Producto Aplica Para:'
               TabOrder = 8
+              ExplicitWidth = 756
               object GroupBox3: TGroupBox
                 Left = 12
                 Top = 28
@@ -459,7 +471,6 @@ inherited frmTipoProducto: TfrmTipoProducto
                   TabOrder = 0
                   ViewStyle = vsReport
                   OnSelectItem = lvDisponibleSelectItem
-                  ExplicitTop = 14
                 end
               end
               object Button2: TButton
@@ -534,11 +545,12 @@ inherited frmTipoProducto: TfrmTipoProducto
         object Panel2: TPanel
           Left = 1
           Top = 425
-          Width = 637
-          Height = 185
+          Width = 775
+          Height = 186
           Align = alTop
           Anchors = [akLeft, akTop, akRight, akBottom]
           TabOrder = 1
+          ExplicitWidth = 762
           object Image2: TImage
             Left = 11
             Top = 58
@@ -792,7 +804,7 @@ inherited frmTipoProducto: TfrmTipoProducto
             AlignWithMargins = True
             Left = 4
             Top = 4
-            Width = 629
+            Width = 767
             Height = 37
             BorderWidth = 1
             ButtonHeight = 30
@@ -802,6 +814,7 @@ inherited frmTipoProducto: TfrmTipoProducto
             GradientEndColor = clMoneyGreen
             Images = DataModulo1.ImageList2
             TabOrder = 0
+            ExplicitWidth = 754
             object btnNuevo2: TToolButton
               Left = 0
               Top = 0
@@ -828,7 +841,7 @@ inherited frmTipoProducto: TfrmTipoProducto
           object GroupBox2: TGroupBox
             Left = 66
             Top = 55
-            Width = 544
+            Width = 682
             Height = 74
             Align = alCustom
             Anchors = [akLeft, akTop, akRight]
@@ -837,6 +850,7 @@ inherited frmTipoProducto: TfrmTipoProducto
             ParentBackground = False
             ParentColor = False
             TabOrder = 1
+            ExplicitWidth = 669
             object Label10: TLabel
               Left = 11
               Top = 32
@@ -886,14 +900,12 @@ inherited frmTipoProducto: TfrmTipoProducto
     object TabSheet1: TTabSheet
       Caption = 'Movimientos'
       ImageIndex = 1
-      DesignSize = (
-        639
-        664)
+      ExplicitWidth = 624
       object ToolBar2: TToolBar
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 633
+        Width = 771
         Height = 34
         BorderWidth = 1
         ButtonHeight = 30
@@ -903,6 +915,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         GradientEndColor = clMoneyGreen
         Images = DataModulo1.ImageList2
         TabOrder = 0
+        ExplicitWidth = 618
         object btnNuevaCuenta: TToolButton
           Left = 0
           Top = 0
@@ -958,40 +971,42 @@ inherited frmTipoProducto: TfrmTipoProducto
         end
       end
       object grpTrx: TGroupBox
-        Left = 1
-        Top = 48
-        Width = 622
-        Height = 611
-        Align = alCustom
-        Anchors = [akLeft, akTop, akRight, akBottom]
+        AlignWithMargins = True
+        Left = 3
+        Top = 43
+        Width = 771
+        Height = 132
+        Align = alTop
         Caption = 'Movimiento Transaccion'
         Color = clWhite
         Enabled = False
         ParentBackground = False
         ParentColor = False
         TabOrder = 1
+        ExplicitWidth = 618
         DesignSize = (
-          622
-          611)
+          771
+          132)
         object Label6: TLabel
-          Left = 49
+          Left = 11
           Top = 22
           Width = 39
           Height = 13
           Caption = 'Cuenta:'
         end
         object lblDC: TLabel
-          Left = 540
+          Left = 651
           Top = 22
           Width = 24
           Height = 13
           Anchors = [akTop, akRight]
           Caption = 'lblDC'
+          ExplicitLeft = 498
         end
         object edCuentaTrx: TDBLookupComboBox
-          Left = 94
+          Left = 56
           Top = 19
-          Width = 427
+          Width = 576
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           DataField = 'cuenta'
@@ -1001,9 +1016,10 @@ inherited frmTipoProducto: TfrmTipoProducto
           ListSource = dtsMaestroContableCombo
           TabOrder = 0
           OnClick = edCuentaTrxClick
+          ExplicitWidth = 423
         end
         object DBCheckBox2: TDBCheckBox
-          Left = 49
+          Left = 20
           Top = 46
           Width = 136
           Height = 17
@@ -1013,19 +1029,19 @@ inherited frmTipoProducto: TfrmTipoProducto
           TabOrder = 1
         end
         object DBCheckBox3: TDBCheckBox
-          Left = 217
+          Left = 435
           Top = 46
-          Width = 136
+          Width = 151
           Height = 17
-          Caption = 'Es Indicativo de Pago?'
-          DataField = 'pago'
+          Caption = 'Genera Registro Contable ?'
+          DataField = 'esCaja'
           DataSource = dtsproductoTrx
           TabOrder = 2
         end
         object DBCheckBox5: TDBCheckBox
-          Left = 377
+          Left = 318
           Top = 46
-          Width = 136
+          Width = 111
           Height = 17
           Caption = 'Cuenta Principal'
           DataField = 'principal'
@@ -1033,10 +1049,12 @@ inherited frmTipoProducto: TfrmTipoProducto
           TabOrder = 3
         end
         object DBRadioGroup1: TDBRadioGroup
-          Left = 49
-          Top = 87
-          Width = 392
-          Height = 35
+          AlignWithMargins = True
+          Left = 5
+          Top = 95
+          Width = 761
+          Height = 32
+          Align = alBottom
           Caption = 'Tipo Trx'
           Columns = 3
           DataField = 'tipoTrx'
@@ -1050,29 +1068,30 @@ inherited frmTipoProducto: TfrmTipoProducto
             'D'
             'R'
             'P')
+          ExplicitWidth = 608
         end
         object DBCheckBox8: TDBCheckBox
-          Left = 49
+          Left = 20
           Top = 69
           Width = 97
           Height = 17
-          Caption = 'Calcula Interes?'
+          Caption = 'Interes?'
           DataField = 'esInteres'
           DataSource = dtsproductoTrx
           TabOrder = 5
         end
         object DBCheckBox9: TDBCheckBox
-          Left = 217
+          Left = 188
           Top = 69
           Width = 97
           Height = 17
-          Caption = 'Calcula Mora?'
+          Caption = 'Mora?'
           DataField = 'esMora'
           DataSource = dtsproductoTrx
           TabOrder = 6
         end
         object DBCheckBox10: TDBCheckBox
-          Left = 376
+          Left = 318
           Top = 69
           Width = 97
           Height = 17
@@ -1082,7 +1101,7 @@ inherited frmTipoProducto: TfrmTipoProducto
           TabOrder = 7
         end
         object DBCheckBox11: TDBCheckBox
-          Left = 488
+          Left = 435
           Top = 69
           Width = 97
           Height = 17
@@ -1092,7 +1111,7 @@ inherited frmTipoProducto: TfrmTipoProducto
           TabOrder = 8
         end
         object DBCheckBox4: TDBCheckBox
-          Left = 488
+          Left = 188
           Top = 46
           Width = 113
           Height = 17
@@ -1106,10 +1125,12 @@ inherited frmTipoProducto: TfrmTipoProducto
         end
       end
       object dbgTrx: TDBGrid
-        Left = 0
-        Top = 171
-        Width = 620
-        Height = 471
+        AlignWithMargins = True
+        Left = 3
+        Top = 181
+        Width = 771
+        Height = 480
+        Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
         DataSource = dtsproductoTrx
         DrawingStyle = gdsGradient
@@ -1168,7 +1189,14 @@ inherited frmTipoProducto: TfrmTipoProducto
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
-            Width = 217
+            Width = 198
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'campo'
+            Title.Caption = 'Campo'
+            Width = 95
             Visible = True
           end
           item
@@ -1235,7 +1263,7 @@ inherited frmTipoProducto: TfrmTipoProducto
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
-            Width = 100
+            Width = 79
             Visible = True
           end
           item

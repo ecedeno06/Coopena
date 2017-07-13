@@ -1,3 +1,19 @@
+//==============================================================================
+//                            xxxxxxxxxxxxxxxxxxxxx
+//
+// Descripcion:
+//       1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//
+// LLamado Por:
+//            -
+//------------------------------------------------------------------------------
+//       Por                |     Fecha          |    Hora
+//------------------------------------------------------------------------------
+// 00- Edwin cedeno         | xxxxxxxxxxxx       |  xxxxxxx
+// 00- Edwin cedeno         | xxxxxxxxxxxx       |  xxxxxxx
+//==============================================================================
+
 unit Caja;
 
 interface
@@ -9,7 +25,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Vcl.Grids, Vcl.DBGrids, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Mask,
-  Vcl.Samples.Spin, FireDAC.Stan.Async, FireDAC.DApt, Vcl.DBCtrls,system.DateUtils;
+  Vcl.Samples.Spin, FireDAC.Stan.Async, FireDAC.DApt, Vcl.DBCtrls,system.DateUtils, Clipbrd;
 
 type
   TfrmCaja = class(TfrmVentana)
@@ -154,6 +170,8 @@ type
     Label5: TLabel;
     lbl_PPP_Cuenta: TEdit;
     btn_trx_det_suspenso: TToolButton;
+    mMovimientossubcuenta: TSmallintField;
+    mTransaccionmontoInteres: TFloatField;
     procedure edFiltroRightButtonClick(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     Procedure CargarVista;
@@ -192,9 +210,9 @@ type
     //---------
     Function CalculaSaldoActual(NumCuenta: String; cuenta: String) : double;
     Function CalculaMora(Cuenta: String; calculaMora: Boolean) : double ;
-    Function CalculaInteres(NumCuenta: String; cuenta: String; interesSobre: String ) : double ;
-    Procedure AsientoTrx(_numCuenta : String ; _cuenta : String ; _idProducto : string ;
-              campo: String ; Valor : Double; _orden : String );
+    Function CalculaInteres(NumCuenta: String; cuentaInteres: String; CuentaCapital: String; interesSobre: String ) : double ;
+//    Procedure AsientoTrx(_numCuenta : String ; _cuenta : String ; _idProducto : string ;
+//              campo: String ; Valor : Double; _orden : String );
     Function AplicarDeposito(_numCuenta : String ; _deposito : Double; _orden : String ) : Double;
     Procedure AplicaDeposito;
     procedure DBGrid1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -219,6 +237,10 @@ type
     //-------------------------------------------------
     Function Pagos (Num_Cuenta : string) : double ;
     procedure btn_trx_det_suspensoClick(Sender: TObject);
+    Procedure InsertarDetalle;
+
+    //-------------------------------------------------
+    Function _Documento(Operacion : String) : integer;   //*01
 
 
 //    Function insertarDetalleTrx(
@@ -238,6 +260,21 @@ var
  _accept     : boolean;
  _pagos      : Double;
  _tipo_doc   : String;
+ _naturaleza : string;
+ _cuenta     : string;
+
+ _Numrec : Integer;
+ _total,_Monto  : Double;
+ _montoMora     : Double;
+ _montoInteres  : double;
+ _montoCapital  : double;
+
+ //---------------------------------------
+ // Variables para la fecha del registro
+ _d,_m,_a    : word;
+ _h1,_m1,_s1,_m2 : word;
+ _fechaTrx   : TDateTime;
+
  //---------------------------------------
  //  Variables fijas de calculos
  //
@@ -255,6 +292,44 @@ implementation
 {$R *.dfm}
 
 uses DM1, cuentas, DesgloseCheques, ChequesCaja;
+
+
+//01============================================================================
+//                            _Documento
+//
+// Descripcion:
+//       1-Funcion para obtener el siguiente numero de documento dependiendo
+//         del tipo de operacion deposito/pago  o  retiros
+//
+// LLamado Por:
+//            -
+//------------------------------------------------------------------------------
+//       Por                |     Fecha          |    Hora
+//------------------------------------------------------------------------------
+// 00- Edwin cedeno         | 2017-07-06         |  11:09am
+// 00- Edwin cedeno         | xxxxxxxxxxxx       |  xxxxxxx
+//==============================================================================
+function TfrmCaja._Documento(Operacion: String): integer;
+begin
+//---   llamado al query que optiene la secuencia actual
+  DataModulo1.Secuencial.Close;
+  DataModulo1.Secuencial.Params [0].AsString := Operacion;
+  DataModulo1.Secuencial.Open;
+
+  if not DataModulo1.Secuencial.Eof  then
+  begin
+    Result:= DataModulo1.SecuencialDocumento.asinteger;
+  end
+  Else
+  Begin
+    //
+  End;
+
+
+end;
+//============================================================================01
+
+
 
 //------------------------------------------------------------------------------
 //                      Boton btnBuscar Click
@@ -288,26 +363,6 @@ begin
     rbRetiro.Enabled   := true;
   end;
 
-//
-//  if (DBGRid1.DataSource.DataSet.FieldByName('Imputable').asBoolean) then
-//  begin
-//    _numCuenta := DBGRid1.DataSource.DataSet.FieldByName('num_Cuenta').AsString;
-//
-//    mTransaccion.first;
-//    while not mTransaccion.eof  do
-//    Begin
-//      if mTransaccionNum_Cuenta.AsString = _numCuenta then
-//         mTransaccion.Delete
-//      else
-//         mTransaccion.next;
-//    end;
-//  end;
-
-
-
-
-//  mTransaccion.First;
-
 
 end;
 
@@ -339,6 +394,7 @@ begin
   mTransaccion.Open;
   rbDeposito.Enabled := True;
   rbRetiro.Enabled   := true;
+  tvHist.Enabled     := true;
 end;
 
 //------------------------------------------------------------------------------
@@ -346,181 +402,208 @@ end;
 //...edw:
 //------------------------------------------------------------------------------
 procedure TfrmCaja.btnSalvarClick(Sender: TObject);
- var
-  _Numrec : Integer;
-  _total,_Monto  : Double;
-  montoDeposito  : double;
 begin
   inherited;
 //---
+
+ DecodeDate(_fechaSistema ,_a,_m,_d);
+ DecodeTime(now,_h1,_m1,_s1,_m2);
+
+ _fechaTrx := EncodeDateTime (_a,_m,_d,_h1,_m1,_s1,_m2);
+
 
  if not mTransaccion.eof then
  begin
    mTransaccion.first;
    if mTransaccionDocumento.AsString = '' then // Transaccion Aun no procesada
    Begin
-     _Numrec := SigNumeroRecibo();
+     _Numrec := _Documento (_tipo_doc);
+
     //---------------------------------------------------------------------------
     //  Crea el registro de encabezado de transaccion en TRANSACCION_ENC
     //---------------------------------------------------------------------------
-        DataModulo1.actualiza.close;
-        DataModulo1.actualiza.SQL.Clear;
-        DataModulo1.actualiza.SQL.Add('Insert Into transaccion_enc (');
+    DataModulo1.actualiza.close;
+    DataModulo1.actualiza.SQL.Clear;
+    DataModulo1.actualiza.SQL.Add('Insert Into transaccion_enc (');
 
-        //----- Seccion de Campos
-        DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
-        DataModulo1.actualiza.SQL.Add(',Documento');
-        DataModulo1.actualiza.SQL.Add(',Fecha_Doc');
-        DataModulo1.actualiza.SQL.Add(',Estado');
-        DataModulo1.actualiza.SQL.Add(',Fecha_Aud');
-        DataModulo1.actualiza.SQL.Add(',Usuario ) ');
+    //----- Seccion de Campos
+    DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
+    DataModulo1.actualiza.SQL.Add(',Documento');
+    DataModulo1.actualiza.SQL.Add(',Anulado');
+    DataModulo1.actualiza.SQL.Add(',Fecha_Doc');
+    DataModulo1.actualiza.SQL.Add(',Estado');
+    DataModulo1.actualiza.SQL.Add(',Fecha_Aud');
+    DataModulo1.actualiza.SQL.Add(',Usuario ) ');
 
-        //----Seccion de Data
-        DataModulo1.actualiza.SQL.Add('Values (');
-        DataModulo1.actualiza.SQL.Add(QuotedStr('REC'));
-        DataModulo1.actualiza.SQL.Add(',' + coma + IntToStr(_Numrec) + coma );
-        DataModulo1.actualiza.SQL.Add(',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now)    + coma );
-        DataModulo1.actualiza.SQL.Add(',' + Coma + '1'               + coma );
-        DataModulo1.actualiza.SQL.Add(',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now)   + coma );
-        DataModulo1.actualiza.SQL.Add(',' + coma + usuario           + coma + ')' );
-        Memo1.Text :=     DataModulo1.actualiza.SQL.text ;
-        //abort;
-        DataModulo1.actualiza.ExecSQL;
+    //----Seccion de Data
+    DataModulo1.actualiza.SQL.Add('Values (');
+    DataModulo1.actualiza.SQL.Add(QuotedStr(_tipo_doc));
+    DataModulo1.actualiza.SQL.Add(',' + coma + IntToStr(_Numrec) + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + '0'               + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',_FechaTrx)    + coma );
+    DataModulo1.actualiza.SQL.Add(',' + Coma + '1'               + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now)   + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + usuario           + coma + ')' );
+    Memo1.Text :=     DataModulo1.actualiza.SQL.text ;
+    DataModulo1.actualiza.ExecSQL;
 
     //--------------------------------------------------------------------------
     //  Crea  registros de Detalle  de transaccion en TRANSACCION_DET
     //--------------------------------------------------------------------------
     _Total        := 0.00;
     montoDeposito := 0.00;
+    _montoMora    := 0.00;
+    _montoInteres := 0.00;
+    _montoCapital := 0.00;
+
+    //----------------------- Insertar detalle ---------------------------------
 
     while not mTransaccion.eof do
     begin
 
-      _Monto := mTransaccionEfectivo.Value +
-               mTransaccionCheque.Value ;
+     _Monto := mTransaccionMonto.AsFloat ; //
 
-     if (_Monto <> 0.00) and
-        (mTransaccion.FieldByName ('Documento').AsString = '') then
+     if _Monto > 0.00 then
      begin
 
-       montoDeposito := montoDeposito + _Monto;
-       _total := _total +  _Monto ;
+       if mTransacciontipoCuenta.AsString = 'T'  then // es la cuenta de caja o rembolso solo habr'a una
+       begin
+          _cuenta     := mTransaccionCuenta.AsString ;
+          _naturaleza := mTransaccionNaturaleza.AsString ;
+          InsertarDetalle;
+       end
+       Else
+       Begin
 
-       DataModulo1.actualiza.close;
-       DataModulo1.actualiza.SQL.Clear;
-       DataModulo1.actualiza.SQL.Add('Insert Into transaccion_det (');
-       //----- Seccion de Campos
-       DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
-       DataModulo1.actualiza.SQL.Add(',Documento'     );
-       DataModulo1.actualiza.SQL.Add(',Fecha_Doc'     );
-       DataModulo1.actualiza.SQL.Add(',num_cuenta'    );
-       DataModulo1.actualiza.SQL.Add(',cuenta'        );
-       DataModulo1.actualiza.SQL.Add(',naturaleza'    );
-       DataModulo1.actualiza.SQL.Add(',monto'         );
-       DataModulo1.actualiza.SQL.Add(',Efectivo'      );
-       DataModulo1.actualiza.SQL.Add(',Cheque'        );
-       DataModulo1.actualiza.SQL.Add(',Banco'         );
-       DataModulo1.actualiza.SQL.Add(',NumCheque'     );
-       DataModulo1.actualiza.SQL.Add(',fecha_aud'     );
-       DataModulo1.actualiza.SQL.Add(',Usuario) '     );
-       //----Seccion de Data
-       DataModulo1.actualiza.SQL.Add('Values (');
-       DataModulo1.actualiza.SQL.Add(QuotedStr('REC'));
-       DataModulo1.actualiza.SQL.Add(',' + Coma + IntToStr(_Numrec) + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNum_Cuenta.AsString   + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionCuenta.AsString       + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNaturaleza.AsString   + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + FloatToStr(_Monto)                + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionEfectivo.AsString     + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionCheque.AsString       + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionBanco.AsString        + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNumCheque.AsString        + Coma );
+         //--- filtra los registro enlazados ----
+         DataModulo1.transacciontrx.Close;
+         DataModulo1.transacciontrx.Params [0].AsString  := mTransaccionNum_Cuenta.AsString ;
+         DataModulo1.transacciontrx.Params [1].AsString  := mTransaccionCuenta.AsString;
+         DataModulo1.transacciontrx.Params [2].AsString  := _tipoOperacion;
+         Clipboard.AsText := DataModulo1.transacciontrx.SQL.Text;
+         Memo2.Text := DataModulo1.transaccionTrx.SQL.Text ;
+         DataModulo1.transacciontrx.Open;
 
-       DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
-       DataModulo1.actualiza.SQL.Add(',' + Coma + usuario           + Coma          +  ' )' );
-       DataModulo1.actualiza.ExecSQL;
+         if not DataModulo1.transacciontrx.eof then
+         begin
+           DataModulo1.transacciontrx.First;
+           while not DataModulo1.transacciontrx.eof do
+           Begin
+             // Adiciona los registros del asiento definido en ProductoTrx
+             // de acuerdo a que se esta afectando Mora , Interes o Capital
 
-       mTransaccion.Edit;
-       mTransaccionTipoDoc.AsString    := 'REC';
-       mTransaccionDocumento.AsInteger := _Numrec;
+             if (length(trim(DataModulo1.transaccionTrxdebito.AsString))  > 0) then
+              _naturaleza := 'D'
+             Else
+               If (length(trim(DataModulo1.transaccionTrxCredito.AsString)) > 0) then
+                 _naturaleza := 'C'
+               Else
+                 ShowMessage('Error en Transaccion ');
 
-       mTransaccion.Next;
+             _cuenta := DataModulo1.transaccionTrxcuenta.AsString ;
 
+             if DataModulo1.transaccionTrxcampo.AsString = 'Pagado' then
+               _monto := mTransaccionMonto.AsFloat;
+
+             if DataModulo1.transaccionTrxcampo.AsString = 'Calculado' then
+               _monto := mTransaccionmontoInteres.AsFloat;
+
+             InsertarDetalle;
+
+             DataModulo1.transacciontrx.Next;
+           End;
+         End
+         Else
+         Begin
+           //----Adiciona el registro manual
+           _naturaleza := mTransaccionNaturaleza.AsString ;
+           _cuenta     := mTransaccionCuenta.AsString;
+           InsertarDetalle
+         End;
+       End;
      end;
+
+     mTransaccion.Next;
+
     end;
-
-    //---------------------------------------------------------------------------
-    //  Inserta el Registro de Caja General
-    //---------------------------------------------------------------------------
-    if montoDeposito <> 0.00  then
-    Begin
-     //---  Determina la cuenta de Caja General ...
-     // edw ... Aqui debe recorrer la tabla de productoTrx y comparar
-     //  en las columnas debito,credito la palabra montoDeposito
-     //  y las cuenta asociada , debe afectar por el lado en que encuentra
-     //insertarDetalleTrx
-    {
-     DataModulo1.productoTrx.close;
-//     DataModulo1.productoTrx.Params [0].Value := ;
-
-     DataModulo1.Generico.Close;
-     DataModulo1.Generico.Sql.Clear;
+   end;
 
 
-     DataModulo1.Generico.Sql.Add('SELECT valor_string Cuenta , M.naturaleza  ' +
-                                  'FROM Parametros P '                            +
-                                  'Inner Join maescont M On P.valor_string = M.cuenta ');
-     DataModulo1.Generico.Sql.Add('Where Aplicacion = ' + QuotedStr('CC') );
-     DataModulo1.Generico.Sql.Add('and   Codigo     = ' + QuotedStr('4') );
-     DataModulo1.Generico.Open;
-
-     DataModulo1.actualiza.Close;
-     DataModulo1.actualiza.Sql.Clear;
-     DataModulo1.actualiza.SQL.Add('Insert Into transaccion_det (');
-
-     //----- Seccion de Campos
-     DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
-     DataModulo1.actualiza.SQL.Add(',Documento'     );
-     DataModulo1.actualiza.SQL.Add(',Fecha_Doc'     );
-     DataModulo1.actualiza.SQL.Add(',num_cuenta'    );
-     DataModulo1.actualiza.SQL.Add(',cuenta'        );
-     DataModulo1.actualiza.SQL.Add(',naturaleza'    );
-     DataModulo1.actualiza.SQL.Add(',monto'         );
-     DataModulo1.actualiza.SQL.Add(',fecha_aud'     );
-     DataModulo1.actualiza.SQL.Add(',Usuario) '     );
-
-     //----Seccion de Data
-     DataModulo1.actualiza.SQL.Add('Values (');
-     DataModulo1.actualiza.SQL.Add(QuotedStr('REC'));
-     DataModulo1.actualiza.SQL.Add(',' + Coma + IntToStr(_Numrec) + Coma );
-     DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
-     DataModulo1.actualiza.SQL.Add(',' + coma + '0'               + Coma );
-     DataModulo1.actualiza.SQL.Add(',' + Coma + DataModulo1.Generico.FieldByName('Cuenta').AsString     +  Coma );
-     DataModulo1.actualiza.SQL.Add(',' + Coma + DataModulo1.Generico.FieldByName('Naturaleza').AsString +  Coma );
-     DataModulo1.actualiza.SQL.Add(',' + Coma + FormatFloat('#0.00',_Total) + Coma );
-     DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
-     DataModulo1.actualiza.SQL.Add(',' + Coma + usuario           + Coma + ')' );
-     DataModulo1.actualiza.ExecSQL;
-
-     tvHB.Enabled := False;
-                              }
-     _tipoOperacion   := '';
-      rbDeposito.Enabled := true;
-      rbRetiro.Enabled   := true;
+   _tipoOperacion   := '';
+   rbDeposito.Enabled := true;
+   rbRetiro.Enabled   := true;
 //      rbPago.Enabled     := true;
 
-     //------------ Actualiza el TreeVeiw de Transacciones recientes -------------------
-     recientes;
+  //------------ Actualiza el TreeVeiw de Transacciones recientes -------------------
+  recientes;
 
-    End;
-   end;
-  end;
+ End;
 
-  mTransaccion.Close;
-  mTransaccion.Open;
-  rbDeposito.Enabled := true;
-  rbRetiro.Enabled   := true;
+ mTransaccion.Close;
+ mTransaccion.Open;
+ rbDeposito.Enabled := true;
+ rbRetiro.Enabled   := true;
+
+ rbDeposito.Checked := false;
+ rbRetiro.Checked   := false;
+ tvHist.Enabled     := True;
+end;
+
+//------------------------------------------------------------------------------
+//                        InsertarDetalle
+//
+//------------------------------------------------------------------------------
+//  Creada:                    |    Modificada:
+//------------------------------------------------------------------------------
+//...edw: 2017-07-04 , 4:07pm  |
+//------------------------------------------------------------------------------
+procedure TfrmCaja.InsertarDetalle;
+begin
+ //---
+ if _Monto > 0.0000 then
+ Begin
+
+   DataModulo1.actualiza.close;
+   DataModulo1.actualiza.SQL.Clear;
+   DataModulo1.actualiza.SQL.Add('Insert Into transaccion_det (');
+   //----- Seccion de Campos
+   DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
+   DataModulo1.actualiza.SQL.Add(',Documento'     );
+   DataModulo1.actualiza.SQL.Add(',Fecha_Doc'     );
+   DataModulo1.actualiza.SQL.Add(',num_cuenta'    );
+   DataModulo1.actualiza.SQL.Add(',cuenta'        );
+   DataModulo1.actualiza.SQL.Add(',naturaleza'    );
+   DataModulo1.actualiza.SQL.Add(',monto'         );
+   DataModulo1.actualiza.SQL.Add(',Efectivo'      );
+   DataModulo1.actualiza.SQL.Add(',Cheque'        );
+   DataModulo1.actualiza.SQL.Add(',Banco'         );
+   DataModulo1.actualiza.SQL.Add(',NumCheque'     );
+   DataModulo1.actualiza.SQL.Add(',fecha_aud'     );
+   DataModulo1.actualiza.SQL.Add(',Usuario) '     );
+
+   //----Seccion de Data
+   DataModulo1.actualiza.SQL.Add('Values (');
+   DataModulo1.actualiza.SQL.Add(QuotedStr(_tipo_doc));
+   DataModulo1.actualiza.SQL.Add(',' + Coma + IntToStr(_Numrec) + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',_FechaTrx) + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNum_Cuenta.AsString   + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + _cuenta                           + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + _naturaleza                       + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + FloatToStr(_Monto)                + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionEfectivo.AsString     + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionCheque.AsString       + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionBanco.AsString        + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNumCheque.AsString    + Coma );
+
+   DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + usuario           + Coma          +  ' )' );
+   DataModulo1.actualiza.ExecSQL;
+
+   mTransaccion.Edit;
+   mTransaccionTipoDoc.AsString    := _tipo_doc;
+   mTransaccionDocumento.AsInteger := _Numrec;
+ End
+
 end;
 
 //------------------------------------------------------------------------------
@@ -734,6 +817,7 @@ begin
 
 
   Memo1.Text := DataModulo1.SPC.SQL.text;
+
   DataModulo1.SPC.Open;
 
   if  Not DataModulo1.SPC.eof then
@@ -868,6 +952,7 @@ begin
 
       DataModulo1.recientes.Next
     End;
+    tvHist.Enabled := true;
   End;
 end;
 
@@ -1104,6 +1189,7 @@ var
   _totalEfectivo : Double;
   _totalCheque   : Double;
   _cuenta : String;
+  _TDebito , _TCredito : Double;
 //  _guid   : string;
 begin
   _cuenta := DBGRid1.DataSource.DataSet.FieldByName('Num_Cuenta').AsString ;
@@ -1114,20 +1200,25 @@ begin
   _total  := 0.00;
   _totalEfectivo := 0.00;
   _totalCheque   := 0.00;
+  _tDebito := 0.00 ; _TCredito := 0.00;
   DBGRid1.DataSource.DataSet.First ;
   while not DBGRid1.DataSource.DataSet.eof do
   begin
-    if DBGRid1.DataSource.DataSet.FieldByName('Orden').AsString <> 'T'  then
-    begin
-      _total := _total +
-              ( DBGRid1.DataSource.DataSet.FieldByName('Efectivo').AsFloat +
-                DBGRid1.DataSource.DataSet.FieldByName('Cheque').AsFloat  ) ;
-      _totalEfectivo := _totalEfectivo +
-                         DBGRid1.DataSource.DataSet.FieldByName('Efectivo').AsFloat;
-      _totalCheque   := _totalCheque +
-                         DBGRid1.DataSource.DataSet.FieldByName('Cheque').AsFloat;
-    end;
-    DBGRid1.DataSource.DataSet.next;
+   if DBGRid1.DataSource.DataSet.FieldByName('Orden').AsString <> 'T'  then
+   begin
+     if DBGRid1.DataSource.DataSet.FieldByName('Naturaleza').AsString = 'D' then
+        _TDebito := _TDebito   + DBGRid1.DataSource.DataSet.FieldByName('monto').AsFloat ;   //+
+//                               DBGRid1.DataSource.DataSet.FieldByName('Cheque').AsFloat  ) ;
+     if DBGRid1.DataSource.DataSet.FieldByName('Naturaleza').AsString = 'C' then
+        _TCredito := _TCredito + DBGRid1.DataSource.DataSet.FieldByName('monto').AsFloat ;
+//                               DBGRid1.DataSource.DataSet.FieldByName('Cheque').AsFloat  ) ;
+
+     //---- Calcula total para la cuenta de caja / rembolso
+     _totalEfectivo := _totalEfectivo +  DBGRid1.DataSource.DataSet.FieldByName('Efectivo').AsFloat;
+     _totalCheque   := _totalCheque   +  DBGRid1.DataSource.DataSet.FieldByName('Cheque').AsFloat;
+   end;
+   _Total := _TDebito - _TCredito;
+   DBGRid1.DataSource.DataSet.next;
   end;
 
   //--- actualiza la cuenta de Caja General o Rembolso de Caja
@@ -1142,8 +1233,8 @@ begin
         mTransaccion.Edit;
         mTransaccionEfectivo.AsFloat := _totalEfectivo;
         mTransaccionCheque.AsFloat   := _totalCheque;
-        mTransaccionMonto.AsFloat    := _total;
-        mTransaccionSaldo.AsFloat    := mTransaccionSaldoO.AsFloat + _total;
+        mTransaccionMonto.AsFloat    := _totalEfectivo + _totalCheque;
+        mTransaccionSaldo.AsFloat    := mTransaccionSaldoO.AsFloat + mTransaccionMonto.AsFloat;
       end;
       DBGRid1.DataSource.DataSet.next;
     end;
@@ -1151,19 +1242,6 @@ begin
 
   edMontoTotal.Text := FormatFloat('#,##0.00',_total);
   mTransaccion.Locate('guid',_guid2,[]);
-
-
-//
-//  mTransaccion.Edit;
-//  if mTransaccionNaturaleza.AsString = 'C' then
-//     mTransaccion.FieldByName('SaldoT').AsFloat  := mTransaccionSaldo.AsFloat +
-//                 ( DBGRid1.DataSource.DataSet.FieldByName('Efectivo').AsFloat +
-//                   DBGRid1.DataSource.DataSet.FieldByName('Cheque').AsFloat   ) ;
-//
-//  if mTransaccionNaturaleza.AsString = 'D' then
-//     mTransaccion.FieldByName('SaldoT').AsFloat  := mTransaccionSaldo.AsFloat -
-//                  ( DBGRid1.DataSource.DataSet.FieldByName('Efectivo').AsFloat +
-//                    DBGRid1.DataSource.DataSet.FieldByName('Cheque').AsFloat   ) ;
 
 end;
 
@@ -1260,6 +1338,8 @@ begin
 end;
 
 
+
+
 //------------------------------------------------------------------------------
 //  Movimientos:
 //             Carga la tabla temporal de movimientos, La cual carga
@@ -1294,15 +1374,24 @@ begin
 
      while Not DataModulo1.movimientosCuenta.eof do
      begin
-        mMovimientos.Append;
-        for I := 0 to DataModulo1.movimientosCuenta.FieldCount - 1  do
-        Begin
-          mMovimientos.Fields[I].Value := DataModulo1.movimientosCuenta.Fields[i].Value;
-        End;
 
-        //--- Verifica que el moviemiento tenga la misma naturaleza
-        if mMovimientosnaturaleza.AsString = mMovimientos_dc.AsString  then
+//        DataModulo1.movimientoTRX.close;
+//        DataModulo1.movimientoTRX.Params [0].AsString := DataModulo1.movimientosCuentacuenta.AsString;
+//        DataModulo1.movimientoTRX.Params [1].AsInteger:= DataModulo1.movimientosCuenta.FieldByName('subcuenta').asInteger;
+//        DataModulo1.movimientoTRX.Params [2].Asstring := DataModulo1.movimientosCuenta.FieldByName('naturaleza').asString;
+//        DataModulo1.movimientoTRX.Open;
+
+//        if Datamodulo1.movimientoTRX.FieldByName ('verAuxiliar').AsBoolean  then
         begin
+          mMovimientos.Append;
+          for I := 0 to DataModulo1.movimientosCuenta.FieldCount - 1  do
+          Begin
+            mMovimientos.Fields[I].Value := DataModulo1.movimientosCuenta.Fields[i].Value;
+          End;
+
+          //--- Verifica que el moviemiento tenga la misma naturaleza
+          if mMovimientosnaturaleza.AsString = mMovimientos_dc.AsString  then
+          begin
             //--- Mantiene el mismo signo con el que se configuro
             //    en la tabla de productosTrx (mantenimiento de productos)
 
@@ -1312,72 +1401,55 @@ begin
             end
             else
               _signo := 1;
-        end
-        else  //--- En caso contrario, que la naturaleza de la cuenta en el
+          end
+          else  //--- En caso contrario, que la naturaleza de la cuenta en el
               //    maestro contable sea diferente al movimiento dela transaccion,
               //    Entonces el signo con el que se configuro se cambia ....
-        begin
-         if mMovimientosSigno.AsString = '-' then
+          begin
+            if mMovimientosSigno.AsString = '-' then
             begin
               _signo := 1;
             end
             else
               _signo := -1
+          end;
+
+          mMovimientosmontoCapital.Value := mMovimientosmontoCapital.Value * _signo;
+          mMovimientosmontoInteres.Value := mMovimientosmontoInteres.Value * _signo;
+          mMovimientosmontoMora.Value    := mMovimientosmontoMora.Value    * _signo;
+
+          _saldoCapital := _saldoCapital + mMovimientosmontoCapital.AsFloat;
+          _saldoInteres := _saldoInteres + mMovimientosmontoInteres.AsFloat;
+          _saldomora    := _saldoMora    + mMovimientosmontoMora.AsFloat;
+
+          mMovimientossaldoCapital.Value := _saldoCapital;
+          mMovimientossaldoInteres.Value := _saldoInteres;
+          mMovimientossaldoMora.Value    := _saldoMora;
+
+          if mMovimientosmontoCapital.Value = 0  then
+            mMovimientosmontoCapital.Clear;
+
+          if mMovimientossaldoCapital.Value = 0  then
+            mMovimientossaldoCapital.Clear;
+
+          if mMovimientosmontoInteres.Value = 0  then
+            mMovimientosmontoInteres.Clear;
+
+          if mMovimientossaldoInteres.Value = 0  then
+            mMovimientossaldoInteres.Clear;
+
+          if mMovimientosmontoMora.Value = 0  then
+            mMovimientosmontoMora.Clear;
+
+          if mMovimientossaldoMora.Value = 0  then
+            mMovimientossaldoMora.Clear;
+
+          DataModulo1.movimientosCuenta.next;
         end;
-
-        mMovimientosmontoCapital.Value := mMovimientosmontoCapital.Value * _signo;
-        mMovimientosmontoInteres.Value := mMovimientosmontoInteres.Value * _signo;
-        mMovimientosmontoMora.Value    := mMovimientosmontoMora.Value    * _signo;
-
-        _saldoCapital := _saldoCapital + mMovimientosmontoCapital.AsFloat;
-        _saldoInteres := _saldoInteres + mMovimientosmontoInteres.AsFloat;
-        _saldomora    := _saldoMora    + mMovimientosmontoMora.AsFloat;
-
-
-//
-//        if DataModulo1.movimientosCuentanaturaleza.AsString =   'D' then
-//        begin
-//         _saldoCapital := _saldoCapital + DataModulo1.movimientosCuentamontoCapital.AsFloat;
-//         _saldoInteres := _saldoInteres + DataModulo1.movimientosCuentamontoInteres.AsFloat;
-//         _saldomora    := _saldoMora    + DataModulo1.movimientosCuentamontoMora.AsFloat;
-//        end
-//        else
-//        Begin
-//         _saldoCapital := _saldoCapital - DataModulo1.movimientosCuentamontoCapital.AsFloat;
-//         _saldoInteres := _saldoInteres - DataModulo1.movimientosCuentamontoInteres.AsFloat;
-//         _saldomora    := _saldoMora    - DataModulo1.movimientosCuentamontoMora.AsFloat;
-//        End;
-//
-// //}
-
-        mMovimientossaldoCapital.Value := _saldoCapital;
-        mMovimientossaldoInteres.Value := _saldoInteres;
-        mMovimientossaldoMora.Value    := _saldoMora;
-
-        if mMovimientosmontoCapital.Value = 0  then
-           mMovimientosmontoCapital.Clear;
-
-        if mMovimientossaldoCapital.Value = 0  then
-           mMovimientossaldoCapital.Clear;
-
-        if mMovimientosmontoInteres.Value = 0  then
-           mMovimientosmontoInteres.Clear;
-
-        if mMovimientossaldoInteres.Value = 0  then
-           mMovimientossaldoInteres.Clear;
-
-        if mMovimientosmontoMora.Value = 0  then
-           mMovimientosmontoMora.Clear;
-
-        if mMovimientossaldoMora.Value = 0  then
-           mMovimientossaldoMora.Clear;
-
-       DataModulo1.movimientosCuenta.next;
      end;
 
      mMovimientos.EnableControls;
-//     DBGrid2.Hide;
-//     DBGrid2.Show;
+
    end;
 
 
@@ -1551,7 +1623,8 @@ begin
         mTransaccionCuenta.AsString     := DataModulo1.tipoTransaccioncuentaContable.AsString ;
         mTransaccionNaturaleza.AsString := DataModulo1.tipoTransaccionorden.AsString ;
         mTransaccionimputable.AsBoolean := false;
-        mTransaccionOrden.AsString := 'T';
+        mTransaccionOrden.AsString      := 'T';
+        mTransacciontipoCuenta.AsString := 'T';
       end;
 
      End;
@@ -1562,14 +1635,9 @@ end;
 procedure TfrmCaja.rbPagoClick(Sender: TObject);
 begin
   inherited;
-//
-//  if rbPago.Checked  then
-//  begin
-//     _tipoOperacion := 'P';
-//     DataModulo1.tipoTransaccion.Close;
-//     DataModulo1.tipoTransaccion.Params[0].asstring:= _tipoOperacion;
-//     DataModulo1.tipoTransaccion.Open;
-//  end;
+  //
+  //
+
 end;
 
 procedure TfrmCaja.rbRetiroClick(Sender: TObject);
@@ -1612,6 +1680,7 @@ procedure TfrmCaja.tvHistDragOver(Sender, Source: TObject; X, Y: Integer;
 begin
   inherited;
   _target := 'tvHist';
+  _accept := True;
 end;
 
 //------------------------------------------------------------------------------
@@ -1622,6 +1691,8 @@ procedure TfrmCaja._ArrastrarCuenta;
 var
  _NumCuenta    : String;
  _cuenta       : string;
+ _cuentaInteres: string;
+ _cuentaCapital: string;
  _InteresSobre : string;
  _subCuenta    : string;
  _tipoTrx      : String;
@@ -1678,14 +1749,12 @@ begin
           mTransaccionNum_Cuenta.AsString := _numCuenta;
 
           //--- Identifica si se trata de Mora
-          if (DataModulo1.productoTrxdebito.AsString   = 'montoMora' ) or
-             (DataModulo1.productoTrxcredito.AsString  = 'montoMora' ) then
+          if (DataModulo1.productoTrxesMora.AsBoolean) then
           begin
-             mTransacciontipoCuenta.AsString := 'M';
+            mTransacciontipoCuenta.AsString := 'M';
             //------ Calcular la mora
             mMovimientos.Last;
             montoMora  := mMovimientossaldoMora.AsFloat;
-
             mTransaccionFECHA.AsDateTime    := _fechaTrx;
             mTransaccionNum_Cuenta.AsString := _NumCuenta;
             mTransaccionSaldoO.AsFloat      := montoMora;
@@ -1694,44 +1763,33 @@ begin
           end;
 
           //--- Identifica si se trata de Interes
-          if (DataModulo1.productoTrxdebito.AsString   = 'montoInteres' ) or
-             (DataModulo1.productoTrxcredito.AsString  = 'montoInteres' ) then
+          if (DataModulo1.productoTrxesInteres.AsBoolean) then
           Begin
              mTransacciontipoCuenta.AsString := 'I';
-             _InteresSobre := DataModulo1.SPC.FieldByName('InteresSobre').AsString;
-             montoInteres := CalculaInteres(_NumCuenta, DataModulo1.SPC.FieldByName('Cuenta').AsString, _InteresSobre);
-             mTransaccionFECHA.AsDateTime    := _fechaTrx;
-             mTransaccionNum_Cuenta.AsString := _NumCuenta;
-             mTransaccionSaldoO.AsFloat      := montoInteres;
-             mTransaccionSaldo.AsFloat       := montoInteres;
-             mTransaccionOrden.AsString      := 'I';
+             _cuentaInteres  := DataModulo1.productoTrxcuenta.AsString;
+             _cuentaCapital  := DataModulo1.SPC.FieldByName('Cuenta').AsString;
+             _InteresSobre   := DataModulo1.SPC.FieldByName('InteresSobre').AsString;
+             montoInteres    := CalculaInteres(_NumCuenta, _cuentaInteres, _cuentaCapital , _InteresSobre);
+             mTransaccionFECHA.AsDateTime     := _fechaTrx;
+             mTransaccionNum_Cuenta.AsString  := _NumCuenta;
+             mTransaccionmontoInteres.AsFloat := montoInteres  ;
+             mTransaccionSaldoO.AsFloat       := montoInteres + CalculaSaldoActual(_numCuenta,_cuentaInteres);
+             mTransaccionSaldo.AsFloat        := mTransaccionSaldoO.AsFloat ;  // montoInteres + CalculaSaldoActual(_numCuenta,_cuentaInteres);
+             mTransaccionOrden.AsString       := 'I';
           End;
 
           //--- Identifica si se trata de Capital
-          if (DataModulo1.productoTrxdebito.AsString   = 'montoCapital' ) or
-             (DataModulo1.productoTrxcredito.AsString  = 'montoCapital' ) then
+          if (DataModulo1.productoTrxesCapital.AsBoolean ) then
           Begin
-             mTransacciontipoCuenta.AsString := 'C';
-             mTransaccionOrden.AsString      := 'C';
+             mTransacciontipoCuenta.AsString  := 'C';
+             mTransaccionOrden.AsString       := 'C';
              //--- LLamado a la funcion de calculo de Saldo de Capital
           End;
 
-//
-//            DataModulo1._guid ();
-//
-//            CreateGUID(MyGUID1);
-//            GUIDToString(MyGuid1);
-//            _guid := GUIDToString(MyGuid1);
-
-          mTransaccionguid.asstring       :=  DataModulo1._guid ();
+          mTransaccionguid.asstring           :=  DataModulo1._guid ();
 
           // ubica la naturaleza de la cuenta
-          if DataModulo1.productoTrxdebito.AsString  <> '' then
-             mTransaccionNaturaleza.AsString := 'D'
-          else
-            if DataModulo1.productoTrxCredito.AsString <> '' then
-               mTransaccionNaturaleza.AsString := 'C';
-
+          mTransaccionNaturaleza.AsString := DataModulo1.productoTrxDC.AsString;
 
           // Identifica la cuenta principal
           if DataModulo1.productoTrxprincipal.AsBoolean  then
@@ -1758,98 +1816,18 @@ begin
 
             if not DataModulo1.CuentaSaldo.eof then
             Begin
-
-              mTransaccionSaldoO.AsFloat :=  DataModulo1.CuentaSaldoDebito.AsFloat -
-                                             DataModulo1.CuentaSaldoCredito.AsFloat ;
-              mTransaccionSaldo.AsFloat  :=  mTransaccionSaldoO.AsFloat;
-              mTransaccionSaldoT.AsFloat :=  mTransaccionSaldoO.AsFloat;
+              mTransaccionSaldoO.AsFloat := DataModulo1.CuentaSaldoSaldo.AsFloat ;
+              mTransaccionSaldo.AsFloat  := DataModulo1.CuentaSaldoSaldo.AsFloat;
+              mTransaccionSaldoT.AsFloat := DataModulo1.CuentaSaldoSaldo.AsFloat;
             End;
 
           end;
           DataModulo1.productoTrx.Next;
-            //  DataModulo1.SPC.FieldByName('Cuenta').AsString;
         End;
       End;
     end;
 
-
-
-
-
-
-
-//
-//        // Se coloca en el registro correspondiente en la tabla de maes_aux
-//        if DataModulo1.SPC.Locate('num_cuenta',_numCuenta,[]) then
-//        begin
-//          mTransaccionCuenta.AsString       := DataModulo1.SPC.FieldByName('Cuenta').AsString;
-//          mTransaccionnombreCuenta.AsString := DataModulo1.SPC.FieldByName('Cuenta').AsString + ' - ' +
-//                    DataModulo1.SPC.FieldByName('nombre').AsString;
-//          mTransaccionimputable.AsBoolean := True;
-//          mTransaccionOrden.AsString      := 'C';
-//          _cuenta                         := DataModulo1.SPC.FieldByName('Cuenta').AsString;
-//          _subCuenta                      := DataModulo1.SPC.FieldByName('subCuenta').AsString;
-//          mTransaccionNaturaleza.AsString := DataModulo1.SPC.FieldByName('Naturaleza').AsString;
-//    //      _tasa                           := DataModulo1.SPC.FieldByName('tasa').asFloat;
-//          _InteresSobre                   := DataModulo1.SPC.FieldByName('InteresSobre').AsString;
-//
-//          //--------------------------------------------------------------------
-//          // Calcula el Saldo actual
-//          //--------------------------------------------------------------------
-//          DataModulo1.CuentaSaldo.Close;
-//          DataModulo1.CuentaSaldo.Params [0].AsString := _NumCuenta;
-//          DataModulo1.CuentaSaldo.Params [1].AsString := _cuenta;
-//          DataModulo1.CuentaSaldo.Open;
-//
-//          mTransaccionSaldo.AsFloat   :=  0.00;
-//          mTransaccionSaldoO.AsFloat  :=  0.00;
-//          mTransaccionSaldoT.AsFloat  :=  0.00;
-//
-//          if not DataModulo1.CuentaSaldo.eof then
-//          Begin
-//
-//            mTransaccionSaldoO.AsFloat :=  DataModulo1.CuentaSaldoDebito.AsFloat -
-//                                           DataModulo1.CuentaSaldoCredito.AsFloat ;
-//            mTransaccionSaldo.AsFloat  :=  mTransaccionSaldoO.AsFloat;
-//            mTransaccionSaldoT.AsFloat :=  mTransaccionSaldoO.AsFloat;
-//          End;
-//
-//
-//          //----------------------------------------------------------
-//          // Verifica Si es un prestamo
-//          if DataModulo1.SPC.FieldByName('Prestamo_S_N').AsString = 'S' then
-//          begin
-//            mTransaccionPrestamo_SN.AsString := DataModulo1.SPC.FieldByName('Prestamo_S_N').AsString;
-//            // LLamado a Funcion del calculo de interes
-//            //   se le debe enviar como parametro
-//            //   1). No. cuenta
-//            //   2). tipo de interes (S=Sobre Saldo , P= Sobre Monto del Prestamo)
-//            montoInteres := CalculaInteres(_NumCuenta, DataModulo1.SPC.FieldByName('Cuenta').AsString, _InteresSobre);
-//
-//            // Insertar Fila de Intereses
-//            mTransaccion.Append;
-//            mTransaccionFECHA.AsDateTime    := _fechaTrx;
-//            mTransaccionNum_Cuenta.AsString := _NumCuenta;
-//            mTransaccionSaldoO.AsFloat      := montoInteres;
-//            mTransaccionSaldo.AsFloat       := montoInteres;
-//            mTransaccionOrden.AsString      := 'I';
-//
-//            //------ Calcular la mora
-//            mMovimientos.Last;
-//            montoMora  := mMovimientossaldoMora.AsFloat;
-//
-//            mTransaccion.Append;
-//            mTransaccionFECHA.AsDateTime    := _fechaTrx;
-//            mTransaccionNum_Cuenta.AsString := _NumCuenta;
-//            mTransaccionSaldoO.AsFloat      := montoMora;
-//            mTransaccionSaldo.AsFloat       := montoMora;
-//            mTransaccionOrden.AsString      := 'M';
-//
-//
-//          end;
-//        end;
-
-        tvHist.Enabled := False;
+    tvHist.Enabled := False;
 
   End;
 End;
@@ -1865,19 +1843,19 @@ begin
           DataModulo1.CuentaSaldo.Params [0].AsString := numCuenta;
           DataModulo1.CuentaSaldo.Params [1].AsString := cuenta;
           DataModulo1.CuentaSaldo.Open;
-//
-          mTransaccionSaldo.AsFloat   :=  0.00;
-          mTransaccionSaldoO.AsFloat  :=  0.00;
-          mTransaccionSaldoT.AsFloat  :=  0.00;
-//
+
+          mTransaccionSaldo.AsFloat    :=  0.00;
+          mTransaccionSaldoO.AsFloat   :=  0.00;
+          mTransaccionSaldoT.AsFloat   :=  0.00;
+
           if not DataModulo1.CuentaSaldo.eof then
           Begin
-
-            mTransaccionSaldoO.AsFloat :=  DataModulo1.CuentaSaldoDebito.AsFloat -
-                                           DataModulo1.CuentaSaldoCredito.AsFloat ;
-            mTransaccionSaldo.AsFloat  :=  mTransaccionSaldoO.AsFloat;
-            mTransaccionSaldoT.AsFloat :=  mTransaccionSaldoO.AsFloat;
+            mTransaccionSaldoO.AsFloat :=  DataModulo1.CuentaSaldoSaldo.AsFloat ;
+            mTransaccionSaldo.AsFloat  :=  DataModulo1.CuentaSaldoSaldo.AsFloat;
+            mTransaccionSaldoT.AsFloat :=  DataModulo1.CuentaSaldoSaldo.AsFloat;
           End;
+
+          Result := DataModulo1.CuentaSaldoSaldo.AsFloat ;
 
 end;
 
@@ -1886,7 +1864,7 @@ end;
 //                           Calcula Interes del Prestamo
 //...edw:2017-03-04
 //------------------------------------------------------------------------------
-function TfrmCaja.CalculaInteres(NumCuenta: String; cuenta: String; interesSobre: String): double;
+function TfrmCaja.CalculaInteres(NumCuenta: String; cuentaInteres: String; cuentaCapital: string; interesSobre: String): double;
 var
  _tasa      : Double;
  _intereses : Double;
@@ -1905,12 +1883,13 @@ begin
 
  DataModulo1.Generico.Close;
  DataModulo1.Generico.SQL.Clear;
- DataModulo1.Generico.SQL.Add('Select max(d.fecha_doc) as FechaPago from   transaccion_det D ') ;
+ DataModulo1.Generico.SQL.Add('Select max(d.fecha_doc) as FechaPago from  transaccion_det D ') ;
  DataModulo1.Generico.SQL.Add(' left join transaccion_enc E on D.documento = E.documento and D.tipo_documento = E.tipo_documento ');
  DataModulo1.Generico.SQL.Add(' where num_cuenta = ' + QuotedStr(numCuenta)) ;
- DataModulo1.Generico.SQL.Add(' and cuenta = '       + QuotedStr(cuenta));
+ DataModulo1.Generico.SQL.Add(' and cuenta = '       + QuotedStr(cuentaInteres));
  DataModulo1.Generico.SQL.Add(' and e.anulado = 0 and e.fecha_doc = d.fecha_doc ');
 
+ clipboard.asText := DataModulo1.Generico.sql.Text;
  DataModulo1.Generico.Open;
 
  _intereses := 0.00;
@@ -1940,26 +1919,13 @@ begin
    DataModulo1.Generico.SQL.Add(',(Sum(Case naturaleza When ' + quotedStr('D') + ' Then monto Else 0 End) - '        ) ;
    DataModulo1.Generico.SQL.Add('  Sum(Case naturaleza When ' + quotedStr('C') + ' Then monto Else 0 End)) as Saldo ' );
 
-   //------- Saldo en Intereses Atrasados --------------------------------------
-   DataModulo1.Generico.SQL.Add(',(Select Sum(Case naturaleza When ' + quotedstr('D') + ' Then monto Else 0 End)  - ');
-   DataModulo1.Generico.SQL.Add('         Sum(Case naturaleza When ' + quotedstr('C') + ' Then monto Else 0 End) '   );
-   DataModulo1.Generico.SQL.Add('  From  Transaccion_Det D1 Left Join transaccion_enc E1 on D1.documento = E1.documento ');
-   DataModulo1.Generico.SQL.Add('        and d1.tipo_documento = e1.tipo_documento');
-   DataModulo1.Generico.SQL.Add('  Where num_cuenta = ' + quotedstr(numCuenta));
-   DataModulo1.Generico.SQL.Add('        and  cuenta = ' ) ;
-   DataModulo1.Generico.SQL.Add('            (Select cuenta From Productotrx where idproducto = ' + _producto + ' and esInteres = 1 )' );
-   DataModulo1.Generico.SQL.Add('        and d1.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd hh:mm:ss',_fechaPago)));
-   DataModulo1.Generico.SQL.Add('        and E1.anulado = 0 ' );
-   DataModulo1.Generico.SQL.Add('        and E1.fecha_doc = D1.fecha_doc ) as Intereses_Atrasados  ');
-
-
    DataModulo1.Generico.SQL.Add('From Transaccion_det D');
    DataModulo1.Generico.SQL.Add('     Left Join transaccion_enc E on D.documento = E.documento ');
    DataModulo1.Generico.SQL.Add('     and D.tipo_documento = E.tipo_documento');
 
 
    DataModulo1.Generico.SQL.Add('where num_cuenta = '  + quotedstr(numCuenta));
-   DataModulo1.Generico.SQL.Add(' and  cuenta     = '  + QuotedStr(cuenta));
+   DataModulo1.Generico.SQL.Add(' and  cuenta     = '  + QuotedStr(cuentaCapital));
    DataModulo1.Generico.SQL.Add(' and D.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd hh:mm:ss',_fechaPago)));
    DataModulo1.Generico.SQL.Add(' and e.anulado   = 0');
    DataModulo1.Generico.SQL.Add(' and e.fecha_doc = d.fecha_doc');
@@ -2096,7 +2062,7 @@ begin
 end;
 
 
-//------------------------------------------------------------------------------
+{//------------------------------------------------------------------------------
 //                           Asiento de la Transaccion
 //------------------------------------------------------------------------------
 procedure TfrmCaja.AsientoTrx(_numCuenta: string; _cuenta : string;
@@ -2106,57 +2072,57 @@ var
  _cuentaDB,_cuentaCR : String;
 begin
 //---
-
-  DataModulo1.AsientoTrx.Close;
-  DataModulo1.AsientoTrx.Sql.Clear;
-  DataModulo1.AsientoTrx.Sql.add('Select P.cuenta, ');
-  DataModulo1.AsientoTrx.Sql.add('MC.Nombre, ');
-  DataModulo1.AsientoTrx.Sql.add('Case debito  when ' +
-      quotedStr( campo ) +' then P.Cuenta else ' + QuotedStr('') + ' end  as CuentaDB, ');
-  DataModulo1.AsientoTrx.Sql.add('Case credito when ' +
-      quotedStr( campo ) +' then P.Cuenta else ' + QuotedStr('') + ' end  as CuentaCR  ');
-  DataModulo1.AsientoTrx.Sql.add('From productotrx P ');
-  DataModulo1.AsientoTrx.Sql.add('Inner Join maescont MC on P.Cuenta = MC.Cuenta ');
-  DataModulo1.AsientoTrx.Sql.add('Where idProducto = ' + _idProducto ) ;
-  DataModulo1.AsientoTrx.Sql.add(' and (debito  = ' + quotedStr(campo));
-  DataModulo1.AsientoTrx.Sql.add(' or   credito = ' + QuotedStr(campo) + ')');
-  DataModulo1.AsientoTrx.Open;
-
-  if not DataModulo1.AsientoTrx.eof  then
-  begin
-      DataModulo1.AsientoTrx.First;
-
-      while not DataModulo1.AsientoTrx.eof   do
-      Begin
-
-        mTransaccion.Append;
-        mTransaccionFECHA.AsDateTime      := now;
-        mTransaccionNum_Cuenta.AsString   := _numCuenta;
-        mTransaccionnombreCuenta.AsString := DataModulo1.AsientoTrx.FieldByName('Cuenta').AsString + ' - ' +
-                          DataModulo1.AsientoTrx.FieldByName('Nombre').AsString;
-        mTransaccionOrden.AsString        := _orden;
-
-        if DataModulo1.AsientoTrx.FieldByName ('CuentaDB').AsString <> '' then
-        Begin
-           mTransaccionCuenta.AsString     := DataModulo1.AsientoTrx.FieldByName ('CuentaDB').AsString;
-           mTransaccionNaturaleza.AsString := 'D';
-           mTransaccionSaldoO.AsFloat      := valor;
-           mTransaccionSaldo.AsFloat       := valor;
-        End;
-        if DataModulo1.AsientoTrx.FieldByName ('CuentaCR').AsString <> '' then
-        Begin
-           mTransaccionCuenta.AsString     := DataModulo1.AsientoTrx.FieldByName ('CuentaCR').AsString;
-           mTransaccionNaturaleza.AsString := 'C';
-           mTransaccionSaldoO.AsFloat      := valor;
-           mTransaccionSaldo.AsFloat       := valor;
-        End;
-
-        DataModulo1.AsientoTrx.next
-
-      End;
-
-  end;
-end;
+//
+//  DataModulo1.AsientoTrx.Close;
+//  DataModulo1.AsientoTrx.Sql.Clear;
+//  DataModulo1.AsientoTrx.Sql.add('Select P.cuenta, ');
+//  DataModulo1.AsientoTrx.Sql.add('MC.Nombre, ');
+//  DataModulo1.AsientoTrx.Sql.add('Case debito  when ' +
+//      quotedStr( campo ) +' then P.Cuenta else ' + QuotedStr('') + ' end  as CuentaDB, ');
+//  DataModulo1.AsientoTrx.Sql.add('Case credito when ' +
+//      quotedStr( campo ) +' then P.Cuenta else ' + QuotedStr('') + ' end  as CuentaCR  ');
+//  DataModulo1.AsientoTrx.Sql.add('From productotrx P ');
+//  DataModulo1.AsientoTrx.Sql.add('Inner Join maescont MC on P.Cuenta = MC.Cuenta ');
+//  DataModulo1.AsientoTrx.Sql.add('Where idProducto = ' + _idProducto ) ;
+//  DataModulo1.AsientoTrx.Sql.add(' and (debito  = ' + quotedStr(campo));
+//  DataModulo1.AsientoTrx.Sql.add(' or   credito = ' + QuotedStr(campo) + ')');
+//  DataModulo1.AsientoTrx.Open;
+//
+//  if not DataModulo1.AsientoTrx.eof  then
+//  begin
+//      DataModulo1.AsientoTrx.First;
+//
+//      while not DataModulo1.AsientoTrx.eof   do
+//      Begin
+//
+//        mTransaccion.Append;
+//        mTransaccionFECHA.AsDateTime      := now;
+//        mTransaccionNum_Cuenta.AsString   := _numCuenta;
+//        mTransaccionnombreCuenta.AsString := DataModulo1.AsientoTrx.FieldByName('Cuenta').AsString + ' - ' +
+//                          DataModulo1.AsientoTrx.FieldByName('Nombre').AsString;
+//        mTransaccionOrden.AsString        := _orden;
+//
+//        if DataModulo1.AsientoTrx.FieldByName ('CuentaDB').AsString <> '' then
+//        Begin
+//           mTransaccionCuenta.AsString     := DataModulo1.AsientoTrx.FieldByName ('CuentaDB').AsString;
+//           mTransaccionNaturaleza.AsString := 'D';
+//           mTransaccionSaldoO.AsFloat      := valor;
+//           mTransaccionSaldo.AsFloat       := valor;
+//        End;
+//        if DataModulo1.AsientoTrx.FieldByName ('CuentaCR').AsString <> '' then
+//        Begin
+//           mTransaccionCuenta.AsString     := DataModulo1.AsientoTrx.FieldByName ('CuentaCR').AsString;
+//           mTransaccionNaturaleza.AsString := 'C';
+//           mTransaccionSaldoO.AsFloat      := valor;
+//           mTransaccionSaldo.AsFloat       := valor;
+//        End;
+//
+//        DataModulo1.AsientoTrx.next
+//
+//      End;
+//
+//  end;
+end; }
 
 
 
@@ -2220,6 +2186,8 @@ begin
     end;
   End;
 End;
+
+
 end.
 
 

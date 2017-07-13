@@ -11537,22 +11537,20 @@ inherited frmCaja: TfrmCaja
         Left = 1
         Top = 1
         Width = 620
-        Height = 112
+        Height = 90
         Align = alTop
         BevelEdges = []
         BorderStyle = bsSingle
         Color = clMoneyGreen
         ParentBackground = False
         TabOrder = 0
-        DesignSize = (
-          616
-          108)
         object GroupBox1: TGroupBox
-          Left = 3
-          Top = 8
-          Width = 532
-          Height = 70
-          Anchors = [akLeft, akTop, akRight, akBottom]
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 608
+          Height = 78
+          Align = alClient
           Caption = 'Buscar Por:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -11562,10 +11560,10 @@ inherited frmCaja: TfrmCaja
           ParentFont = False
           TabOrder = 0
           DesignSize = (
-            532
-            70)
+            608
+            78)
           object btnBuscar: TSpeedButton
-            Left = 498
+            Left = 574
             Top = 15
             Width = 26
             Height = 30
@@ -11611,11 +11609,10 @@ inherited frmCaja: TfrmCaja
           object Label2: TLabel
             Left = 324
             Top = 23
-            Width = 30
+            Width = 34
             Height = 16
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Filtro:'
-            ExplicitWidth = 34
           end
           object rbNsocio: TRadioButton
             Left = 10
@@ -11645,7 +11642,7 @@ inherited frmCaja: TfrmCaja
             OnClick = rbCuentaClick
           end
           object pnFiltro1: TPanel
-            Left = 116
+            Left = 192
             Top = 48
             Width = 207
             Height = 31
@@ -11676,7 +11673,7 @@ inherited frmCaja: TfrmCaja
             end
           end
           object pnFiltro2: TPanel
-            Left = 250
+            Left = 299
             Top = 48
             Width = 208
             Height = 30
@@ -11742,7 +11739,7 @@ inherited frmCaja: TfrmCaja
       end
       object PageControl1: TPageControl
         Left = 1
-        Top = 113
+        Top = 91
         Width = 620
         Height = 383
         ActivePage = TabSheet1
@@ -11824,7 +11821,7 @@ inherited frmCaja: TfrmCaja
                 TabOrder = 0
               end
               object rbDeposito: TRadioButton
-                Left = 3
+                Left = 10
                 Top = 45
                 Width = 130
                 Height = 17
@@ -11957,8 +11954,8 @@ inherited frmCaja: TfrmCaja
               ExplicitLeft = 409
             end
             object edMontoTotal: TEdit
-              Left = 401
-              Top = 5
+              Left = 398
+              Top = 6
               Width = 121
               Height = 27
               Alignment = taRightJustify
@@ -12184,6 +12181,10 @@ inherited frmCaja: TfrmCaja
         object TabSheet2: TTabSheet
           Caption = 'Plan de Pago'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Panel8: TPanel
             Left = 0
             Top = 0
@@ -12339,6 +12340,10 @@ inherited frmCaja: TfrmCaja
         object TabSheet3: TTabSheet
           Caption = 'Movimientos'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Panel10: TPanel
             Left = 0
             Top = 0
@@ -12696,7 +12701,7 @@ inherited frmCaja: TfrmCaja
     UpdateOptions.CheckRequired = False
     StoreDefs = True
     Left = 484
-    Top = 435
+    Top = 443
     object mTransaccionFECHA: TDateTimeField
       FieldName = 'FECHA'
       DisplayFormat = 'dd MMM yyyy'
@@ -12827,6 +12832,9 @@ inherited frmCaja: TfrmCaja
     object mTransacciontipoCuenta: TStringField
       FieldName = 'tipoCuenta'
       Size = 1
+    end
+    object mTransaccionmontoInteres: TFloatField
+      FieldName = 'montoInteres'
     end
   end
   object mPlanPago: TFDMemTable
@@ -12986,6 +12994,10 @@ inherited frmCaja: TfrmCaja
       FieldName = 'nombreDoc'
       Origin = 'nombreDoc'
       Size = 50
+    end
+    object mMovimientossubcuenta: TSmallintField
+      FieldName = 'subcuenta'
+      Origin = 'subcuenta'
     end
   end
   object calculo: TFDQuery

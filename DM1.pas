@@ -1,3 +1,18 @@
+//==============================================================================
+//                            Funcion _Acceso (Entrar)
+//
+// Descripcion:
+//       1- Verifica el acceso del usuario en la tabla de usuarioRoles
+//          DataModule1.rolesUsuarioLogin
+//
+// LLamado Por:
+//            -
+//------------------------------------------------------------------------------
+//       Por                |     Fecha          |    Hora
+//------------------------------------------------------------------------------
+// 00- Edwin cedeno         | 5-abr-2017         | 9:17pm
+// 00- Edwin cedeno         | 5-abr-2017         | 9:17pm
+//==============================================================================
 unit DM1;
 
 interface
@@ -622,8 +637,6 @@ type
     TipoProductointeresSobre: TStringField;
     productoTrxprincipal: TBooleanField;
     TipoProductocalculaMora: TBooleanField;
-    CuentaSaldoDebito: TFloatField;
-    CuentaSaldoCredito: TFloatField;
     _consulta: TFDQuery;
     FloatField1: TFloatField;
     FloatField2: TFloatField;
@@ -1571,7 +1584,6 @@ type
     cheque_encbanco: TIntegerField;
     cheque_encnCuenta: TStringField;
     cheque_encnCuentaCheque: TStringField;
-    cheque_enc_beneficiario: TStringField;
     tblSocios: TFDQuery;
     tblSociossocio: TIntegerField;
     tblSociostipoCliente: TIntegerField;
@@ -1708,6 +1720,68 @@ type
     catalogofecha_aud: TSQLTimeStampField;
     catalogousuario: TWideStringField;
     Secuencial: TFDQuery;
+    Secuencialtipo_doc: TStringField;
+    Secuencialdocumento: TIntegerField;
+    transaccionTrx: TFDQuery;
+    transaccionTrxidTrx: TFDAutoIncField;
+    transaccionTrxidProducto: TIntegerField;
+    transaccionTrxcuenta: TStringField;
+    transaccionTrxdescripcion: TStringField;
+    transaccionTrxdebito: TStringField;
+    transaccionTrxcredito: TStringField;
+    transaccionTrxverAuxiliar: TBooleanField;
+    transaccionTrxfecha_aud: TSQLTimeStampField;
+    transaccionTrxusuario: TStringField;
+    transaccionTrxpago: TBooleanField;
+    transaccionTrxprincipal: TBooleanField;
+    transaccionTrxDC: TStringField;
+    transaccionTrxsigno: TStringField;
+    transaccionTrxtipoTrx: TStringField;
+    transaccionTrxcajaTrx: TStringField;
+    transaccionTrxesInteres: TBooleanField;
+    transaccionTrxesMora: TBooleanField;
+    transaccionTrxesCaja: TBooleanField;
+    transaccionTrxesCapital: TBooleanField;
+    transaccionTrxorden: TIntegerField;
+    transaccionTrxesImputable: TBooleanField;
+    transaccionTrxguid: TStringField;
+    transaccionTrxverChk_Tran: TBooleanField;
+    movimientoTRX: TFDQuery;
+    movimientosCuentasubcuenta: TSmallintField;
+    movimientoTRXidTrx: TFDAutoIncField;
+    movimientoTRXidProducto: TIntegerField;
+    movimientoTRXcuenta: TStringField;
+    movimientoTRXdescripcion: TStringField;
+    movimientoTRXdebito: TStringField;
+    movimientoTRXcredito: TStringField;
+    movimientoTRXverAuxiliar: TBooleanField;
+    movimientoTRXfecha_aud: TSQLTimeStampField;
+    movimientoTRXusuario: TStringField;
+    movimientoTRXpago: TBooleanField;
+    movimientoTRXprincipal: TBooleanField;
+    movimientoTRXDC: TStringField;
+    movimientoTRXsigno: TStringField;
+    movimientoTRXtipoTrx: TStringField;
+    movimientoTRXcajaTrx: TStringField;
+    movimientoTRXesInteres: TBooleanField;
+    movimientoTRXesMora: TBooleanField;
+    movimientoTRXesCaja: TBooleanField;
+    movimientoTRXesCapital: TBooleanField;
+    movimientoTRXorden: TIntegerField;
+    movimientoTRXesImputable: TBooleanField;
+    movimientoTRXguid: TStringField;
+    movimientoTRXverChk_Tran: TBooleanField;
+    CuentaSaldoSaldo: TFloatField;
+    transaccionTrxMDC: TWideStringField;
+    productoTrx2campo: TStringField;
+    transaccionTrxcd: TStringField;
+    transaccionTrxcampo: TStringField;
+    socioCuentascuenta: TWideStringField;
+    socioCuentasinteresSobre: TStringField;
+    socioCuentastasa: TFloatField;
+    saldoMora: TFDQuery;
+    saldoMoramontoMora: TFloatField;
+    cheque_ListaBeneficiario: TFDQuery;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;
@@ -1730,6 +1804,9 @@ type
     function _diaMes(_fecha : tdateTime) : Integer;
     function _ultimoDiaMes(ano,mes : integer) : integer;
     Function Dias360(des,has : tdateTime) : integer;
+    Function CalculaSaldoActual(NumCuenta: String; cuenta: String) : double;
+    Function SalodMora(numcuenta : String) : Double;
+    Function _Documento(Operacion : String) : integer;
 
     { Public declarations }
   end;
@@ -1758,6 +1835,32 @@ uses DTS, Socios, ProcesoMorisidad;
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+//               Calcula Saldo Actual de la cuenta Capital(Principal)
+//...edw:2017-05-19 8:51am
+//------------------------------------------------------------------------------
+function TDataModulo1.CalculaSaldoActual(NumCuenta, cuenta: String): double;
+Begin
+          DataModulo1.CuentaSaldo.Close;
+          DataModulo1.CuentaSaldo.Params [0].AsString := numCuenta;
+          DataModulo1.CuentaSaldo.Params [1].AsString := cuenta;
+          DataModulo1.CuentaSaldo.Open;
+
+          if not DataModulo1.CuentaSaldo.eof then
+          Begin
+            Result := DataModulo1.CuentaSaldoSaldo.AsFloat ;
+          End
+          Else
+          Begin
+            Result := 0.000;
+          End;
+end;
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+
 function TDataModulo1.calculoPeriodo(desde, Hasta: Tdatetime): string;
 var A, AA, M, MM, D, DD: Word;
   Anio, Mes, Dia: double;
@@ -1993,6 +2096,30 @@ begin
 end;
 
 
+function TDataModulo1.SalodMora(numcuenta: String): Double;
+var
+ _saldoMora : Double;
+begin
+//---
+  saldoMora.Close;
+  saldoMora.Params [0].AsString := numcuenta;
+  saldomora.Open;
+
+  _saldoMora := 0.00;
+  if not saldoMora.Eof then
+  begin
+    saldomora.First;
+    while not saldoMora.Eof do
+    begin
+      _saldomora := _saldoMora + saldoMoramontoMora.AsFloat;
+      saldoMora.Next;
+    end;
+
+  end;
+
+  result := _saldoMora;
+end;
+
 procedure TDataModulo1.socioNacionalidadesAfterEdit(DataSet: TDataSet);
 begin
   ShowMessage('');
@@ -2053,6 +2180,23 @@ begin
       1,3,5,7,8,10,12: Result:=31;
       4,6,9,11:        Result:=30;
       end;
+end;
+
+function TDataModulo1._Documento(Operacion: String): integer;
+begin
+//---   llamado al query que optiene la secuencia actual
+  DataModulo1.Secuencial.Close;
+  DataModulo1.Secuencial.Params [0].AsString := Operacion;
+  DataModulo1.Secuencial.Open;
+
+  if not DataModulo1.Secuencial.Eof  then
+  begin
+    Result:= DataModulo1.SecuencialDocumento.asinteger;
+  end
+  Else
+  Begin
+    Result := 0;
+  End;
 end;
 
 function TDataModulo1._guid: String;

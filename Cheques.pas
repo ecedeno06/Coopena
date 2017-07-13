@@ -8,7 +8,8 @@ uses
   Vcl.StdCtrls, Data.DB, Vcl.Mask, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, frxClass, Vcl.ExtCtrls, Vcl.Buttons;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, frxClass, Vcl.ExtCtrls, Vcl.Buttons,
+  system.DateUtils;
 
 type
   TfrmCheques = class(TfrmVentana)
@@ -108,6 +109,12 @@ type
     m_Chk_Generados_impreso: TIntegerField;
     Label10: TLabel;
     ed_chk_diferencia: TEdit;
+    mTransaccionmontoInteres: TFloatField;
+    btn_chk_imprimir: TToolButton;
+    dts_cheque_ListaBeneficiario: TDataSource;
+    pnl_chk_beneficiarios: TPanel;
+    ed_chk_beneficiario: TEdit;
+    lv_socioCuentas: TListView;
     procedure btn_chk_NuevoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ed_chk_MontoKeyPress(Sender: TObject; var Key: Char);
@@ -147,22 +154,36 @@ type
       State: TDragState; var Accept: Boolean);
     procedure DBGrid1DragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure btn_chk_Undo_EncaClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure pnl_chk_beneficiariosExit(Sender: TObject);
+    procedure dbl_chk_BeneficiarioEnter(Sender: TObject);
+    procedure dbl_chk_BeneficiarioExit(Sender: TObject);
 
   private
     { Private declarations }
   public
     { Public declarations }
     procedure _ArrastrarCuenta;
+    Procedure SalvarCheque;
+//    Function CalculaSaldoActual(NumCuenta: String; cuenta: String) : double;
+//    Function CalculaMora(Cuenta: String; calculaMora: Boolean) : double ;
+    Function CalculaInteres(NumCuenta: String; cuentaInteres: String; CuentaCapital: String; interesSobre: String ) : double ;
+    Function InsertarDetalle(_monto : double ) :  boolean;
   end;
 
 //--- Variables Globales
 var
   frmCheques: TfrmCheques;
-  _documento,_cheque : integer;
+  _documento,_cheque,  _Numrec  : integer;
    ntecla : word;
   _Origen,_Destino : String;
   _accept : boolean;
   montoInteres, montoMora : Double ;
+  _a,_m,_d,_h1,_m1,_s1,_m2 : word;
+  _fechaTrx : TdateTime;
+  _Monto : double;
+  _Naturaleza : string;
+
 implementation
 
 {$R *.dfm}
@@ -190,11 +211,12 @@ end;
 procedure TfrmCheques.btn_chk_SalvarClick(Sender: TObject);
 begin
   inherited;
-//  grp_chk_Detalle.Enabled := false;
-//  grp_chk_enc.Enabled     := False;
-//  btn_chk_Salvar.Enabled  := False;
-  btn_chk_Nuevo.Enabled   := True;
+  btn_chk_Nuevo.Enabled     := True;
   btn_chk_Undo_Enca.Enabled := False;
+  btn_chk_imprimir.Visible  := True;
+
+  SalvarCheque;
+
 end;
 
 procedure TfrmCheques.btn_chk_Undo_EncaClick(Sender: TObject);
@@ -210,6 +232,84 @@ begin
   grp_chk_enc.Enabled     := false;
 
   grp_chk_Detalle.Enabled := true;
+end;
+
+function TfrmCheques.CalculaInteres(NumCuenta, cuentaInteres, CuentaCapital,
+  interesSobre: String): double;
+var
+ _tasa      : Double;
+ _intereses : Double;
+ _mora      : Double;
+ _saldo     : Double;  // Saldo del Prestamo a la ultima fecha de pago
+ _fechaPago : TDateTime;
+ _dias      : Int16;
+ _Producto  : string;
+ _d,_m,_y   : word;
+begin
+ // Buscar el Interes en el  SPC
+  _tasa     := DataModulo1.socioCuentas.FieldByName('tasa').AsFloat;
+ //  _Producto := DataModulo1.SPC.FieldByName('subCuenta').AsString;
+ // debe ubicar el ultimo pago realizado, esto verificando cuenta en el transaccional y
+ // que el numero de cuenta sea igual a numCuenta (Cuenta Principal)
+
+ DataModulo1.Generico.Close;
+ DataModulo1.Generico.SQL.Clear;
+ DataModulo1.Generico.SQL.Add('Select max(d.fecha_doc) as FechaPago from  transaccion_det D ') ;
+ DataModulo1.Generico.SQL.Add(' left join transaccion_enc E on D.documento = E.documento and D.tipo_documento = E.tipo_documento ');
+ DataModulo1.Generico.SQL.Add(' where num_cuenta = ' + QuotedStr(numCuenta)) ;
+ DataModulo1.Generico.SQL.Add(' and cuenta = '       + QuotedStr(cuentaInteres));
+ DataModulo1.Generico.SQL.Add(' and e.anulado = 0 and e.fecha_doc = d.fecha_doc ');
+ DataModulo1.Generico.Open;
+
+ _intereses := 0.00;
+ //*----------------------------------------------------------------------------
+ // Calcula el saldo a la fecha del ultimo pago
+ // y Calcula el Interes
+ if not DataModulo1.Generico.eof  then
+ Begin
+   _fechaPago := DataModulo1.Generico.FieldByName('FechaPago').AsDateTime;
+   // _dias      := trunc(dpFecha.Date  - _fechaPago + 1 );  // se suma uno (1)
+   //---------------------------------------------------------------------------
+   //  LLamado a funcion de dias360
+    _dias := DataModulo1.Dias360(_fechaPago,_FechaSistema);
+
+    DecodeDate(_fechapago,_y,_m,_d);
+    _fechaPago := EncodeDateTime(_y,_m,_d,23,59,59,0);
+
+   //---------------------------------------------------------------------------
+   //  Calculo del saldo a la ultima fecha de pago
+   DataModulo1.Generico.Close;
+   DataModulo1.Generico.SQL.Clear;
+   DataModulo1.Generico.SQL.Add('Select ' + quotedstr('SaldoCapital') +' as Campo');
+   //------- Saldo de Capital --------------------------------------------------
+
+   DataModulo1.Generico.SQL.Add(',(Sum(Case naturaleza When ' + quotedStr('D') + ' Then monto Else 0 End) - '        ) ;
+   DataModulo1.Generico.SQL.Add('  Sum(Case naturaleza When ' + quotedStr('C') + ' Then monto Else 0 End)) as Saldo ' );
+
+   DataModulo1.Generico.SQL.Add('From Transaccion_det D');
+   DataModulo1.Generico.SQL.Add('     Left Join transaccion_enc E on D.documento = E.documento ');
+   DataModulo1.Generico.SQL.Add('     and D.tipo_documento = E.tipo_documento');
+   DataModulo1.Generico.SQL.Add('where num_cuenta = '  + quotedstr(numCuenta));
+   DataModulo1.Generico.SQL.Add(' and  cuenta     = '  + QuotedStr(cuentaCapital));
+   DataModulo1.Generico.SQL.Add(' and D.fecha_doc <= ' + quotedStr(FormatdateTime('yyyy-mm-dd hh:mm:ss',_fechaPago)));
+   DataModulo1.Generico.SQL.Add(' and e.anulado   = 0');
+   DataModulo1.Generico.SQL.Add(' and e.fecha_doc = d.fecha_doc');
+   //---------------------------------------------------------------------------
+
+   DataModulo1.Generico.Open;
+
+   if not DataModulo1.Generico.eof  then
+   begin
+     _saldo := DataModulo1.Generico.FieldByName('Saldo').AsFloat;
+   end;
+
+   //--------------------------------------------------------------------------
+   // calculo del interes
+   if _saldo > 0  then
+     _intereses := (_saldo * ((_tasa / 360 ) / 100) * _dias );
+
+ End; //--- Fin
+ result := _intereses;
 end;
 
 procedure TfrmCheques.CargarCheque;
@@ -549,11 +649,13 @@ begin
   begin
     tb_chk_enc.Enabled := False;
     tb_chk_det.Enabled := False;
+    btn_chk_imprimir.Visible := false;
   end
   else
   begin
     tb_chk_enc.Enabled := true;
     tb_chk_det.Enabled := true;
+    btn_chk_imprimir.Visible := true;
   end;
 
   CargarCheque;
@@ -586,6 +688,32 @@ begin
   else
     dbg_chk_generados.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 
+end;
+
+procedure TfrmCheques.dbl_chk_BeneficiarioEnter(Sender: TObject);
+var
+  p : tpoint ;
+begin
+  inherited;
+  //p :=  dbl_chk_Beneficiario.top;
+  pnl_chk_beneficiarios.left  :=  panel2.Left +  PageControl1.left + ts_Cheque_Confeccion.left  +
+  grp_chk_enc.left + dbl_chk_Beneficiario.left;
+
+   pnl_chk_beneficiarios.top  :=  PageControl1.Top + ts_Cheque_Confeccion.top  +
+  grp_chk_enc.top + dbl_chk_Beneficiario.top - 3;
+
+
+ // pnl_chk_beneficiarios.left := dbl_chk_Beneficiario.left;
+  ed_chk_beneficiario.Text   := dbl_chk_Beneficiario.Text;
+  pnl_chk_beneficiarios.Visible := true;
+  ed_chk_beneficiario.SetFocus;
+//  pnl_chk_beneficiarios.SetFocus ;
+end;
+
+procedure TfrmCheques.dbl_chk_BeneficiarioExit(Sender: TObject);
+begin
+  inherited;
+//  pnl_chk_beneficiarios.Visible := false;
 end;
 
 procedure TfrmCheques.dbl_chk_cuentaClick(Sender: TObject);
@@ -630,6 +758,7 @@ var
   mTransaccionCuenta.AsString     := _cuenta;
   mTransaccionimputable.AsBoolean := False;
   mTransaccionOrden.AsString      := 'P';
+  mTransacciontipoCuenta.AsString := 'T';
   mTransaccionNaturaleza.AsString := 'C';
   mTransaccionTipoDoc.AsString    := 'CHQ';
   mTransaccionEfectivo.AsFloat    := DataModulo1.cheque_encmonto_gral.AsFloat;
@@ -655,7 +784,6 @@ begin
   mTransaccion.Open;
   DBGrid1.Refresh;
 
-
   DataModulo1.cheque_enc.append;
   DataModulo1.cheque_encfecha_doc.AsDateTime := _fechaSistema ;
 
@@ -664,6 +792,7 @@ begin
   btn_chk_Salvar.Enabled    := True;
   btn_chk_Nuevo.Enabled     := False;
   btn_chk_Undo_Enca.Enabled := true;
+  btn_chk_imprimir.Visible  := false;
   dbl_chk_cuenta.SetFocus ;
 end;
 
@@ -718,10 +847,20 @@ begin
 
 end;
 
+procedure TfrmCheques.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  Action := caFree;
+end;
+
 procedure TfrmCheques.FormDestroy(Sender: TObject);
 begin
   inherited;
   DataModulo1.chequesCuenta.Close;
+  DataModulo1.cheque_ListaBeneficiario.Close;
+  mTransaccion.Close;
+  DataModulo1.transacciontrx.Close;
+  DataModulo1.chequesgenerados.Close;
 
 end;
 
@@ -736,19 +875,218 @@ begin
   DataModulo1.chequesCuenta.Close;
   DataModulo1.chequesCuenta.Open;
 
+
+  //--- Lista de Beneficiarios para combo Box
+  DataModulo1.cheque_ListaBeneficiario.Close;
+  DataModulo1.cheque_ListaBeneficiario.Open;
+
   //--- Desactiva los controles de edicion
   grp_chk_Detalle.Enabled := False;
   grp_chk_enc.Enabled     := False;
   btn_chk_Salvar.Enabled  := False;
   btn_chk_Nuevo.Enabled   := True;
   btn_chk_Undo_Enca.Enabled := False;
-
+  btn_chk_imprimir.Visible  := false;
   //--- Fecha del Sistema
 
   ed_chk_fecha.Text := FormatDateTime('dd/MMM/yyy',_fechaSistema);
 
 
 end;
+
+
+
+function TfrmCheques.InsertarDetalle(_monto: double): boolean;
+begin
+//
+ if _Monto > 0.0000 then
+ Begin
+
+   DataModulo1.actualiza.close;
+   DataModulo1.actualiza.SQL.Clear;
+   DataModulo1.actualiza.SQL.Add('Insert Into transaccion_det (');
+   //----- Seccion de Campos
+   DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
+   DataModulo1.actualiza.SQL.Add(',Documento'     );
+   DataModulo1.actualiza.SQL.Add(',Fecha_Doc'     );
+   DataModulo1.actualiza.SQL.Add(',num_cuenta'    );
+   DataModulo1.actualiza.SQL.Add(',cuenta'        );
+   DataModulo1.actualiza.SQL.Add(',naturaleza'    );
+   DataModulo1.actualiza.SQL.Add(',monto'         );
+   DataModulo1.actualiza.SQL.Add(',Efectivo'      );
+   DataModulo1.actualiza.SQL.Add(',Cheque'        );
+   DataModulo1.actualiza.SQL.Add(',Banco'         );
+   DataModulo1.actualiza.SQL.Add(',NumCheque'     );
+   DataModulo1.actualiza.SQL.Add(',fecha_aud'     );
+   DataModulo1.actualiza.SQL.Add(',Usuario) '     );
+
+   //----Seccion de Data
+   DataModulo1.actualiza.SQL.Add('Values (');
+   DataModulo1.actualiza.SQL.Add(QuotedStr('CHK'));
+   DataModulo1.actualiza.SQL.Add(',' + Coma + IntToStr(_Numrec) + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',_FechaTrx) + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNum_Cuenta.AsString   + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + _cuenta                           + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + _naturaleza                       + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + FloatToStr(_Monto)                + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionEfectivo.AsString     + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionCheque.AsString       + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionBanco.AsString        + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNumCheque.AsString    + Coma );
+
+   DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
+   DataModulo1.actualiza.SQL.Add(',' + Coma + usuario           + Coma          +  ' )' );
+   DataModulo1.actualiza.ExecSQL;
+
+   mTransaccion.Edit;
+   mTransaccionTipoDoc.AsString    := 'CHK';
+   mTransaccionDocumento.AsInteger := _Numrec;
+ End
+
+end;
+
+procedure TfrmCheques.pnl_chk_beneficiariosExit(Sender: TObject);
+begin
+  inherited;
+  pnl_chk_beneficiarios.Visible := false;
+end;
+
+procedure TfrmCheques.SalvarCheque;
+
+begin
+//---
+
+ DecodeDate(_fechaSistema ,_a,_m,_d);
+ DecodeTime(now,_h1,_m1,_s1,_m2);
+
+ _fechaTrx := EncodeDateTime (_a,_m,_d,_h1,_m1,_s1,_m2);
+ if not mTransaccion.eof then
+ begin
+   mTransaccion.first;
+   if mTransaccionDocumento.AsString = '' then // Transaccion Aun no procesada
+   Begin
+    _Numrec := DataModulo1._Documento ('CHK');
+
+    //---------------------------------------------------------------------------
+    //  Crea el registro de encabezado de transaccion en TRANSACCION_ENC
+    //---------------------------------------------------------------------------
+    DataModulo1.actualiza.close;
+    DataModulo1.actualiza.SQL.Clear;
+    DataModulo1.actualiza.SQL.Add('Insert Into transaccion_enc (');
+
+    //----- Seccion de Campos
+    DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
+    DataModulo1.actualiza.SQL.Add(',Documento');
+    DataModulo1.actualiza.SQL.Add(',Anulado');
+    DataModulo1.actualiza.SQL.Add(',Fecha_Doc');
+    DataModulo1.actualiza.SQL.Add(',Estado');
+    DataModulo1.actualiza.SQL.Add(',Fecha_Aud');
+    DataModulo1.actualiza.SQL.Add(',Usuario ) ');
+
+    //----Seccion de Data
+    DataModulo1.actualiza.SQL.Add('Values (');
+    DataModulo1.actualiza.SQL.Add(QuotedStr('CHK'));
+    DataModulo1.actualiza.SQL.Add(',' + coma + IntToStr(_Numrec) + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + '0'               + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',_FechaTrx)    + coma );
+    DataModulo1.actualiza.SQL.Add(',' + Coma + '1'               + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now)   + coma );
+    DataModulo1.actualiza.SQL.Add(',' + coma + usuario           + coma + ')' );
+    DataModulo1.actualiza.ExecSQL;
+
+    //--------------------------------------------------------------------------
+    //  Crea  registros de Detalle  de transaccion en TRANSACCION_DET
+    //--------------------------------------------------------------------------
+//    _Total        := 0.00;
+//    montoDeposito := 0.00;
+//    _montoMora    := 0.00;
+//    _montoInteres := 0.00;
+//    _montoCapital := 0.00;
+
+    //----------------------- Insertar detalle ---------------------------------
+
+    while not mTransaccion.eof do
+    begin
+
+     _Monto := mTransaccionMonto.AsFloat ; //
+
+     if _Monto > 0.00 then
+     begin
+
+       if mTransaccionOrden.AsString = 'P'  then //  la cuenta principal de cheque
+       begin
+          _cuenta     := mTransaccionCuenta.AsString ;
+          _naturaleza := mTransaccionNaturaleza.AsString ;
+          InsertarDetalle(_monto);
+       end
+       Else
+       Begin
+
+         //--- filtra los registro enlazados ----
+         DataModulo1.transacciontrx.Close;
+         DataModulo1.transacciontrx.Params [0].AsString  := mTransaccionNum_Cuenta.AsString ;
+         DataModulo1.transacciontrx.Params [1].AsString  := mTransaccionCuenta.AsString;
+         DataModulo1.transacciontrx.Params [2].AsString  := 'D' ;// por cheque NO aplica retiro (Retiro solo es por Caja) _tipoOperacion;
+         DataModulo1.transacciontrx.Open;
+
+         if not DataModulo1.transacciontrx.eof then
+         begin
+           DataModulo1.transacciontrx.First;
+           while not DataModulo1.transacciontrx.eof do
+           Begin
+             // Adiciona los registros del asiento definido en ProductoTrx
+             // de acuerdo a que se esta afectando Mora , Interes o Capital
+
+             if (length(trim(DataModulo1.transaccionTrxdebito.AsString))  > 0) then
+              _naturaleza := 'D'
+             Else
+               If (length(trim(DataModulo1.transaccionTrxCredito.AsString)) > 0) then
+                 _naturaleza := 'C'
+               Else
+                 ShowMessage('Error en Transaccion ');
+
+             _cuenta := DataModulo1.transaccionTrxcuenta.AsString ;
+
+             if DataModulo1.transaccionTrxcampo.AsString = 'Pagado' then
+               _monto := mTransaccionMonto.AsFloat;
+
+             if DataModulo1.transaccionTrxcampo.AsString = 'Calculado' then
+               _monto := mTransaccionmontoInteres.AsFloat;
+
+             InsertarDetalle(_Monto);
+
+             DataModulo1.transacciontrx.Next;
+           End;
+         End
+         Else
+         Begin
+           //----Adiciona el registro manual
+           _naturaleza := mTransaccionNaturaleza.AsString ;
+           _cuenta     := mTransaccionCuenta.AsString;
+
+           InsertarDetalle(_Monto);
+         End;
+       End;
+     end;
+
+     mTransaccion.Next;
+
+    end;
+   end;
+
+ End;
+
+ mTransaccion.Close;
+ mTransaccion.Open;
+// rbDeposito.Enabled := true;
+// rbRetiro.Enabled   := true;
+//
+// rbDeposito.Checked := false;
+// rbRetiro.Checked   := false;
+// tvHist.Enabled     := True;
+
+end;
+
 
 procedure TfrmCheques.btn_chk_det_borrarClick(Sender: TObject);
 begin
@@ -804,7 +1142,7 @@ begin
     if frmSociocuentas.ShowModal = mrOk then
     Begin
      //---agregar aqui el codigo para cuenta de asociado
-     _ArrastrarCuenta ;
+ //    _ArrastrarCuenta ;
     End;
 end;
 
@@ -845,15 +1183,32 @@ end;
 
 procedure TfrmCheques._ArrastrarCuenta;
 var
-_append : Boolean ;
+_append         : Boolean ;
+_cuentaInteres  : String;
+_cuentaCapital  : string;
+_NumCuenta      : String;
+_interesSobre   : String;
+_SaldoO, _Saldo : Double;
+_Orden          : String;
+_AgregaTrx      : boolean;
 
 begin
+
+  _cuentaCapital  := DataModulo1.socioCuentas.FieldByName('Cuenta').AsString;
+  _InteresSobre   := DataModulo1.socioCuentas.FieldByName('InteresSobre').AsString;
+  _NumCuenta      := DataModulo1.socioCuentas.FieldByName('num_Cuenta').AsString;
+  _AgregaTrx      := True;
+
   DataModulo1.productoTrx2.Close;
   Datamodulo1.productoTrx2.Params [0].AsInteger :=
-      DataModulo1.socioCuentassubcuenta.AsInteger ;
+      DataModulo1.socioCuentas.FieldByName('subCuenta').AsInteger ;
   DataModulo1.productoTrx2.Open;
 
-//  if DataModulo1.socioCuentasprestamo_S_N.AsString = 'S' then
+  if mTransaccion.Locate ('Num_Cuenta',_NumCuenta,[]) then
+    _AgregaTrx := False;
+
+
+ // if DataModulo1.socioCuentasprestamo_S_N.AsString = 'S' then
   begin
     //--- Validar contra el productoTRX las cuentas que se ven afectadas
     //--- Se debe mostrar Intereses y Mora
@@ -864,46 +1219,73 @@ begin
       while not DataModulo1.productoTrx2.eof do
       Begin
 
+        montoInteres := 0.00; montoMora := 0.00;
+       _SaldoO := 0.00 ; _Saldo := 0.00;
+
+
        //--- Agrega  solo las que se veran en el cheque/Transferencia
-       if DataModulo1.productoTrx2verChk_Tran.AsBoolean then
+       if (DataModulo1.productoTrx2verChk_Tran.AsBoolean)  then
        begin
 
          //---- por defecto el registro se debe agregar a la transaccion
          //     No se agregara dependiendo de las condiciones de mora e interes
-         _append :=  true;
+         _append :=  false;
 
-         montoInteres := 0.00; montoMora := 0.00;
          //---Valida si la linea calcula Intereses (productoTRX.esInteres)
-         if DataModulo1.productoTrx2.FieldByName('esInteres').AsBoolean then
+         if (DataModulo1.productoTrx2.FieldByName('esInteres').AsBoolean) and _AgregaTrx  then
          begin
             //-- CalculoDeIntereses;
-            if montoInteres = 0.00 then
-               _append := false;  {No habilita el append , ya que no calculo intereses}
+            _cuenta                   := DataModulo1.productoTrx2cuenta.AsString;
+            montoInteres              := CalculaInteres(_NumCuenta, _cuenta, _cuentaCapital , _InteresSobre);
+            _SaldoO                   := montoInteres + DataModulo1.CalculaSaldoActual(_NumCuenta , _cuenta);
+            _saldo                    := _SaldoO;
+            _Orden                    := 'I';
+            if _saldoO > 0.00 then
+               _append := true;
          end;
 
          //---Valida si la linea calcula mora (productoTRX.esMora)
-         if DataModulo1.productoTrx2.FieldByName('esMora').AsBoolean then
+         if (DataModulo1.productoTrx2.FieldByName('esMora').AsBoolean) and _AgregaTrx  then
          begin
-            //--CalculoDeMorosidad;
-           //-- CalculoDeIntereses;
-            if montoMora = 0.00 then
-               _append := false;  {No habilita el append , ya que no calculo intereses}
+            _cuenta                    := DataModulo1.productoTrx2cuenta.AsString;
+            montoMora                  := DataModulo1.SalodMora(_NumCuenta);
+            _saldoO                    := montoMora;
+            _Saldo                     := _SaldoO;
+            _Orden                     := 'M';
+            if _saldoO  > 0.00 then
+               _append := true;
+         end;
+
+         //------------Principal
+         if DataModulo1.productoTrx2.FieldByName('Principal').AsBoolean then
+         begin
+
+            _cuenta                    := DataModulo1.productoTrx2cuenta.AsString;
+            _saldoO                    := DataModulo1.CalculaSaldoActual(_NumCuenta , _cuenta);
+            _Saldo                     := _SaldoO;
+            _Orden                     := 'C';
+            if _saldoO  > 0.00 then
+               _append := True;
 
          end;
+
 
          if _append then
          Begin
 
            mTransaccion.Append;
-           mTransaccionFECHA.AsDateTime    := _fechaSistema ;
-           mTransaccionDocumento.AsInteger := _documento;
-           mTransaccionCuenta.AsString     := DataModulo1.productoTrx2cuenta.AsString;
-           mTransaccionTipoDoc.AsString    := 'CHQ';
-           mTransaccionNum_Cuenta.AsString := DataModulo1.sociocuentas.FieldByName('num_cuenta').AsString ;
-           mTransaccionimputable.AsBoolean := DataModulo1.productoTrx2esImputable.AsBoolean ;
-           mTransaccionOrden.AsString      := 'X';
-           mTransaccionguid.AsString       := DataModulo1._guid();
-           mTransaccionNaturaleza.AsString := DataModulo1.productoTrx2DC.AsString;
+           mTransaccionFECHA.AsDateTime     := _fechaSistema ;
+           mTransaccionDocumento.AsInteger  := _documento;
+           mTransaccionCuenta.AsString      := DataModulo1.productoTrx2cuenta.AsString;
+           mTransaccionTipoDoc.AsString     := 'CHQ';
+           mTransaccionNum_Cuenta.AsString  := DataModulo1.sociocuentas.FieldByName('num_cuenta').AsString ;
+           mTransaccionimputable.AsBoolean  := DataModulo1.productoTrx2esImputable.AsBoolean ;
+           mTransaccionOrden.AsString       := _Orden;
+           mTransaccionguid.AsString        := DataModulo1._guid();
+           mTransaccionNaturaleza.AsString  := DataModulo1.productoTrx2DC.AsString;
+           mTransaccionmontoInteres.AsFloat := montoInteres;
+           mTransaccionSaldoO.AsFloat       := _SaldoO;
+           mTransaccionSaldo.AsFloat        := mTransaccionSaldoO.AsFloat ;
 
          End;
        end;
@@ -911,6 +1293,7 @@ begin
       End;
     end;
   end;
+  
 end;
 
 end.

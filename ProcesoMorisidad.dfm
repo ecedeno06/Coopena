@@ -173,7 +173,6 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
       Top = 1
       Width = 784
       Height = 29
-      ButtonHeight = 26
       Caption = 'ToolBar1'
       DrawingStyle = dsGradient
       GradientEndColor = clMoneyGreen
@@ -181,7 +180,7 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
       TabOrder = 2
       object mes: TDBLookupComboBox
         Left = 0
-        Top = 2
+        Top = 0
         Width = 109
         Height = 21
         DataField = 'mes'
@@ -202,7 +201,7 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
         Left = 117
         Top = 0
         Width = 60
-        Height = 26
+        Height = 22
         MaxValue = 0
         MinValue = 0
         TabOrder = 0
@@ -235,7 +234,7 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
         Left = 361
         Top = 0
         Width = 108
-        Height = 26
+        Height = 22
         BevelOuter = bvNone
         TabOrder = 2
         object NoProcesadas: TCheckBox

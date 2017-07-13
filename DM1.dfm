@@ -142,7 +142,7 @@ object DataModulo1: TDataModulo1
     Left = 400
     Top = 4
     Bitmap = {
-      494C01013100A80094041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
+      494C01013100A800D4041000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       000000000000000000000000000000000000E4E4E4FF050004FF0B0004FF0B00
       04FF0B0004FF0B0004FF0B0004FF0C0004FF130007FFFFFFFFFFFFFFFFFFFFFF
@@ -1909,7 +1909,7 @@ object DataModulo1: TDataModulo1
     Left = 459
     Top = 5
     Bitmap = {
-      494C010131009802E80610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010131009802280710001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -6383,37 +6383,47 @@ object DataModulo1: TDataModulo1
   object CuentaSaldo: TFDQuery
     Connection = cnn2
     SQL.Strings = (
-      'select '
-      '   Sum(Case naturaleza When '#39'D'#39' Then monto Else 0 End) as Debito'
       
-        '  ,Sum(Case naturaleza When '#39'C'#39' Then monto Else 0 End) as Credit' +
-        'o'
-      'from [dbo].[transaccion_det]'
-      'where num_cuenta = :numCuenta and cuenta = :subcuenta'
-      'group by num_cuenta,cuenta')
+        '/*   query para calculo de saldo de las cuentas , verficando la ' +
+        'naturaleza de la cuenta para determinar por donde aumenta */'
+      'select '
+      ' Saldo = (case when M.naturaleza = '#39'C'#39' then'
+      
+        '           (Sum(Case D.naturaleza When '#39'C'#39' Then monto Else 0 End' +
+        ') - Sum(Case D.naturaleza When '#39'D'#39' Then monto Else 0 End))'
+      '         Else '
+      
+        '          (Sum(Case D.naturaleza When '#39'D'#39' Then monto Else 0 End)' +
+        ' - Sum(Case D.naturaleza When '#39'C'#39' Then monto Else 0 End))'
+      #9' End )'
+      '  '
+      
+        'from [dbo].[transaccion_det] D inner join maescont M on D.cuenta' +
+        ' = M.cuenta '
+      'where num_cuenta = :Ncuenta and D.cuenta = :Cuenta'
+      
+        ' and (Select anulado from transaccion_enc where D.fecha_doc = fe' +
+        'cha_doc and D.tipo_documento = Tipo_documento and D.Documento = ' +
+        'Documento) = 0'
+      ' group by num_cuenta,D.cuenta,M.naturaleza')
     Left = 311
     Top = 690
     ParamData = <
       item
-        Name = 'NUMCUENTA'
+        Name = 'NCUENTA'
         DataType = ftString
         ParamType = ptInput
-        Value = '0300001901'
+        Value = '2800001901'
       end
       item
-        Name = 'SUBCUENTA'
+        Name = 'CUENTA'
         DataType = ftString
         ParamType = ptInput
-        Value = '211010'
+        Value = '114040'
       end>
-    object CuentaSaldoDebito: TFloatField
-      FieldName = 'Debito'
-      Origin = 'Debito'
-      ReadOnly = True
-    end
-    object CuentaSaldoCredito: TFloatField
-      FieldName = 'Credito'
-      Origin = 'Credito'
+    object CuentaSaldoSaldo: TFloatField
+      FieldName = 'Saldo'
+      Origin = 'Saldo'
       ReadOnly = True
     end
   end
@@ -6990,13 +7000,13 @@ object DataModulo1: TDataModulo1
         Name = 'IDPRODUCTO'
         DataType = ftString
         ParamType = ptInput
-        Value = '3'
+        Value = '28'
       end
       item
         Name = 'TIPOTRX'
         DataType = ftString
         ParamType = ptInput
-        Value = 'R'
+        Value = 'D'
       end>
     object productoTrxidTrx: TFDAutoIncField
       FieldName = 'idTrx'
@@ -7159,65 +7169,52 @@ object DataModulo1: TDataModulo1
       't.naturaleza,'
       'mc.naturaleza as _dc,'
       't.monto,'
-      'tx.Signo,'
+      'ma.subcuenta,'
       
-        'montoCapital    = case  when  TX.principal = 1  then t.monto els' +
-        'e 0 end,'
-      '0.0 as saldoCapital,'
+        'signo = (Select signo from productoTrx where cuenta = t.cuenta a' +
+        'nd verauxiliar = 1 and idproducto = ma.subcuenta and dc = t.natu' +
+        'raleza)'
+      
+        ',montoCapital = (case when (Select top 1 principal from producto' +
+        'Trx where cuenta = t.cuenta  and principal = 1 and ma.subcuenta ' +
+        '= idProducto ) = 1 then t.monto Else 0 End)'
+      ',0.0 as saldoCapital'
       ''
-      '--- Intereses '
       
-        'montoInteres  = (case  when  TX.debito = '#39'montoInteres'#39' or tx.cr' +
-        'edito = '#39'montoInteres'#39' then t.monto '
-      '                 else 0'
-      #9'--'#9'    case  when  TX.credito  = '#39'montoInteres'#39'  then t.monto '
-      #9'--'#9'    else 0 '
-      '        --            end'
-      #9#9' end),'
-      '0.0 as saldoInteres,'
+        ',montoMora = (case when (Select top 1 esmora from productoTrx wh' +
+        'ere cuenta = t.cuenta  and esmora = 1 and ma.subcuenta = idProdu' +
+        'cto ) = 1 then t.monto Else 0 End)'
+      ',0.0 as saldoMora'
       ''
-      '--- mora'
       
-        'montoMora  = (case  when  TX.debito   = '#39'montoMora'#39'  then t.mont' +
-        'o '
-      '              else '
-      #9#9'  case  when  TX.credito  = '#39'montoMora'#39'  then t.monto '
-      #9#9'  else 0 '
-      '                  end'
-      #9'      end),'
-      '0.0 as saldoMora,'
+        ',montoInteres = (case when (Select top 1 esInteres from producto' +
+        'Trx where cuenta = t.cuenta  and esinteres = 1 and ma.subcuenta ' +
+        '= idProducto ) = 1 then t.monto Else 0 End)'
+      ',0.0 as saldoInteres'
       ''
       '--- Orden para mostrar en el Grid de Movimientos'
       
-        'Orden = (case  when  (TX.debito            = '#39'montoMora'#39')    the' +
-        'n 1 '
-      '         else '
-      #9'    case  when  (TX.credito        = '#39'montoMora'#39')    then 1 '
-      #9'    else'
-      #9#9'case when (Tx.debito       = '#39'montoInteres'#39') then 2 '
-      #9#9'else '
-      #9#9'   case  when  (TX.credito = '#39'montoInteres'#39') then 2 '
-      #9#9'   else 3 '
-      '                   end'
-      #9'        end'
-      #9'     end'
-      '         end )'
+        ',Orden = (case when (Select top 1 principal from productoTrx whe' +
+        're cuenta = t.cuenta  and principal = 1 and ma.subcuenta = idPro' +
+        'ducto ) = 1 then 3 Else '
+      
+        '           (case when (Select top 1 esmora from productoTrx wher' +
+        'e cuenta = t.cuenta  and esmora = 1 and ma.subcuenta = idProduct' +
+        'o ) = 1 then 1 Else '
+      
+        '             (case when (Select top 1 esInteres from productoTrx' +
+        ' where cuenta = t.cuenta  and esinteres = 1 and ma.subcuenta = i' +
+        'dProducto ) = 1 then 2 Else 0 End) end) end)'
       ''
       'from transaccion_det T '
-      ' left OUTER join maes_aux MA on T.num_cuenta     = MA.num_cuenta'
       
-        ' left OUTER join productoTrx TX on TX.idProducto  = MA.subcuenta' +
-        ' and T.Cuenta = TX.cuenta'
-      
-        '                                -- Que la cuenta se afecte por s' +
-        'u naturaleza o sea la cuenta principal    '
-      
-        '                                and (t.naturaleza = tx.DC   or  ' +
-        ' tx.principal = 1) '
+        ' left OUTER  join maes_aux MA on T.num_cuenta     = MA.num_cuent' +
+        'a'
       ''
       '-- Enlace con la tabla de encabezado de transaccion '
-      ' left join transaccion_enc E on T.documento = E.documento  '
-      ' and T.tipo_documento = E.tipo_documento'
+      
+        ' left join transaccion_enc E on T.documento = E.documento and T.' +
+        'tipo_documento = E.tipo_documento'
       ''
       
         '-- Enlace con la tabla maestro de cuentas para determinar la nat' +
@@ -7229,10 +7226,16 @@ object DataModulo1: TDataModulo1
       ''
       'where  '
       '   t.num_cuenta = :cuenta'
-      '   and tx.verAuxiliar = 1 '
+      
+        '   and (Select verauxiliar from productoTrx where cuenta = t.cue' +
+        'nta and idproducto = ma.subcuenta and ( dc = t.naturaleza )) = 1'
+      
+        '  -- and (Select verauxiliar from productoTrx where cuenta = t.c' +
+        'uenta and verauxiliar = 1 and idproducto = ma.subcuenta and ( dc' +
+        ' = t.naturaleza or principal = 1)) = 1'
       '   and e.anulado = 0'
       '   and e.fecha_doc = t.fecha_doc'
-      'order by T.fecha_doc,tx.principal,Orden asc'
+      '   order by T.fecha_doc,t.Documento,Orden asc'
       '')
     Left = 1275
     Top = 453
@@ -7241,7 +7244,7 @@ object DataModulo1: TDataModulo1
         Name = 'CUENTA'
         DataType = ftString
         ParamType = ptInput
-        Value = '0500001901'
+        Value = '2800001901'
       end>
     object movimientosCuentatipo_documento: TWideStringField
       FieldName = 'tipo_documento'
@@ -7341,6 +7344,10 @@ object DataModulo1: TDataModulo1
       FieldName = 'nombreDoc'
       Origin = 'nombreDoc'
       Size = 50
+    end
+    object movimientosCuentasubcuenta: TSmallintField
+      FieldName = 'subcuenta'
+      Origin = 'subcuenta'
     end
   end
   object movimientoCorte: TFDQuery
@@ -8403,9 +8410,7 @@ object DataModulo1: TDataModulo1
     ParamData = <
       item
         Name = 'IDTIPO'
-        DataType = ftString
         ParamType = ptInput
-        Value = 'P'
       end>
     object tipoTransaccionidtipo: TStringField
       FieldName = 'idtipo'
@@ -8620,6 +8625,11 @@ object DataModulo1: TDataModulo1
     object productoTrx2verChk_Tran: TBooleanField
       FieldName = 'verChk_Tran'
       Origin = 'verChk_Tran'
+    end
+    object productoTrx2campo: TStringField
+      FieldName = 'campo'
+      Origin = 'campo'
+      Size = 50
     end
   end
   object ChequesCaja: TFDQuery
@@ -12398,16 +12408,6 @@ object DataModulo1: TDataModulo1
       Size = 50
       Lookup = True
     end
-    object cheque_enc_beneficiario: TStringField
-      FieldKind = fkLookup
-      FieldName = '_beneficiario'
-      LookupDataSet = tblSocios
-      LookupKeyFields = 'idSocio'
-      LookupResultField = 'nombreCompleto'
-      KeyFields = 'anombrede'
-      Size = 50
-      Lookup = True
-    end
     object cheque_encobservacion: TMemoField
       FieldName = 'observacion'
       Origin = 'observacion'
@@ -12982,6 +12982,9 @@ object DataModulo1: TDataModulo1
       ',P.nombreSubCuenta'
       ',P.subcuenta '
       ',P.prestamo_S_N'
+      ',P.cuenta'
+      ',P.interesSobre'
+      ',m.tasa'
       'from maes_aux  M '
       'Left Join socios S on M.socio  = S.idSocio'
       'Left Join subCuenta P on m.subCuenta = p.subcuenta'
@@ -13027,6 +13030,21 @@ object DataModulo1: TDataModulo1
     object socioCuentassubcuenta: TSmallintField
       FieldName = 'subcuenta'
       Origin = 'subcuenta'
+    end
+    object socioCuentascuenta: TWideStringField
+      FieldName = 'cuenta'
+      Origin = 'cuenta'
+    end
+    object socioCuentasinteresSobre: TStringField
+      FieldName = 'interesSobre'
+      Origin = 'interesSobre'
+      FixedChar = True
+      Size = 1
+    end
+    object socioCuentastasa: TFloatField
+      FieldName = 'tasa'
+      Origin = 'tasa'
+      Required = True
     end
   end
   object dts_socioCuentas: TDataSource
@@ -13116,7 +13134,439 @@ object DataModulo1: TDataModulo1
         Name = 'TIPO'
         DataType = ftString
         ParamType = ptInput
-        Value = 'AJC'
+        Value = 'REC'
       end>
+    object Secuencialtipo_doc: TStringField
+      FieldName = 'tipo_doc'
+      Origin = 'tipo_doc'
+      ReadOnly = True
+      FixedChar = True
+      Size = 3
+    end
+    object Secuencialdocumento: TIntegerField
+      FieldName = 'documento'
+      Origin = 'documento'
+      ReadOnly = True
+    end
+  end
+  object transaccionTrx: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      ' select M.Naturaleza as MDC,'
+      ' p.dc cd,'
+      ' P.* '
+      ' from productotrx P Inner Join maescont M on P.cuenta = M.cuenta'
+      ' where '
+      
+        ' ---- Optiene el primer registro de ProductoTrx donde el id de p' +
+        'roducto sea (ejemplo 28) y la cuenta '
+      
+        ' (debito = (select top 1 (Case when len(p.debito) > 0 then p.deb' +
+        'ito else p.credito end ) as valor'
+      '            from productoTrx P'
+      '            where '
+      '               p.idProducto = (Select subcuenta '
+      
+        '                               from maes_aux where num_cuenta = ' +
+        ':NCuenta)'
+      '            and p.cuenta = :cuenta)'
+      '   or   '
+      
+        '   credito  = (select top 1 (Case when len(p.debito) > 0 then p.' +
+        'debito else p.credito end ) as valor'
+      '               from productoTrx P'
+      '               where '
+      
+        '                 p.idProducto = (Select subcuenta from maes_aux ' +
+        'where num_cuenta = :NCuenta )'
+      '             and p.cuenta = :cuenta)'
+      '   )'
+      
+        '   and  idproducto = (Select subcuenta from maes_aux where num_c' +
+        'uenta = :NCuenta )'
+      '   and tipoTrx = :tipoTrx'
+      '   and (esCaja = 1)'
+      ''
+      'Order by p.cuenta'
+      '            '
+      ''
+      ''
+      ''
+      ''
+      '/*'
+      ''
+      'select * from productotrx where (debito = (select top 1   '
+      
+        '                                            (Case when len(p.deb' +
+        'ito) > 0 then p.debito else p.credito end ) as valor'
+      '                                           from productoTrx P'
+      '                                           where '
+      
+        '                                               p.idProducto = (S' +
+        'elect subcuenta from maes_aux where num_cuenta = :ncuenta)'
+      
+        '                                               and p.cuenta = :c' +
+        'uenta)'
+      '                              or   credito  = (select top 1   '
+      
+        '                                            (Case when len(p.deb' +
+        'ito) > 0 then p.debito else p.credito end ) as valor'
+      '                                           from productoTrx P'
+      '                                           where '
+      
+        '                                               p.idProducto = (S' +
+        'elect subcuenta from maes_aux where num_cuenta = :ncuenta)'
+      
+        '                                               and p.cuenta = :c' +
+        'uenta))'
+      ''
+      #9' and '
+      #9' '
+      
+        #9' idproducto = (Select subcuenta from maes_aux where num_cuenta ' +
+        '= :ncuenta)'
+      ''
+      #9' and tipoTrx = :tipoTrx'
+      '         and (esInteres = 1 or esMora = 1 or esCapital = 1)'
+      '            '
+      '*/')
+    Left = 2088
+    Top = 1048
+    ParamData = <
+      item
+        Name = 'NCUENTA'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '2800001901'
+      end
+      item
+        Name = 'CUENTA'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '114040'
+      end
+      item
+        Name = 'TIPOTRX'
+        DataType = ftString
+        ParamType = ptInput
+        Value = 'D'
+      end>
+    object transaccionTrxidTrx: TFDAutoIncField
+      FieldName = 'idTrx'
+      Origin = 'idTrx'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object transaccionTrxidProducto: TIntegerField
+      FieldName = 'idProducto'
+      Origin = 'idProducto'
+      Required = True
+    end
+    object transaccionTrxcuenta: TStringField
+      FieldName = 'cuenta'
+      Origin = 'cuenta'
+      Size = 50
+    end
+    object transaccionTrxdescripcion: TStringField
+      FieldName = 'descripcion'
+      Origin = 'descripcion'
+      Size = 100
+    end
+    object transaccionTrxdebito: TStringField
+      FieldName = 'debito'
+      Origin = 'debito'
+      Size = 50
+    end
+    object transaccionTrxcredito: TStringField
+      FieldName = 'credito'
+      Origin = 'credito'
+      Size = 50
+    end
+    object transaccionTrxverAuxiliar: TBooleanField
+      FieldName = 'verAuxiliar'
+      Origin = 'verAuxiliar'
+    end
+    object transaccionTrxfecha_aud: TSQLTimeStampField
+      FieldName = 'fecha_aud'
+      Origin = 'fecha_aud'
+    end
+    object transaccionTrxusuario: TStringField
+      FieldName = 'usuario'
+      Origin = 'usuario'
+      Size = 12
+    end
+    object transaccionTrxpago: TBooleanField
+      FieldName = 'pago'
+      Origin = 'pago'
+    end
+    object transaccionTrxprincipal: TBooleanField
+      FieldName = 'principal'
+      Origin = 'principal'
+    end
+    object transaccionTrxDC: TStringField
+      FieldName = 'DC'
+      Origin = 'DC'
+      Size = 1
+    end
+    object transaccionTrxsigno: TStringField
+      FieldName = 'signo'
+      Origin = 'signo'
+      Size = 1
+    end
+    object transaccionTrxtipoTrx: TStringField
+      FieldName = 'tipoTrx'
+      Origin = 'tipoTrx'
+      Size = 1
+    end
+    object transaccionTrxcajaTrx: TStringField
+      FieldName = 'cajaTrx'
+      Origin = 'cajaTrx'
+      Size = 1
+    end
+    object transaccionTrxesInteres: TBooleanField
+      FieldName = 'esInteres'
+      Origin = 'esInteres'
+    end
+    object transaccionTrxesMora: TBooleanField
+      FieldName = 'esMora'
+      Origin = 'esMora'
+    end
+    object transaccionTrxesCaja: TBooleanField
+      FieldName = 'esCaja'
+      Origin = 'esCaja'
+    end
+    object transaccionTrxesCapital: TBooleanField
+      FieldName = 'esCapital'
+      Origin = 'esCapital'
+    end
+    object transaccionTrxorden: TIntegerField
+      FieldName = 'orden'
+      Origin = 'orden'
+    end
+    object transaccionTrxesImputable: TBooleanField
+      FieldName = 'esImputable'
+      Origin = 'esImputable'
+    end
+    object transaccionTrxguid: TStringField
+      FieldName = 'guid'
+      Origin = 'guid'
+      Size = 50
+    end
+    object transaccionTrxverChk_Tran: TBooleanField
+      FieldName = 'verChk_Tran'
+      Origin = 'verChk_Tran'
+    end
+    object transaccionTrxMDC: TWideStringField
+      FieldName = 'MDC'
+      Origin = 'MDC'
+      Size = 1
+    end
+    object transaccionTrxcd: TStringField
+      FieldName = 'cd'
+      Origin = 'cd'
+      Size = 1
+    end
+    object transaccionTrxcampo: TStringField
+      FieldName = 'campo'
+      Origin = 'campo'
+      Size = 50
+    end
+  end
+  object movimientoTRX: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'Select * from productoTrx'
+      'Where '
+      '      idProducto = :id'
+      ' and  cuenta     = :cuenta'
+      ' and  dc         = :dc'
+      '    ')
+    Left = 1280
+    Top = 888
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '28'
+      end
+      item
+        Name = 'CUENTA'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '114060'
+      end
+      item
+        Name = 'DC'
+        DataType = ftString
+        ParamType = ptInput
+        Value = 'C'
+      end>
+    object movimientoTRXidTrx: TFDAutoIncField
+      FieldName = 'idTrx'
+      Origin = 'idTrx'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object movimientoTRXidProducto: TIntegerField
+      FieldName = 'idProducto'
+      Origin = 'idProducto'
+      Required = True
+    end
+    object movimientoTRXcuenta: TStringField
+      FieldName = 'cuenta'
+      Origin = 'cuenta'
+      Size = 50
+    end
+    object movimientoTRXdescripcion: TStringField
+      FieldName = 'descripcion'
+      Origin = 'descripcion'
+      Size = 100
+    end
+    object movimientoTRXdebito: TStringField
+      FieldName = 'debito'
+      Origin = 'debito'
+      Size = 50
+    end
+    object movimientoTRXcredito: TStringField
+      FieldName = 'credito'
+      Origin = 'credito'
+      Size = 50
+    end
+    object movimientoTRXverAuxiliar: TBooleanField
+      FieldName = 'verAuxiliar'
+      Origin = 'verAuxiliar'
+    end
+    object movimientoTRXfecha_aud: TSQLTimeStampField
+      FieldName = 'fecha_aud'
+      Origin = 'fecha_aud'
+    end
+    object movimientoTRXusuario: TStringField
+      FieldName = 'usuario'
+      Origin = 'usuario'
+      Size = 12
+    end
+    object movimientoTRXpago: TBooleanField
+      FieldName = 'pago'
+      Origin = 'pago'
+    end
+    object movimientoTRXprincipal: TBooleanField
+      FieldName = 'principal'
+      Origin = 'principal'
+    end
+    object movimientoTRXDC: TStringField
+      FieldName = 'DC'
+      Origin = 'DC'
+      Size = 1
+    end
+    object movimientoTRXsigno: TStringField
+      FieldName = 'signo'
+      Origin = 'signo'
+      Size = 1
+    end
+    object movimientoTRXtipoTrx: TStringField
+      FieldName = 'tipoTrx'
+      Origin = 'tipoTrx'
+      Size = 1
+    end
+    object movimientoTRXcajaTrx: TStringField
+      FieldName = 'cajaTrx'
+      Origin = 'cajaTrx'
+      Size = 1
+    end
+    object movimientoTRXesInteres: TBooleanField
+      FieldName = 'esInteres'
+      Origin = 'esInteres'
+    end
+    object movimientoTRXesMora: TBooleanField
+      FieldName = 'esMora'
+      Origin = 'esMora'
+    end
+    object movimientoTRXesCaja: TBooleanField
+      FieldName = 'esCaja'
+      Origin = 'esCaja'
+    end
+    object movimientoTRXesCapital: TBooleanField
+      FieldName = 'esCapital'
+      Origin = 'esCapital'
+    end
+    object movimientoTRXorden: TIntegerField
+      FieldName = 'orden'
+      Origin = 'orden'
+    end
+    object movimientoTRXesImputable: TBooleanField
+      FieldName = 'esImputable'
+      Origin = 'esImputable'
+    end
+    object movimientoTRXguid: TStringField
+      FieldName = 'guid'
+      Origin = 'guid'
+      Size = 50
+    end
+    object movimientoTRXverChk_Tran: TBooleanField
+      FieldName = 'verChk_Tran'
+      Origin = 'verChk_Tran'
+    end
+  end
+  object saldoMora: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'select'
+      
+        'montoMora = (case when (Select top 1 esmora from productoTrx whe' +
+        're cuenta = t.cuenta  and esmora = 1 and ma.subcuenta = idProduc' +
+        'to ) = 1 then t.monto Else 0 End) * '
+      
+        '             (case when (Select signo from productoTrx where cue' +
+        'nta = t.cuenta and verauxiliar = 1 and idproducto = ma.subcuenta' +
+        ' and dc = t.naturaleza) = '#39'+'#39' then 1 else -1 end)'
+      'from transaccion_det T '
+      
+        ' left OUTER  join maes_aux MA on T.num_cuenta     = MA.num_cuent' +
+        'a'
+      
+        ' left join transaccion_enc E on T.documento = E.documento and T.' +
+        'tipo_documento = E.tipo_documento'
+      ' inner Join maesCont MC on T.cuenta = mc.cuenta'
+      ' inner join tipo_doc TD on T.tipo_documento = td.tipo_doc '
+      ''
+      'where  '
+      '   t.num_cuenta = :numCuenta'
+      
+        '   and (Select verauxiliar from productoTrx where cuenta = t.cue' +
+        'nta and idproducto = ma.subcuenta and ( dc = t.naturaleza )) = 1'
+      
+        '   and ((case when (Select top 1 esmora from productoTrx where c' +
+        'uenta = t.cuenta  and esmora = 1 and ma.subcuenta = idProducto )' +
+        ' = 1 then t.monto Else 0 End)) <> 0.00'
+      '   and e.anulado = 0'
+      '   and e.fecha_doc = t.fecha_doc'
+      '--   order by T.fecha_doc,t.Documento,Orden asc')
+    Left = 1920
+    Top = 1608
+    ParamData = <
+      item
+        Name = 'NUMCUENTA'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '2800001901'
+      end>
+    object saldoMoramontoMora: TFloatField
+      FieldName = 'montoMora'
+      Origin = 'montoMora'
+      ReadOnly = True
+    end
+  end
+  object cheque_ListaBeneficiario: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      
+        '--  Listado de la tabla de tblsocios para la carga de combo box ' +
+        'de beneficiarios en modulo de cheques'
+      ''
+      'Select * from Socios'
+      'Order by nombreCompleto')
+    Left = 320
+    Top = 1400
   end
 end

@@ -205,6 +205,8 @@
     <File Path="Calendario.dfm"/>
     <File Path="Cargos.pas"/>
     <File Path="Cargos.dfm"/>
+    <File Path="CatalogoContable.pas"/>
+    <File Path="CatalogoContable.dfm"/>
     <File Path="Cheques.pas"/>
     <File Path="Cheques.dfm"/>
     <File Path="ChequesCaja.pas"/>
@@ -285,7 +287,5 @@
     <File Path="Ventana2.dfm"/>
     <File Path="WORKING.PAS"/>
     <File Path="WORKING.dfm"/>
-    <File Path="CatalogoContable.pas"/>
-    <File Path="CatalogoContable.dfm"/>
   </ProjectSortOrder>
 </BorlandProject>

@@ -6,6 +6,7 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
+  ExplicitLeft = -72
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -1344,6 +1345,11 @@ inherited frmCheques: TfrmCheques
             ImageIndex = 31
             OnClick = btn_chk_Undo_EncaClick
           end
+          object btn_chk_imprimir: TToolButton
+            Left = 113
+            Top = 0
+            ImageIndex = 18
+          end
         end
         object grp_chk_Detalle: TGroupBox
           Left = 0
@@ -1597,6 +1603,8 @@ inherited frmCheques: TfrmCheques
           Font.Style = []
           ParentFont = False
           TabOrder = 2
+          ExplicitLeft = 1
+          ExplicitTop = 40
           object Label4: TLabel
             Left = 195
             Top = 27
@@ -1660,9 +1668,14 @@ inherited frmCheques: TfrmCheques
             Top = 54
             Width = 280
             Height = 24
-            DataField = '_beneficiario'
+            DataField = 'anombrede'
             DataSource = dts_cheque_enc
+            KeyField = 'idSocio'
+            ListField = 'nombreCompleto'
+            ListSource = dts_cheque_ListaBeneficiario
             TabOrder = 0
+            OnEnter = dbl_chk_BeneficiarioEnter
+            OnExit = dbl_chk_BeneficiarioExit
           end
           object dbl_chk_cuenta: TDBLookupComboBox
             Left = 456
@@ -1682,7 +1695,7 @@ inherited frmCheques: TfrmCheques
             Height = 24
             DataField = 'monto_gral'
             DataSource = dts_cheque_enc
-            TabOrder = 2
+            TabOrder = 3
             OnClick = ed_chk_MontoClick
             OnEnter = ed_chk_MontoEnter
             OnExit = ed_chk_MontoExit
@@ -1695,7 +1708,7 @@ inherited frmCheques: TfrmCheques
             Height = 66
             Align = alBottom
             Caption = 'Observaci'#243'n:'
-            TabOrder = 3
+            TabOrder = 2
             object DBMemo1: TDBMemo
               AlignWithMargins = True
               Left = 5
@@ -1760,6 +1773,55 @@ inherited frmCheques: TfrmCheques
           TabOrder = 0
         end
       end
+    end
+  end
+  object pnl_chk_beneficiarios: TPanel
+    Left = 448
+    Top = 175
+    Width = 282
+    Height = 174
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 3
+    Visible = False
+    OnExit = pnl_chk_beneficiariosExit
+    DesignSize = (
+      282
+      174)
+    object ed_chk_beneficiario: TEdit
+      Left = 0
+      Top = 0
+      Width = 282
+      Height = 24
+      TabOrder = 1
+      Text = 'ed_chk_beneficiario'
+    end
+    object lv_socioCuentas: TListView
+      Left = 1
+      Top = 24
+      Width = 279
+      Height = 147
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      Columns = <
+        item
+          Caption = 'Nombre Cuenta Contable'
+          ImageIndex = 0
+          Width = 200
+        end
+        item
+          Caption = 'ID'
+          ImageIndex = 17
+        end>
+      LargeImages = DataModulo1.ImageList2
+      GroupHeaderImages = DataModulo1.ImageList2
+      ReadOnly = True
+      RowSelect = True
+      SmallImages = DataModulo1.ImageList2
+      StateImages = DataModulo1.ImageList2
+      TabOrder = 0
+      ViewStyle = vsReport
     end
   end
   object dts_ChequesCuenta: TDataSource
@@ -1931,6 +1993,9 @@ inherited frmCheques: TfrmCheques
       FieldName = 'tipoCuenta'
       Size = 1
     end
+    object mTransaccionmontoInteres: TFloatField
+      FieldName = 'montoInteres'
+    end
   end
   object dtstransaccion: TDataSource
     DataSet = mTransaccion
@@ -1983,5 +2048,10 @@ inherited frmCheques: TfrmCheques
     DataSet = m_Chk_Generados
     Left = 56
     Top = 230
+  end
+  object dts_cheque_ListaBeneficiario: TDataSource
+    DataSet = DataModulo1.cheque_ListaBeneficiario
+    Left = 104
+    Top = 352
   end
 end

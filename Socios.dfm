@@ -3124,7 +3124,7 @@ inherited frmSocios: TfrmSocios
               Left = 564
               Top = 145
               Width = 34
-              Height = 22
+              Height = 21
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3145,7 +3145,7 @@ inherited frmSocios: TfrmSocios
               Left = 608
               Top = 145
               Width = 34
-              Height = 22
+              Height = 21
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3166,7 +3166,7 @@ inherited frmSocios: TfrmSocios
               Left = 652
               Top = 145
               Width = 46
-              Height = 22
+              Height = 21
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -5993,6 +5993,10 @@ inherited frmSocios: TfrmSocios
     object TabSheet3: TTabSheet
       Caption = 'Herederos'
       ImageIndex = 36
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Image1: TImage
         Left = -4
         Top = 229
@@ -7499,6 +7503,10 @@ inherited frmSocios: TfrmSocios
     object TabSheet5: TTabSheet
       Caption = 'Documentacion'
       ImageIndex = 38
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ToolBar6: TToolBar
         AlignWithMargins = True
         Left = 3
@@ -7809,6 +7817,10 @@ inherited frmSocios: TfrmSocios
         object TabSheet9: TTabSheet
           Caption = 'Detalles de La Cuenta'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox11: TGroupBox
             Left = 0
             Top = 41
@@ -8498,6 +8510,10 @@ inherited frmSocios: TfrmSocios
               OnMouseLeave = PageControl3MouseLeave
               object TabSheet11: TTabSheet
                 Caption = 'Inf. de Fiador'
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 0
+                ExplicitHeight = 0
                 object GroupBox13: TGroupBox
                   AlignWithMargins = True
                   Left = 3
@@ -9232,6 +9248,10 @@ inherited frmSocios: TfrmSocios
         object tsProductoPlanPago: TTabSheet
           Caption = 'Plan de Pago'
           ImageIndex = 3
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object grp_PPP: TGroupBox
             AlignWithMargins = True
             Left = 3
@@ -9498,6 +9518,10 @@ inherited frmSocios: TfrmSocios
       AlignWithMargins = True
       Caption = 'Datos Financieros'
       ImageIndex = 40
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBGrid3: TDBGrid
         Left = 0
         Top = 35
@@ -9635,6 +9659,10 @@ inherited frmSocios: TfrmSocios
       ImageIndex = 47
       ParentShowHint = False
       ShowHint = True
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBGrid2: TDBGrid
         Left = 3
         Top = 34
@@ -10176,6 +10204,10 @@ inherited frmSocios: TfrmSocios
       FieldName = 'nombreDoc'
       Origin = 'nombreDoc'
       Size = 50
+    end
+    object mMovimientossubcuenta: TSmallintField
+      FieldName = 'subcuenta'
+      Origin = 'subcuenta'
     end
   end
   object dtstipoPlanilla: TDataSource
