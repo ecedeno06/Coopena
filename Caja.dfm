@@ -12174,6 +12174,11 @@ inherited frmCaja: TfrmCaja
                   Title.Font.Style = [fsBold]
                   Width = 80
                   Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'tipoCuenta'
+                  Visible = True
                 end>
             end
           end
@@ -12181,10 +12186,6 @@ inherited frmCaja: TfrmCaja
         object TabSheet2: TTabSheet
           Caption = 'Plan de Pago'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel8: TPanel
             Left = 0
             Top = 0
@@ -12340,10 +12341,6 @@ inherited frmCaja: TfrmCaja
         object TabSheet3: TTabSheet
           Caption = 'Movimientos'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel10: TPanel
             Left = 0
             Top = 0

@@ -6,7 +6,7 @@ inherited frmCheques: TfrmCheques
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -72
+  ExplicitTop = 4
   ExplicitWidth = 1030
   ExplicitHeight = 680
   PixelsPerInch = 96
@@ -151,7 +151,7 @@ inherited frmCheques: TfrmCheques
     end
     object dbg_chk_generados: TDBGrid
       Left = 2
-      Top = 148
+      Top = 152
       Width = 292
       Height = 482
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -251,10 +251,10 @@ inherited frmCheques: TfrmCheques
     end
     object PageControl1: TPageControl
       Left = 0
-      Top = 9
+      Top = 8
       Width = 726
       Height = 622
-      ActivePage = ts_Cheque_Confeccion
+      ActivePage = ts_Cheque_Impresion
       Align = alCustom
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 0
@@ -1319,6 +1319,7 @@ inherited frmCheques: TfrmCheques
           GradientStartColor = clWhite
           Images = DataModulo1.ImageList1
           TabOrder = 0
+          OnMouseMove = tb_Chk_EncMouseMove
           object btn_chk_Nuevo: TToolButton
             Left = 0
             Top = 0
@@ -1348,7 +1349,8 @@ inherited frmCheques: TfrmCheques
           object btn_chk_imprimir: TToolButton
             Left = 113
             Top = 0
-            ImageIndex = 18
+            ImageIndex = 20
+            OnClick = btn_chk_imprimirClick
           end
         end
         object grp_chk_Detalle: TGroupBox
@@ -1379,6 +1381,7 @@ inherited frmCheques: TfrmCheques
             GradientStartColor = clWhite
             Images = DataModulo1.ImageList2
             TabOrder = 0
+            OnMouseMove = tb_chk_detMouseMove
             object btn_chk_det_InsertarCuenta: TToolButton
               Left = 0
               Top = 0
@@ -1418,13 +1421,27 @@ inherited frmCheques: TfrmCheques
             object ToolButton6: TToolButton
               Left = 129
               Top = 0
-              Width = 296
+              Width = 138
               Caption = 'ToolButton6'
               ImageIndex = 18
               Style = tbsSeparator
             end
+            object btn_chk_asiento: TToolButton
+              Left = 267
+              Top = 0
+              Caption = 'btn_chk_asiento'
+              ImageIndex = 39
+            end
+            object ToolButton5: TToolButton
+              Left = 299
+              Top = 0
+              Width = 70
+              Caption = 'ToolButton5'
+              ImageIndex = 19
+              Style = tbsSeparator
+            end
             object TLabel
-              Left = 425
+              Left = 369
               Top = 0
               Width = 62
               Height = 24
@@ -1432,7 +1449,7 @@ inherited frmCheques: TfrmCheques
             end
             object ed_chk_diferencia: TEdit
               AlignWithMargins = True
-              Left = 487
+              Left = 431
               Top = 0
               Width = 134
               Height = 24
@@ -1450,8 +1467,14 @@ inherited frmCheques: TfrmCheques
             DataSource = dtstransaccion
             FixedColor = clMoneyGreen
             GradientEndColor = clMoneyGreen
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Tahoma'
+            Font.Style = []
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
             ParentColor = True
+            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 1
@@ -1462,11 +1485,7 @@ inherited frmCheques: TfrmCheques
             TitleFont.Style = []
             OnCellClick = DBGrid1CellClick
             OnColEnter = DBGrid1ColEnter
-            OnColExit = DBGrid1ColExit
             OnDrawColumnCell = DBGrid1DrawColumnCell
-            OnDragDrop = DBGrid1DragDrop
-            OnDragOver = DBGrid1DragOver
-            OnKeyDown = DBGrid1KeyDown
             OnKeyPress = DBGrid1KeyPress
             Columns = <
               item
@@ -1479,7 +1498,7 @@ inherited frmCheques: TfrmCheques
                 Title.Font.Height = -11
                 Title.Font.Name = 'Tahoma'
                 Title.Font.Style = [fsBold]
-                Width = 122
+                Width = 130
                 Visible = True
               end
               item
@@ -1496,7 +1515,7 @@ inherited frmCheques: TfrmCheques
                 Title.Font.Height = -11
                 Title.Font.Name = 'Tahoma'
                 Title.Font.Style = [fsBold]
-                Width = 87
+                Width = 70
                 Visible = True
               end
               item
@@ -1514,7 +1533,7 @@ inherited frmCheques: TfrmCheques
                 Title.Font.Height = -11
                 Title.Font.Name = 'Tahoma'
                 Title.Font.Style = [fsBold]
-                Width = 217
+                Width = 220
                 Visible = True
               end
               item
@@ -1586,6 +1605,26 @@ inherited frmCheques: TfrmCheques
                 Title.Font.Style = [fsBold]
                 Width = 80
                 Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'CuentaOrden'
+                Visible = False
+              end
+              item
+                Expanded = False
+                FieldName = 'SaldoO'
+                Visible = False
+              end
+              item
+                Expanded = False
+                FieldName = 'guiPadre'
+                Visible = False
+              end
+              item
+                Expanded = False
+                FieldName = 'montoInteres'
+                Visible = True
               end>
           end
         end
@@ -1603,8 +1642,6 @@ inherited frmCheques: TfrmCheques
           Font.Style = []
           ParentFont = False
           TabOrder = 2
-          ExplicitLeft = 1
-          ExplicitTop = 40
           object Label4: TLabel
             Left = 195
             Top = 27
@@ -1647,33 +1684,18 @@ inherited frmCheques: TfrmCheques
             Height = 16
             Caption = 'Documento:'
           end
-          object SpeedButton1: TSpeedButton
-            Left = 375
-            Top = 55
-            Width = 23
-            Height = 22
-            Glyph.Data = {
-              F6000000424DF600000000000000760000002800000010000000100000000100
-              0400000000008000000000000000000000001000000000000000000000000000
-              8000008000000080800080000000800080008080000080808000C0C0C0000000
-              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555550000000
-              00055555578888888805555557FFFFFFF805555557FFFFFFF805555557FFFFFF
-              F805555557FFFFFFF805555557FFFFFFF805555557FFFFFFF805555557FFFFFF
-              F805557F77FF7FF000055557B7F7FFF8F75555557FBFFFF8755555577BFF7777
-              55555557B7B7F5555555557F57F575555555555557F557F55555}
-          end
           object dbl_chk_Beneficiario: TDBLookupComboBox
             AlignWithMargins = True
             Left = 89
             Top = 54
-            Width = 280
+            Width = 310
             Height = 24
             DataField = 'anombrede'
             DataSource = dts_cheque_enc
             KeyField = 'idSocio'
             ListField = 'nombreCompleto'
             ListSource = dts_cheque_ListaBeneficiario
-            TabOrder = 0
+            TabOrder = 2
             OnEnter = dbl_chk_BeneficiarioEnter
             OnExit = dbl_chk_BeneficiarioExit
           end
@@ -1684,7 +1706,7 @@ inherited frmCheques: TfrmCheques
             Height = 24
             DataField = 'nCuentaCheque'
             DataSource = dts_cheque_enc
-            TabOrder = 1
+            TabOrder = 0
             OnClick = dbl_chk_cuentaClick
           end
           object ed_chk_Monto: TDBEdit
@@ -1708,7 +1730,7 @@ inherited frmCheques: TfrmCheques
             Height = 66
             Align = alBottom
             Caption = 'Observaci'#243'n:'
-            TabOrder = 2
+            TabOrder = 1
             object DBMemo1: TDBMemo
               AlignWithMargins = True
               Left = 5
@@ -1762,66 +1784,146 @@ inherited frmCheques: TfrmCheques
       object ts_Cheque_Impresion: TTabSheet
         Caption = 'Vista Preliminar'
         ImageIndex = 1
-        object Memo1: TMemo
-          Left = 32
-          Top = 48
-          Width = 625
-          Height = 217
-          Lines.Strings = (
-            'Me'
-            'mo1')
+        object DBGrid2: TDBGrid
+          Left = 0
+          Top = 41
+          Width = 718
+          Height = 553
+          Align = alClient
+          DataSource = dts_mchequeImpresion
           TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = '_dcuenta'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = '_dNombre'
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = '_dMonto'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = '_cCuenta'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = '_cNombre'
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = '_cmonto'
+              Visible = True
+            end>
+        end
+        object ToolBar1: TToolBar
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 712
+          Height = 35
+          ButtonHeight = 32
+          ButtonWidth = 32
+          DrawingStyle = dsGradient
+          GradientEndColor = clMoneyGreen
+          GradientStartColor = clWhite
+          Images = DataModulo1.ImageList1
+          TabOrder = 1
+          OnMouseMove = tb_Chk_EncMouseMove
+          object ToolButton9: TToolButton
+            Left = 0
+            Top = 0
+            ImageIndex = 18
+            OnClick = btn_chk_imprimirClick
+          end
+          object ToolButton1: TToolButton
+            Left = 32
+            Top = 0
+            Caption = 'ToolButton1'
+            ImageIndex = 41
+            OnClick = ToolButton1Click
+          end
         end
       end
     end
   end
   object pnl_chk_beneficiarios: TPanel
-    Left = 448
-    Top = 175
-    Width = 282
-    Height = 174
-    Color = clWhite
+    Left = 85
+    Top = 282
+    Width = 194
+    Height = 87
+    BevelEdges = []
+    BevelKind = bkFlat
+    Color = clCream
     ParentBackground = False
     TabOrder = 3
     Visible = False
     OnExit = pnl_chk_beneficiariosExit
+    OnMouseLeave = pnl_chk_beneficiariosMouseLeave
     DesignSize = (
-      282
-      174)
+      194
+      87)
     object ed_chk_beneficiario: TEdit
       Left = 0
       Top = 0
-      Width = 282
+      Width = 194
       Height = 24
+      Anchors = [akLeft, akTop, akRight]
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = True
+      ParentFont = False
       TabOrder = 1
       Text = 'ed_chk_beneficiario'
+      OnChange = ed_chk_beneficiarioChange
     end
-    object lv_socioCuentas: TListView
-      Left = 1
-      Top = 24
-      Width = 279
-      Height = 147
+    object lv_beneficiarios: TListView
+      Left = 0
+      Top = 30
+      Width = 191
+      Height = 55
+      Align = alCustom
       Anchors = [akLeft, akTop, akRight, akBottom]
       BevelOuter = bvNone
       BorderStyle = bsNone
       Columns = <
         item
-          Caption = 'Nombre Cuenta Contable'
-          ImageIndex = 0
-          Width = 200
+          Caption = 'ID'
+          Width = 70
         end
         item
-          Caption = 'ID'
-          ImageIndex = 17
+          Caption = 'Beneficiario'
+          Width = 280
         end>
       LargeImages = DataModulo1.ImageList2
       GroupHeaderImages = DataModulo1.ImageList2
       ReadOnly = True
       RowSelect = True
+      ParentColor = True
       SmallImages = DataModulo1.ImageList2
-      StateImages = DataModulo1.ImageList2
       TabOrder = 0
       ViewStyle = vsReport
+      OnClick = lv_beneficiariosClick
+      OnColumnClick = lv_beneficiariosColumnClick
+      OnCompare = lv_beneficiariosCompare
     end
   end
   object dts_ChequesCuenta: TDataSource
@@ -1833,26 +1935,6 @@ inherited frmCheques: TfrmCheques
     DataSet = DataModulo1.cheque_enc
     Left = 453
     Top = 354
-  end
-  object frxReport1: TfrxReport
-    Version = '5.1.5'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 42912.829592789350000000
-    ReportOptions.LastChange = 42912.829592789350000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      'begin'
-      ''
-      'end.')
-    Left = 688
-    Datasets = <>
-    Variables = <>
-    Style = <>
   end
   object mTransaccion: TFDMemTable
     FieldDefs = <>
@@ -1880,7 +1962,7 @@ inherited frmCheques: TfrmCheques
     object mTransaccionNum_Cuenta: TStringField
       FieldName = 'Num_Cuenta'
       EditMask = '!00-000000-00;0;_'
-      Size = 12
+      Size = 10
     end
     object mTransaccionCuenta: TStringField
       FieldName = 'Cuenta'
@@ -1895,7 +1977,7 @@ inherited frmCheques: TfrmCheques
     end
     object mTransaccionMonto: TFloatField
       FieldName = 'Monto'
-      DisplayFormat = '#,###.##;(#,###.##)'
+      DisplayFormat = '#,##0.00;(#,##0.00)'
       EditFormat = '#,##0.00'
     end
     object mTransaccionFecha_Aud: TDateTimeField
@@ -1911,10 +1993,11 @@ inherited frmCheques: TfrmCheques
     end
     object mTransaccionEfectivo: TFloatField
       FieldName = 'Efectivo'
-      DisplayFormat = '#,##0.00'
+      DisplayFormat = '#,##0.00;(#,##0.00)'
     end
     object mTransaccionCheque: TFloatField
       FieldName = 'Cheque'
+      DisplayFormat = '#,##0.00;(#,##0.00)'
       MaxValue = 99999999999999.000000000000000000
     end
     object mTransaccionNumCheque: TIntegerField
@@ -1995,6 +2078,15 @@ inherited frmCheques: TfrmCheques
     end
     object mTransaccionmontoInteres: TFloatField
       FieldName = 'montoInteres'
+      DisplayFormat = '#,##0.00;(#,##0.00)'
+    end
+    object mTransaccionCuentaOrden: TStringField
+      FieldName = 'CuentaOrden'
+      Size = 1
+    end
+    object mTransaccionguiPadre: TStringField
+      FieldName = 'guiPadre'
+      Size = 50
     end
   end
   object dtstransaccion: TDataSource
@@ -2053,5 +2145,445 @@ inherited frmCheques: TfrmCheques
     DataSet = DataModulo1.cheque_ListaBeneficiario
     Left = 104
     Top = 352
+  end
+  object frxReport2: TfrxReport
+    Version = '5.1.5'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 42937.660710138900000000
+    ReportOptions.LastChange = 42940.678819490740000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      'begin'
+      ''
+      'end.')
+    Left = 448
+    Top = 464
+    Datasets = <
+      item
+        DataSet = frxDetalleCheque
+        DataSetName = 'frxChequeDetalle'
+      end
+      item
+        DataSet = frxEncabezado
+        DataSetName = 'frxEncabezado'
+      end>
+    Variables = <
+      item
+        Name = ' Cheques'
+        Value = Null
+      end
+      item
+        Name = 'MontoLetra'
+        Value = Null
+      end
+      item
+        Name = 'Beneficiario'
+        Value = Null
+      end
+      item
+        Name = 'xxx'
+        Value = Null
+      end>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 216.000000000000000000
+      PaperHeight = 215.000000000000000000
+      PaperSize = 256
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        Height = 415.748300000000000000
+        Top = 18.897650000000000000
+        Width = 816.378480000000000000
+        DataSet = frxEncabezado
+        DataSetName = 'frxEncabezado'
+        RowCount = 0
+        object frxEncabezadomonto_gral: TfrxMemoView
+          Left = 557.252320000000100000
+          Top = 139.944960000000000000
+          Width = 162.519790000000000000
+          Height = 18.897650000000000000
+          DataField = 'monto_gral'
+          DataSet = frxEncabezado
+          DataSetName = 'frxEncabezado'
+          DisplayFormat.DecimalSeparator = '.'
+          DisplayFormat.FormatStr = '%2.2m'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxEncabezado."monto_gral"]')
+          ParentFont = False
+        end
+        object MontoLetra: TfrxMemoView
+          Left = 94.929190000000010000
+          Top = 171.165430000000000000
+          Width = 393.071120000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            '[MontoLetra]')
+          ParentFont = False
+        end
+        object frxEncabezadoNombreCompleto: TfrxMemoView
+          Left = 94.929190000000010000
+          Top = 138.590600000000000000
+          Width = 400.630180000000000000
+          Height = 15.118120000000000000
+          DataSet = frxEncabezado
+          DataSetName = 'frxEncabezado'
+          Memo.UTF8W = (
+            'UpperCase(***[frxEncabezado."NombreCompleto"]***)')
+        end
+        object Memo1: TfrxMemoView
+          Left = 515.354670000000100000
+          Top = 70.149660000000000000
+          Width = 222.992270000000000000
+          Height = 26.456710000000000000
+          CharSpacing = 3.000000000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = '@Arial Unicode MS'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[xxx]')
+          ParentFont = False
+        end
+        object frxEncabezadoanombrede: TfrxMemoView
+          Left = 131.165430000000000000
+          Top = 376.393940000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          DataField = 'anombrede'
+          DataSet = frxEncabezado
+          DataSetName = 'frxEncabezado'
+          Memo.UTF8W = (
+            '[frxEncabezado."anombrede"]')
+        end
+        object frxEncabezadopagare: TfrxMemoView
+          Left = 401.071120000000000000
+          Top = 377.393940000000000000
+          Width = 181.417440000000000000
+          Height = 18.897650000000000000
+          DataField = 'pagare'
+          DataSet = frxEncabezado
+          DataSetName = 'frxEncabezado'
+          Memo.UTF8W = (
+            '[frxEncabezado."pagare"]')
+        end
+      end
+      object PageFooter2: TfrxPageFooter
+        FillType = ftBrush
+        Height = 151.181200000000000000
+        Top = 536.693260000000000000
+        Width = 816.378480000000000000
+        object SysMemo1: TfrxSysMemoView
+          Left = 262.448980000000000000
+          Top = 61.354360000000040000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.DecimalSeparator = '.'
+          DisplayFormat.FormatStr = '%2.2m'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxChequeDetalle."_dMonto">,DetailData1)]')
+          ParentFont = False
+        end
+        object SysMemo2: TfrxSysMemoView
+          Left = 607.197280000000000000
+          Top = 61.354360000000040000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.DecimalSeparator = '.'
+          DisplayFormat.FormatStr = '%2.2m'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxChequeDetalle."_cmonto">,DetailData1)]')
+          ParentFont = False
+        end
+        object frxEncabezadoobservacion: TfrxMemoView
+          Left = 37.795300000000000000
+          Top = 3.779530000000022000
+          Width = 695.433520000000000000
+          Height = 41.574830000000000000
+          DataField = 'observacion'
+          DataSet = frxEncabezado
+          DataSetName = 'frxEncabezado'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxEncabezado."observacion"]')
+          ParentFont = False
+        end
+      end
+      object DetailData1: TfrxDetailData
+        FillType = ftBrush
+        Height = 18.897637800000000000
+        Top = 457.323130000000000000
+        Width = 816.378480000000000000
+        DataSet = frxDetalleCheque
+        DataSetName = 'frxChequeDetalle'
+        RowCount = 0
+        object frxChequeDetalle_dcuenta1: TfrxMemoView
+          Left = 28.897650000000000000
+          Top = 2.000000000000000000
+          Width = 68.031540000000000000
+          Height = 15.118120000000000000
+          DataField = '_dcuenta'
+          DataSet = frxDetalleCheque
+          DataSetName = 'frxChequeDetalle'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxChequeDetalle."_dcuenta"]')
+          ParentFont = False
+        end
+        object frxChequeDetalle_cNombre: TfrxMemoView
+          Left = 445.307360000000000000
+          Top = 2.000000000000000000
+          Width = 170.078850000000000000
+          Height = 15.118120000000000000
+          DataField = '_cNombre'
+          DataSet = frxDetalleCheque
+          DataSetName = 'frxChequeDetalle'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxChequeDetalle."_cNombre"]')
+          ParentFont = False
+        end
+        object frxChequeDetalle_dMonto1: TfrxMemoView
+          Left = 277.567100000000000000
+          Top = 2.000000000000000000
+          Width = 79.370130000000000000
+          Height = 15.118120000000000000
+          DataField = '_dMonto'
+          DataSet = frxDetalleCheque
+          DataSetName = 'frxChequeDetalle'
+          DisplayFormat.DecimalSeparator = '.'
+          DisplayFormat.FormatStr = '%2.2m'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxChequeDetalle."_dMonto"]')
+          ParentFont = False
+        end
+        object frxChequeDetalle_dNombre1: TfrxMemoView
+          Left = 100.708720000000000000
+          Top = 2.000000000000000000
+          Width = 166.299320000000000000
+          Height = 15.118120000000000000
+          DataField = '_dNombre'
+          DataSet = frxDetalleCheque
+          DataSetName = 'frxChequeDetalle'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxChequeDetalle."_dNombre"]')
+          ParentFont = False
+        end
+        object frxChequeDetalle_cmonto: TfrxMemoView
+          Left = 622.315400000000000000
+          Top = 2.000000000000000000
+          Width = 79.370130000000000000
+          Height = 15.118120000000000000
+          DataField = '_cmonto'
+          DataSet = frxDetalleCheque
+          DataSetName = 'frxChequeDetalle'
+          DisplayFormat.DecimalSeparator = '.'
+          DisplayFormat.FormatStr = '%2.2m'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxChequeDetalle."_cmonto"]')
+          ParentFont = False
+        end
+        object frxChequeDetalle_cCuenta: TfrxMemoView
+          Left = 371.953000000000000000
+          Top = 2.000000000000000000
+          Width = 68.031540000000000000
+          Height = 15.118120000000000000
+          DataField = '_cCuenta'
+          DataSet = frxDetalleCheque
+          DataSetName = 'frxChequeDetalle'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxChequeDetalle."_cCuenta"]')
+          ParentFont = False
+        end
+      end
+    end
+  end
+  object frxEncabezado: TfrxDBDataset
+    UserName = 'frxEncabezado'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'tipo_documento=tipo_documento'
+      'documento=documento'
+      'fecha_doc=fecha_doc'
+      'estado=estado'
+      'observacion=observacion'
+      'anombrede=anombrede'
+      'impreso=impreso'
+      'anulado=anulado'
+      'contabilidad=contabilidad'
+      'conciliado=conciliado'
+      'fecha_aud=fecha_aud'
+      'usuario=usuario'
+      'monto_gral=monto_gral'
+      'pagare=pagare'
+      'idSocio=idSocio'
+      'guid=guid'
+      'banco=banco'
+      'nCuenta=nCuenta'
+      'NombreCompleto=NombreCompleto')
+    DataSource = dtsChequeEnc
+    BCDToCurrency = False
+    Left = 344
+    Top = 464
+  end
+  object frxDetalleCheque: TfrxDBDataset
+    UserName = 'frxChequeDetalle'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      '_dcuenta=_dcuenta'
+      '_dNombre=_dNombre'
+      '_cCuenta=_cCuenta'
+      '_cNombre=_cNombre'
+      '_documento=_documento'
+      '_tipo=_tipo'
+      '_dMonto=_dMonto'
+      '_cmonto=_cmonto')
+    DataSource = dts_mchequeImpresion
+    BCDToCurrency = False
+    Left = 352
+    Top = 536
+  end
+  object mChequeImpresion: TFDMemTable
+    Active = True
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    Left = 64
+    Top = 515
+    object mChequeImpresion_dcuenta: TStringField
+      FieldName = '_dcuenta'
+    end
+    object mChequeImpresion_dNombre: TStringField
+      FieldName = '_dNombre'
+      Size = 100
+    end
+    object mChequeImpresion_cCuenta: TStringField
+      FieldName = '_cCuenta'
+    end
+    object mChequeImpresion_cNombre: TStringField
+      FieldName = '_cNombre'
+      Size = 100
+    end
+    object mChequeImpresion_documento: TIntegerField
+      FieldName = '_documento'
+    end
+    object mChequeImpresion_tipo: TStringField
+      FieldName = '_tipo'
+      Size = 3
+    end
+    object mChequeImpresion_dMonto: TFloatField
+      FieldName = '_dMonto'
+    end
+    object mChequeImpresion_cmonto: TFloatField
+      FieldName = '_cmonto'
+    end
+  end
+  object dts_mchequeImpresion: TDataSource
+    DataSet = mChequeImpresion
+    Left = 192
+    Top = 515
+  end
+  object dtsChequeEnc: TDataSource
+    DataSet = DataModulo1.chequeImpresionEnc
+    Left = 64
+    Top = 451
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Transparency = False
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    Left = 504
+    Top = 184
   end
 end

@@ -26,7 +26,8 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
   FireDAC.Phys.MSSQLDef, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
   FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.VCLUI.Wait,
-  IniFiles,Dialogs, FireDAC.Phys.MSAcc, FireDAC.Phys.MSAccDef,System.DateUtils;
+  IniFiles,Dialogs, FireDAC.Phys.MSAcc, FireDAC.Phys.MSAccDef,System.DateUtils,
+  FireDAC.Phys.ODBC, FireDAC.Phys.ODBCDef;
 
 type
   TDataModulo1 = class(TDataModule)
@@ -1782,6 +1783,109 @@ type
     saldoMora: TFDQuery;
     saldoMoramontoMora: TFloatField;
     cheque_ListaBeneficiario: TFDQuery;
+    beneficiarios: TFDQuery;
+    beneficiariosnombrecompleto: TStringField;
+    beneficiariosidsocio: TIntegerField;
+    productoTrx2Naturaleza: TWideStringField;
+    ProductoTrx3: TFDQuery;
+    ProductoTrx3idTrx: TFDAutoIncField;
+    ProductoTrx3idProducto: TIntegerField;
+    ProductoTrx3cuenta: TStringField;
+    ProductoTrx3descripcion: TStringField;
+    ProductoTrx3debito: TStringField;
+    ProductoTrx3credito: TStringField;
+    ProductoTrx3verAuxiliar: TBooleanField;
+    ProductoTrx3fecha_aud: TSQLTimeStampField;
+    ProductoTrx3usuario: TStringField;
+    ProductoTrx3pago: TBooleanField;
+    ProductoTrx3principal: TBooleanField;
+    ProductoTrx3DC: TStringField;
+    ProductoTrx3signo: TStringField;
+    ProductoTrx3tipoTrx: TStringField;
+    ProductoTrx3cajaTrx: TStringField;
+    ProductoTrx3esInteres: TBooleanField;
+    ProductoTrx3esMora: TBooleanField;
+    ProductoTrx3esCaja: TBooleanField;
+    ProductoTrx3esCapital: TBooleanField;
+    ProductoTrx3orden: TIntegerField;
+    ProductoTrx3esImputable: TBooleanField;
+    ProductoTrx3guid: TStringField;
+    ProductoTrx3verChk_Tran: TBooleanField;
+    ProductoTrx3campo: TStringField;
+    Actualiza2: TFDQuery;
+    ActualizaCheque: TFDQuery;
+    chequeImpresion: TFDQuery;
+    chequeImpresionEnc: TFDQuery;
+    chequeImpresionEnctipo_documento: TWideStringField;
+    chequeImpresionEncdocumento: TIntegerField;
+    chequeImpresionEncfecha_doc: TSQLTimeStampField;
+    chequeImpresionEncestado: TSingleField;
+    chequeImpresionEncobservacion: TMemoField;
+    chequeImpresionEncanombrede: TIntegerField;
+    chequeImpresionEncimpreso: TSingleField;
+    chequeImpresionEncanulado: TSingleField;
+    chequeImpresionEnccontabilidad: TSingleField;
+    chequeImpresionEncconciliado: TSingleField;
+    chequeImpresionEncfecha_aud: TSQLTimeStampField;
+    chequeImpresionEncusuario: TWideStringField;
+    chequeImpresionEncmonto_gral: TFloatField;
+    chequeImpresionEncpagare: TWideStringField;
+    chequeImpresionEncidSocio: TIntegerField;
+    chequeImpresionEncguid: TStringField;
+    chequeImpresionEncbanco: TIntegerField;
+    chequeImpresionEncnCuenta: TStringField;
+    chequeImpresioncuenta: TWideStringField;
+    chequeImpresionnombre: TWideStringField;
+    chequeImpresionnum_cuenta: TWideStringField;
+    chequeImpresiondebito: TBCDField;
+    chequeImpresionCredito: TBCDField;
+    chequeImpresionidProducto: TSmallintField;
+    chequeImpresionNaturaleza: TWideStringField;
+    chequeImpresionEncNombreCompleto: TWideStringField;
+    productoTrxtipoCuenta: TStringField;
+    ProductoTrx3tipoCuenta: TStringField;
+    FDQuery1: TFDQuery;
+    tipoCuenta: TFDQuery;
+    tipoCuentaid: TStringField;
+    tipoCuentanombre: TStringField;
+    tipoCuentaorden: TIntegerField;
+    dts_tipoCuenta: TDataSource;
+    FDQuery2: TFDQuery;
+    transferencia_enc: TFDQuery;
+    transferencia_enctipo_documento: TWideStringField;
+    transferencia_encdocumento: TIntegerField;
+    transferencia_encfecha_doc: TSQLTimeStampField;
+    transferencia_encestado: TSingleField;
+    transferencia_encobservacion: TMemoField;
+    transferencia_encanombrede: TIntegerField;
+    transferencia_encimpreso: TSingleField;
+    transferencia_encanulado: TSingleField;
+    transferencia_enccontabilidad: TSingleField;
+    transferencia_encconciliado: TSingleField;
+    transferencia_encfecha_aud: TSQLTimeStampField;
+    transferencia_encusuario: TWideStringField;
+    transferencia_encmonto_gral: TFloatField;
+    transferencia_encpagare: TWideStringField;
+    transferencia_encidSocio: TIntegerField;
+    transferencia_encguid: TStringField;
+    transferencia_encbanco: TIntegerField;
+    transferencia_encnCuenta: TStringField;
+    fechadelSistema: TFDQuery;
+    fechadelSistemaFechaSistema: TSQLTimeStampField;
+    actualizaDocumento: TFDQuery;
+    pacto: TFDConnection;
+    p_maes_aux: TFDQuery;
+    FDQuery4: TFDQuery;
+    ProductoTrx3esPagoEspecial: TBooleanField;
+    ProductoTrx3EspecialContraCuenta: TStringField;
+    SaldoCuenta1: TFDQuery;
+    SaldoCuenta1saldoReal: TFloatField;
+    SaldoCuenta1deberSer: TFloatField;
+    SaldoCuenta1Vencimiento: TSQLTimeStampField;
+    SaldoCuenta1atraso: TIntegerField;
+    TipoProductograciaEnMora: TBooleanField;
+    trfGeneradas: TFDQuery;
+    trfEnc: TFDQuery;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;
@@ -1807,6 +1911,8 @@ type
     Function CalculaSaldoActual(NumCuenta: String; cuenta: String) : double;
     Function SalodMora(numcuenta : String) : Double;
     Function _Documento(Operacion : String) : integer;
+    Function NumToLetras(num:double) : string;
+    Function FechaSistema(): tDateTime;
 
     { Public declarations }
   end;
@@ -1968,14 +2074,14 @@ end;
 procedure TDataModulo1.tblso(Sender: TObject);
 
 begin
-
-  if fCnn then
-    if fCnn2 then
-    else
-  else
-  begin
-
-  end;
+//
+//  if fCnn then
+//    if fCnn2 then
+//    else
+//  else
+//  begin
+//
+//  end;
 
  //---
  //---  Obtener la fecha del sistema
@@ -2090,11 +2196,266 @@ begin
   end;
 end;
 
+function TDataModulo1.FechaSistema: tDateTime;
+begin
+  fechadelSistema.Close;
+  fechadelSistema.Open;
+
+  if not fechadelSistema.eof then
+    FechaSistema := fechadelSistemaFechaSistema.AsDateTime ;
+
+
+end;
+
 procedure TDataModulo1.movimientosCuentaCalcFields(DataSet: TDataSet);
 begin
   //movimientosCuentasaldo.Value  := movimientosCuentamontoCapital.Value ;
 end;
 
+
+function TDataModulo1.NumToLetras(num: double): string;
+var
+  cadena   : array[0..12] of char;
+  cade     : array[0..2] of char;
+  cienmil  : string[20];
+  diezmil  : string[14];
+  unmil    : string[14];
+  centena  : string[14];
+  decena   : string[14];
+  unidad   : string[10];
+  largo,n,i: integer;
+  texto    : string;
+  letras   : string;
+
+begin
+ texto:=formatfloat('####0.00',num);
+ strpcopy(cadena,texto);
+
+
+ cienmil:='';
+ diezmil:='';
+ unmil:='';
+ centena:='';
+ decena:='';
+ unidad:='';
+ letras:='';
+ largo := length(texto);
+ if largo < 12 then
+  begin
+   cadena[8] := cadena[largo-1];
+   cadena[7] := cadena[largo-2];
+   cadena[6] := cadena[largo-3];
+   cadena[5] := cadena[largo-4];
+   cadena[4] := cadena[largo-5];
+   cadena[3] := cadena[largo-6];
+   cadena[2] := cadena[largo-7];
+   cadena[1] := cadena[largo-8];
+   n:= 8-largo;
+   i:= 0;
+   while i <= n do
+    begin
+      cadena[i]:= #32;
+      i:=i+1;
+    end;
+  end;
+  cade[2] := cadena[8];
+  cade[1] := cadena[7];
+  cade[0] := cadena[6];
+
+  if cade[1] = #46 then
+  begin
+     cadena[0] := cadena[1];
+     cadena[1] := cadena[2];
+     cadena[2] := cadena[3];
+     cadena[3] := cadena[4];
+     cadena[4] := cadena[5];
+     cadena[5] := cadena[6];
+     cadena[6] := cadena[7];
+     cadena[7] := cadena[8];
+     cadena[8] := #48;
+  end;
+
+ if cade[2] = #46 then
+  begin
+     cadena[0] := cadena[1];
+     cadena[1] := cadena[2];
+     cadena[2] := cadena[3];
+     cadena[3] := cadena[4];
+     cadena[4] := cadena[5];
+     cadena[5] := cadena[6];
+     cadena[6] := cadena[7];
+     cadena[7] := #48;
+     cadena[8] := #48;
+  end;
+  { la parte que calcula cien, diez y miles}
+
+ case cadena [0] of
+      '1': cienmil := 'CIENTO ';
+      '2': cienmil := 'DOSCIENTOS ';
+      '3': cienmil := 'TRESCIENTOS ';
+      '4': cienmil := 'CUATROCIENTOS ';
+      '5': cienmil := 'QUINIENTOS ';
+      '6': cienmil := 'SEISCIENTOS ';
+      '7': cienmil := 'SETECIENTOS ';
+      '8': cienmil := 'OCHOCIENTOS ';
+      '9': cienmil := 'NOVECIENTOS ';
+ end;
+ if (Cadena[0] ='1') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'CIEN MIL';
+ if (Cadena[0] ='2') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'DOSCIENTOS MIL';
+ if (Cadena[0] ='3') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'TRESCIENTOS MIL';
+ if (Cadena[0] ='4') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'CUATROCIENTOS MIL';
+ if (Cadena[0] ='5') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'QUINIENTOS MIL';
+ if (Cadena[0] ='6') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'SEISCIENTOS MIL';
+ if (Cadena[0] ='7') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'SETECIENTOS MIL';
+ if (Cadena[0] ='8') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'OCHOCIENTOS MIL';
+ if (Cadena[0] ='9') and (Cadena[1] ='0') and (Cadena[2] ='0') then
+     cienmil := 'NOVECIENTOS MIL';
+  //Showmessage(cienmil);
+   if cadena[2] = '0' then
+   begin
+    case cadena [1] of
+      '1': diezmil := 'DIEZ MIL ';
+      '2': diezmil := 'VEINTE MIL ';
+      '3': diezmil := 'TREINTA MIL ';
+      '4': diezmil := 'CUARENTA MIL ';
+      '5': diezmil := 'CINCUENTA MIL ';
+      '6': diezmil := 'SESENTA MIL ';
+      '7': diezmil := 'SETENTA MIL ';
+      '8': diezmil := 'OCHENTA MIL ';
+      '9': diezmil := 'NOVENTA MIL ';
+    end;
+   end
+ else
+   begin
+    if cadena[1] = '1' then
+      begin
+           case cadena [2] of
+           '1': diezmil := 'ONCE MIL ';
+           '2': diezmil := 'DOCE MIL ';
+           '3': diezmil := 'TRECE MIL ';
+           '4': diezmil := 'CATORCE MIL ';
+           '5': diezmil := 'QUINCE MIL ';
+           '6': diezmil := 'DIECISEIS MIL ';
+           '7': diezmil := 'DIECISIETE MIL ';
+           '8': diezmil := 'DIECIOCHO MIL ';
+           '9': diezmil := 'DIECINUEVE MIL ';
+           end;
+      end
+    else
+      begin
+           case cadena[1] of
+           '2': diezmil := 'VEINTI';
+           '3': diezmil := 'TREINTA Y ';
+           '4': diezmil := 'CUARENTA Y';
+           '5': diezmil := 'CINCUENTA Y ';
+           '6': diezmil := 'SESENTA Y ';
+           '7': diezmil := 'SETENTA Y ';
+           '8': diezmil := 'OCHENTA Y ';
+           '9': diezmil := 'NOVENTA Y';
+           end;
+           case cadena[2] of
+           '1': unmil := 'UN MIL ';
+           '2': unmil := 'DOS MIL ';
+           '3': unmil := 'TRES MIL ';
+           '4': unmil := 'CUATRO MIL ';
+           '5': unmil := 'CINCO MIL ';
+           '6': unmil := 'SEIS MIL ';
+           '7': unmil := 'SIETE MIL ';
+           '8': unmil := 'OCHO MIL ';
+           '9': unmil := 'NUEVE MIL ';
+           end;
+      end;
+   end;
+{ la parte que calcula cientos, decenas y unidades }
+
+ case cadena [3] of
+      '1': centena := 'CIENTO ';
+      '2': centena := 'DOSCIENTOS ';
+      '3': centena := 'TRESCIENTOS ';
+      '4': centena := 'CUATROCIENTOS ';
+      '5': centena := 'QUINIENTOS ';
+      '6': centena := 'SEISCIENTOS ';
+      '7': centena := 'SETECIENTOS ';
+      '8': centena := 'OCHOCIENTOS ';
+      '9': centena := 'NOVECIENTOS ';
+ end;
+
+ if cadena[3] = '1' then
+    if cadena[4] = '0' then
+       if cadena[5] = '0' then
+          centena := 'CIEN ';
+ if cadena[5] = '0' then
+   begin
+    case cadena [4] of
+      '1': decena := 'DIEZ ';
+      '2': decena := 'VEINTE ';
+      '3': decena := 'TREINTA ';
+      '4': decena := 'CUARENTA ';
+      '5': decena := 'CINCUENTA ';
+      '6': decena := 'SESENTA ';
+      '7': decena := 'SETENTA ';
+      '8': decena := 'OCHENTA ';
+      '9': decena := 'NOVENTA ';
+    end;
+   end
+ else
+   begin
+    if cadena[4] = '1' then
+      begin
+           case cadena [5] of
+           '1': decena := 'ONCE ';
+           '2': decena := 'DOCE ';
+           '3': decena := 'TRECE ';
+           '4': decena := 'CATORCE ';
+           '5': decena := 'QUINCE ';
+           '6': decena := 'DIECISEIS ';
+           '7': decena := 'DIECISIETE ';
+           '8': decena := 'DIECIOCHO ';
+           '9': decena := 'DIECINUEVE ';
+           end;
+      end
+    else
+      begin
+           case cadena[4] of
+           '2': decena := 'VEINTI';
+           '3': decena := 'TREINTA Y ';
+           '4': decena := 'CUARENTA Y ';
+           '5': decena := 'CINCUENTA Y ';
+           '6': decena := 'SESENTA Y ';
+           '7': decena := 'SETENTA Y ';
+           '8': decena := 'OCHENTA Y ';
+           '9': decena := 'NOVENTA Y ';
+           end;
+           case cadena[5] of
+           '1': unidad := 'UNO ';
+           '2': unidad := 'DOS ';
+           '3': unidad := 'TRES ';
+           '4': unidad := 'CUATRO ';
+           '5': unidad := 'CINCO ';
+           '6': unidad := 'SEIS ';
+           '7': unidad := 'SIETE ';
+           '8': unidad := 'OCHO ';
+           '9': unidad := 'NUEVE ';
+           end;
+      end;
+   end;
+
+
+{fin del calculo}
+ if (cadena[0] = #32) then
+   if (cadena[1] = #32) then
+      if (cadena[2] = #49)  then unmil := 'MIL ';
+ NumToLetras:= concat(cienmil+' '+diezmil+unmil+centena+decena+unidad+'CON ' +
+                      cadena[7]+cadena[8]+'/100');
+end;
 
 function TDataModulo1.SalodMora(numcuenta: String): Double;
 var

@@ -93,6 +93,10 @@ type
     ed_mora: TDBEdit;
     Label11: TLabel;
     DBCheckBox4: TDBCheckBox;
+    dbl_TipoCuenta: TDBLookupComboBox;
+    Label13: TLabel;
+    DBCheckBox12: TDBCheckBox;
+    DBCheckBox13: TDBCheckBox;
     procedure FormShow(Sender: TObject);
     procedure btnNuevo1Click(Sender: TObject);
     procedure btnSalvar1Click(Sender: TObject);
@@ -119,6 +123,7 @@ type
     procedure dbgTrxKeyPress(Sender: TObject; var Key: Char);
     procedure cbx_calcula_moraClick(Sender: TObject);
     procedure edCuentaTrxClick(Sender: TObject);
+    procedure DBCheckBox8Click(Sender: TObject);
   private
     Function Siguiente() : Integer;
     Procedure CargaDisponibles;
@@ -154,7 +159,7 @@ end;
 procedure TfrmTipoProducto.btnEliminarCuentaClick(Sender: TObject);
 begin
   inherited;
-  DataModulo1.productoTrx2.Delete;
+  DataModulo1.productoTrx3.Delete;
   grpTrx.Enabled := false;
 end;
 
@@ -163,7 +168,7 @@ begin
   inherited;
   grpTrx.Enabled := true;
   edCuentaTrx.SetFocus;
-  DataModulo1.productoTrx2.Append;
+  DataModulo1.productoTrx3.Append;
 
 end;
 
@@ -257,17 +262,17 @@ var
 begin
   inherited;
 
-  DataModulo1.productoTrx2.edit;
+  DataModulo1.productoTrx3.edit;
 
   Try
 
-   DataModulo1.productoTrx2idProducto.Value :=
+   DataModulo1.productoTrx3idProducto.Value :=
                DataModulo1.TipoProducto.FieldByName('subCuenta').Value;
-   _idtrx := DataModulo1.productoTrx2idTrx.AsInteger ;
+   _idtrx := DataModulo1.productoTrx3idProducto.AsInteger ;
 
-   DataModulo1.productoTrx2.post;
+   DataModulo1.productoTrx3.post;
    CargarTrx;
-   DataModulo1.productoTrx2.Locate('idTrx',_idTrx,[]);
+   DataModulo1.productoTrx3.Locate('idTrx',_idTrx,[]);
 
 
 
@@ -382,10 +387,10 @@ end;
 
 procedure TfrmTipoProducto.CargarTrx;
 begin
-  DataModulo1.productoTrx2.Close;
-  DataModulo1.productoTrx2.Params[0].Value := DataModulo1.TipoProductosubcuenta.Value ;
-  DataModulo1.productoTrx2.open;
-  DataModulo1.productoTrx2.First;
+  DataModulo1.productoTrx3.Close;
+  DataModulo1.productoTrx3.Params[0].Value := DataModulo1.TipoProductosubcuenta.Value ;
+  DataModulo1.productoTrx3.open;
+  DataModulo1.productoTrx3.First;
 end;
 
 procedure TfrmTipoProducto.cbx_calcula_moraClick(Sender: TObject);
@@ -418,6 +423,16 @@ begin
     chbIntSobrePrestamo.Checked := False;
   end;
 
+end;
+
+procedure TfrmTipoProducto.DBCheckBox8Click(Sender: TObject);
+begin
+  inherited;
+  if DBCheckBox8.Checked  then
+  begin
+   // DataModulo1.productotrx3.Edit;
+
+  end;
 end;
 
 procedure TfrmTipoProducto.dbgTrxDrawColumnCell(Sender: TObject;
@@ -459,7 +474,7 @@ end;
 procedure TfrmTipoProducto.edCuentaTrxClick(Sender: TObject);
 begin
   inherited;
-  DataModulo1.productoTrx2.FieldByName('descripcion').AsString :=
+  DataModulo1.productoTrx3.FieldByName('descripcion').AsString :=
        DataModulo1.maestroContableCombo.FieldByName('Nombre').AsString ;
 //---
 end;
@@ -511,10 +526,10 @@ begin
 
 
 
-  DataModulo1.productoTrx2.Close;
-  DataModulo1.productoTrx2.Params[0].Value := DataModulo1.TipoProductosubcuenta.Value ;
-  DataModulo1.productoTrx2.open;
-  DataModulo1.productoTrx2.First;
+  DataModulo1.productoTrx3.Close;
+  DataModulo1.ProductoTrx3.Params[0].Value := DataModulo1.TipoProductosubcuenta.Value ;
+  DataModulo1.ProductoTrx3.open;
+  DataModulo1.ProductoTrx3.First;
 
 
   CargaDisponibles;
@@ -538,6 +553,9 @@ begin
 
  DataModulo1.maestroContableCombo.Close;
  DataModulo1.maestroContableCombo.Open;
+
+ DataModulo1.TipoCuenta.Close;
+ DataModulo1.TipoCuenta.Open;
 
  end;
 

@@ -439,6 +439,8 @@ inherited frmSocios: TfrmSocios
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitLeft = -232
+  ExplicitTop = -279
   ExplicitWidth = 1141
   ExplicitHeight = 665
   PixelsPerInch = 96
@@ -2649,11 +2651,11 @@ inherited frmSocios: TfrmSocios
               796
               222)
             object Label8: TLabel
-              Left = 29
+              Left = 9
               Top = 23
-              Width = 44
+              Width = 77
               Height = 13
-              Caption = 'Nombre :'
+              Caption = 'Primer Nombre :'
               FocusControl = dbNombre
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -2695,11 +2697,11 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 315
             end
             object lblApellido: TLabel
-              Left = 32
+              Left = 9
               Top = 45
-              Width = 41
+              Width = 74
               Height = 13
-              Caption = 'Apellido:'
+              Caption = 'Primer Apellido:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -2724,11 +2726,11 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 303
             end
             object Label9: TLabel
-              Left = 24
+              Left = 9
               Top = 97
-              Width = 49
+              Width = 81
               Height = 13
-              Caption = 'Tipo Doc.:'
+              Caption = 'Tipo Documento:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -2753,7 +2755,7 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 342
             end
             object Label3: TLabel
-              Left = 45
+              Left = 87
               Top = 147
               Width = 28
               Height = 13
@@ -2900,11 +2902,11 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 636
             end
             object Label68: TLabel
-              Left = 12
+              Left = 9
               Top = 122
-              Width = 61
+              Width = 76
               Height = 13
-              Caption = 'Pais Emision:'
+              Caption = 'Pais de Emision:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -2929,7 +2931,7 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 432
             end
             object dbNombre: TDBEdit
-              Left = 79
+              Left = 108
               Top = 20
               Width = 202
               Height = 19
@@ -2976,7 +2978,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 3
             end
             object dbApellido: TDBEdit
-              Left = 79
+              Left = 108
               Top = 44
               Width = 202
               Height = 19
@@ -3007,7 +3009,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 4
             end
             object dblTipoDoc: TDBLookupComboBox
-              Left = 79
+              Left = 108
               Top = 94
               Width = 202
               Height = 19
@@ -3091,7 +3093,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 6
             end
             object rbMasculino: TRadioButton
-              Left = 98
+              Left = 140
               Top = 146
               Width = 113
               Height = 17
@@ -3106,7 +3108,7 @@ inherited frmSocios: TfrmSocios
               OnClick = rbMasculinoClick
             end
             object rbFemenino: TRadioButton
-              Left = 193
+              Left = 235
               Top = 146
               Width = 113
               Height = 16
@@ -3124,7 +3126,7 @@ inherited frmSocios: TfrmSocios
               Left = 564
               Top = 145
               Width = 34
-              Height = 21
+              Height = 22
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3145,7 +3147,7 @@ inherited frmSocios: TfrmSocios
               Left = 608
               Top = 145
               Width = 34
-              Height = 21
+              Height = 22
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3166,7 +3168,7 @@ inherited frmSocios: TfrmSocios
               Left = 652
               Top = 145
               Width = 46
-              Height = 21
+              Height = 22
               Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
@@ -3186,7 +3188,7 @@ inherited frmSocios: TfrmSocios
             object cmbPaisNacimiento: TDBLookupComboBox
               Left = 108
               Top = 170
-              Width = 173
+              Width = 201
               Height = 19
               DataField = 'paisNacimiento'
               DataSource = Socios
@@ -3242,8 +3244,8 @@ inherited frmSocios: TfrmSocios
               TabOrder = 15
             end
             object dblEstadoCivil: TDBLookupComboBox
-              Left = 79
-              Top = 193
+              Left = 108
+              Top = 195
               Width = 201
               Height = 19
               DataField = 'estadoCivil2'
@@ -3257,7 +3259,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 16
             end
             object dblPaisPasaporte: TDBLookupComboBox
-              Left = 79
+              Left = 108
               Top = 119
               Width = 202
               Height = 19
@@ -5993,10 +5995,6 @@ inherited frmSocios: TfrmSocios
     object TabSheet3: TTabSheet
       Caption = 'Herederos'
       ImageIndex = 36
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Image1: TImage
         Left = -4
         Top = 229
@@ -7503,10 +7501,6 @@ inherited frmSocios: TfrmSocios
     object TabSheet5: TTabSheet
       Caption = 'Documentacion'
       ImageIndex = 38
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object ToolBar6: TToolBar
         AlignWithMargins = True
         Left = 3
@@ -7810,17 +7804,13 @@ inherited frmSocios: TfrmSocios
         Top = 166
         Width = 835
         Height = 421
-        ActivePage = TabSheet7
+        ActivePage = TabSheet9
         Align = alClient
         TabOrder = 1
         OnChange = pcDetalleCuentaChange
         object TabSheet9: TTabSheet
           Caption = 'Detalles de La Cuenta'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object GroupBox11: TGroupBox
             Left = 0
             Top = 41
@@ -8287,7 +8277,7 @@ inherited frmSocios: TfrmSocios
               end
               object periocidad: TDBLookupComboBox
                 Left = 320
-                Top = 86
+                Top = 85
                 Width = 121
                 Height = 21
                 DataField = 'tipo_periodo_tasa'
@@ -8351,14 +8341,6 @@ inherited frmSocios: TfrmSocios
                 Font.Style = []
                 ParentFont = False
                 TabOrder = 8
-              end
-              object Button2: TButton
-                Left = 624
-                Top = 88
-                Width = 75
-                Height = 25
-                Caption = 'Button2'
-                TabOrder = 9
               end
             end
           end
@@ -8510,10 +8492,6 @@ inherited frmSocios: TfrmSocios
               OnMouseLeave = PageControl3MouseLeave
               object TabSheet11: TTabSheet
                 Caption = 'Inf. de Fiador'
-                ExplicitLeft = 0
-                ExplicitTop = 0
-                ExplicitWidth = 0
-                ExplicitHeight = 0
                 object GroupBox13: TGroupBox
                   AlignWithMargins = True
                   Left = 3
@@ -9248,10 +9226,6 @@ inherited frmSocios: TfrmSocios
         object tsProductoPlanPago: TTabSheet
           Caption = 'Plan de Pago'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object grp_PPP: TGroupBox
             AlignWithMargins = True
             Left = 3
@@ -9518,10 +9492,6 @@ inherited frmSocios: TfrmSocios
       AlignWithMargins = True
       Caption = 'Datos Financieros'
       ImageIndex = 40
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid3: TDBGrid
         Left = 0
         Top = 35
@@ -9659,10 +9629,6 @@ inherited frmSocios: TfrmSocios
       ImageIndex = 47
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid2: TDBGrid
         Left = 3
         Top = 34
@@ -9819,7 +9785,7 @@ inherited frmSocios: TfrmSocios
       Columns = <
         item
           Expanded = False
-          FieldName = 'socio'
+          FieldName = 'idSocio'
           Title.Caption = '#Socio'
           Title.Font.Charset = DEFAULT_CHARSET
           Title.Font.Color = clWindowText
@@ -10266,8 +10232,8 @@ inherited frmSocios: TfrmSocios
   end
   object dtsSocioGrupo: TDataSource
     DataSet = DataModulo1.socioComunidad
-    Left = 437
-    Top = 232
+    Left = 677
+    Top = 216
   end
   object dtsSocioAsociaciones: TDataSource
     DataSet = DataModulo1.socioAsociaciones

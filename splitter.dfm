@@ -30,9 +30,7 @@ object Form1: TForm1
       Color = clHighlight
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 64
-      ExplicitTop = 104
-      ExplicitHeight = 41
+      ExplicitLeft = -4
     end
     object Panel3: TPanel
       Left = 186
@@ -44,14 +42,14 @@ object Form1: TForm1
       Color = clActiveBorder
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 192
+      ExplicitLeft = 482
+      ExplicitTop = 73
       object Splitter1: TSplitter
         Left = 1
         Top = 1
         Height = 301
-        ExplicitLeft = 184
-        ExplicitTop = 104
-        ExplicitHeight = 100
+        ExplicitLeft = 6
+        ExplicitTop = 0
       end
     end
   end

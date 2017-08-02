@@ -234,10 +234,6 @@
             <Form>frmCuentas</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ChequesCaja.pas">
-            <Form>frmChequesCaja</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="MantenimientoPaises.pas">
             <Form>frmPaises</Form>
             <FormType>dfm</FormType>
@@ -280,6 +276,10 @@
         </DCCReference>
         <DCCReference Include="CatalogoContable.pas">
             <Form>frmCatalogoContable</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Transferencias.pas">
+            <Form>frmTransferencias</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

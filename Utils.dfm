@@ -153,7 +153,6 @@ object frmUtil: TfrmUtil
     Params.Strings = (
       'Database=D:\Guarare\Syscoop2003\BD\pacto.mdb'
       'DriverID=MSAcc')
-    Connected = True
     LoginPrompt = False
     Left = 96
     Top = 8

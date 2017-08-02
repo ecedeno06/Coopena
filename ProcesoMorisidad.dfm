@@ -142,6 +142,19 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
           Visible = True
         end
         item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = '_periodoGraciaMeses'
+          ReadOnly = True
+          Title.Caption = 'Periodo Gracia'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clGreen
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
           Expanded = False
           FieldName = '_cargo'
           ReadOnly = True
@@ -158,6 +171,7 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
         item
           Expanded = False
           FieldName = '_mora'
+          ReadOnly = True
           Title.Alignment = taCenter
           Title.Caption = 'Morosidad'
           Title.Font.Charset = DEFAULT_CHARSET
@@ -305,11 +319,19 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
       Anchors = [akLeft, akTop, akRight, akBottom]
       Caption = 'Morosidad'
       TabOrder = 3
+      object Button1: TButton
+        Left = 34
+        Top = 31
+        Width = 75
+        Height = 25
+        Caption = 'Button1'
+        TabOrder = 0
+      end
     end
   end
   object dtsCorte: TDataSource
-    Left = 128
-    Top = 289
+    Left = 336
+    Top = 385
   end
   object dtsMeses: TDataSource
     DataSet = DataModulo1.meses
@@ -365,6 +387,7 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
     Top = 128
   end
   object mCuentas: TFDMemTable
+    OnCalcFields = mCuentasCalcFields
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -410,10 +433,23 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
       FieldName = '_mora'
       DisplayFormat = '#,###.##'
     end
+    object mCuentas_sel: TBooleanField
+      FieldName = '_sel'
+    end
+    object mCuentas_nombreCompleto: TStringField
+      FieldKind = fkCalculated
+      FieldName = '_nombreCompleto'
+      Size = 100
+      Calculated = True
+    end
   end
   object dtsCuentas: TDataSource
     DataSet = mCuentas
     Left = 664
     Top = 280
+  end
+  object dts_saldoMora: TDataSource
+    Left = 89
+    Top = 327
   end
 end

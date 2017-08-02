@@ -90,7 +90,7 @@ type
     iposdeCuentas1: TMenuItem;
     CatalogoContable1: TMenuItem;
     Procesos2: TMenuItem;
-    RegistrodeTransacciones1: TMenuItem;
+    mnu_cont_transferencia: TMenuItem;
     N9: TMenuItem;
     AnulaciondeDocumentos1: TMenuItem;
     AjustedeCuentasEspeciales1: TMenuItem;
@@ -136,6 +136,9 @@ type
     mnuVentanas: TMenuItem;
     N23: TMenuItem;
     mnu_Cont_Cheque: TMenuItem;
+    ToolButton16: TToolButton;
+    ToolButton17: TToolButton;
+    ToolButton18: TToolButton;
     procedure FormActivate(Sender: TObject);
     procedure Encriptar2Click(Sender: TObject);
     procedure Perfil1Click(Sender: TObject);
@@ -178,6 +181,7 @@ type
     procedure GrupoEconomico1Click(Sender: TObject);
     procedure mnuActividadesEcoClick(Sender: TObject);
     procedure mnu_Cont_ChequeClick(Sender: TObject);
+    procedure mnu_cont_transferenciaClick(Sender: TObject);
 
 
   private
@@ -200,7 +204,8 @@ uses Encripta, DM1,  Socios, GeneralesUsuario, Finalidad, Bancos, Cargos,
   ProcesoMorisidad, Usuarios, MantTipoCheque, MantCuentasChequera,
   MantAprobacionesCheque, ChequesCaja, MantenimientoPaises, Asociaciones,
   MantenimientoFrecuenciaPagos, MantenimientoFormasPagos,
-  MantenimientoTipoIngresos, MantenimientoActividadEconomica, Cheques;
+  MantenimientoTipoIngresos, MantenimientoActividadEconomica, Cheques,
+  Transferencias;
 
 procedure TfrmPrincipal.mnSociosClick(Sender: TObject);
 begin
@@ -533,6 +538,12 @@ procedure TfrmPrincipal.Provincias1Click(Sender: TObject);
 begin
   application.CreateForm(TfrmGeografia , frmGeografia);
   frmGeografia.Show;
+end;
+
+procedure TfrmPrincipal.mnu_cont_transferenciaClick(Sender: TObject);
+begin
+  application.CreateForm(Tfrmtransferencias , frmTransferencias);
+  frmTransferencias.Show;
 end;
 
 procedure TfrmPrincipal.SectorEconmico1Click(Sender: TObject);

@@ -36,7 +36,6 @@ uses
   MantTipoCheque in 'MantTipoCheque.pas' {frmMantTipoCheque},
   MantCuentasChequera in 'MantCuentasChequera.pas' {frmMantCuentasChequera},
   cuentas in 'cuentas.pas' {frmCuentas},
-  ChequesCaja in 'ChequesCaja.pas' {frmChequesCaja},
   MantenimientoPaises in 'MantenimientoPaises.pas' {frmPaises},
   MantAprobacionesCheque in 'MantAprobacionesCheque.pas' {frmMantAprobacionesCheque},
   Asociaciones in 'Asociaciones.pas' {frmAsociaciones},
@@ -47,7 +46,8 @@ uses
   MantenimientoActividadEconomica in 'MantenimientoActividadEconomica.pas' {frmActividadEconimca},
   Cheques in 'Cheques.pas' {frmCheques},
   SocioCuentas in 'SocioCuentas.pas' {frmSocioCuentas},
-  CatalogoContable in 'CatalogoContable.pas' {frmCatalogoContable};
+  CatalogoContable in 'CatalogoContable.pas' {frmCatalogoContable},
+  Transferencias in 'Transferencias.pas' {frmTransferencias};
 
 {$R *.res}
 
@@ -58,7 +58,5 @@ begin
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TDM2, DM2);
   Application.CreateForm(Tds, ds);
-  Application.CreateForm(TfrmSocioCuentas, frmSocioCuentas);
-  Application.CreateForm(TfrmCatalogoContable, frmCatalogoContable);
   Application.Run;
 end.

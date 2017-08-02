@@ -7,7 +7,7 @@ inherited frmTipoProducto: TfrmTipoProducto
   Position = poDesigned
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -71
+  ExplicitLeft = -192
   ExplicitWidth = 1072
   ExplicitHeight = 750
   PixelsPerInch = 96
@@ -20,7 +20,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         Width = 50
       end>
     ExplicitTop = 703
-    ExplicitWidth = 913
+    ExplicitWidth = 1066
   end
   object dbgProfesion: TDBGrid
     Left = 1
@@ -79,16 +79,14 @@ inherited frmTipoProducto: TfrmTipoProducto
     Top = 8
     Width = 785
     Height = 694
-    ActivePage = TabSheet1
+    ActivePage = tsBanco
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     Images = DataModulo1.ImageList2
     TabOrder = 2
-    ExplicitWidth = 632
     object tsBanco: TTabSheet
       Caption = 'Producto'
       ImageIndex = 23
-      ExplicitWidth = 764
       object ToolBar8: TToolBar
         AlignWithMargins = True
         Left = 3
@@ -103,7 +101,6 @@ inherited frmTipoProducto: TfrmTipoProducto
         GradientEndColor = clMoneyGreen
         Images = DataModulo1.ImageList2
         TabOrder = 0
-        ExplicitWidth = 758
         object btnNuevo1: TToolButton
           Left = 0
           Top = 0
@@ -134,7 +131,6 @@ inherited frmTipoProducto: TfrmTipoProducto
         Height = 624
         Align = alClient
         TabOrder = 1
-        ExplicitWidth = 764
         object Panel3: TPanel
           Left = 1
           Top = 1
@@ -143,7 +139,6 @@ inherited frmTipoProducto: TfrmTipoProducto
           Align = alTop
           Caption = 'Panel3'
           TabOrder = 0
-          ExplicitWidth = 762
           object GroupBox1: TGroupBox
             Left = 1
             Top = 1
@@ -155,7 +150,6 @@ inherited frmTipoProducto: TfrmTipoProducto
             ParentBackground = False
             ParentColor = False
             TabOrder = 0
-            ExplicitWidth = 760
             DesignSize = (
               773
               416)
@@ -240,7 +234,6 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'nombresubcuenta'
               DataSource = dtsTipoProducto
               TabOrder = 1
-              ExplicitWidth = 471
             end
             object edAbre: TDBEdit
               Left = 70
@@ -261,7 +254,6 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'cuenta'
               DataSource = dtsTipoProducto
               TabOrder = 3
-              ExplicitWidth = 469
             end
             object edPeriodoTasa: TDBEdit
               Left = 71
@@ -414,6 +406,22 @@ inherited frmTipoProducto: TfrmTipoProducto
                 DataSource = dtsTipoProducto
                 TabOrder = 6
               end
+              object DBCheckBox13: TDBCheckBox
+                Left = 317
+                Top = 44
+                Width = 132
+                Height = 17
+                Caption = 'Gracia en Mora'
+                DataField = 'graciaEnMora'
+                DataSource = dtsTipoProducto
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clRed
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold, fsItalic]
+                ParentFont = False
+                TabOrder = 7
+              end
             end
             object esPrestamo: TDBCheckBox
               Left = 3
@@ -443,7 +451,6 @@ inherited frmTipoProducto: TfrmTipoProducto
               Align = alBottom
               Caption = 'Producto Aplica Para:'
               TabOrder = 8
-              ExplicitWidth = 756
               object GroupBox3: TGroupBox
                 Left = 12
                 Top = 28
@@ -550,7 +557,6 @@ inherited frmTipoProducto: TfrmTipoProducto
           Align = alTop
           Anchors = [akLeft, akTop, akRight, akBottom]
           TabOrder = 1
-          ExplicitWidth = 762
           object Image2: TImage
             Left = 11
             Top = 58
@@ -814,7 +820,6 @@ inherited frmTipoProducto: TfrmTipoProducto
             GradientEndColor = clMoneyGreen
             Images = DataModulo1.ImageList2
             TabOrder = 0
-            ExplicitWidth = 754
             object btnNuevo2: TToolButton
               Left = 0
               Top = 0
@@ -850,7 +855,6 @@ inherited frmTipoProducto: TfrmTipoProducto
             ParentBackground = False
             ParentColor = False
             TabOrder = 1
-            ExplicitWidth = 669
             object Label10: TLabel
               Left = 11
               Top = 32
@@ -900,7 +904,6 @@ inherited frmTipoProducto: TfrmTipoProducto
     object TabSheet1: TTabSheet
       Caption = 'Movimientos'
       ImageIndex = 1
-      ExplicitWidth = 624
       object ToolBar2: TToolBar
         AlignWithMargins = True
         Left = 3
@@ -915,7 +918,6 @@ inherited frmTipoProducto: TfrmTipoProducto
         GradientEndColor = clMoneyGreen
         Images = DataModulo1.ImageList2
         TabOrder = 0
-        ExplicitWidth = 618
         object btnNuevaCuenta: TToolButton
           Left = 0
           Top = 0
@@ -983,7 +985,6 @@ inherited frmTipoProducto: TfrmTipoProducto
         ParentBackground = False
         ParentColor = False
         TabOrder = 1
-        ExplicitWidth = 618
         DesignSize = (
           771
           132)
@@ -1003,6 +1004,13 @@ inherited frmTipoProducto: TfrmTipoProducto
           Caption = 'lblDC'
           ExplicitLeft = 498
         end
+        object Label13: TLabel
+          Left = 17
+          Top = 73
+          Width = 24
+          Height = 13
+          Caption = 'Tipo:'
+        end
         object edCuentaTrx: TDBLookupComboBox
           Left = 56
           Top = 19
@@ -1016,7 +1024,6 @@ inherited frmTipoProducto: TfrmTipoProducto
           ListSource = dtsMaestroContableCombo
           TabOrder = 0
           OnClick = edCuentaTrxClick
-          ExplicitWidth = 423
         end
         object DBCheckBox2: TDBCheckBox
           Left = 20
@@ -1068,21 +1075,21 @@ inherited frmTipoProducto: TfrmTipoProducto
             'D'
             'R'
             'P')
-          ExplicitWidth = 608
         end
         object DBCheckBox8: TDBCheckBox
-          Left = 20
-          Top = 69
+          Left = 621
+          Top = 72
           Width = 97
           Height = 17
           Caption = 'Interes?'
           DataField = 'esInteres'
           DataSource = dtsproductoTrx
           TabOrder = 5
+          OnClick = DBCheckBox8Click
         end
         object DBCheckBox9: TDBCheckBox
-          Left = 188
-          Top = 69
+          Left = 620
+          Top = 49
           Width = 97
           Height = 17
           Caption = 'Mora?'
@@ -1092,7 +1099,7 @@ inherited frmTipoProducto: TfrmTipoProducto
         end
         object DBCheckBox10: TDBCheckBox
           Left = 318
-          Top = 69
+          Top = 72
           Width = 97
           Height = 17
           Caption = 'Es Capital?'
@@ -1101,8 +1108,8 @@ inherited frmTipoProducto: TfrmTipoProducto
           TabOrder = 7
         end
         object DBCheckBox11: TDBCheckBox
-          Left = 435
-          Top = 69
+          Left = 219
+          Top = 72
           Width = 97
           Height = 17
           Caption = 'Es Imputable?'
@@ -1123,15 +1130,36 @@ inherited frmTipoProducto: TfrmTipoProducto
           ShowHint = True
           TabOrder = 9
         end
+        object dbl_TipoCuenta: TDBLookupComboBox
+          Left = 56
+          Top = 69
+          Width = 145
+          Height = 21
+          DataField = 'tipoCuenta'
+          DataSource = dtsproductoTrx
+          KeyField = 'id'
+          ListField = 'nombre'
+          ListSource = DataModulo1.dts_tipoCuenta
+          TabOrder = 10
+        end
+        object DBCheckBox12: TDBCheckBox
+          Left = 435
+          Top = 72
+          Width = 97
+          Height = 17
+          Caption = 'Es Pago Especial'
+          DataField = 'esPagoEspecial'
+          DataSource = dtsproductoTrx
+          TabOrder = 11
+        end
       end
       object dbgTrx: TDBGrid
         AlignWithMargins = True
         Left = 3
         Top = 181
         Width = 771
-        Height = 480
+        Height = 482
         Align = alTop
-        Anchors = [akLeft, akTop, akRight, akBottom]
         DataSource = dtsproductoTrx
         DrawingStyle = gdsGradient
         GradientEndColor = clMoneyGreen
@@ -1195,7 +1223,13 @@ inherited frmTipoProducto: TfrmTipoProducto
           item
             Expanded = False
             FieldName = 'campo'
-            Title.Caption = 'Campo'
+            Title.Alignment = taCenter
+            Title.Caption = 'Interes'
+            Title.Font.Charset = DEFAULT_CHARSET
+            Title.Font.Color = clGreen
+            Title.Font.Height = -11
+            Title.Font.Name = 'Tahoma'
+            Title.Font.Style = [fsBold]
             Width = 95
             Visible = True
           end
@@ -1263,8 +1297,7 @@ inherited frmTipoProducto: TfrmTipoProducto
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
-            Width = 79
-            Visible = True
+            Visible = False
           end
           item
             Color = clMoneyGreen
@@ -1281,8 +1314,7 @@ inherited frmTipoProducto: TfrmTipoProducto
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
-            Width = 100
-            Visible = True
+            Visible = False
           end
           item
             Expanded = False
@@ -1299,6 +1331,13 @@ inherited frmTipoProducto: TfrmTipoProducto
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
             Visible = False
+          end
+          item
+            Expanded = False
+            FieldName = 'EspecialContraCuenta'
+            Title.Caption = 'Especial Contra Cuenta'
+            Width = 133
+            Visible = True
           end>
       end
     end
@@ -1315,7 +1354,7 @@ inherited frmTipoProducto: TfrmTipoProducto
     Top = 312
   end
   object dtsproductoTrx: TDataSource
-    DataSet = DataModulo1.productoTrx2
+    DataSet = DataModulo1.ProductoTrx3
     Left = 172
     Top = 313
   end

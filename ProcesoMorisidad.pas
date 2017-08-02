@@ -55,12 +55,17 @@ type
     mCuentas_mora: TFloatField;
     Panel3: TPanel;
     NoProcesadas: TCheckBox;
+    dts_saldoMora: TDataSource;
+    Button1: TButton;
+    mCuentas_sel: TBooleanField;
+    mCuentas_nombreCompleto: TStringField;
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ToolButton3Click(Sender: TObject);
     Function ValidaCierre(mes,ano : Integer) : Boolean;
     //------
     Procedure CargarPrestamos;
+    procedure mCuentasCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -108,39 +113,46 @@ begin
       _reg := _reg + 1;
       UpdateWorking(_reg);
 
-      DataModulo1.saldoCuenta.Close;
-      DataModulo1.saldoCuenta.Params [0].AsDate :=
-        _fechaCierre;
-      DataModulo1.saldoCuenta.Params [1].asstring :=
+
+      DataModulo1.saldoCuenta1.Close;
+      DataModulo1.saldoCuenta1.Params [0].asstring :=
          datamodulo1.morosidadPrestamosnum_cuenta.AsString ;
-      DataModulo1.saldoCuenta.Open;
+      DataModulo1.saldoCuenta1.Params [1].AsDate :=
+        _fechaCierre;
+
+      DataModulo1.saldoCuenta1.Open;
 //
 //      DecodeDate(DataModulo1.saldoCuentafechaVencimiento.AsDateTime,
 //                 _ano,_mes,_dia);
 
-      if DataModulo1.saldoCuentaMeses.AsInteger > 0  then
+      if DataModulo1.saldoCuenta1atraso.AsInteger > 0  then
       begin
 
         mCuentas.Append;
         mCuentas_num_Cuenta.AsString     := DataModulo1.morosidadPrestamosnum_cuenta.AsString ;
         mCuentas_NombreSocio.AsString    := DataModulo1.morosidadPrestamosnombreCompleto.asstring;
-        mCuentas_SaldoReal .asfloat      := DataModulo1.saldoCuentasaldoReal.AsFloat ;
-        mCuentas_DeberSer.AsFloat        := DataModulo1.saldoCuentadeberSer.AsFloat ;
+        mCuentas_SaldoReal .asfloat      := DataModulo1.saldoCuenta1saldoReal.AsFloat ;
+        mCuentas_DeberSer.AsFloat        := DataModulo1.saldoCuenta1deberSer.AsFloat ;
 
         if _ano > 2000 then
-          mCuentas_Vencimiento.AsDateTime  := DataModulo1.saldoCuentafechaVencimiento.AsDateTime
+          mCuentas_Vencimiento.AsDateTime  := DataModulo1.saldoCuenta1Vencimiento.AsDateTime
         else
           mCuentas_Vencimiento.clear;
 
-        mCuentas_meses.AsInteger         := DataModulo1.saldoCuentaMeses.AsInteger ;
+        mCuentas_meses.AsInteger         := DataModulo1.saldoCuenta1Atraso.AsInteger ;
         mCuentas_periodoGraciaMeses.AsInteger :=
            DataModulo1.morosidadPrestamosperiodoGraciaMeses.AsInteger ;
         mCuentas_cargo.AsFloat           := DataModulo1.morosidadPrestamosmora.AsFloat;
         mCuentas_periocidad.AsString     := Datamodulo1.morosidadPrestamosperiodo_planilla.AsString ;
 
         if mCuentas_meses.AsInteger > 0 then
-           mCuentas_mora.AsFloat            :=
-              (mCuentas_SaldoReal .asfloat -  mCuentas_DeberSer.AsFloat) * mCuentas_cargo.AsFloat
+        begin
+          if (mCuentas_SaldoReal .asfloat -  mCuentas_DeberSer.AsFloat) > 0  then
+              mCuentas_mora.AsFloat :=
+               (mCuentas_SaldoReal .asfloat -  mCuentas_DeberSer.AsFloat) * mCuentas_cargo.AsFloat
+          else
+             mcuentas_mora.Clear ;
+        end
         else
         begin
          mCuentas_mora.Clear;
@@ -181,6 +193,12 @@ begin
  // CargarPrestamos;
 
 
+end;
+
+procedure TfrmProcesoMorisidad.mCuentasCalcFields(DataSet: TDataSet);
+begin
+  inherited;
+  //mCuentas_nombreCompleto.AsString :=
 end;
 
 procedure TfrmProcesoMorisidad.SpeedButton1Click(Sender: TObject);
@@ -272,6 +290,14 @@ begin
 end;
 
 end.
+
+
+
+
+
+
+
+
 
 
 

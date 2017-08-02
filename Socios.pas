@@ -600,7 +600,6 @@ type
     dbl_DirIF_Pais: TDBLookupComboBox;
     dbl_DirIF_Provincia: TDBLookupComboBox;
     dbl_EgresoIF_provincia: TDBLookupComboBox;
-    Button2: TButton;
     tsProductoPlanPago: TTabSheet;
     grp_PPP: TGroupBox;
     tb_Producto_PlanPago: TToolBar;
@@ -1001,8 +1000,8 @@ begin
        _siguiente := 1;
 
      _numCuenta := formatfloat('00',     DataModulo1.SocioProductossubcuenta.AsInteger) +   // el codigo de producto
-                  formatFloat('000000', DataModulo1.tblSociosSocio.AsInteger) +  // El Numero de Socio
-                  formatFloat('00' , _siguiente);   // el Consecutivo del producto
+                   formatFloat('000000', DataModulo1.tblSociosSocio.AsInteger) +  // El Numero de Socio
+                   formatFloat('00' , _siguiente);   // el Consecutivo del producto
 
       DataModulo1.SocioProductosnum_cuenta.AsString := _numCuenta;
 
@@ -1306,6 +1305,8 @@ end;
 procedure TfrmSocios.btnSocioNuevo1Click(Sender: TObject);
 begin
   inherited;
+  grpDatosPersonales.Enabled  := true;
+
   grpSocioCorreos.Enabled   := False;
   grpSocioTelefonos.Enabled := false;
   grpSocioDireccion.Enabled := False;
@@ -1324,7 +1325,7 @@ begin
   grpSocioDireccion.Enabled   := false;
   grpSocioTelefonos.Enabled   := false;
   grpAsociaciones.Enabled     := false;
-  grpDatosPersonales.Enabled  := false;
+
 end;
 
 procedure TfrmSocios.btnSocioSalvar1Click(Sender: TObject);
@@ -1340,6 +1341,7 @@ begin
 
   if (DataModulo1.tblSocios.State IN [dsInsert]) then
   begin
+
     DataModulo1.tblSocios.edit;
     DataModulo1.Generico.Close;
     DataModulo1.Generico.SQL.Clear;
@@ -1359,9 +1361,9 @@ begin
       end
       else
         sSec := DataModulo1.Generico.FieldByName('ValorActual').AsInteger + 1;
-
-      DataModulo1.tblSociosidsocio.Value        := sSec;
     End;
+
+    DataModulo1.tblSociosidsocio.Value      := sSec;
     DataModulo1.tblSociosguidSocio.asstring := DataModulo1._guid ();
   end;
 
@@ -1404,23 +1406,23 @@ begin
 
    if not (VarIsNull(DataModulo1.tblSociosnombre.AsString )) and
           (trim(DataModulo1.tblSociosnombre.AsString)<>'') then
-     nombreCompleto := nombreCompleto + ' ' + DataModulo1.tblSociosnombre.AsString;
+     nombreCompleto := Trim(nombreCompleto) + ' ' + trim(DataModulo1.tblSociosnombre.AsString);
 
    if not (VarIsNull(DataModulo1.tblSociossegundoNombre.AsString )) and
           (trim(DataModulo1.tblSociossegundoNombre.AsString) <> '') then
-     nombreCompleto := nombreCompleto + ' ' + DataModulo1.tblSociossegundoNombre.AsString;
+     nombreCompleto := trim(nombreCompleto) + ' ' + Trim(DataModulo1.tblSociossegundoNombre.AsString);
 
    if not (VarIsNull(DataModulo1.tblSociosapellido.AsString ))  and
           (trim(DataModulo1.tblSociosapellido.AsString) <> '') then
-     nombreCompleto := nombreCompleto + ' ' + DataModulo1.tblSociosapellido.AsString;
+     nombreCompleto := trim(nombreCompleto) + ' ' + Trim(DataModulo1.tblSociosapellido.AsString);
 
    if not (VarIsNull(DataModulo1.tblSociossegundoApellido.AsString )) and
           (trim(DataModulo1.tblSociossegundoApellido.AsString) <> '') then
-      nombreCompleto := nombreCompleto + ' ' + DataModulo1.tblSociossegundoApellido.AsString;
+      nombreCompleto := Trim(nombreCompleto) + ' ' + Trim(DataModulo1.tblSociossegundoApellido.AsString);
 
    if not (VarIsNull(DataModulo1.tblSociosapellidoCasada.AsString ))  and
           (trim(DataModulo1.tblSociosapellidoCasada.AsString) <> '') then
-     nombreCompleto := nombreCompleto + ' de ' + DataModulo1.tblSociosapellidoCasada.AsString;
+     nombreCompleto := Trim(nombreCompleto)  + ' de ' + Trim(DataModulo1.tblSociosapellidoCasada.AsString);
 
    nombreCompleto := trim(nombreCompleto);
 
@@ -2622,19 +2624,19 @@ end;
 procedure TfrmSocios.nAnoChange(Sender: TObject);
 begin
   inherited;
-  FechaNacimiento(now , 'N')
+  FechaNacimiento(encodedate(nano.Value ,nmes.Value ,ndia.value) , 'N')
 end;
 
 procedure TfrmSocios.ndiaChange(Sender: TObject);
 begin
   inherited;
-  (FechaNacimiento(now , 'N') );
+  FechaNacimiento(encodedate(nano.Value ,nmes.Value ,ndia.value) , 'N')
 end;
 
 procedure TfrmSocios.nMesChange(Sender: TObject);
 begin
   inherited;
- (FechaNacimiento(now , 'N') );
+  FechaNacimiento(encodedate(nano.Value ,nmes.Value ,ndia.value) , 'N')
 end;
 
 procedure TfrmSocios.PageControl1Change(Sender: TObject);

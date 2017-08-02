@@ -28966,6 +28966,28 @@ object frmPrincipal: TfrmPrincipal
       ImageIndex = 31
       OnClick = tipoDocumentos1Click
     end
+    object ToolButton17: TToolButton
+      Left = 633
+      Top = 0
+      Width = 48
+      Caption = 'ToolButton17'
+      ImageIndex = 33
+      Style = tbsSeparator
+    end
+    object ToolButton16: TToolButton
+      Left = 681
+      Top = 0
+      Caption = 'btn_Cheques'
+      ImageIndex = 41
+      OnClick = mnu_Cont_ChequeClick
+    end
+    object ToolButton18: TToolButton
+      Left = 729
+      Top = 0
+      Caption = 'ToolButton18'
+      ImageIndex = 43
+      OnClick = mnu_cont_transferenciaClick
+    end
   end
   object dtpFecha1: TDateTimePicker
     Left = 8
@@ -30970,11 +30992,15 @@ object frmPrincipal: TfrmPrincipal
       end
       object Procesos2: TMenuItem
         Caption = 'Procesos'
-        object RegistrodeTransacciones1: TMenuItem
-          Caption = 'Registro de Transacciones'
+        object mnu_cont_transferencia: TMenuItem
+          AutoCheck = True
+          Caption = 'Registro de Transferencias'
+          ImageIndex = 43
+          OnClick = mnu_cont_transferenciaClick
         end
         object mnu_Cont_Cheque: TMenuItem
           Caption = 'Generacion de Cheque'
+          ImageIndex = 41
           OnClick = mnu_Cont_ChequeClick
         end
         object N9: TMenuItem

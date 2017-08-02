@@ -13,6 +13,7 @@ object frmSocioCuentas: TfrmSocioCuentas
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -63,8 +64,6 @@ object frmSocioCuentas: TfrmSocioCuentas
       RightButton.PressedImageIndex = 7
       RightButton.Visible = True
       TabOrder = 2
-      OnChange = ed_socioCuentas_FiltroChange
-      OnKeyDown = ed_socioCuentas_FiltroKeyDown
       OnKeyPress = ed_socioCuentas_FiltroKeyPress
       OnLeftButtonClick = ed_socioCuentas_FiltroLeftButtonClick
       OnRightButtonClick = ed_socioCuentas_FiltroRightButtonClick
@@ -100,6 +99,8 @@ object frmSocioCuentas: TfrmSocioCuentas
       TabOrder = 3
       ViewStyle = vsReport
       OnClick = lv_socioCuentasClick
+      OnColumnClick = lv_socioCuentasColumnClick
+      OnCompare = lv_socioCuentasCompare
       OnDblClick = lv_socioCuentasDblClick
       OnDrawItem = lv_socioCuentasDrawItem
       OnDragOver = lv_socioCuentasDragOver

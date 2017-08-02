@@ -19,12 +19,9 @@ type
     dts_mCuenta: TDataSource;
     ed_socioCuentas_Filtro: TButtonedEdit;
     lv_socioCuentas: TListView;
-    procedure ed_socioCuentas_FiltroChange(Sender: TObject);
     procedure ed_socioCuentas_FiltroLeftButtonClick(Sender: TObject);
     procedure ed_socioCuentas_FiltroRightButtonClick(Sender: TObject);
     procedure ed_socioCuentas_FiltroKeyPress(Sender: TObject; var Key: Char);
-    procedure ed_socioCuentas_FiltroKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure lv_socioCuentasClick(Sender: TObject);
     procedure lv_socioCuentasDragOver(Sender, Source: TObject; X, Y: Integer;
@@ -32,6 +29,9 @@ type
     procedure lv_socioCuentasDrawItem(Sender: TCustomListView; Item: TListItem;
       Rect: TRect; State: TOwnerDrawState);
     procedure lv_socioCuentasDblClick(Sender: TObject);
+    procedure lv_socioCuentasColumnClick(Sender: TObject; Column: TListColumn);
+    procedure lv_socioCuentasCompare(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
   private
     { Private declarations }
   public
@@ -40,27 +40,13 @@ type
 
 var
   frmSocioCuentas: TfrmSocioCuentas;
+  ColumnToSort  : integer;
 
 implementation
 
 {$R *.dfm}
 
 uses DM1, Cheques;
-
-procedure TfrmSocioCuentas.ed_socioCuentas_FiltroChange(Sender: TObject);
-
-begin
- //---ejecutar query socioCuentas
- // Luego cargar en el ListView
-end;
-
-procedure TfrmSocioCuentas.ed_socioCuentas_FiltroKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-var
-  _k : char;
-begin
-  _k := char(key);
-end;
 
 procedure TfrmSocioCuentas.ed_socioCuentas_FiltroKeyPress(Sender: TObject;
   var Key: Char);
@@ -71,7 +57,6 @@ begin
   Begin
     _k := Char(key);
     ed_socioCuentas_Filtro.OnLeftButtonClick (sender);
-
   End;
 end;
 
@@ -103,6 +88,7 @@ begin
        DataModulo1.socioCuentas.next;
 
      End;
+     lv_socioCuentas.SetFocus;
    end;
  end;
 
@@ -121,7 +107,30 @@ end;
 
 procedure TfrmSocioCuentas.lv_socioCuentasClick(Sender: TObject);
 begin
-  DataModulo1.socioCuentas.Locate('num_cuenta',trim(lv_socioCuentas.Selected.Caption)) ;
+  if lv_socioCuentas.Items.Count > 0 then
+    DataModulo1.socioCuentas.Locate('num_cuenta',trim(lv_socioCuentas.Selected.Caption)) ;
+end;
+
+procedure TfrmSocioCuentas.lv_socioCuentasColumnClick(Sender: TObject;
+  Column: TListColumn);
+begin
+  ColumnToSort := Column.index;
+  (Sender as TCustomListView).AlphaSort;
+end;
+
+procedure TfrmSocioCuentas.lv_socioCuentasCompare(Sender: TObject; Item1,
+  Item2: TListItem; Data: Integer; var Compare: Integer);
+var
+ix: Integer;
+begin
+  if ColumnToSort = 0 then
+   Compare := CompareText(Item1.Caption,Item2.Caption)
+  else
+  begin
+   ix := ColumnToSort - 1;
+   Compare := CompareText(Item1.SubItems[ix],Item2.SubItems[ix]);
+  end;
+
 end;
 
 procedure TfrmSocioCuentas.lv_socioCuentasDblClick(Sender: TObject);
