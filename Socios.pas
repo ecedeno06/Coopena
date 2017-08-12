@@ -18,12 +18,13 @@ uses
   Vcl.Imaging.jpeg, DateUtils, Vcl.Imaging.GIFImg, Vcl.Menus, Vcl.ExtDlgs,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client ,SqlTimSt, Vcl.Imaging.pngimage;//,Data.SqlTimSt;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client ,SqlTimSt, Vcl.Imaging.pngimage,clipbrd,System.StrUtils,
+  axCtrls;
 
-type
+  type
   TfrmSocios = class(TfrmVentana)
-    PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
+    pc_socio: TPageControl;
+    ts_Generales: TTabSheet;
     ScrollBox1: TScrollBox;
     gbGenerales: TGroupBox;
     lblClienteID: TLabel;
@@ -41,8 +42,8 @@ type
     dbSocioTelefono: TDBEdit;
     DBCheckBox2: TDBCheckBox;
     DBCheckBox3: TDBCheckBox;
-    TabSheet3: TTabSheet;
-    TabSheet8: TTabSheet;
+    ts_Herederos: TTabSheet;
+    ts_datosFinancieros: TTabSheet;
     DBGrid3: TDBGrid;
     GroupBox6: TGroupBox;
     Label19: TLabel;
@@ -51,7 +52,7 @@ type
     spMes: TSpinEdit;
     spAnio: TSpinEdit;
     DBCheckBox11: TDBCheckBox;
-    TabSheet6: TTabSheet;
+    ts_Vaciones: TTabSheet;
     DBGrid2: TDBGrid;
     Mantenimiento: TGroupBox;
     Label16: TLabel;
@@ -59,8 +60,8 @@ type
     sbDesde: TSpeedButton;
     sbHasta: TSpeedButton;
     GroupBox5: TGroupBox;
-    TabSheet5: TTabSheet;
-    TabSheet4: TTabSheet;
+    ts_documentos: TTabSheet;
+    ts_EstadoCuentas: TTabSheet;
     Socios: TDataSource;
     tipoPersona: TDataSource;
     tipoDocumento: TDataSource;
@@ -180,7 +181,7 @@ type
     GroupBox7: TGroupBox;
     ScrollBox2: TScrollBox;
     DBImage1: TDBImage;
-    TabSheet2: TTabSheet;
+    ts_Cuentas: TTabSheet;
     GroupBox10: TGroupBox;
     DBGrid4: TDBGrid;
     SocioProductos: TDataSource;
@@ -204,12 +205,6 @@ type
     Copiar1: TMenuItem;
     N1: TMenuItem;
     Imprimir1: TMenuItem;
-    GroupBox2: TGroupBox;
-    Label41: TLabel;
-    Label42: TLabel;
-    edNombreDoc: TDBEdit;
-    DBCheckBox6: TDBCheckBox;
-    edFechaRegistro: TDBEdit;
     tb1: TTrackBar;
     tsFiador: TTabSheet;
     Image1: TImage;
@@ -369,7 +364,7 @@ type
     Label73: TLabel;
     edCasaApart: TDBEdit;
     DBCheckBox8: TDBCheckBox;
-    tbsDependientes: TTabSheet;
+    ts_Dependientes: TTabSheet;
     dblTipoResidencia: TDBLookupComboBox;
     Label28: TLabel;
     Label74: TLabel;
@@ -435,7 +430,7 @@ type
     dbldescripcionAsociacion: TDBLookupComboBox;
     dtsSocioAsociaciones: TDataSource;
     DBCheckBox10: TDBCheckBox;
-    tsPerfiles: TTabSheet;
+    ts_Perfiles: TTabSheet;
     ToolButton35: TToolButton;
     PageControl2: TPageControl;
     tsPerfilFijo: TTabSheet;
@@ -611,6 +606,52 @@ type
     Label96: TLabel;
     ToolButton37: TToolButton;
     mMovimientossubcuenta: TSmallintField;
+    ToolButton39: TToolButton;
+    ToolButton40: TToolButton;
+    ToolButton46: TToolButton;
+    Image10: TImage;
+    GroupBox2: TGroupBox;
+    Label41: TLabel;
+    Label42: TLabel;
+    edNombreDoc: TDBEdit;
+    DBCheckBox6: TDBCheckBox;
+    edFechaRegistro: TDBEdit;
+    ts_ApoyoLentes: TTabSheet;
+    grp_apoyoLentes: TGroupBox;
+    ToolBar25: TToolBar;
+    btn_ApoyoLentes_new: TToolButton;
+    btn_ApoyoLentes_Salvar: TToolButton;
+    ToolButton52: TToolButton;
+    ToolButton47: TToolButton;
+    ToolButton50: TToolButton;
+    dts_SocioApoyoLentes: TDataSource;
+    DBEdit12: TDBEdit;
+    DBMemo2: TDBMemo;
+    dp_FechaApoyoLentes: TDateTimePicker;
+    Label112: TLabel;
+    Label113: TLabel;
+    Label114: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
+    dts_tipoApoyo: TDataSource;
+    GroupBox23: TGroupBox;
+    ToolBar26: TToolBar;
+    btn_ApoyoDoc_new: TToolButton;
+    btn_ApoyoDoc_salvar: TToolButton;
+    ToolButton56: TToolButton;
+    btn_ApoyoDoc_prior: TToolButton;
+    btn_ApoyoDoc_next: TToolButton;
+    DBImage2: TDBImage;
+    dts_SocioApoyoDoc: TDataSource;
+    GroupBox27: TGroupBox;
+    dp_factura: TDateTimePicker;
+    Label115: TLabel;
+    DBEdit13: TDBEdit;
+    Label116: TLabel;
+    DBMemo3: TDBMemo;
+    ppm_Facturas: TPopupMenu;
+    MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
+    Pegar1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure btnSocioNuevo1Click(Sender: TObject);
     procedure dblTipoSocioClick(Sender: TObject);
@@ -678,7 +719,7 @@ type
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure btnextractoClick(Sender: TObject);
     procedure Copiar1Click(Sender: TObject);
-    procedure PageControl1Change(Sender: TObject);
+    procedure pc_socioChange(Sender: TObject);
     procedure DBGrid4CellClick(Column: TColumn);
     procedure DBImage1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -714,7 +755,6 @@ type
     procedure btnSiguienteNacionalidadClick(Sender: TObject);
     procedure btnBorrarNacionalidadClick(Sender: TObject);
     procedure dtspaises2DataChange(Sender: TObject; Field: TField);
-    procedure dtsSocioNacionalidadesUpdateData(Sender: TObject);
     procedure PaisesDataChange(Sender: TObject; Field: TField);
     procedure DireccionesDataChange(Sender: TObject; Field: TField);
     procedure btnDireccionBorrarClick(Sender: TObject);
@@ -786,6 +826,28 @@ type
     procedure btn_ppp_SalvarClick(Sender: TObject);
     procedure ToolButton37Click(Sender: TObject);
     procedure estatusProductoClick(Sender: TObject);
+    procedure dtsSocioDocDataChange(Sender: TObject; Field: TField);
+    procedure ToolButton39Click(Sender: TObject);
+    procedure ToolButton40Click(Sender: TObject);
+    procedure ToolButton46Click(Sender: TObject);
+    procedure DBImage1DblClick(Sender: TObject);
+    procedure btn_ApoyoLentes_newClick(Sender: TObject);
+    procedure btn_ApoyoLentes_SalvarClick(Sender: TObject);
+    procedure dts_SocioApoyoLentesDataChange(Sender: TObject; Field: TField);
+    procedure ToolButton47Click(Sender: TObject);
+    procedure ToolButton50Click(Sender: TObject);
+    procedure btn_ApoyoDoc_newClick(Sender: TObject);
+    procedure btn_ApoyoDoc_salvarClick(Sender: TObject);
+    procedure btn_ApoyoDoc_priorClick(Sender: TObject);
+    procedure btn_ApoyoDoc_nextClick(Sender: TObject);
+    procedure DBImage2KeyPress(Sender: TObject; var Key: Char);
+    procedure DBImage2KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure DBImage2DblClick(Sender: TObject);
+    procedure dts_SocioApoyoDocDataChange(Sender: TObject; Field: TField);
+    procedure MenuItem1Click(Sender: TObject);
+    procedure Pegar1Click(Sender: TObject);
+    procedure Imprimir1Click(Sender: TObject);
   private
   //-----
     Procedure _Carga;
@@ -804,10 +866,12 @@ type
     Procedure CargarDireccionV;
     Procedure CargarEgresosFI;
     Procedure CargarEgresosVA;
+    Procedure CargarApoyoLentes;
     //----
     Procedure CalcularTotalIngresosFijos;
     Procedure CalcularTotalIngresosVariables;
     Function  Grupos(valor : Boolean) : Boolean;
+    function Paginas (valor : boolean) : boolean;
     //----
     Procedure CargarPlanPago;
 
@@ -827,11 +891,120 @@ var
   abmFiador : string;
   dm : TDataModule;
 
+const
+  CRYPT_STRING_BASE64 = 1;
+  BPP = 8; //Note: BYTES per pixel
+
+
 implementation
 
 {$R *.dfm}
 
-uses DM1, Principal, Calendario, DTS;
+uses DM1, Principal, Calendario, DTS, EncdDecd;
+
+{---------------------------------------------------------}
+function BitmapToString(Bitmap: TBitmap): String;
+var
+  x, y: Integer;
+  S: String;
+
+begin
+  S := '';
+  for y := 0 to Bitmap.Height-1 do
+    begin
+      for x := 0 to Bitmap.Width-1 do
+        begin
+          S := S + IntToHex(Bitmap.Canvas.Pixels[x,y], BPP);
+        end;
+      S := S + '\';
+    end;
+  Result := S;
+end;
+{---------------------------------------------------------}
+function StringToBitmap(S: String): TBitmap;
+var
+  Bitmap: TBitmap;
+  Line: String;
+  P: Integer;
+  x, y: Integer;
+
+begin
+  Bitmap := TBitmap.Create;
+  P := pos('\', S);
+  Bitmap.Width := P div BPP;
+  Bitmap.Height := 1;
+
+  Line := Copy(S, 1, P-1);
+  Delete(S, 1, P);
+  x := 0;
+  y := 0;
+
+  While P <> 0 do
+    begin
+      if length(Line) <> 0 then
+        begin
+          Bitmap.Canvas.Pixels[x, y] := StrToInt('$' + Copy(Line, 1, BPP));
+          Delete(Line, 1, BPP);
+          inc(x);
+        end
+      else
+        begin
+          P := pos('\', S);
+          Line := Copy(S, 1, P-1);
+          Delete(S, 1, P);
+          inc(y);
+          Bitmap.Height := y+1;
+          x := 0;
+        end;
+    end;
+  Bitmap.Height := Bitmap.Height - 1;
+  Result := Bitmap;
+end;
+
+{$Region '********** Imagen a Text y vis *************************************************'}
+function CryptBinaryToString(pbBinary: PByte; cbBinary: DWORD; dwFlags: DWORD;
+  pszString: PChar; var pcchString: DWORD): BOOL; stdcall;
+  external 'Crypt32.dll' name 'CryptBinaryToStringA';
+
+function CryptStringToBinary(pszString: PChar; cchString: DWORD; dwFlags: DWORD;
+  pbBinary: PByte; var pcbBinary: DWORD; pdwSkip: PDWORD;
+  pdwFlags: PDWORD): BOOL; stdcall;
+  external 'Crypt32.dll' name 'CryptStringToBinaryA';
+function BinToStr(Binary: PByte; Len: Cardinal): String;
+var
+  Count: DWORD;
+begin
+  Count:= 0;
+  if CryptBinaryToString(Binary,Len,CRYPT_STRING_BASE64,nil,Count) then
+  begin
+    SetLength(Result,Count);
+    if not CryptBinaryToString(Binary,Len,CRYPT_STRING_BASE64,PChar(Result),
+      Count) then
+      Result:= EmptyStr;
+  end;
+end;
+
+procedure StrToStream(Str: String; Stream: TStream);
+var
+  Buffer: PByte;
+  Count: DWORD;
+begin
+  Count:= 0;
+  if CryptStringToBinary(PChar(Str),Length(Str),CRYPT_STRING_BASE64,nil,Count,
+    nil,nil) then
+  begin
+    GetMem(Buffer,Count);
+    try
+      if CryptStringToBinary(PChar(Str),Length(Str),CRYPT_STRING_BASE64,Buffer,
+        Count,nil,nil) then
+        Stream.WriteBuffer(Buffer^,Count);
+    finally
+      FreeMem(Buffer);
+    end;
+  end;
+end;
+
+{$Endregion}
 
 function TfrmSocios.Grupos(valor: Boolean): Boolean;
 begin
@@ -847,6 +1020,28 @@ begin
 //  dbrTipoCliente.Items.Add()
 //  dbrTipoCliente.Items.va
 
+end;
+
+procedure TfrmSocios.Imprimir1Click(Sender: TObject);
+begin
+  inherited;
+  case MessageDlg('Esta Seguro de Pegar la Imagen?... Esto borrara la Actual', mtConfirmation, [mbOK, mbCancel], 0,mbCancel) of
+    mrOk:
+    begin
+    // Write code here for pressing button OK
+      DataModulo1.SocioDoc.Edit;
+      DBImage1.PasteFromClipboard ;
+    end;
+    mrCancel:
+    begin
+    end;
+  end;
+end;
+
+procedure TfrmSocios.MenuItem1Click(Sender: TObject);
+begin
+  inherited;
+  DBImage2.CopyToClipboard;
 end;
 
 procedure TfrmSocios.btnCorreoNuevoClick(Sender: TObject);
@@ -1106,7 +1301,7 @@ begin
       DataModulo1.SocioFuentesIngresosFijosguid.AsString := DataModulo1._guid();
 
     DataModulo1.SocioFuentesIngresosFijosidsocio.value :=
-            DataModulo1.tblSociossocio.value;
+            DataModulo1.tblSociosidsocio.value;
 
     DataModulo1.SocioFuentesIngresosFijosguidSocio.AsString :=
             DataModulo1.tblSociosguidSocio.asstring;
@@ -1310,7 +1505,12 @@ begin
   grpSocioCorreos.Enabled   := False;
   grpSocioTelefonos.Enabled := false;
   grpSocioDireccion.Enabled := False;
+  grpNacionalidades.Enabled := False;
+  grpGrupo.Enabled          := False;
   edTipoCliente.SetFocus;
+
+  paginas(false);
+
   DataModulo1.tblSocios.Append;
   DataModulo1.tblSociosidNacionalidad.Value    := 'PAN';
   DataModulo1.tblSociosfechaRegistro.AsDateTime   := now;
@@ -1334,10 +1534,13 @@ var
  sSec : Integer;
  nombreCompleto,_guid : string;
  _idsocio : integer;
+ _actualizaSec : boolean;
 
 begin
   inherited;
 
+
+  _actualizaSec := false;
 
   if (DataModulo1.tblSocios.State IN [dsInsert]) then
   begin
@@ -1364,7 +1567,9 @@ begin
     End;
 
     DataModulo1.tblSociosidsocio.Value      := sSec;
+    DataModulo1.tblSociossocio.Value        := sSec;
     DataModulo1.tblSociosguidSocio.asstring := DataModulo1._guid ();
+    _actualizaSec := true;
   end;
 
   if  Not (DataModulo1.tblSocios.State IN [dsEdit,dsInsert]) then
@@ -1377,17 +1582,19 @@ begin
    FechaNacimiento (now,'W');
 
    try
-
-      DataModulo1.Generico.Close;
-      DataModulo1.Generico.SQL.Clear;
-      DataModulo1.Generico.SQL.Add('Update SocioSecuencial set ValorActual = ' + IntToStr(sSec)) ;
-      DataModulo1.Generico.SQL.Add(' Where id = ' + DataModulo1.SocioSecuencialid.AsString);
-      DataModulo1.Generico.ExecSQL;
+      if _actualizaSec  then
+      begin
+        DataModulo1.Generico.Close;
+        DataModulo1.Generico.SQL.Clear;
+        DataModulo1.Generico.SQL.Add('Update SocioSecuencial set ValorActual = ' + IntToStr(sSec)) ;
+        DataModulo1.Generico.SQL.Add(' Where id = ' + DataModulo1.SocioSecuencialid.AsString);
+        DataModulo1.Generico.ExecSQL;
+      end;
 
    except on E:Exception do
 
      begin
-
+       ShowMessage('...Error al acutlizar secuencia numerica de socios....');
      end;
 
    end;
@@ -1454,6 +1661,7 @@ begin
   end;
 
   Grupos(true);
+  paginas(true);
 
 end;
 
@@ -1675,6 +1883,21 @@ begin
      hasta.Date := DataModulo1.movimientosCuenta.FieldByName('Fecha_doc').Value;
 
    end;
+
+end;
+
+procedure TfrmSocios.CargarApoyoLentes;
+begin
+
+  DataModulo1.socioApoyoLentes.Close;
+  DataModulo1.socioApoyoLentes.Params[0].AsInteger  :=
+         DataModulo1.tblSociosidSocio.AsInteger  ;
+  DataModulo1.socioApoyoLentes.Open;
+  DataModulo1.socioApoyoLentes.First;
+
+  DataModulo1.socioApoyoDoc.Close;
+  DataModulo1.socioApoyoDoc.Params[0].AsString := DataModulo1.socioApoyoLentesguid.AsString  ;
+  DataModulo1.socioApoyoDoc.Open;
 
 end;
 
@@ -2187,6 +2410,17 @@ begin
 
 end;
 
+procedure TfrmSocios.DBImage1DblClick(Sender: TObject);
+begin
+  inherited;
+  if OpenPictureDialog1.Execute  then
+  begin
+    DataModulo1.SocioDoc.Edit;
+    DBImage1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    DBImage1.Refresh;
+  end;
+end;
+
 procedure TfrmSocios.DBImage1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
@@ -2228,6 +2462,44 @@ begin
   inherited;
   {Dejamos el cursor como estaba}
   Screen.Cursor := crDefault;
+end;
+
+procedure TfrmSocios.DBImage2DblClick(Sender: TObject);
+begin
+  inherited;
+  if OpenPictureDialog1.Execute  then
+  begin
+    DataModulo1.socioApoyoDoc.Edit;
+    DataModulo1.socioApoyoDocidSocio.Value       := DataModulo1.tblSociossocio.Value;
+    DataModulo1.socioApoyoDocidApoyo.AsInteger   := DataModulo1.socioApoyoLentesidApoyo.AsInteger ;
+    DataModulo1.socioApoyoDocguidApoyo.AsString  := DataModulo1.socioApoyoLentesguid.AsString ;
+    DataModulo1.socioApoyoDocusuario_au.AsString := usuario;
+    DataModulo1.socioApoyoDocfecha_au.AsDateTime := now;
+    DataModulo1.socioApoyoDocguid.AsString       := DataModulo1._guid ();
+    DBImage2.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+  End
+  else
+end;
+
+procedure TfrmSocios.DBImage2KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+
+ if not DataModulo1.socioApoyoDoc.eof then
+ begin
+   if (ssCtrl in Shift) and ((Key = Ord('V')) or (Key = Ord('v'))) and
+      (DataModulo1.socioApoyoDocidApoyo.AsInteger > 0) then
+       DBImage2.PasteFromClipboard;
+ end;
+
+end;
+
+procedure TfrmSocios.DBImage2KeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+
 end;
 
 {OnMouseDown}
@@ -2462,9 +2734,48 @@ begin
 
 end;
 
-procedure TfrmSocios.dtsSocioNacionalidadesUpdateData(Sender: TObject);
+procedure TfrmSocios.dtsSocioDocDataChange(Sender: TObject; Field: TField);
+var
+ Stream: TStream;
+ imgStream : TJPEGImage ;
+
+begin
+//  Stream:= TMemoryStream.Create;
+//  try
+//    StrToStream(DataModulo1.SocioDocimagenTxt.AsString,Stream);
+////
+//    imgStream.LoadFromStream(Stream);
+//    image9.Picture.bitmap.LoadFromStream(Stream);
+//    image9.Repaint;
+//  finally
+//    Stream.Free;
+//   end;
+end;
+
+procedure TfrmSocios.dts_SocioApoyoDocDataChange(Sender: TObject;
+  Field: TField);
 begin
   inherited;
+  DBImage2.Stretch := true;
+end;
+
+procedure TfrmSocios.dts_SocioApoyoLentesDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;
+  if not DataModulo1.socioApoyoLentes.eof then
+  begin
+   DataModulo1.socioApoyoDoc.Close;
+   DataModulo1.socioApoyoDoc.Params [0].AsString :=
+      DataModulo1.socioApoyoLentesguid.AsString ;
+   DataModulo1.socioApoyoDoc.Open;
+
+  end
+  else
+  begin
+   DataModulo1.socioApoyoDoc.Close;
+   DataModulo1.socioApoyoDoc.Open;
+  end;
 end;
 
 //==============================================================================
@@ -2549,6 +2860,7 @@ begin
   DataModulo1.Fiadores.Open;
   DataModulo1.mFiadores.Open;         //... tabla de memoria para Fiadores del Prestamo
   DataModulo1.Finalidad.Open;         //... tabla Finalidad
+  DataModulo1.socioApoyoLentes.Open;
 
 
 
@@ -2577,6 +2889,11 @@ begin
   DataModulo1.estatusProducto.close;
   DataModulo1.estatusProducto.Open;
 
+  DataModulo1.tipoApoyo.Close;
+  DataModulo1.tipoApoyo.Open;
+
+  DataModulo1.socioApoyoDoc.Close;
+  DataModulo1.socioApoyoDoc.open;
 
 end;
 
@@ -2639,16 +2956,33 @@ begin
   FechaNacimiento(encodedate(nano.Value ,nmes.Value ,ndia.value) , 'N')
 end;
 
-procedure TfrmSocios.PageControl1Change(Sender: TObject);
+procedure TfrmSocios.pc_socioChange(Sender: TObject);
 begin
   inherited;
-  if PageControl1.ActivePageIndex = 5 then
+  if pc_socio.ActivePageIndex = 5 then
   begin
     CargaMov;
   end;
 
 end;
 
+
+procedure TfrmSocios.Pegar1Click(Sender: TObject);
+begin
+  inherited;
+  case MessageDlg('Esta Seguro de Pegar la Imagen?... Esto borrara la Actual', mtConfirmation, [mbOK, mbCancel], 0,mbCancel) of
+    mrOk:
+    begin
+    // Write code here for pressing button OK
+      DataModulo1.socioApoyoDoc.Edit;
+      DBImage2.PasteFromClipboard ;
+    end;
+    mrCancel:
+    begin
+    end;
+  end;
+
+end;
 
 //------------------------------------------------------------------------------
 //        Seleccina el Page de cuentas
@@ -2683,6 +3017,18 @@ procedure TfrmSocios.PageControl3MouseLeave(Sender: TObject);
 begin
   inherited;
    bFiadores := False;
+end;
+
+function TfrmSocios.Paginas(valor: boolean): boolean;
+begin
+  ts_Herederos.Enabled        := valor;
+  ts_datosFinancieros.Enabled := valor;
+  ts_Vaciones.Enabled         := valor;
+  ts_documentos.Enabled       := valor;
+  ts_EstadoCuentas.Enabled    := valor;
+  ts_Cuentas.Enabled          := valor;
+  ts_Dependientes.Enabled     := valor;
+  ts_Perfiles.Enabled         := valor;
 end;
 
 procedure TfrmSocios.PaisesDataChange(Sender: TObject; Field: TField);
@@ -2801,6 +3147,8 @@ begin
     //---
     CargarDireccionV;
     CargarEgresosVA;
+    CargarApoyoLentes;
+
 
 
 
@@ -2906,14 +3254,18 @@ begin
 //---
 
   if OpenPictureDialog1.Execute  then
-   begin
+  begin
+
+   // Image10.Picture.LoadFromFile()
     DataModulo1.SocioDoc.Append;
     DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
     DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
+    DataModulo1.SocioDocruta.AsString            := OpenPictureDialog1.FileName;
     DBImage1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
     DBImage1.Refresh;
   End
-  else ShowMessage('Open file was cancelled');
+  else
+   ShowMessage('Open file was cancelled');
 
 
 end;
@@ -2935,6 +3287,9 @@ begin
 end;
 
 procedure TfrmSocios.ToolButton19Click(Sender: TObject);
+var
+  Stream: TMemoryStream;
+  Texto: String;
 begin
   inherited;
 //  Twain.SelectedSourceIndex := LBSources.ItemIndex;
@@ -2945,18 +3300,100 @@ begin
 //    Twain.SelectedSource.ShowUI := False;
 //    Twain.SelectedSource.Enabled := True;
 //  end;
+
+
+
+  if OpenPictureDialog1.Execute  then
+  begin
+    Stream:= TMemoryStream.Create;
+    try
+      DataModulo1.SocioDoc.Append;
+      DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
+      DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
+      Stream.LoadFromFile(OpenPictureDialog1.FileName);
+      Texto:= BinToStr(Stream.Memory,Stream.Size);
+      DataModulo1.SocioDocimagenTxt.AsString       := texto;
+      Clipboard.AsText := texto;
+    finally
+      Stream.Free;
+    end;
+//    DataModulo1.SocioDoc.Append;
+//    DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
+//    DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
+//    DataModulo1.SocioDocruta.AsString            := OpenPictureDialog1.FileName;
+//    DBImage1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+//    DBImage1.Refresh;
+  end;
+
 end;
 
 procedure TfrmSocios.ToolButton21Click(Sender: TObject);
+//var
+//  OleGraphic               : TOleGraphic;
+//  Source                   : TImage;
+//  BMP                      : TBitmap;
+//  ss          :TMemoryStream;
+//  st          :string;
+//  fs          :TBytesStream;
 begin
   inherited;
-    DataModulo1.SocioDoc.Prior;
+//  OleGraphic := TOleGraphic.Create; {The magic class!}
+
+  DataModulo1.SocioDoc.prior;
+//  ss    := TMemoryStream.Create();
+//  st := DataModulo1.SocioDocimagenTxt.AsString;
+//
+//
+//  if st <> '' then
+//  begin
+//    fs := TBytesStream.Create(DecodeBase64(st));
+//    OleGraphic.LoadFromStream(fs);
+//    Source := Timage.Create(Nil);
+//    Source.Picture.Assign(OleGraphic);
+//
+//    BMP := TBitmap.Create; {Converting to Bitmap}
+////    bmp.Width := Source.Picture.Width;
+////    bmp.Height := source.Picture.Height;
+//    bmp.Canvas.Draw(0, 0, source.Picture.Graphic);
+//
+//    image10.Picture.Bitmap := bmp; {Show the bitmap on form}
+//  end;
+
 end;
 
 procedure TfrmSocios.ToolButton22Click(Sender: TObject);
+//var
+//  OleGraphic               : TOleGraphic;
+//  Source                   : TImage;
+//  BMP                      : TBitmap;
+//  ss          :TMemoryStream;
+//  st          :string;
+//  fs          :TBytesStream;
 begin
   inherited;
-    DataModulo1.SocioDoc.Next;
+//  OleGraphic := TOleGraphic.Create; {The magic class!}
+//
+  DataModulo1.SocioDoc.Next;
+//  ss    := TMemoryStream.Create();
+//  st := DataModulo1.SocioDocimagenTxt.AsString;
+//
+//
+//  if st <> '' then
+//  begin
+//    fs := TBytesStream.Create(DecodeBase64(st));
+//    OleGraphic.LoadFromStream(fs);
+//    Source := Timage.Create(Nil);
+//    Source.Picture.Assign(OleGraphic);
+//
+//    BMP := TBitmap.Create; {Converting to Bitmap}
+//    bmp.Width := Source.Picture.Width;
+//    bmp.Height := source.Picture.Height;
+//
+//    bmp.Canvas.Draw(0, 0, source.Picture.Graphic);
+//
+//    image10.Picture.Bitmap := bmp; {Show the bitmap on form}
+//  end;
+
 end;
 
 procedure TfrmSocios.ToolButton23Click(Sender: TObject);
@@ -3085,10 +3522,230 @@ begin
 
 end;
 
+procedure TfrmSocios.ToolButton39Click(Sender: TObject);
+var
+  FS: TMemoryStream;
+  FirstBytes: AnsiString;
+  Graphic: TGraphic;
+  fileName : string;
+  tipo,st  : string;
+begin
+  inherited;
+//---
+  Graphic := nil;
+  OpenPictureDialog1.Filter := 'Imagenes JPG (*.jpg)|*.JPG|BMP-s (*.bmp)|*.BMP|GIF (*.gif)|*.GIF';
+  FS := TMemoryStream.Create ();
+  if OpenPictureDialog1.execute  then
+  begin
+    fileName := OpenPictureDialog1.FileName;
+    Image10.Picture.LoadFromFile(fileName);
+    image10.Picture.Graphic.SaveToStream(FS);
+    st    :=  EncodeBase64(fs.Memory, fs.Size);
+    Clipboard.AsText := st;
+    tipo := RightStr(filename, 3);
+
+    if tipo = 'jpg' then
+      Graphic := TJPEGImage.Create;
+    if tipo = 'bmp'  then
+      Graphic := TBitmap.Create;
+
+    DataModulo1.SocioDoc.Append;
+    DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
+    DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
+    DataModulo1.SocioDocruta.AsString            := filename;
+    DataModulo1.SocioDocimagenTxt.AsString       := St;
+    DataModulo1.SocioDoc.Post;
+
+//    image9.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+//    s := BitmapToString(image9.Picture.Bitmap );
+//    Clipboard.AsText := s;
+//    DataModulo1.SocioDocimagenTxt.AsString := S;
+//    Image10.Picture.Bitmap := StringToBitmap(DataModulo1.SocioDocimagenTxt.AsString );
+//    DBImage1.Refresh;
+  End
+  else
+   ShowMessage('Open file was cancelled');
+
+end;
+
+procedure TfrmSocios.ToolButton40Click(Sender: TObject);
+
+var
+  ss    :TMemoryStream;
+  st    :string;
+  stream: TBytesStream;
+  jpg   :  TJPEGImage;
+begin
+  ss    := TMemoryStream.Create();
+  jpg   := TJPEGImage.Create;
+
+  if OpenPictureDialog1.Execute  then
+  begin
+    OpenPictureDialog1.Filter := 'Imagenes JPG (*.jpg)|*.JPG| BMP-s (*.bmp)|*.BMP';
+    if OpenPictureDialog1.execute  then
+
+    DataModulo1.SocioDoc.Append;
+    DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
+    DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
+    DataModulo1.SocioDocruta.AsString            := OpenPictureDialog1.FileName;
+
+    DBImage1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    DBImage1.Refresh;
+
+    try
+
+      DBImage1.Picture.Graphic.SaveToStream(ss);
+
+      st    :=  EncodeBase64(ss.Memory, ss.Size);
+      Clipboard.AsText := st;
+      DataModulo1.SocioDocimagenTxt.AsString := st;
+      stream := TBytesStream.Create(DecodeBase64(st));
+      stream.Position := 0;
+
+      jpg.LoadFromStream(stream);
+      Image10.Picture.Assign(jpg);
+
+    finally
+      ss.Free;
+    end;
+  end;
+end;
+
+procedure TfrmSocios.ToolButton46Click(Sender: TObject);
+var
+  ss    :TMemoryStream;
+  st    :string;
+  stream: TBytesStream;
+  jpg   :  TJPEGImage;
+begin
+
+  ss    := TMemoryStream.Create();
+  jpg   := TJPEGImage.Create;
+  st := DataModulo1.SocioDocimagenTxt.AsString;
+
+  stream := TBytesStream.Create(DecodeBase64(st));
+  stream.Position := 0;
+
+  jpg.LoadFromStream(stream);
+  Image10.Picture.Assign(jpg);
+
+end;
+
+procedure TfrmSocios.ToolButton47Click(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.socioApoyoLentes.Prior;
+  dp_FechaApoyoLentes.Datetime := DataModulo1.socioApoyoLentesfechaApoyo.AsDateTime ;
+end;
+
+procedure TfrmSocios.ToolButton50Click(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.socioApoyoLentes.Next;
+  dp_FechaApoyoLentes.Datetime := DataModulo1.socioApoyoLentesfechaApoyo.AsDateTime ;
+end;
+
 procedure TfrmSocios.btn_AnteriorEFClick(Sender: TObject);
 begin
   inherited;
    DataModulo1.actividadEgresosF.Prior;
+end;
+
+procedure TfrmSocios.btn_ApoyoDoc_newClick(Sender: TObject);
+var
+ _file : String;
+begin
+  inherited;
+
+
+  if OpenPictureDialog1.Execute  then
+  begin
+    _file :=  OpenPictureDialog1.FileName;
+    DataModulo1.socioApoyoDoc.Append;
+    DataModulo1.socioApoyoDocidSocio.Value       := DataModulo1.tblSociossocio.Value;
+    DataModulo1.socioApoyoDocidApoyo.AsInteger   := DataModulo1.socioApoyoLentesidApoyo.AsInteger ;
+    DataModulo1.socioApoyoDocguidApoyo.AsString  := DataModulo1.socioApoyoLentesguid.AsString ;
+    DataModulo1.socioApoyoDocusuario_au.AsString := usuario;
+    DataModulo1.socioApoyoDocfecha_au.AsDateTime := now;
+    DataModulo1.socioApoyoDocguid.AsString       := DataModulo1._guid ();
+    DBImage2.Picture.LoadFromFile(_file);
+    dp_factura.DateTime := now;
+ //   DBImage2.Refresh;
+  End
+  else
+   ShowMessage('Open file was cancelled');
+
+
+end;
+
+procedure TfrmSocios.btn_ApoyoDoc_nextClick(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.socioApoyoDoc.next;
+  dp_factura.Datetime := DataModulo1.socioApoyodocFecha.AsDateTime ;
+end;
+
+procedure TfrmSocios.btn_ApoyoDoc_priorClick(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.socioApoyoDoc.Prior;
+  dp_factura.Datetime := DataModulo1.socioApoyodocFecha.AsDateTime ;
+
+end;
+
+procedure TfrmSocios.btn_ApoyoDoc_salvarClick(Sender: TObject);
+begin
+  inherited;
+  if  Not (DataModulo1.socioApoyoDoc.State IN [dsEdit,dsInsert]) then
+  Begin
+    DataModulo1.socioApoyoDoc.edit;
+  End;
+
+  Try
+   DataModulo1.socioApoyodocFecha.AsDateTime :=  dp_factura.Datetime ;
+   DataModulo1.socioApoyoDoc.post;
+   DBImage2.Refresh;
+   DBImage2.Stretch := true;
+  except
+   on E:Exception do
+   begin
+    showMessage('Error al salvar el Documento...');
+   end;
+  end;
+end;
+
+procedure TfrmSocios.btn_ApoyoLentes_newClick(Sender: TObject);
+begin
+  inherited;
+
+  DataModulo1.socioApoyoLentes.Append;
+  DataModulo1.socioApoyoLentesidSocio.Value         := DataModulo1.tblSociossocio.Value;
+  DataModulo1.socioApoyoLentesGuidSocio.AsString    := DataModulo1.tblSociosguidSocio.AsString;
+  DataModulo1.socioApoyoLentesFechaApoyo.AsDateTime := DataModulo1.FechaSistema ();
+  dp_FechaApoyoLentes.Datetime := DataModulo1.FechaSistema ();
+  DataModulo1.socioApoyoLentesguid.AsString         := DataModulo1._guid();
+
+end;
+
+procedure TfrmSocios.btn_ApoyoLentes_SalvarClick(Sender: TObject);
+begin
+  inherited;
+  if  Not (DataModulo1.socioApoyoLentes.State IN [dsEdit, dsInsert]) then
+     DataModulo1.socioApoyoLentes.edit;
+
+    Try
+
+      DataModulo1.socioApoyoLentesfechaApoyo.AsDateTime := dp_FechaApoyoLentes.DateTime ;
+      DataModulo1.socioApoyoLentes.post;
+
+      except
+      on E:Exception do
+      begin
+        showMessage('Error al salvar el Apoyo...');
+      end;
+
+    end;
+
 end;
 
 procedure TfrmSocios.btn_DirIV_AnteriorClick(Sender: TObject);

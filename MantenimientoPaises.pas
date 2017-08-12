@@ -191,7 +191,7 @@ begin
                                     DataModulo1.Provinciasidprovincia.AsInteger;
   DataModulo1.DistritosguidProvincia.AsString:=
                                    DataModulo1.ProvinciasguidProvincia.AsString;
-  DataModulo1.DistritosguidDistrito.AsString := DataModulo1._guid();
+//  DataModulo1.DistritosguidDistrito.AsString := DataModulo1._guid();
 end;
 
 
@@ -309,8 +309,8 @@ begin
    _guid := DataModulo1.DistritosguidDistrito.AsString ;
    DataModulo1.DistritosguidProvincia.AsString  :=
                DataModulo1.ProvinciasguidProvincia.AsString;
-   DataModulo1.Distritosfecha_au.AsDateTime := now();
-   DataModulo1.Provinciasusuario_au.AsString := usuario;
+   DataModulo1.Distritosfecha_au.AsDateTime := now;
+   DataModulo1.Distritosusuario_au.AsString := usuario;
 
    DataModulo1.Distritos.post;
    DataModulo1.Distritos.close;

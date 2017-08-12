@@ -142,7 +142,7 @@ object DataModulo1: TDataModulo1
     Left = 400
     Top = 4
     Bitmap = {
-      494C01013100A80028051000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
+      494C01013100A8004C051000100000FF0000FF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       000000000000000000000000000000000000E4E4E4FF050004FF0B0004FF0B00
       04FF0B0004FF0B0004FF0B0004FF0C0004FF130007FFFFFFFFFFFFFFFFFFFFFF
@@ -1909,133 +1909,133 @@ object DataModulo1: TDataModulo1
     Left = 459
     Top = 5
     Bitmap = {
-      494C0101310098027C0710001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010132009802AC0710001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000D0000000010020000000000000D0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CA890900CA890900CA890900CA89
       0900CA890900CA890900BA750300CA890900CA890900CC993300CA890900BA75
-      0300000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      030000000000000000000000000000000000D9E6D9FF3C4141FF3B4545FF3B44
+      45FF3A4344FF3B4545FF3C4546FF3C4546FF3B4445FF3B4545FF3B4446FF3944
+      46FF6C6C6CFFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC993300F0F7F200F0F7F200F0F7
       F200F0F7F200F0F7F200D5B49300D5B49300E7D0A500E7D0A500F0F7F200CC99
-      3300000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      330000000000000000000000000000000000D9E6D9FF303739FF353C3DFF363C
+      3DFF353D3EFF353C3DFF333B3CFF343C3DFF353C3DFF363C3DFF363A40FF3B3C
+      3FFF646463FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC993300F3E7D300F3E7D300F3E7
       D300F0F7F200D5B49300D5B49300D5B49300D5B49300F3E7D300F0F7F200CC99
-      3300000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      330000000000000000000000000000000000D9E6D9FF466877FF539ABCFF539A
+      BBFF539ABCFF539ABCFF519ABDFF5299BFFF5299BFFF5399BEFF5898BDFF5A5A
+      59FFBEBDBDFFBCBCBEFFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC993300F0F7F200D5B49300E7D0
       A500CC9999009999CC007F3B230099666600D5B49300D5B49300F3E7D300CC99
-      3300000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      330000000000000000000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FF686969FF515AEDFF5159F0FF5058F1FF5257F1FF4F58F0FF5059
+      EFFF4F59F0FF373A50FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC993300F0F7F200CC999900CC99
       9900CC999900666666006699FF006699FF00B0735E00CC999900F0F7F200CC99
-      3300000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      330000000000000000000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FF656869FF5159EEFF5159F0FF5058F0FF2F3347FF4C57E0FF5257
+      F1FF4F59F0FF383B4FFFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000E2B0450000000000CCCCCC00CC99
       CC00D5B49300B6D5E20099CCFF0066CCFF006699FF00C9AB7B00F3E7D300CC99
-      3300000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      330000000000000000000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FF8A8A8AFF565CD5FF5059EFFF4F55BAFF3B3B3AFF313755FF5058
+      EBFF5257F1FF444451FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC993300F0F7F200E8D5C400E8D5
       C400E8D5C40099996600CCCCFF00A4B6F1006699FF006699CC00D5B49300CC99
-      3300000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      330000000000000000000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FF4E4D51FF5057F0FF5D5F61FFEEEEEEFF484A4AFF4E51
+      B9FF494EB6FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC993300F0F7F200F3E7D300F3E7
       D300F3E7D300F3E7D300CCCCCC00CCCCFF00A4B6F100A4B6F1006699FF00B471
-      1800000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      180000000000000000000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FF343545FF32333CFFFBFBFBFF6F7070FF5052
+      A8FF72716FFFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC99330000000000000000000000
       00000000000000000000F3E7D300F0F7F200CCCCFF0099CCFF0099CCFF006699
-      CC00000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      CC0000000000000000000000000000000000D9E6D9FF4F4F4FFF6B6B6BFF6B6B
+      6BFF6B6B6BFF404040FFD9E6D9FFD9E6D9FFD9E6D9FFA09E9CFFCFCFCDFFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC99330000000000E8D5C400E8D5
       C400E8D5C400E8D5C400E8D5C400CC999900F0F7F200CAEDF700D5B49300FFCC
-      6600CC9933000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      6600CC993300000000000000000000000000D9E6D9FF595959FF7E7E7EFF7E7E
+      7EFF7E7E7EFF464646FFD9E6D9FFD9E6D9FF818182FFA6BDDCFF646F7FFFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000E2B0450000000000CC999900D5B4
       9300CC999900D5B49300CC999900CC9999009966660099996600000000009999
-      9900003366003333990000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      990000336600333399000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF7789A1FFB1CEFBFFAFCFFBFF6767
+      68FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC99330000000000000000000000
       00000000000000000000000000000000000000000000E2B04500CCCC99003333
-      6600333366003333660066333300000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      660033336600333366006633330000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FF7A7979FFB2CEF7FFB1CFF9FFB3CFF9FF8593
+      A7FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC99330000000000000000000000
       00000000000000000000F0F7F200F0F7F200E8D5C400DB9F0800333366003458
-      E6003458E6003333CC007F3B2300000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      E6003458E6003333CC007F3B230000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF3A3B3CFFA7B7D3FF363739FF3C3B
+      3BFFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000E2B0450000000000000000000000
       000000000000000000000000000000000000E8D5C400E2B04500AA600F003458
-      E6003458E6006633CC0000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      E6003458E6006633CC000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF4F4F4FFF3F3F3EFF555555FFBFBF
+      BFFFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000CC99330000000000000000000000
       000000000000000000000000000000000000E8D5C400B4711800000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000D9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6
+      D9FFD9E6D9FFD9E6D9FFD9E6D9FFD9E6D9FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -5229,6 +5229,12 @@ object DataModulo1: TDataModulo1
       FieldName = 'fechaAud'
       Origin = 'fechaAud'
     end
+    object SocioDocimagenTxt: TMemoField
+      FieldName = 'imagenTxt'
+      Origin = 'imagenTxt'
+      BlobType = ftMemo
+      Size = 2147483647
+    end
   end
   object SocioProductos: TFDQuery
     Connection = cnn2
@@ -5238,7 +5244,7 @@ object DataModulo1: TDataModulo1
       '  where Socio = :ID'
       '  order by socio')
     Left = 1933
-    Top = 320
+    Top = 352
     ParamData = <
       item
         Name = 'ID'
@@ -9424,7 +9430,9 @@ object DataModulo1: TDataModulo1
     Connection = cnn2
     SQL.Strings = (
       'select * from Barrio'
-      'Where guidCorregimiento = :guid')
+      'Where '
+      'guidCorregimiento = :guid'
+      'Order by descripcion')
     Left = 166
     Top = 292
     ParamData = <
@@ -13804,6 +13812,7 @@ object DataModulo1: TDataModulo1
         Name = 'CUENTA'
         DataType = ftString
         ParamType = ptInput
+        Size = 8
         Value = '8'
       end
       item
@@ -14149,14 +14158,14 @@ object DataModulo1: TDataModulo1
   end
   object pacto: TFDConnection
     Params.Strings = (
-      'Database=D:\sistemas\pacto\pacto.mdb'
+      'Database=D:\Syscoop2003\pacto.mdb'
       'ODBCDriver=Microsoft Access Driver (*.mdb)'
       'DataSource=pacto'
       'User_Name=admin'
       
-        'ODBCAdvanced=DefaultDir=D:\sistemas\pacto;DriverId=25;MaxBufferS' +
-        'ize=2048;MaxScanRows=8;PageTimeout=5;SafeTransactions=0;Threads=' +
-        '3;UserCommitSync=Yes'
+        'ODBCAdvanced=DefaultDir=D:\Syscoop2003;DriverId=25;MaxBufferSize' +
+        '=2048;MaxScanRows=8;PageTimeout=5;SafeTransactions=0;Threads=3;U' +
+        'serCommitSync=Yes'
       'DriverID=ODBC')
     UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode]
     UpdateOptions.UpdateChangedFields = False
@@ -14166,12 +14175,14 @@ object DataModulo1: TDataModulo1
     Left = 48
     Top = 1764
   end
-  object p_maes_aux: TFDQuery
+  object p_Sicios: TFDQuery
     Connection = pacto
     SQL.Strings = (
-      'select count (*) from maes_aux')
-    Left = 48
-    Top = 1840
+      'select * from socios'
+      ''
+      'where socio > 1 and socio < 4245')
+    Left = 24
+    Top = 1944
   end
   object FDQuery4: TFDQuery
     Connection = cnn2
@@ -14277,5 +14288,456 @@ object DataModulo1: TDataModulo1
     Connection = cnn2
     Left = 2104
     Top = 1328
+  end
+  object transferencia_det: TFDQuery
+    Connection = cnn2
+    Left = 2096
+    Top = 1400
+  end
+  object FDQuery3: TFDQuery
+    Connection = cnn2
+    Left = 1448
+    Top = 984
+  end
+  object socioPrestamos: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'select num_cuenta, s.nombresubcuenta, p.subcuenta  '
+      'from maes_aux p '
+      'inner join subcuenta s on s.subcuenta = p.subcuenta'
+      'where socio = 19 and s.prestamo_s_n = '#39'S'#39)
+    Left = 1936
+    Top = 304
+    object socioPrestamosnum_cuenta: TWideStringField
+      FieldName = 'num_cuenta'
+      Origin = 'num_cuenta'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      EditMask = '!00-000000-00;0;_'
+      Size = 12
+    end
+    object socioPrestamosnombresubcuenta: TWideStringField
+      FieldName = 'nombresubcuenta'
+      Origin = 'nombresubcuenta'
+      Size = 50
+    end
+    object socioPrestamossubcuenta: TSmallintField
+      FieldName = 'subcuenta'
+      Origin = 'subcuenta'
+    end
+  end
+  object comprobante_ENC: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'Select  TE.* '
+      ', isnull(s.nombre,'#39#39') + '#39' '#39' + '
+      '  isnull(s.segundonombre,'#39#39') + '#39' '#39' + '
+      '  isnull(s.Apellido,'#39#39') + '#39' '#39' + '
+      '  isnull(s.SegundoApellido,'#39#39') + '#39' '#39' + '
+      '  isNull(s.ApellidoCasada,'#39#39') as NombreCompleto'
+      ',TD.Nombre as nombreDocumento'
+      'from transaccion_enc TE'
+      'Left Join Socios   S  on TE.aNombreDe = S.idsocio '
+      'Left Join tipo_doc TD on TE.Tipo_Documento = TD.Tipo_Doc'
+      'where documento    = :documento'
+      'and tipo_documento = :tipo'
+      '')
+    Left = 296
+    Top = 1600
+    ParamData = <
+      item
+        Name = 'DOCUMENTO'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '20313'
+      end
+      item
+        Name = 'TIPO'
+        DataType = ftString
+        ParamType = ptInput
+        Value = 'CHQ'
+      end>
+    object comprobante_ENCtipo_documento: TWideStringField
+      FieldName = 'tipo_documento'
+      Origin = 'tipo_documento'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 3
+    end
+    object comprobante_ENCdocumento: TIntegerField
+      FieldName = 'documento'
+      Origin = 'documento'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object comprobante_ENCfecha_doc: TSQLTimeStampField
+      FieldName = 'fecha_doc'
+      Origin = 'fecha_doc'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object comprobante_ENCestado: TSingleField
+      FieldName = 'estado'
+      Origin = 'estado'
+    end
+    object comprobante_ENCobservacion: TMemoField
+      FieldName = 'observacion'
+      Origin = 'observacion'
+      BlobType = ftMemo
+      Size = 2147483647
+    end
+    object comprobante_ENCanombrede: TIntegerField
+      FieldName = 'anombrede'
+      Origin = 'anombrede'
+    end
+    object comprobante_ENCimpreso: TSingleField
+      FieldName = 'impreso'
+      Origin = 'impreso'
+    end
+    object comprobante_ENCanulado: TSingleField
+      FieldName = 'anulado'
+      Origin = 'anulado'
+    end
+    object comprobante_ENCcontabilidad: TSingleField
+      FieldName = 'contabilidad'
+      Origin = 'contabilidad'
+    end
+    object comprobante_ENCconciliado: TSingleField
+      FieldName = 'conciliado'
+      Origin = 'conciliado'
+    end
+    object comprobante_ENCfecha_aud: TSQLTimeStampField
+      FieldName = 'fecha_aud'
+      Origin = 'fecha_aud'
+    end
+    object comprobante_ENCusuario: TWideStringField
+      FieldName = 'usuario'
+      Origin = 'usuario'
+      Size = 10
+    end
+    object comprobante_ENCmonto_gral: TFloatField
+      FieldName = 'monto_gral'
+      Origin = 'monto_gral'
+    end
+    object comprobante_ENCpagare: TWideStringField
+      FieldName = 'pagare'
+      Origin = 'pagare'
+      Size = 25
+    end
+    object comprobante_ENCidSocio: TIntegerField
+      FieldName = 'idSocio'
+      Origin = 'idSocio'
+    end
+    object comprobante_ENCguid: TStringField
+      FieldName = 'guid'
+      Origin = 'guid'
+      Size = 50
+    end
+    object comprobante_ENCbanco: TIntegerField
+      FieldName = 'banco'
+      Origin = 'banco'
+    end
+    object comprobante_ENCnCuenta: TStringField
+      FieldName = 'nCuenta'
+      Origin = 'nCuenta'
+      Size = 50
+    end
+    object comprobante_ENCNombreCompleto: TWideStringField
+      FieldName = 'NombreCompleto'
+      Origin = 'NombreCompleto'
+      ReadOnly = True
+      Required = True
+      Size = 214
+    end
+    object comprobante_ENCnombreDocumento: TWideStringField
+      FieldName = 'nombreDocumento'
+      Origin = 'nombreDocumento'
+      Size = 50
+    end
+  end
+  object comprobante_DET: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      ''
+      'Select'
+      'td.Fecha_doc,'
+      'td.documento,'
+      'td.cuenta,'
+      'cc.nombre NombreCuenta,'
+      'td.num_cuenta,'
+      
+        'debito  = cast((case when td.naturaleza = '#39'D'#39' then td.Monto Else' +
+        ' 0 end) as decimal(18,2)),'
+      
+        'Credito = cast((case when td.naturaleza = '#39'C'#39' then td.Monto Else' +
+        ' 0 end) as decimal(18,2))'
+      ',p.subcuenta as idProducto'
+      ',td.Naturaleza'
+      'from transaccion_det TD'
+      '  Left Join maescont CC on TD.cuenta = CC.cuenta '
+      '  left Join maes_aux P  on td.num_cuenta = p.num_cuenta '
+      'where documento      = :Documento'
+      'and tipo_documento   = :tipo'
+      '--and Fecha_Doc      = :fecha_doc'
+      'order by TD.naturaleza desc ,TD.cuenta,td.num_cuenta')
+    Left = 296
+    Top = 1680
+    ParamData = <
+      item
+        Name = 'DOCUMENTO'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '20313'
+      end
+      item
+        Name = 'TIPO'
+        DataType = ftString
+        ParamType = ptInput
+        Value = 'CHQ'
+      end>
+    object comprobante_DETFecha_doc: TSQLTimeStampField
+      FieldName = 'Fecha_doc'
+      Origin = 'Fecha_doc'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object comprobante_DETdocumento: TIntegerField
+      FieldName = 'documento'
+      Origin = 'documento'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object comprobante_DETcuenta: TWideStringField
+      FieldName = 'cuenta'
+      Origin = 'cuenta'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object comprobante_DETNombreCuenta: TWideStringField
+      FieldName = 'NombreCuenta'
+      Origin = 'NombreCuenta'
+      Size = 50
+    end
+    object comprobante_DETnum_cuenta: TWideStringField
+      FieldName = 'num_cuenta'
+      Origin = 'num_cuenta'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 12
+    end
+    object comprobante_DETdebito: TBCDField
+      FieldName = 'debito'
+      Origin = 'debito'
+      ReadOnly = True
+      Precision = 18
+      Size = 2
+    end
+    object comprobante_DETCredito: TBCDField
+      FieldName = 'Credito'
+      Origin = 'Credito'
+      ReadOnly = True
+      Precision = 18
+      Size = 2
+    end
+    object comprobante_DETidProducto: TSmallintField
+      FieldName = 'idProducto'
+      Origin = 'idProducto'
+    end
+    object comprobante_DETNaturaleza: TWideStringField
+      FieldName = 'Naturaleza'
+      Origin = 'Naturaleza'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 1
+    end
+  end
+  object FDQuery5: TFDQuery
+    Connection = pacto
+    SQL.Strings = (
+      ''
+      'select distinct distrito,Correguimiento,calle_barrio from socios'
+      
+        'where distrito like '#39'%espi%'#39' or correguimiento like '#39'%espi%'#39' or ' +
+        'calle_barrio like '#39'%espi% '#39
+      'order by distrito,correguimiento,calle_barrio')
+    Left = 288
+    Top = 1848
+  end
+  object FDQuery6: TFDQuery
+    Connection = cnn2
+    Left = 1456
+    Top = 992
+  end
+  object cuentaSaldoInteres: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'select p.cuenta '
+      'from productoTrx P'
+      '     inner Join maescont M on p.cuenta = m.cuenta'
+      
+        'where p.idproducto = :id and p.esInteres=1 and p.campo = '#39'Calcul' +
+        'ado'#39' and p.DC = m.naturaleza')
+    Left = 296
+    Top = 1752
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '28'
+      end>
+  end
+  object socioApoyoLentes: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'Select * from SocioApoyoLentes'
+      'where idsocio = :id'
+      'Order by fechaApoyo desc')
+    Left = 1920
+    Top = 1680
+    ParamData = <
+      item
+        Name = 'ID'
+        ParamType = ptInput
+      end>
+    object socioApoyoLentesidsocio: TIntegerField
+      FieldName = 'idsocio'
+      Origin = 'idsocio'
+    end
+    object socioApoyoLentesguidSocio: TStringField
+      FieldName = 'guidSocio'
+      Origin = 'guidSocio'
+      Size = 50
+    end
+    object socioApoyoLentesfechaApoyo: TDateField
+      FieldName = 'fechaApoyo'
+      Origin = 'fechaApoyo'
+    end
+    object socioApoyoLentesmonto: TBCDField
+      FieldName = 'monto'
+      Origin = 'monto'
+      currency = True
+      Precision = 18
+      Size = 2
+    end
+    object socioApoyoLentesnota: TMemoField
+      FieldName = 'nota'
+      Origin = 'nota'
+      BlobType = ftMemo
+      Size = 2147483647
+    end
+    object socioApoyoLentesguid: TStringField
+      FieldName = 'guid'
+      Origin = 'guid'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 50
+    end
+    object socioApoyoLentestipoApoyo: TIntegerField
+      FieldName = 'tipoApoyo'
+      Origin = 'tipoApoyo'
+    end
+    object socioApoyoLentesidApoyo: TFDAutoIncField
+      FieldName = 'idApoyo'
+      Origin = 'idApoyo'
+      ReadOnly = True
+    end
+  end
+  object tipoApoyo: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'Select * from Apoyos '
+      'Order by descripcion ')
+    Left = 2096
+    Top = 1472
+  end
+  object socioApoyoDoc: TFDQuery
+    Connection = cnn2
+    SQL.Strings = (
+      'Select * from SocioApoyoDocumentos'
+      'where  guidApoyo = :id'
+      'Order by fecha desc')
+    Left = 1920
+    Top = 1760
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '1'
+      end>
+    object socioApoyoDocidApoyo: TIntegerField
+      FieldName = 'idApoyo'
+      Origin = 'idApoyo'
+    end
+    object socioApoyoDocidSocio: TIntegerField
+      FieldName = 'idSocio'
+      Origin = 'idSocio'
+    end
+    object socioApoyoDocsecuencial: TFDAutoIncField
+      FieldName = 'secuencial'
+      Origin = 'secuencial'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object socioApoyoDocdescripcion: TStringField
+      FieldName = 'descripcion'
+      Origin = 'descripcion'
+      Size = 50
+    end
+    object socioApoyoDocimagen: TBlobField
+      FieldName = 'imagen'
+      Origin = 'imagen'
+    end
+    object socioApoyoDocguid: TStringField
+      FieldName = 'guid'
+      Origin = 'guid'
+      Size = 50
+    end
+    object socioApoyoDocguidApoyo: TStringField
+      FieldName = 'guidApoyo'
+      Origin = 'guidApoyo'
+      Size = 50
+    end
+    object socioApoyoDocfecha: TSQLTimeStampField
+      FieldName = 'fecha'
+      Origin = 'fecha'
+    end
+    object socioApoyoDocusuario_au: TStringField
+      FieldName = 'usuario_au'
+      Origin = 'usuario_au'
+      Size = 10
+    end
+    object socioApoyoDocfecha_au: TSQLTimeStampField
+      FieldName = 'fecha_au'
+      Origin = 'fecha_au'
+    end
+    object socioApoyoDocnota: TMemoField
+      FieldName = 'nota'
+      Origin = 'nota'
+      BlobType = ftMemo
+      Size = 2147483647
+    end
+  end
+  object p_maes_aux: TFDQuery
+    Connection = pacto
+    SQL.Strings = (
+      'select * from maes_aux '
+      'where socio =  :id'
+      '')
+    Left = 120
+    Top = 1944
+    ParamData = <
+      item
+        Name = 'ID'
+        ParamType = ptInput
+      end>
+  end
+  object p_fiadores: TFDQuery
+    Connection = pacto
+    SQL.Strings = (
+      'Select * From Fiadores')
+    Left = 216
+    Top = 1944
   end
 end

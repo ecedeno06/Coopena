@@ -197,14 +197,11 @@ type
     procedure DBGrid1DragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
 //    procedure tvHistEndDrag(Sender, Target: TObject; X, Y: Integer);
-    procedure tvHBDragOver(Sender, Source: TObject; X, Y: Integer;
-      State: TDragState; var Accept: Boolean);
     procedure tvHistDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
     procedure DBGrid1DragDrop(Sender, Source: TObject; X, Y: Integer);
     Procedure _ArrastrarDocumento;
     Procedure _ArrastrarCuenta;
-    procedure ced1Change(Sender: TObject);
     procedure rbCedulaClick(Sender: TObject);
     procedure spDiasChange(Sender: TObject);
     //---------
@@ -229,7 +226,6 @@ type
     procedure rbPagoClick(Sender: TObject);
     procedure btnInsertarLineaClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
-    procedure dtstransaccionUpdateData(Sender: TObject);
     procedure edFiltroExit(Sender: TObject);
     procedure edFiltroClick(Sender: TObject);
     procedure btnReversarClick(Sender: TObject);
@@ -240,7 +236,10 @@ type
     Procedure InsertarDetalle;
 
     //-------------------------------------------------
-    Function _Documento(Operacion : String) : integer;   //*01
+    Function _Documento(Operacion : String) : integer;
+    procedure rbPasaporteRucClick(Sender: TObject);
+    procedure ced1KeyPress(Sender: TObject; var Key: Char);
+    procedure ced3Change(Sender: TObject);   //*01
 
 
 //    Function insertarDetalleTrx(
@@ -357,12 +356,11 @@ begin
   if not (DBGRid1.DataSource.DataSet.FieldByName('Orden').asString = 'T' ) then
      mTransaccion.Delete;
 
-  if mTransaccion.Eof then
-  begin
-    rbDeposito.Enabled := true;
-    rbRetiro.Enabled   := true;
-  end;
-
+//  if mTransaccion.Eof then
+//  begin
+//    rbDeposito.Enabled := true;
+//    rbRetiro.Enabled   := true;
+//  end;
 
 end;
 
@@ -394,7 +392,12 @@ begin
   mTransaccion.Open;
   rbDeposito.Enabled := True;
   rbRetiro.Enabled   := true;
+  rbDeposito.Checked := false;
+  rbRetiro.Checked   := false;
   tvHist.Enabled     := true;
+  //Habilita el dbGrid de transaccion para edicion
+  DBGrid1.Enabled    := true;
+  _tipoOperacion := '';
 end;
 
 {$Region '********** Salva la Transaccion (Click) ****************************************'}
@@ -406,13 +409,13 @@ procedure TfrmCaja.btnSalvarClick(Sender: TObject);
 begin
   inherited;
 //---
-
+ _fechaSistema := DataModulo1.FechaSistema ();
  DecodeDate(_fechaSistema ,_a,_m,_d);
  DecodeTime(now,_h1,_m1,_s1,_m2);
 
  _fechaTrx := EncodeDateTime (_a,_m,_d,_h1,_m1,_s1,_m2);
 
-
+ mTransaccion.First;
  if not mTransaccion.eof then
  begin
    mTransaccion.first;
@@ -472,6 +475,8 @@ begin
           _cuenta     := mTransaccionCuenta.AsString ;
           _naturaleza := mTransaccionNaturaleza.AsString ;
           InsertarDetalle;
+          mTransaccionDocumento.AsInteger := _Numrec ;
+          mTransaccionTipoDoc.AsString    := _tipo_doc;
        end
        Else
        Begin
@@ -488,6 +493,7 @@ begin
          Datamodulo1.transacciontrx.sql.add(' and tipoTrx = ' + QuotedStr(_tipoOperacion) );
          Datamodulo1.transacciontrx.sql.add(' and (esCaja = 1)');
          Datamodulo1.transacciontrx.open;
+         Clipboard.AsText := Datamodulo1.transacciontrx.sql.Text ;
 
          if not DataModulo1.transacciontrx.eof then
          begin
@@ -524,12 +530,9 @@ begin
 
     end;
    end;
-
-
    _tipoOperacion   := '';
    rbDeposito.Enabled := true;
    rbRetiro.Enabled   := true;
-//      rbPago.Enabled     := true;
 
   //------------ Actualiza el TreeVeiw de Transacciones recientes -------------------
   recientes;
@@ -708,6 +711,7 @@ begin
         Else
         //--- No se ha agregado a la transaccion, por lo que se puede arrastrar
         Begin
+          //--- Para el caso de que no se trate de un prestamo
           if (DataModulo1.SPC.FieldByName('prestamo_S_N').asstring = 'N') then
           begin
             if _tipoOperacion = 'D' then
@@ -719,7 +723,7 @@ begin
 //          if _tipoOperacion = 'P' then
 //             _accept := false;
           end
-          else
+          else  //--- para el caso de que se trate de prestamo... la operacion por caja tiene que ser un deposito
           Begin
             if _tipoOperacion <> 'D' then
              _accept := false
@@ -733,11 +737,7 @@ begin
 
 end;
 
-procedure TfrmCaja.tvHBDragOver(Sender, Source: TObject; X, Y: Integer;
-  State: TDragState; var Accept: Boolean);
-begin
-  inherited;
-end;
+
 
 
 //------------------------------------------------------------------------------
@@ -794,12 +794,12 @@ begin
   //--- Busqueda por Numero de Cuenta
   if rbCuenta.Checked  then
   begin
-    DataModulo1.SPC.SQL.Add('where m.num_cuenta Like ' + Quotedstr(edFiltro.Text+'%'));
+    DataModulo1.SPC.SQL.Add(' where m.num_cuenta Like ' + Quotedstr('%' + edFiltro.Text + '%') );
     DataModulo1.SPC.SQL.Add(' order by m.socio,m.subCuenta ');
   end;
 
   //--- Busqueda por Numero de Pasaporte Ruc
-  if rbCuenta.Checked  then
+  if rbPasaporteRuc.Checked  then
   begin
     DataModulo1.SPC.SQL.Add('where m.pasaporteRuc Like ' + Quotedstr(edFiltro.Text+'%'));
     DataModulo1.SPC.SQL.Add(' order by m.socio,m.subCuenta ');
@@ -814,8 +814,8 @@ begin
     DataModulo1.SPC.SQL.Add(' order by m.socio,m.subCuenta ');
   end;
 
-
-  Memo1.Text := DataModulo1.SPC.SQL.text;
+  Clipboard.AsText := DataModulo1.SPC.SQL.text;
+//  Memo1.Text := DataModulo1.SPC.SQL.text;
 
   DataModulo1.SPC.Open;
 
@@ -889,7 +889,13 @@ begin
 
 end;
 
-procedure TfrmCaja.ced1Change(Sender: TObject);
+procedure TfrmCaja.ced1KeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  Key := UpCase(Key);
+end;
+
+procedure TfrmCaja.ced3Change(Sender: TObject);
 begin
   inherited;
 
@@ -1047,8 +1053,8 @@ begin
   if _target = 'tvHB'  then
     if  _tipoOperacion <>  '' then
     begin
-      rbDeposito.Enabled := false;
-      rbRetiro.Enabled   := false;
+//      rbDeposito.Enabled := false;
+//     rbRetiro.Enabled   := false;
       //rbPago.Enabled     := false;
       _ArrastrarCuenta;
     end
@@ -1150,7 +1156,8 @@ end;
 procedure TfrmCaja.dtstransaccionDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  if mTransaccion.Eof then
+
+  if mTransaccion.RecordCount <= 0 then
   begin
      tvHist.Enabled     := True;
      tvHB.Enabled       := true;
@@ -1162,20 +1169,35 @@ begin
     rbDeposito.Enabled := false;
     rbRetiro.Enabled   := false;
   end;
-  if mTransaccionDocumento.AsInteger <=0  then
-     tvHist.Enabled := false
+
+  if not mTransaccionDocumento.AsInteger > 1 then
+  begin
+    btnImprimir.Enabled      := true;
+    tvHist.Enabled           := false;
+    btnNuevo.Enabled         := false;
+    btnSalvar.Enabled        := false;
+    btnInsertarLinea.Enabled := false;
+    btnEliminar.Enabled      := false;
+    btnReversar.Enabled      := false;
+    btn_trx_det_suspenso.Enabled := false;
+    rbDeposito.Enabled           := false;
+    rbRetiro.Enabled             := false;
+  end
   else
   begin
-   tvHist.Enabled := True;
-   tvHB.Enabled   := false;
+    btnImprimir.Enabled          := False;
+    btnNuevo.Enabled             := True;
+    btnSalvar.Enabled            := True;
+    btnInsertarLinea.Enabled     := True;
+    btnEliminar.Enabled          := True;
+    btnReversar.Enabled          := True;
+    btn_trx_det_suspenso.Enabled := True;
+    tvHist.Enabled               := False;
+    tvHB.Enabled                 := True;
   end;
 end;
 
-procedure TfrmCaja.dtstransaccionUpdateData(Sender: TObject);
-begin
-  inherited;
 
-end;
 
 //------------------------------------------------------------------------------
 //                           CalculaTotal
@@ -1313,7 +1335,7 @@ end;
 procedure TfrmCaja.FormShow(Sender: TObject);
 begin
   inherited;
-  pnFiltro1.Top  := 12;
+  pnFiltro1.Top  := 44;
   pnFiltro2.Top  := pnFiltro1.Top;
 //pnFiltro1.Left := 427;
   pnFiltro2.Left := pnFiltro2.Left;
@@ -1329,7 +1351,7 @@ begin
   //---- LLama las transacciones recientes del usuario....
   Recientes;
 
-  dpFecha.DateTime := now;
+  dpFecha.DateTime := DataModulo1.FechaSistema () ;
   memo2.Clear;
 end;
 
@@ -1544,12 +1566,32 @@ end;
 procedure TfrmCaja.rbCedulaClick(Sender: TObject);
 begin
   inherited;
+
+  pnFiltro1.Visible:=false;
+  pnFiltro2.Visible:=true;
+
+  ced1.Clear ;
+  ced2.Clear;
+  ced3.Clear;
+
+  ced1.Enabled := true;
+  ced2.Enabled := true;
+  ced3.Enabled := true;
+
+  ced1.SetFocus ;
+
+end;
+
+procedure TfrmCaja.rbPasaporteRucClick(Sender: TObject);
+begin
+  inherited;
   pnFiltro1.Visible:=true;
   pnFiltro2.Visible:=false;
   edFiltro.Clear ;
   edFiltro.Enabled := true;
   edFiltro.SetFocus;
 end;
+
 
 procedure TfrmCaja.rbCuentaClick(Sender: TObject);
 begin
@@ -1686,7 +1728,7 @@ procedure TfrmCaja._ArrastrarCuenta;
 var
  _NumCuenta    : String;
  _cuenta       : string;
- _cuentaInteres: string;
+ _cuentaInteres: String;
  _cuentaCapital: string;
  _InteresSobre : string;
  _subCuenta    : string;
@@ -1764,6 +1806,13 @@ begin
              _cuentaInteres  := DataModulo1.productoTrxcuenta.AsString;
              _cuentaCapital  := DataModulo1.SPC.FieldByName('Cuenta').AsString;
              _InteresSobre   := DataModulo1.SPC.FieldByName('InteresSobre').AsString;
+
+             DataModulo1.cuentaSaldoInteres.close;
+             DataModulo1.cuentaSaldoInteres.Params [0].AsInteger := DataModulo1.SPC.FieldByName('SubCuenta').asinteger; ;
+             DataModulo1.cuentaSaldoInteres.Open;
+
+             _cuentaInteres  := DataModulo1.cuentaSaldoInteres.FieldByName('cuenta').AsString;
+
              montoInteres    := CalculaInteres(_NumCuenta, _cuentaInteres, _cuentaCapital , _InteresSobre);
              mTransaccionFECHA.AsDateTime     := _fechaTrx;
              mTransaccionNum_Cuenta.AsString  := _NumCuenta;

@@ -181,7 +181,6 @@ inherited frmCaja: TfrmCaja
             ParentFont = False
             TabOrder = 0
             OnClick = tvHBClick
-            OnDragOver = tvHBDragOver
           end
         end
         object cpSocio: TCategoryPanel
@@ -11563,10 +11562,10 @@ inherited frmCaja: TfrmCaja
             608
             78)
           object btnBuscar: TSpeedButton
-            Left = 574
-            Top = 15
-            Width = 26
-            Height = 30
+            Left = 532
+            Top = 13
+            Width = 70
+            Height = 59
             Anchors = [akTop, akRight]
             Glyph.Data = {
               36040000424D3604000000000000360000002800000010000000100000000100
@@ -11604,11 +11603,10 @@ inherited frmCaja: TfrmCaja
               0000000000000000000000000000000000000000000000000000000000000000
               0000000000000000000000000000000000000000000000000000}
             OnClick = btnBuscarClick
-            ExplicitLeft = 658
           end
           object Label2: TLabel
-            Left = 324
-            Top = 23
+            Left = 13
+            Top = 48
             Width = 34
             Height = 16
             Anchors = [akLeft, akTop, akRight]
@@ -11624,8 +11622,8 @@ inherited frmCaja: TfrmCaja
             OnClick = rbNsocioClick
           end
           object rbNombre: TRadioButton
-            Left = 91
-            Top = 20
+            Left = 108
+            Top = 19
             Width = 67
             Height = 22
             Caption = 'Nombre'
@@ -11633,8 +11631,8 @@ inherited frmCaja: TfrmCaja
             OnClick = rbNombreClick
           end
           object rbCuenta: TRadioButton
-            Left = 164
-            Top = 20
+            Left = 202
+            Top = 19
             Width = 81
             Height = 22
             Caption = 'No.Cuenta'
@@ -11642,11 +11640,11 @@ inherited frmCaja: TfrmCaja
             OnClick = rbCuentaClick
           end
           object pnFiltro1: TPanel
-            Left = 192
-            Top = 48
-            Width = 207
+            Left = 53
+            Top = 44
+            Width = 476
             Height = 31
-            Anchors = [akTop, akRight]
+            Anchors = [akLeft, akTop, akRight]
             BorderStyle = bsSingle
             Caption = 'pnFiltro1'
             Ctl3D = True
@@ -11655,7 +11653,7 @@ inherited frmCaja: TfrmCaja
             object edFiltro: TButtonedEdit
               Left = 1
               Top = 1
-              Width = 201
+              Width = 470
               Height = 25
               Align = alClient
               Anchors = [akTop, akBottom]
@@ -11673,53 +11671,54 @@ inherited frmCaja: TfrmCaja
             end
           end
           object pnFiltro2: TPanel
-            Left = 299
-            Top = 48
-            Width = 208
+            Left = 53
+            Top = 45
+            Width = 213
             Height = 30
-            Anchors = [akTop]
-            BorderStyle = bsSingle
+            Anchors = [akLeft, akTop, akRight]
             Ctl3D = True
+            ParentBackground = False
             ParentCtl3D = False
             TabOrder = 4
             object ced1: TMaskEdit
               Left = 3
-              Top = 1
+              Top = 3
               Width = 35
               Height = 24
               Color = clCream
               TabOrder = 0
               Text = ''
-              OnChange = ced1Change
+              OnKeyPress = ced1KeyPress
             end
             object ced2: TMaskEdit
               Left = 44
-              Top = 1
-              Width = 68
+              Top = 3
+              Width = 59
               Height = 24
               Alignment = taCenter
               Color = clCream
-              EditMask = '#####'
-              MaxLength = 5
+              EditMask = '!9999;0; '
+              MaxLength = 4
               TabOrder = 1
-              Text = '     '
+              Text = ''
             end
             object ced3: TMaskEdit
-              Left = 119
-              Top = 1
-              Width = 81
+              Left = 114
+              Top = 3
+              Width = 77
               Height = 24
               Alignment = taCenter
               Color = clCream
-              EditMask = '#####'
-              MaxLength = 5
+              EditMask = '!9999;0; '
+              MaxLength = 4
               TabOrder = 2
-              Text = '     '
+              Text = ''
+              OnChange = ced3Change
             end
           end
           object rbCedula: TRadioButton
-            Left = 248
-            Top = 20
+            Left = 308
+            Top = 19
             Width = 81
             Height = 22
             Caption = 'C'#233'dula'
@@ -11727,13 +11726,13 @@ inherited frmCaja: TfrmCaja
             OnClick = rbCedulaClick
           end
           object rbPasaporteRuc: TRadioButton
-            Left = 12
-            Top = 48
+            Left = 395
+            Top = 19
             Width = 112
             Height = 22
             Caption = 'Pasaporte / Ruc'
             TabOrder = 6
-            OnClick = rbCedulaClick
+            OnClick = rbPasaporteRucClick
           end
         end
       end
@@ -11821,7 +11820,7 @@ inherited frmCaja: TfrmCaja
                 TabOrder = 0
               end
               object rbDeposito: TRadioButton
-                Left = 10
+                Left = 17
                 Top = 45
                 Width = 130
                 Height = 17
@@ -11907,7 +11906,7 @@ inherited frmCaja: TfrmCaja
               Left = 193
               Top = 0
               Caption = 'btnReversar'
-              ImageIndex = 42
+              ImageIndex = 47
               OnClick = btnReversarClick
             end
             object ToolButton7: TToolButton
@@ -11923,6 +11922,7 @@ inherited frmCaja: TfrmCaja
               Top = 0
               Caption = 'btn_trx_det_suspenso'
               ImageIndex = 43
+              Visible = False
               OnClick = btn_trx_det_suspensoClick
             end
           end
@@ -12672,9 +12672,8 @@ inherited frmCaja: TfrmCaja
   object dtstransaccion: TDataSource
     DataSet = mTransaccion
     OnDataChange = dtstransaccionDataChange
-    OnUpdateData = dtstransaccionUpdateData
-    Left = 396
-    Top = 435
+    Left = 692
+    Top = 251
   end
   object dtsRecientes: TDataSource
     DataSet = DataModulo1.recientes
@@ -12697,8 +12696,8 @@ inherited frmCaja: TfrmCaja
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
     StoreDefs = True
-    Left = 484
-    Top = 443
+    Left = 788
+    Top = 251
     object mTransaccionFECHA: TDateTimeField
       FieldName = 'FECHA'
       DisplayFormat = 'dd MMM yyyy'

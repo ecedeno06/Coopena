@@ -2,8 +2,8 @@ object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
   Caption = 'COOPENA '
-  ClientHeight = 488
-  ClientWidth = 759
+  ClientHeight = 496
+  ClientWidth = 795
   Color = clBtnFace
   TransparentColorValue = clNone
   Font.Charset = DEFAULT_CHARSET
@@ -8542,19 +8542,20 @@ object frmPrincipal: TfrmPrincipal
   OnActivate = FormActivate
   OnCreate = FormCreate
   DesignSize = (
-    759
-    488)
+    795
+    496)
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter2: TSplitter
     Left = 0
     Top = 34
     Width = 245
-    Height = 435
+    Height = 443
     Beveled = True
     Color = clMoneyGreen
     ParentColor = False
     ResizeStyle = rsLine
+    ExplicitHeight = 435
   end
   object Image1: TImage
     Left = 48
@@ -13043,8 +13044,8 @@ object frmPrincipal: TfrmPrincipal
   object Image2: TImage
     Left = 345
     Top = 70
-    Width = 336
-    Height = 385
+    Width = 372
+    Height = 393
     Anchors = [akLeft, akTop, akRight, akBottom]
     Center = True
     Picture.Data = {
@@ -28838,11 +28839,13 @@ object frmPrincipal: TfrmPrincipal
       EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
       EEEEEEEEEEEEEEEEEEEEEEEEEEEE}
     Stretch = True
+    ExplicitWidth = 336
+    ExplicitHeight = 385
   end
   object stbPrincipal: TStatusBar
     Left = 0
-    Top = 469
-    Width = 759
+    Top = 477
+    Width = 795
     Height = 19
     Panels = <
       item
@@ -28858,7 +28861,7 @@ object frmPrincipal: TfrmPrincipal
   object ToolBar1: TToolBar
     Left = 0
     Top = 0
-    Width = 759
+    Width = 795
     Height = 34
     ButtonHeight = 32
     ButtonWidth = 48
@@ -28969,24 +28972,31 @@ object frmPrincipal: TfrmPrincipal
     object ToolButton17: TToolButton
       Left = 633
       Top = 0
-      Width = 48
+      Width = 16
       Caption = 'ToolButton17'
       ImageIndex = 33
       Style = tbsSeparator
     end
     object ToolButton16: TToolButton
-      Left = 681
+      Left = 649
       Top = 0
       Caption = 'btn_Cheques'
       ImageIndex = 41
       OnClick = mnu_Cont_ChequeClick
     end
     object ToolButton18: TToolButton
-      Left = 729
+      Left = 697
       Top = 0
       Caption = 'ToolButton18'
       ImageIndex = 43
       OnClick = mnu_cont_transferenciaClick
+    end
+    object ToolButton19: TToolButton
+      Left = 745
+      Top = 0
+      Caption = 'Modulo de Caja'
+      ImageIndex = 49
+      OnClick = mnu_cajaClick
     end
   end
   object dtpFecha1: TDateTimePicker
@@ -29006,7 +29016,7 @@ object frmPrincipal: TfrmPrincipal
     Left = 8
     Top = 232
     Width = 229
-    Height = 225
+    Height = 233
     Align = alCustom
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Datos Relevantes de hoy'
@@ -29039,7 +29049,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 2
       Top = 48
       Width = 225
-      Height = 175
+      Height = 183
       VertScrollBar.Tracking = True
       Align = alClient
       GradientBaseColor = clGreen
@@ -29109,7 +29119,7 @@ object frmPrincipal: TfrmPrincipal
     Left = 245
     Top = 34
     Width = 0
-    Height = 435
+    Height = 443
     Align = alLeft
     TabOrder = 4
     Visible = False
@@ -29134,7 +29144,6 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'Cooperativa'
         object Parametros1: TMenuItem
           Caption = 'Parametros'
-          OnClick = Parametros1Click
         end
         object TipoProducto1: TMenuItem
           Caption = 'Tipo Producto'
@@ -30967,9 +30976,10 @@ object frmPrincipal: TfrmPrincipal
     end
     object Procesos1: TMenuItem
       Caption = 'Caja'
-      object Caja1: TMenuItem
+      object mnu_caja: TMenuItem
         Caption = 'Caja'
-        OnClick = Caja1Click
+        ImageIndex = 49
+        OnClick = mnu_cajaClick
       end
       object N6: TMenuItem
         Caption = '-'
@@ -30997,6 +31007,10 @@ object frmPrincipal: TfrmPrincipal
           Caption = 'Registro de Transferencias'
           ImageIndex = 43
           OnClick = mnu_cont_transferenciaClick
+        end
+        object mnu_Cont_Especial: TMenuItem
+          Caption = 'Registro Especial'
+          OnClick = mnu_Cont_EspecialClick
         end
         object mnu_Cont_Cheque: TMenuItem
           Caption = 'Generacion de Cheque'
@@ -31116,6 +31130,14 @@ object frmPrincipal: TfrmPrincipal
       object Encriptar2: TMenuItem
         Caption = 'Encriptar'
         OnClick = Encriptar2Click
+      end
+    end
+    object Migracion1: TMenuItem
+      Caption = 'Migracion'
+      OnClick = Migracion1Click
+      object Migracion2: TMenuItem
+        Caption = 'Migracion'
+        OnClick = Migracion2Click
       end
     end
   end

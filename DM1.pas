@@ -1874,7 +1874,7 @@ type
     fechadelSistemaFechaSistema: TSQLTimeStampField;
     actualizaDocumento: TFDQuery;
     pacto: TFDConnection;
-    p_maes_aux: TFDQuery;
+    p_Sicios: TFDQuery;
     FDQuery4: TFDQuery;
     ProductoTrx3esPagoEspecial: TBooleanField;
     ProductoTrx3EspecialContraCuenta: TStringField;
@@ -1886,6 +1886,71 @@ type
     TipoProductograciaEnMora: TBooleanField;
     trfGeneradas: TFDQuery;
     trfEnc: TFDQuery;
+    transferencia_det: TFDQuery;
+    FDQuery3: TFDQuery;
+    socioPrestamos: TFDQuery;
+    socioPrestamosnum_cuenta: TWideStringField;
+    socioPrestamosnombresubcuenta: TWideStringField;
+    socioPrestamossubcuenta: TSmallintField;
+    comprobante_ENC: TFDQuery;
+    comprobante_DET: TFDQuery;
+    comprobante_ENCtipo_documento: TWideStringField;
+    comprobante_ENCdocumento: TIntegerField;
+    comprobante_ENCfecha_doc: TSQLTimeStampField;
+    comprobante_ENCestado: TSingleField;
+    comprobante_ENCobservacion: TMemoField;
+    comprobante_ENCanombrede: TIntegerField;
+    comprobante_ENCimpreso: TSingleField;
+    comprobante_ENCanulado: TSingleField;
+    comprobante_ENCcontabilidad: TSingleField;
+    comprobante_ENCconciliado: TSingleField;
+    comprobante_ENCfecha_aud: TSQLTimeStampField;
+    comprobante_ENCusuario: TWideStringField;
+    comprobante_ENCmonto_gral: TFloatField;
+    comprobante_ENCpagare: TWideStringField;
+    comprobante_ENCidSocio: TIntegerField;
+    comprobante_ENCguid: TStringField;
+    comprobante_ENCbanco: TIntegerField;
+    comprobante_ENCnCuenta: TStringField;
+    comprobante_ENCNombreCompleto: TWideStringField;
+    comprobante_ENCnombreDocumento: TWideStringField;
+    comprobante_DETFecha_doc: TSQLTimeStampField;
+    comprobante_DETdocumento: TIntegerField;
+    comprobante_DETcuenta: TWideStringField;
+    comprobante_DETNombreCuenta: TWideStringField;
+    comprobante_DETnum_cuenta: TWideStringField;
+    comprobante_DETdebito: TBCDField;
+    comprobante_DETCredito: TBCDField;
+    comprobante_DETidProducto: TSmallintField;
+    comprobante_DETNaturaleza: TWideStringField;
+    FDQuery5: TFDQuery;
+    FDQuery6: TFDQuery;
+    cuentaSaldoInteres: TFDQuery;
+    SocioDocimagenTxt: TMemoField;
+    socioApoyoLentes: TFDQuery;
+    socioApoyoLentesidsocio: TIntegerField;
+    socioApoyoLentesguidSocio: TStringField;
+    socioApoyoLentesfechaApoyo: TDateField;
+    socioApoyoLentesmonto: TBCDField;
+    socioApoyoLentesnota: TMemoField;
+    socioApoyoLentesguid: TStringField;
+    socioApoyoLentestipoApoyo: TIntegerField;
+    tipoApoyo: TFDQuery;
+    socioApoyoDoc: TFDQuery;
+    socioApoyoDocidApoyo: TIntegerField;
+    socioApoyoDocidSocio: TIntegerField;
+    socioApoyoDocsecuencial: TFDAutoIncField;
+    socioApoyoDocdescripcion: TStringField;
+    socioApoyoDocimagen: TBlobField;
+    socioApoyoDocguid: TStringField;
+    socioApoyoDocguidApoyo: TStringField;
+    socioApoyoDocfecha: TSQLTimeStampField;
+    socioApoyoDocusuario_au: TStringField;
+    socioApoyoDocfecha_au: TSQLTimeStampField;
+    socioApoyoLentesidApoyo: TFDAutoIncField;
+    socioApoyoDocnota: TMemoField;
+    p_maes_aux: TFDQuery;
+    p_fiadores: TFDQuery;
 
     Function Crypt(Action, Src: String): String;
     Function DBConnectCnn  : Boolean ;
@@ -2290,18 +2355,18 @@ begin
   { la parte que calcula cien, diez y miles}
 
  case cadena [0] of
-      '1': cienmil := 'CIENTO ';
-      '2': cienmil := 'DOSCIENTOS ';
-      '3': cienmil := 'TRESCIENTOS ';
-      '4': cienmil := 'CUATROCIENTOS ';
-      '5': cienmil := 'QUINIENTOS ';
-      '6': cienmil := 'SEISCIENTOS ';
-      '7': cienmil := 'SETECIENTOS ';
-      '8': cienmil := 'OCHOCIENTOS ';
-      '9': cienmil := 'NOVECIENTOS ';
+      '1': cienmil := 'Ciento ';
+      '2': cienmil := 'Doscientos ';
+      '3': cienmil := 'Trescientos ';
+      '4': cienmil := 'Cuatrocientos ';
+      '5': cienmil := 'Quinientos ';
+      '6': cienmil := 'Seicientos ';
+      '7': cienmil := 'Setecientos ';
+      '8': cienmil := 'Ochocientos ';
+      '9': cienmil := 'Novecientos ';
  end;
  if (Cadena[0] ='1') and (Cadena[1] ='0') and (Cadena[2] ='0') then
-     cienmil := 'CIEN MIL';
+     cienmil := 'Cien Mil';
  if (Cadena[0] ='2') and (Cadena[1] ='0') and (Cadena[2] ='0') then
      cienmil := 'DOSCIENTOS MIL';
  if (Cadena[0] ='3') and (Cadena[1] ='0') and (Cadena[2] ='0') then
@@ -2453,7 +2518,7 @@ begin
  if (cadena[0] = #32) then
    if (cadena[1] = #32) then
       if (cadena[2] = #49)  then unmil := 'MIL ';
- NumToLetras:= concat(cienmil+' '+diezmil+unmil+centena+decena+unidad+'CON ' +
+ NumToLetras:= concat(cienmil+' '+diezmil+unmil+centena+decena+unidad+'con ' +
                       cadena[7]+cadena[8]+'/100');
 end;
 

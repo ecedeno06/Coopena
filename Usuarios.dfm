@@ -2,7 +2,6 @@ inherited frmUsuarios: TfrmUsuarios
   Caption = 'Mantenimiento Usuarios'
   ClientWidth = 906
   OnShow = FormShow
-  ExplicitLeft = -185
   ExplicitWidth = 922
   ExplicitHeight = 500
   PixelsPerInch = 96
@@ -2204,7 +2203,7 @@ inherited frmUsuarios: TfrmUsuarios
             Left = 24
             Top = 27
             Width = 566
-            Height = 289
+            Height = 288
             Align = alCustom
             Anchors = [akLeft, akTop, akRight, akBottom]
             Caption = 'Informaci'#243'n del Usuario'
@@ -2219,7 +2218,7 @@ inherited frmUsuarios: TfrmUsuarios
             TabOrder = 0
             DesignSize = (
               566
-              289)
+              288)
             object Label1: TLabel
               Left = 3
               Top = 40
@@ -2544,13 +2543,13 @@ inherited frmUsuarios: TfrmUsuarios
               Left = 3
               Top = 191
               Width = 558
-              Height = 95
+              Height = 94
               Anchors = [akLeft, akTop, akRight, akBottom]
               Caption = 'Clave de Acceso'
               TabOrder = 8
               DesignSize = (
                 558
-                95)
+                94)
               object Label12: TLabel
                 Left = 9
                 Top = 25
@@ -2644,7 +2643,7 @@ inherited frmUsuarios: TfrmUsuarios
               end
               object Button1: TButton
                 Left = 461
-                Top = 55
+                Top = 54
                 Width = 92
                 Height = 35
                 Align = alCustom
@@ -2845,7 +2844,7 @@ inherited frmUsuarios: TfrmUsuarios
           Left = 207
           Top = 45
           Width = 386
-          Height = 319
+          Height = 318
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Rol del Usuario'
           TabOrder = 1
@@ -2896,7 +2895,7 @@ inherited frmUsuarios: TfrmUsuarios
           Left = 3
           Top = 50
           Width = 202
-          Height = 314
+          Height = 313
           Anchors = [akLeft, akTop, akBottom]
           DataSource = rolesUsuario
           ReadOnly = True

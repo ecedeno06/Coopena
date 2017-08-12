@@ -40,12 +40,6 @@ Coordinates=1655,10,60,58
 [DataModulo1.CambiarClave]
 Coordinates=2049,10,176,58
 
-[TabSheet4]
-Coordinates=1122,1050,77,36
-
-[TabSheet1]
-Coordinates=1035,1050,77,36
-
 [DataModulo1.Recuperarcion]
 Coordinates=720,10,178,102
 
@@ -70,9 +64,6 @@ Coordinates=880,936,60,58
 [sbHasta]
 Coordinates=325,1050,62,36
 
-[TabSheet5]
-Coordinates=238,1050,77,36
-
 [Label21]
 Coordinates=950,936,60,58
 
@@ -84,9 +75,6 @@ Coordinates=190,936,60,58
 
 [DataModulo1.tblUsuarios]
 Coordinates=167,10,159,872
-
-[TabSheet8]
-Coordinates=2071,1004,77,36
 
 [lblClienteID]
 Coordinates=10,936,81,58
@@ -105,15 +93,6 @@ Coordinates=1789,10,250,58
 
 [Label26]
 Coordinates=1610,936,60,58
-
-[PageControl1]
-Coordinates=1137,1004,93,36
-
-[TabSheet3]
-Coordinates=1050,1004,77,36
-
-[TabSheet6]
-Coordinates=879,1004,77,36
 
 [Label22]
 Coordinates=1020,936,60,58
@@ -157,4 +136,25 @@ Coordinates=1839,936,79,58
 
 [grpSocioCorreos]
 Coordinates=101,936,79,58
+
+[pc_socio]
+Coordinates=1137,1004,93,36
+
+[ts_datosFinancieros]
+Coordinates=2071,1004,77,36
+
+[ts_documentos]
+Coordinates=238,1050,77,36
+
+[ts_EstadoCuentas]
+Coordinates=1122,1050,77,36
+
+[ts_Generales]
+Coordinates=1035,1050,77,36
+
+[ts_Herederos]
+Coordinates=1050,1004,77,36
+
+[ts_Vaciones]
+Coordinates=879,1004,77,36
 

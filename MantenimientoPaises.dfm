@@ -75,7 +75,7 @@ inherited frmPaises: TfrmPaises
         Top = 0
         Width = 524
         Height = 330
-        ActivePage = tpsPais
+        ActivePage = tpsProvincias
         Align = alClient
         TabOrder = 0
         OnChange = pcPaisesChange
@@ -3671,7 +3671,7 @@ inherited frmPaises: TfrmPaises
             Left = 6
             Top = 87
             Width = 507
-            Height = 212
+            Height = 209
             Align = alCustom
             Anchors = [akLeft, akTop, akRight, akBottom]
             Caption = 'Informaci'#243'n del Pais:'
@@ -7493,7 +7493,7 @@ inherited frmPaises: TfrmPaises
                 Left = 3
                 Top = 121
                 Width = 502
-                Height = 145
+                Height = 142
                 Align = alCustom
                 Anchors = [akLeft, akTop, akRight, akBottom]
                 DataSource = dtsProvincias
@@ -7666,7 +7666,12 @@ inherited frmPaises: TfrmPaises
                         Title.Font.Height = -11
                         Title.Font.Name = 'Tahoma'
                         Title.Font.Style = [fsBold]
-                        Width = 484
+                        Width = 350
+                        Visible = True
+                      end
+                      item
+                        Expanded = False
+                        FieldName = 'idDistrito'
                         Visible = True
                       end>
                   end
@@ -7679,7 +7684,7 @@ inherited frmPaises: TfrmPaises
                     Top = 0
                     Width = 500
                     Height = 246
-                    ActivePage = tpsBarrio
+                    ActivePage = tpsCorregimiento
                     Align = alClient
                     TabOrder = 0
                     object tpsCorregimiento: TTabSheet
@@ -7756,7 +7761,7 @@ inherited frmPaises: TfrmPaises
                         end
                         object edCorregimiento: TDBEdit
                           Left = 67
-                          Top = 27
+                          Top = 29
                           Width = 437
                           Height = 21
                           Anchors = [akLeft, akTop, akRight]
@@ -7775,7 +7780,7 @@ inherited frmPaises: TfrmPaises
                         Left = 0
                         Top = 97
                         Width = 492
-                        Height = 115
+                        Height = 112
                         Align = alTop
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         DataSource = dtsCorregimiento
@@ -7790,13 +7795,19 @@ inherited frmPaises: TfrmPaises
                           item
                             Expanded = False
                             FieldName = 'Descripcion'
+                            ReadOnly = True
                             Title.Caption = 'Corregimientos'
                             Title.Font.Charset = DEFAULT_CHARSET
                             Title.Font.Color = clWindowText
                             Title.Font.Height = -11
                             Title.Font.Name = 'Tahoma'
                             Title.Font.Style = [fsBold]
-                            Width = 211
+                            Width = 305
+                            Visible = True
+                          end
+                          item
+                            Expanded = False
+                            FieldName = 'idCorregimiento'
                             Visible = True
                           end>
                       end
@@ -7897,7 +7908,7 @@ inherited frmPaises: TfrmPaises
                         Left = 0
                         Top = 97
                         Width = 492
-                        Height = 119
+                        Height = 116
                         Align = alTop
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         DataSource = dtsBarrio

@@ -47,7 +47,10 @@ uses
   Cheques in 'Cheques.pas' {frmCheques},
   SocioCuentas in 'SocioCuentas.pas' {frmSocioCuentas},
   CatalogoContable in 'CatalogoContable.pas' {frmCatalogoContable},
-  Transferencias in 'Transferencias.pas' {frmTransferencias};
+  Transferencias in 'Transferencias.pas' {frmTransferencias},
+  Especiales in 'Especiales.pas' {frmEspeciales},
+  MigracionDM in 'MigracionDM.pas' {Migracion: TDataModule},
+  MigracionSocios in 'MigracionSocios.pas' {frmMigracion};
 
 {$R *.res}
 
@@ -58,5 +61,7 @@ begin
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TDM2, DM2);
   Application.CreateForm(Tds, ds);
+  Application.CreateForm(TMigracion, Migracion);
+  Application.CreateForm(TfrmMigracion, frmMigracion);
   Application.Run;
 end.

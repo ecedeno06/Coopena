@@ -2,10 +2,10 @@ inherited frmSocios: TfrmSocios
   Left = 439
   Top = 219
   Anchors = [akLeft, akTop, akRight]
-  BorderStyle = bsSingle
+  BorderStyle = bsNone
   Caption = 'Socios'
-  ClientHeight = 637
-  ClientWidth = 1135
+  ClientHeight = 628
+  ClientWidth = 1108
   Icon.Data = {
     000001000100472E000001002000583500001600000028000000470000005C00
     0000010020000000000030350000C40E0000C40E00000000000000000000F1F0
@@ -439,10 +439,8 @@ inherited frmSocios: TfrmSocios
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitLeft = -232
-  ExplicitTop = -279
-  ExplicitWidth = 1141
-  ExplicitHeight = 665
+  ExplicitWidth = 1124
+  ExplicitHeight = 666
   PixelsPerInch = 96
   TextHeight = 13
   object TLabel [0]
@@ -460,31 +458,31 @@ inherited frmSocios: TfrmSocios
     ParentFont = False
   end
   inherited StatusBar1: TStatusBar
-    Top = 618
-    Width = 1135
-    ExplicitTop = 618
-    ExplicitWidth = 1135
+    Top = 609
+    Width = 1108
+    ExplicitTop = 609
+    ExplicitWidth = 1108
   end
-  object PageControl1: TPageControl
+  object pc_socio: TPageControl
     Left = 301
     Top = 2
-    Width = 843
-    Height = 615
-    ActivePage = TabSheet2
+    Width = 803
+    Height = 606
+    ActivePage = ts_ApoyoLentes
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     MultiLine = True
     TabOrder = 1
-    OnChange = PageControl1Change
-    object TabSheet1: TTabSheet
+    OnChange = pc_socioChange
+    object ts_Generales: TTabSheet
       Caption = 'Generales'
       ImageIndex = 35
       object ScrollBox1: TScrollBox
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 829
-        Height = 581
+        Width = 789
+        Height = 572
         Align = alClient
         BevelInner = bvLowered
         Color = clGradientInactiveCaption
@@ -496,7 +494,7 @@ inherited frmSocios: TfrmSocios
           AlignWithMargins = True
           Left = 3
           Top = 1118
-          Width = 804
+          Width = 764
           Height = 101
           Align = alTop
           Caption = 'Correos'
@@ -510,7 +508,7 @@ inherited frmSocios: TfrmSocios
           ParentFont = False
           TabOrder = 1
           DesignSize = (
-            804
+            764
             101)
           object Label17: TLabel
             Left = 57
@@ -651,7 +649,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 5
             Top = 18
-            Width = 794
+            Width = 754
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -717,7 +715,7 @@ inherited frmSocios: TfrmSocios
           object dbCorreo: TDBEdit
             Left = 129
             Top = 65
-            Width = 462
+            Width = 422
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'email'
@@ -733,7 +731,7 @@ inherited frmSocios: TfrmSocios
           object DBCheckBox4: TDBCheckBox
             Left = 491
             Top = 67
-            Width = 193
+            Width = 153
             Height = 17
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Activo'
@@ -750,7 +748,7 @@ inherited frmSocios: TfrmSocios
           object DBCheckBox5: TDBCheckBox
             Left = 548
             Top = 65
-            Width = 246
+            Width = 206
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Predeterminado'
@@ -769,7 +767,7 @@ inherited frmSocios: TfrmSocios
           AlignWithMargins = True
           Left = 3
           Top = 745
-          Width = 804
+          Width = 764
           Height = 260
           Align = alTop
           Caption = 'Direccion:'
@@ -783,7 +781,7 @@ inherited frmSocios: TfrmSocios
           ParentFont = False
           TabOrder = 2
           DesignSize = (
-            804
+            764
             260)
           object Label22: TLabel
             Left = 56
@@ -801,7 +799,7 @@ inherited frmSocios: TfrmSocios
           object Label23: TLabel
             Left = 197
             Top = 55
-            Width = 89
+            Width = 49
             Height = 13
             Align = alCustom
             Anchors = [akLeft, akTop, akRight]
@@ -816,7 +814,7 @@ inherited frmSocios: TfrmSocios
             ExplicitWidth = 54
           end
           object Label24: TLabel
-            Left = 534
+            Left = 494
             Top = 114
             Width = 79
             Height = 13
@@ -1498,7 +1496,7 @@ inherited frmSocios: TfrmSocios
             Stretch = True
           end
           object Label1: TLabel
-            Left = 559
+            Left = 519
             Top = 86
             Width = 47
             Height = 13
@@ -1539,7 +1537,7 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Label71: TLabel
-            Left = 562
+            Left = 522
             Top = 139
             Width = 44
             Height = 13
@@ -1554,7 +1552,7 @@ inherited frmSocios: TfrmSocios
             ExplicitLeft = 405
           end
           object Label72: TLabel
-            Left = 565
+            Left = 525
             Top = 167
             Width = 37
             Height = 13
@@ -1608,7 +1606,7 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Label74: TLabel
-            Left = 568
+            Left = 528
             Top = 193
             Width = 46
             Height = 13
@@ -1625,7 +1623,7 @@ inherited frmSocios: TfrmSocios
           object edDescripcion: TDBMemo
             Left = 91
             Top = 217
-            Width = 701
+            Width = 661
             Height = 37
             Anchors = [akLeft, akTop, akRight, akBottom]
             DataField = 'descripcion'
@@ -1642,7 +1640,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 5
             Top = 18
-            Width = 794
+            Width = 754
             Height = 34
             BorderWidth = 1
             ButtonHeight = 30
@@ -1742,7 +1740,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 4
           end
           object dblCorregimiento: TDBLookupComboBox
-            Left = 612
+            Left = 572
             Top = 109
             Width = 180
             Height = 21
@@ -1761,7 +1759,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 5
           end
           object DBLookupComboBox1: TDBLookupComboBox
-            Left = 612
+            Left = 572
             Top = 82
             Width = 180
             Height = 21
@@ -1813,7 +1811,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 8
           end
           object edSocioEdificio: TDBEdit
-            Left = 612
+            Left = 572
             Top = 163
             Width = 180
             Height = 21
@@ -1829,7 +1827,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 9
           end
           object edBarriada: TDBEdit
-            Left = 612
+            Left = 572
             Top = 136
             Width = 180
             Height = 21
@@ -1893,7 +1891,7 @@ inherited frmSocios: TfrmSocios
           object dblTipoResidencia: TDBLookupComboBox
             Left = 285
             Top = 190
-            Width = 277
+            Width = 237
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'residencia'
@@ -1907,7 +1905,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 13
           end
           object dblHipoteca: TDBLookupComboBox
-            Left = 612
+            Left = 572
             Top = 191
             Width = 181
             Height = 21
@@ -1927,7 +1925,7 @@ inherited frmSocios: TfrmSocios
           AlignWithMargins = True
           Left = 3
           Top = 1011
-          Width = 804
+          Width = 764
           Height = 101
           Align = alTop
           Caption = 'Telefonos:'
@@ -1941,7 +1939,7 @@ inherited frmSocios: TfrmSocios
           ParentFont = False
           TabOrder = 3
           DesignSize = (
-            804
+            764
             101)
           object Label15: TLabel
             Left = 298
@@ -2421,7 +2419,7 @@ inherited frmSocios: TfrmSocios
           object dbSocioTelefono: TDBEdit
             Left = 345
             Top = 64
-            Width = 246
+            Width = 206
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'idTelefono'
@@ -2437,7 +2435,7 @@ inherited frmSocios: TfrmSocios
           object DBCheckBox2: TDBCheckBox
             Left = 548
             Top = 66
-            Width = 246
+            Width = 206
             Height = 17
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Predeterminado'
@@ -2454,7 +2452,7 @@ inherited frmSocios: TfrmSocios
           object DBCheckBox3: TDBCheckBox
             Left = 489
             Top = 66
-            Width = 181
+            Width = 141
             Height = 17
             Anchors = [akLeft, akTop, akRight]
             Caption = 'SMS'
@@ -2472,7 +2470,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 5
             Top = 18
-            Width = 794
+            Width = 754
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -2538,7 +2536,7 @@ inherited frmSocios: TfrmSocios
           object DBLookupComboBox2: TDBLookupComboBox
             Left = 129
             Top = 64
-            Width = 300
+            Width = 260
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             DataField = 'idTipoTelefono'
@@ -2559,7 +2557,7 @@ inherited frmSocios: TfrmSocios
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 804
+          Width = 764
           Height = 736
           Align = alTop
           Caption = 'Generales'
@@ -2587,7 +2585,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 17
-            Width = 796
+            Width = 756
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -2642,13 +2640,13 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 143
-            Width = 796
+            Width = 756
             Height = 222
             Align = alTop
             Caption = 'Datos Personales'
             TabOrder = 1
             DesignSize = (
-              796
+              756
               222)
             object Label8: TLabel
               Left = 9
@@ -2665,7 +2663,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label64: TLabel
-              Left = 471
+              Left = 431
               Top = 25
               Width = 86
               Height = 13
@@ -2681,7 +2679,7 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 314
             end
             object Label65: TLabel
-              Left = 472
+              Left = 432
               Top = 45
               Width = 86
               Height = 13
@@ -2710,7 +2708,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label66: TLabel
-              Left = 460
+              Left = 420
               Top = 69
               Width = 95
               Height = 13
@@ -2739,7 +2737,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label7: TLabel
-              Left = 499
+              Left = 459
               Top = 97
               Width = 58
               Height = 13
@@ -2768,7 +2766,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label12: TLabel
-              Left = 485
+              Left = 445
               Top = 148
               Width = 56
               Height = 13
@@ -2783,7 +2781,7 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 328
             end
             object Label38: TLabel
-              Left = 554
+              Left = 514
               Top = 150
               Width = 7
               Height = 11
@@ -2798,7 +2796,7 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 490
             end
             object Label39: TLabel
-              Left = 599
+              Left = 559
               Top = 150
               Width = 8
               Height = 11
@@ -2813,7 +2811,7 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 535
             end
             object Label40: TLabel
-              Left = 643
+              Left = 603
               Top = 150
               Width = 7
               Height = 11
@@ -2841,7 +2839,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label37: TLabel
-              Left = 502
+              Left = 462
               Top = 196
               Width = 40
               Height = 13
@@ -2856,7 +2854,7 @@ inherited frmSocios: TfrmSocios
               ExplicitLeft = 345
             end
             object Label67: TLabel
-              Left = 464
+              Left = 424
               Top = 173
               Width = 92
               Height = 13
@@ -2884,7 +2882,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object lbEdad: TLabel
-              Left = 700
+              Left = 660
               Top = 149
               Width = 12
               Height = 13
@@ -2915,7 +2913,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label69: TLabel
-              Left = 496
+              Left = 456
               Top = 122
               Width = 61
               Height = 13
@@ -2946,7 +2944,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 0
             end
             object edSegundoNombre: TDBEdit
-              Left = 563
+              Left = 523
               Top = 20
               Width = 202
               Height = 19
@@ -2962,7 +2960,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 1
             end
             object edSegundoApellido: TDBEdit
-              Left = 563
+              Left = 523
               Top = 44
               Width = 202
               Height = 19
@@ -2993,7 +2991,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 2
             end
             object edApellidoCasada: TDBEdit
-              Left = 563
+              Left = 523
               Top = 69
               Width = 202
               Height = 19
@@ -3028,7 +3026,7 @@ inherited frmSocios: TfrmSocios
               OnClick = dblTipoDocClick
             end
             object dbCed1: TDBEdit
-              Left = 563
+              Left = 523
               Top = 94
               Width = 49
               Height = 19
@@ -3045,7 +3043,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 18
             end
             object dbCed2: TDBEdit
-              Left = 622
+              Left = 582
               Top = 94
               Width = 62
               Height = 19
@@ -3061,7 +3059,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 19
             end
             object dbCed3: TDBEdit
-              Left = 690
+              Left = 650
               Top = 94
               Width = 73
               Height = 19
@@ -3077,7 +3075,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 20
             end
             object edPasaporteRuc: TDBEdit
-              Left = 563
+              Left = 523
               Top = 94
               Width = 201
               Height = 19
@@ -3123,7 +3121,7 @@ inherited frmSocios: TfrmSocios
               OnClick = rbFemeninoClick
             end
             object ndia: TSpinEdit
-              Left = 564
+              Left = 524
               Top = 145
               Width = 34
               Height = 22
@@ -3144,7 +3142,7 @@ inherited frmSocios: TfrmSocios
               OnChange = ndiaChange
             end
             object nMes: TSpinEdit
-              Left = 608
+              Left = 568
               Top = 145
               Width = 34
               Height = 22
@@ -3165,7 +3163,7 @@ inherited frmSocios: TfrmSocios
               OnChange = nMesChange
             end
             object nAno: TSpinEdit
-              Left = 652
+              Left = 612
               Top = 145
               Width = 46
               Height = 22
@@ -3204,7 +3202,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 14
             end
             object DBLookupComboBox6: TDBLookupComboBox
-              Left = 563
+              Left = 523
               Top = 193
               Width = 202
               Height = 19
@@ -3225,7 +3223,7 @@ inherited frmSocios: TfrmSocios
               OnClick = DBLookupComboBox6Click
             end
             object cmbPaisResidencia: TDBLookupComboBox
-              Left = 563
+              Left = 523
               Top = 170
               Width = 201
               Height = 19
@@ -3277,7 +3275,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 7
             end
             object dpExpira: TDateTimePicker
-              Left = 563
+              Left = 523
               Top = 118
               Width = 201
               Height = 21
@@ -3300,19 +3298,19 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 371
-            Width = 796
+            Width = 756
             Height = 90
             Align = alTop
             Caption = 'Nacionalidades:'
             TabOrder = 2
             DesignSize = (
-              796
+              756
               90)
             object ToolBar16: TToolBar
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 788
+              Width = 748
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3405,7 +3403,7 @@ inherited frmSocios: TfrmSocios
             object DBEdit11: TDBEdit
               Left = 251
               Top = 63
-              Width = 519
+              Width = 479
               Height = 19
               Anchors = [akLeft, akTop, akRight]
               DataField = 'nacionalidad'
@@ -3423,13 +3421,13 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 467
-            Width = 796
+            Width = 756
             Height = 82
             Align = alTop
             Caption = 'Pasatiempos:'
             TabOrder = 3
             DesignSize = (
-              796
+              756
               82)
             object Label75: TLabel
               Left = 15
@@ -3449,7 +3447,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 788
+              Width = 748
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3528,7 +3526,7 @@ inherited frmSocios: TfrmSocios
               TabOrder = 1
             end
             object DBCheckBox9: TDBCheckBox
-              Left = 605
+              Left = 565
               Top = 56
               Width = 97
               Height = 17
@@ -3549,13 +3547,13 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 555
-            Width = 796
+            Width = 756
             Height = 82
             Align = alTop
             Caption = 'Comunidad:'
             TabOrder = 4
             DesignSize = (
-              796
+              756
               82)
             object Label76: TLabel
               Left = 10
@@ -3575,7 +3573,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 788
+              Width = 748
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3656,7 +3654,7 @@ inherited frmSocios: TfrmSocios
               OnClick = dblsocioComunidadClick
             end
             object dbkSocioesRiesgosa: TDBCheckBox
-              Left = 605
+              Left = 565
               Top = 56
               Width = 97
               Height = 17
@@ -3678,7 +3676,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 643
-            Width = 796
+            Width = 756
             Height = 87
             Align = alTop
             Caption = 'Asociaciones:'
@@ -3700,7 +3698,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 788
+              Width = 748
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3794,7 +3792,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 58
-            Width = 796
+            Width = 756
             Height = 79
             Align = alTop
             Caption = 'Tipo de Sujeto'
@@ -3806,7 +3804,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 5
               Top = 18
-              Width = 786
+              Width = 746
               Height = 56
               Align = alClient
               AutoSize = True
@@ -3905,7 +3903,7 @@ inherited frmSocios: TfrmSocios
           AlignWithMargins = True
           Left = 3
           Top = 1225
-          Width = 804
+          Width = 764
           Height = 56
           Align = alTop
           Caption = 'Credenciales'
@@ -3950,7 +3948,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 0
           end
           object Button1: TButton
-            Left = 721
+            Left = 681
             Top = 14
             Width = 73
             Height = 33
@@ -3969,15 +3967,15 @@ inherited frmSocios: TfrmSocios
         end
       end
     end
-    object tsPerfiles: TTabSheet
+    object ts_Perfiles: TTabSheet
       Caption = 'Perfiles Financieros'
       ImageIndex = 3
       object PageControl2: TPageControl
         Left = 0
         Top = 0
-        Width = 835
-        Height = 587
-        ActivePage = tsPerfilVariable
+        Width = 795
+        Height = 578
+        ActivePage = tsPerfilFijo
         Align = alClient
         TabOrder = 0
         object tsPerfilFijo: TTabSheet
@@ -3986,8 +3984,8 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 821
-            Height = 553
+            Width = 781
+            Height = 544
             Align = alClient
             Caption = 'Ingresos Fijos:'
             Font.Charset = DEFAULT_CHARSET
@@ -3998,13 +3996,13 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
             TabOrder = 0
             DesignSize = (
-              821
-              553)
+              781
+              544)
             object Panel3: TPanel
               Left = 4
               Top = 18
               Width = 320
-              Height = 530
+              Height = 521
               Anchors = [akLeft, akTop, akBottom]
               BevelEdges = []
               BevelOuter = bvNone
@@ -4018,7 +4016,7 @@ inherited frmSocios: TfrmSocios
                 Left = 0
                 Top = 318
                 Width = 320
-                Height = 212
+                Height = 203
                 Align = alClient
                 Caption = 'Resumen Por Frecuencia'
                 Color = clWhite
@@ -4036,7 +4034,7 @@ inherited frmSocios: TfrmSocios
                   Left = 5
                   Top = 18
                   Width = 310
-                  Height = 189
+                  Height = 180
                   Align = alClient
                   DataSource = DataModulo1.dtsSocioTotalIngresosFijos
                   DrawingStyle = gdsGradient
@@ -4980,8 +4978,8 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 821
-            Height = 553
+            Width = 781
+            Height = 544
             Align = alClient
             Caption = 'Ingresos Variales:'
             Font.Charset = DEFAULT_CHARSET
@@ -4992,13 +4990,13 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
             TabOrder = 0
             DesignSize = (
-              821
-              553)
+              781
+              544)
             object Panel4: TPanel
               Left = 4
               Top = 18
               Width = 320
-              Height = 530
+              Height = 521
               Anchors = [akLeft, akTop, akBottom]
               BevelEdges = []
               BevelOuter = bvNone
@@ -5012,7 +5010,7 @@ inherited frmSocios: TfrmSocios
                 Left = 0
                 Top = 318
                 Width = 320
-                Height = 212
+                Height = 203
                 Align = alClient
                 Caption = 'Resumen Por Frecuencia'
                 Color = clWhite
@@ -5030,7 +5028,7 @@ inherited frmSocios: TfrmSocios
                   Left = 5
                   Top = 18
                   Width = 310
-                  Height = 189
+                  Height = 180
                   Align = alClient
                   DataSource = DataModulo1.dtsSocioTotalIV
                   DrawingStyle = gdsGradient
@@ -5976,23 +5974,23 @@ inherited frmSocios: TfrmSocios
         end
       end
     end
-    object tbsDependientes: TTabSheet
+    object ts_Dependientes: TTabSheet
       Caption = 'Dependientes'
       ImageIndex = 8
       DesignSize = (
-        835
-        587)
+        795
+        578)
       object GroupBox18: TGroupBox
         Left = 3
         Top = 3
-        Width = 829
+        Width = 789
         Height = 110
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Dependiente:'
         TabOrder = 0
       end
     end
-    object TabSheet3: TTabSheet
+    object ts_Herederos: TTabSheet
       Caption = 'Herederos'
       ImageIndex = 36
       object Image1: TImage
@@ -7060,7 +7058,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 829
+        Width = 789
         Height = 35
         BorderWidth = 1
         ButtonHeight = 30
@@ -7089,8 +7087,8 @@ inherited frmSocios: TfrmSocios
       object gbParentezco: TGroupBox
         Left = 65
         Top = 229
-        Width = 714
-        Height = 186
+        Width = 674
+        Height = 177
         Align = alCustom
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = 'Heredero'
@@ -7398,7 +7396,7 @@ inherited frmSocios: TfrmSocios
       object GroupBox8: TGroupBox
         Left = 3
         Top = 38
-        Width = 829
+        Width = 789
         Height = 171
         Align = alCustom
         Anchors = [akLeft, akTop, akRight]
@@ -7413,7 +7411,7 @@ inherited frmSocios: TfrmSocios
         object DBGrid1: TDBGrid
           Left = 5
           Top = 15
-          Width = 821
+          Width = 781
           Height = 130
           Align = alCustom
           Anchors = [akLeft, akTop, akRight]
@@ -7483,7 +7481,7 @@ inherited frmSocios: TfrmSocios
         object StatusBar2: TStatusBar
           Left = 2
           Top = 150
-          Width = 825
+          Width = 785
           Height = 19
           Anchors = [akLeft, akTop, akRight, akBottom]
           Panels = <
@@ -7498,14 +7496,14 @@ inherited frmSocios: TfrmSocios
         end
       end
     end
-    object TabSheet5: TTabSheet
+    object ts_documentos: TTabSheet
       Caption = 'Documentacion'
       ImageIndex = 38
       object ToolBar6: TToolBar
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 829
+        Width = 789
         Height = 35
         BorderWidth = 1
         ButtonHeight = 30
@@ -7559,12 +7557,37 @@ inherited frmSocios: TfrmSocios
           ImageIndex = 12
           OnClick = ToolButton22Click
         end
+        object ToolButton39: TToolButton
+          Left = 245
+          Top = 0
+          Caption = 'ToolButton39'
+          ImageIndex = 13
+          Visible = False
+          OnClick = ToolButton39Click
+        end
+        object ToolButton40: TToolButton
+          Left = 282
+          Top = 0
+          Caption = 'ToolButton40'
+          ImageIndex = 14
+          Visible = False
+          OnClick = ToolButton40Click
+        end
+        object ToolButton46: TToolButton
+          Left = 319
+          Top = 0
+          Caption = 'ToolButton46'
+          ImageIndex = 15
+          Visible = False
+          OnClick = ToolButton46Click
+        end
       end
       object GroupBox7: TGroupBox
-        Left = 0
-        Top = 41
-        Width = 835
-        Height = 543
+        AlignWithMargins = True
+        Left = 3
+        Top = 44
+        Width = 789
+        Height = 533
         Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = 'Imagen:'
@@ -7578,8 +7601,8 @@ inherited frmSocios: TfrmSocios
         object ScrollBox2: TScrollBox
           Left = 2
           Top = 50
-          Width = 831
-          Height = 367
+          Width = 785
+          Height = 375
           HorzScrollBar.Style = ssHotTrack
           HorzScrollBar.Tracking = True
           VertScrollBar.Tracking = True
@@ -7587,12 +7610,335 @@ inherited frmSocios: TfrmSocios
           BevelEdges = []
           BorderStyle = bsNone
           TabOrder = 0
+          object Image10: TImage
+            Left = 88
+            Top = 104
+            Width = 92
+            Height = 67
+            Picture.Data = {
+              0A544A504547496D6167654A270000FFD8FFE000104A46494600010101006000
+              600000FFE110844578696600004D4D002A000000080004013B00020000000600
+              00084A8769000400000001000008509C9D00010000000C00001070EA1C000700
+              00080C0000003E000000001CEA00000008000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000456477696E000001EA
+              1C00070000080C00000862000000001CEA000000080000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000450064
+              00770069006E000000FFE10A5E687474703A2F2F6E732E61646F62652E636F6D
+              2F7861702F312E302F003C3F787061636B657420626567696E3D27EFBBBF2720
+              69643D2757354D304D7043656869487A7265537A4E54637A6B633964273F3E0D
+              0A3C783A786D706D65746120786D6C6E733A783D2261646F62653A6E733A6D65
+              74612F223E3C7264663A52444620786D6C6E733A7264663D22687474703A2F2F
+              7777772E77332E6F72672F313939392F30322F32322D7264662D73796E746178
+              2D6E7323223E3C7264663A4465736372697074696F6E207264663A61626F7574
+              3D22757569643A66616635626464352D626133642D313164612D616433312D64
+              33336437353138326631622220786D6C6E733A64633D22687474703A2F2F7075
+              726C2E6F72672F64632F656C656D656E74732F312E312F222F3E3C7264663A44
+              65736372697074696F6E207264663A61626F75743D22757569643A6661663562
+              6464352D626133642D313164612D616433312D64333364373531383266316222
+              20786D6C6E733A64633D22687474703A2F2F7075726C2E6F72672F64632F656C
+              656D656E74732F312E312F223E3C64633A63726561746F723E3C7264663A5365
+              7120786D6C6E733A7264663D22687474703A2F2F7777772E77332E6F72672F31
+              3939392F30322F32322D7264662D73796E7461782D6E7323223E3C7264663A6C
+              693E456477696E3C2F7264663A6C693E3C2F7264663A5365713E0D0A0909093C
+              2F64633A63726561746F723E3C2F7264663A4465736372697074696F6E3E3C2F
+              7264663A5244463E3C2F783A786D706D6574613E0D0A20202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              20202020202020202020202020202020202020202020202020200A2020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              202020202020202020202020202020202020202020202020202020202020200A
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              202020200A202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020200A20202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              20202020202020202020202020200A2020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              202020202020202020202020202020202020200A202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020200A20202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              20202020202020202020202020202020202020202020202020202020200A2020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              20200A2020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              202020202020200A202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020200A20202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              20202020202020202020202020202020200A2020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              202020202020202020202020202020202020202020200A202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020200A20202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              0A20202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              20202020200A2020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              202020202020202020200A202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020200A20202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              20202020202020202020202020202020202020200A2020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              2020202020202020202020202020202020202020202020202020202020202020
+              202020202020202020202020202020202020202020202020200A202020202020
+              202020202020202020202020202020202020202020203C3F787061636B657420
+              656E643D2777273F3EFFDB00430007050506050407060506080707080A110B0A
+              09090A150F100C1118151A19181518171B1E27211B1D251D1718222E22252829
+              2B2C2B1A202F332F2A32272A2B2AFFDB0043010708080A090A140B0B142A1C18
+              1C2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A
+              2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2AFFC0001108006F008403012200
+              021101031101FFC4001F00000105010101010101000000000000000001020304
+              05060708090A0BFFC400B5100002010303020403050504040000017D01020300
+              041105122131410613516107227114328191A1082342B1C11552D1F024336272
+              82090A161718191A25262728292A3435363738393A434445464748494A535455
+              565758595A636465666768696A737475767778797A838485868788898A929394
+              95969798999AA2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9
+              CAD2D3D4D5D6D7D8D9DAE1E2E3E4E5E6E7E8E9EAF1F2F3F4F5F6F7F8F9FAFFC4
+              001F0100030101010101010101010000000000000102030405060708090A0BFF
+              C400B51100020102040403040705040400010277000102031104052131061241
+              510761711322328108144291A1B1C109233352F0156272D10A162434E125F117
+              18191A262728292A35363738393A434445464748494A535455565758595A6364
+              65666768696A737475767778797A82838485868788898A92939495969798999A
+              A2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9CAD2D3D4D5D6
+              D7D8D9DAE2E3E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA000C030100021103
+              11003F00FA468A28A0028A28A0028A28A0028A28A0028A28A0028A2992CD1C11
+              34B33AC68A32CCC70050095F443E903A962A18161D467A57097FE35D435EBB7D
+              33C0D6DF68753B65D424E218BE9EA6B67C2BE14FF847FCEB9BBBE9EFF51BA03E
+              D13C8E7071D001D80C9A952BBD0EFA98374297356972C9ED1EBF3EDF3D7C8E8E
+              8A28AA38028A28A0028A28A0028A28A0028A28A0028A28A0028A8E79E2B681E6
+              B89162890659DCE0015C25D78C754F155DC9A6F80E0FDCA9DB36AD30FDDC7FEE
+              8FE2352E491D787C254C45DC748ADDBD12F57FA6ECE87C4BE30D33C3312ADD39
+              9AEE4E22B487E69243F4AE6E2F0FEBDE37992EFC552369FA667747A6C2C4330E
+              DBCFF4ADCF0DF81EC34190DE5C3B6A3AA49CCB7B71CB13EDFDD15D354F2B97C4
+              75BC4D1C27BB85D65FCEFF00F6D5D3D77F42B5869D69A65A25B585BC70428301
+              51715668A2B43CA949C9DE4EEC28A28A04145145001451450014514500145150
+              DDDE5BD85B3DC5E4C90C2832CEE70050349C9D913573BE25F1A69BE1C021626E
+              EFE4E22B383E691CF6E3B560CFE29D6BC5F72F63E0C87C8B21F2CBAA4CA401FE
+              E0EF5A7A6786748F04E9B73AADCF9979768865B8BC946F91BD71E959F337F09E
+              B43074F0ED7D6B593DA0B7F9BE9E9BFA1970F85B59F19CE97BE3594DB5883BA2
+              D2606E0FA7987BFD2BB5369F60D1DEDF4686185A38C8823C6101C71D2A3D135A
+              B3D7F478752D3E4DF04A3233D54F707DEB274AF1E691AC789EEF43B390F9F6E0
+              E1CFDD723A81F4A69463F326B4B1788728F25A34F78A5A47D57E6DEA52F05F8C
+              E5D6346BE8F578C47ABE96596EA0518CE338207BE2A97837E2943E23BD5B4D4A
+              C4E9D24E5BECCC5B292E0F4CE0735E75A6BEA7A2F88357F12ACAF3DD58DFB43A
+              8DAB756818F2DEE323F954F776110BD6D3209B165A837DBF44BBCE3CA90F3B09
+              FD31F4AC79E5A1F4F3CA306E5515BE2B34D5FDD76BC925D56A9AEF1BDB63DFA8
+              AE6BC09E227F10F87124B91B2F2D98C17287A875E0D74B5D09A6AE8F89AF4674
+              2ACA94F75A052330552588007526B2B5FF0013699E1CB4F3B52B80ACDFEAE25E
+              5E43E8075AE516CBC45E3DC49A9B49A268AC72B6C87134EBFED1EC29395B45B9
+              D143072A91F6B51F2C3BBEBE8BABFE99E820860083907A114543696B1D959C56
+              D002238942282727028AA389DAFA135145140828AAF7DA85A69968F737F711DB
+              C2832CF23000570B2F88BC41E379DAD3C1F1369DA58389756B8420B8F4897FAD
+              4B9247661F0752BA72DA2B793D97F9BF25A9B9E23F1BD868728B2B756D43547E
+              23B2B71B9F3EF8E82B1AD3C21AAF8A2E63D43C733E2253BA2D321388D3D371EE
+              6B7FC3FE10D33C2D6B2496713DD5E329696EA63BA598FB9AC5F07FC488FC45AD
+              5E697A8DA7F675CC5215851DB9703A83FED0F6A87ABF78F4A9DE14A72C046FCB
+              F14DFC5AF65D17E3E68EDADEDE1B48161B68D628D061554600AC8F1278934DD0
+              F4BBA9AF499C42A3CE862C332AB1C02C3B0F735CAF8BFE22EA3A76B32E95E19D
+              345DDD588335E79CBC79400276E08F5FD3A561F88A5B6B816BE3ED1D4CDA6DFC
+              42DB58B5EBF29F94920771D3F006894D2D8AC26555252854C468A5B6BAB7BA4F
+              B732BD9F5659D0EF13C17E2C1649206F0EEBA3CDB49B3F2C6EDDB35CD0D1E5D3
+              F54D46DAC23F235FD26E9AF6D49EB7509E481EBC56869F656F756D3F82AF6E37
+              413AFDAF42BC27F10A0FF4A92DD6FF00C4BA6C535B1587C61E1D7F2CC6FC1B98
+              C7623BE6B3DD1F4917ECA729B7BA49B7B35F664FC9EB19F67A92EAD771DC4167
+              F1074483CE8A64FB36B566A3395230C48F6FF0359FE1E82C35CBE9FC270BC977
+              A54A7ED3A7DE460EEB3620B6D27B11D31ED5BDF0DF49D666F10EA1A9CB60DA5E
+              8F785D6E74E9C1E65C0C95523EEE777F2AEAEEAEFC2FF0F6D25314515B3DCBEF
+              16D00CC92B7B2F5FE94D46FEF338AB62D5093C2D24E73D396CEF6EA93F386A93
+              5A34ECF421F02F842E3C1F16A32EA5A8ADCB5CC9BD9C8DA0003A9CF7A8351F1B
+              DD6AD78DA5F816D86A1383B65BE6FF005107BE7F88FB5564D1FC43E3D6137891
+              A4D1F4527747A740C565987FD346EDF4AEDF4ED32CF49B24B4D3ADA3B7810615
+              1060568936ACB4478B89AB4E155D6C43552ABE8BE15EB6DFD169E6CE7741F02D
+              BD8DEFF6A6B770DAB6ACFC99E61F2C7EC8BD8575945156925B1E4D7C455C44B9
+              AA3BFE9E497441451453300AE57C45E3AB3D227FECFD3626D4F557E12D60E483
+              FED1ED5A3E26D3352D5F4C5B4D2B513A7B3B812CAAB9629DC0F434DF0EF84F4C
+              F0D5B95B188BCEE732DC4A774921F526A5F33D11DF4161A9C3DAD67CCFA4569F
+              7BEDE4B5F439DB0F056A1E20BB8F53F1DDC79E54EE8B4E88E228BD33EA6BBA8A
+              28E0896285151146155460014FA285148CB118AAB886B9F44B64B44BD10578D7
+              C45D05B48F1643A8D99F223D418149871E55C8FBA73E87A57B2D61F8BF408FC4
+              9E19BAB161FBD2BBE16EEAE3914A71E64756558CFAA6254A5F0BD1FA3FF2DCF3
+              5BFBE9BC47A547E23B18BC8F13E8076DE5B0FF0096D18FBDC7718CFEB51E81A9
+              E9FA56A7B5543F857C4E082ADCADB4E46190FA73FA63D2B98D2EF7C4B1EAB75E
+              22B748CCFA48586F605E1A541C12CBDC71D6BBAD17C11FDB7F6B30A341E1BD5A
+              25BA8E2901596DA7CF21476E475F422B0577B1F6589851C2D370AB25C9E4F6EB
+              CABCE2DF343CAE8E7754D0B59D37508FC31676934F2C37227D26F4748D0F2413
+              E95EA961E1AB2B2D4A2F11EA7B63D545AF95732860109E3271EBC75A357F12E9
+              3E10B0B7B49A57BABB58C4705BA7CF349818FF0026B122F0FEBBE35905D78B25
+              7B0D349CC7A642D82C3FE9A1FE95A28A4F4D4F0AB62AB62A946755FB386B7975
+              9DF7B2F3DDADAFADC9AFBC697FAFDE3E99E04B7170C0ED9752947EE221DF1FDE
+              35A5E1EF03D9E9172751D4657D4F5693992EE7E707D147F08AE82C6C2D74DB44
+              B5B1812085061510600AB156A3D59E3D5C628C1D2C32E58BDFF99FABFD168145
+              14559E7051451400514514005145140051451400514573DE23F19E9BE1E2B6EC
+              5AEEFE5E22B3B71BA473F4EC3DCD26D2D59AD1A352BCF929ABB191785347D27C
+              43A8788A473135CC7B660EFB620BDC91D3B77AC5B8F176A7E289DB4FF00DBE2D
+              94EC97569936C51FAEC07EF1A487C2DACF8C6E12F3C7129B7B004345A3DBBE17
+              DBCC61D4FB57756D6B0595B25BDA42904318DA91C6A15547B0A849BDB447AB56
+              B53A0D3A92F6B5124BBC636DBFC4D7DDEA607877C1361A1CAD793B3DFEA72732
+              DE5C1DCC4FB7A0FA574945156925B1E5D6AF52BCF9EA3BB0A28A299885145140
+              051451400514514005145140054375776F636CF717932430A0CB3B9C01535723
+              A87825F5EF104975E22BF7BBD3A3606DAC17E545E3F8B1F7A936FA1D1878529C
+              9FB6972A5E576FC979FA99F3F89F59F184AD69E0A88DBD9676CBAA4EB818FF00
+              601EBF5ADDF0E78374EF0F169D775DDFC9CCB7939DCEC7EBD856EC10456D02C3
+              6F1AC51A0C2A20C002A4A4A3D59D15B19783A5417243F17FE27D7D36F20A28A2
+              A8F3C28A28A0028A28A0028A28A0028A28A0028A28A00FFFD9}
+            Stretch = True
+          end
           object DBImage1: TDBImage
             Left = 0
             Top = 0
-            Width = 831
-            Height = 366
-            Align = alTop
+            Width = 785
+            Height = 375
+            Align = alClient
             Center = False
             Color = clGradientInactiveCaption
             DataField = 'imagen'
@@ -7601,18 +7947,29 @@ inherited frmSocios: TfrmSocios
             PopupMenu = ppmImagen
             Stretch = True
             TabOrder = 0
+            OnDblClick = DBImage1DblClick
             OnMouseDown = DBImage1MouseDown
             OnMouseMove = DBImage1MouseMove
             OnMouseUp = DBImage1MouseUp
           end
         end
-        object GroupBox2: TGroupBox
+        object tb1: TTrackBar
           Left = 2
-          Top = 417
-          Width = 831
-          Height = 121
+          Top = 15
+          Width = 785
+          Height = 35
           Align = alTop
-          Anchors = [akLeft, akTop, akRight, akBottom]
+          Max = 1000
+          TabOrder = 1
+          OnChange = tb1Change
+        end
+        object GroupBox2: TGroupBox
+          AlignWithMargins = True
+          Left = 5
+          Top = 427
+          Width = 779
+          Height = 101
+          Align = alBottom
           Caption = 'Informaci'#243'n del Documento:'
           Font.Charset = CHINESEBIG5_CHARSET
           Font.Color = clRed
@@ -7620,7 +7977,7 @@ inherited frmSocios: TfrmSocios
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 1
+          TabOrder = 2
           object Label41: TLabel
             Left = 11
             Top = 36
@@ -7697,25 +8054,15 @@ inherited frmSocios: TfrmSocios
             TabOrder = 2
           end
         end
-        object tb1: TTrackBar
-          Left = 2
-          Top = 15
-          Width = 831
-          Height = 35
-          Align = alTop
-          Max = 1000
-          TabOrder = 2
-          OnChange = tb1Change
-        end
       end
     end
-    object TabSheet2: TTabSheet
+    object ts_Cuentas: TTabSheet
       Caption = 'Cuentas'
       ImageIndex = 5
       object GroupBox10: TGroupBox
         Left = 0
         Top = 0
-        Width = 835
+        Width = 795
         Height = 166
         Align = alTop
         Caption = 'Cuentas'
@@ -7729,7 +8076,7 @@ inherited frmSocios: TfrmSocios
         object DBGrid4: TDBGrid
           Left = 2
           Top = 15
-          Width = 831
+          Width = 791
           Height = 149
           Align = alClient
           DataSource = SocioProductos
@@ -7802,8 +8149,8 @@ inherited frmSocios: TfrmSocios
       object pcDetalleCuenta: TPageControl
         Left = 0
         Top = 166
-        Width = 835
-        Height = 421
+        Width = 795
+        Height = 412
         ActivePage = TabSheet9
         Align = alClient
         TabOrder = 1
@@ -7814,8 +8161,8 @@ inherited frmSocios: TfrmSocios
           object GroupBox11: TGroupBox
             Left = 0
             Top = 41
-            Width = 827
-            Height = 352
+            Width = 787
+            Height = 343
             Align = alClient
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
@@ -7827,8 +8174,8 @@ inherited frmSocios: TfrmSocios
             object GroupBox14: TGroupBox
               Left = 2
               Top = 262
-              Width = 823
-              Height = 87
+              Width = 783
+              Height = 78
               Align = alTop
               Anchors = [akLeft, akTop, akRight, akBottom]
               Caption = '       Garantia'
@@ -7883,8 +8230,8 @@ inherited frmSocios: TfrmSocios
               object garantia: TDBMemo
                 Left = 2
                 Top = 15
-                Width = 819
-                Height = 70
+                Width = 779
+                Height = 61
                 Align = alClient
                 DataField = 'garantias'
                 DataSource = SocioProductos
@@ -7903,7 +8250,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 5
               Top = 18
-              Width = 817
+              Width = 777
               Height = 83
               Align = alTop
               Caption = '       Informaci'#243'n de la Cuenta'
@@ -8028,7 +8375,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 5
               Top = 107
-              Width = 817
+              Width = 777
               Height = 152
               Align = alTop
               Caption = '       Informacion del Prestamo'
@@ -8348,7 +8695,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 821
+            Width = 781
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -8405,18 +8752,18 @@ inherited frmSocios: TfrmSocios
           object pnFiadores: TPanel
             Left = 0
             Top = 0
-            Width = 827
-            Height = 393
+            Width = 787
+            Height = 384
             Align = alClient
             TabOrder = 0
             DesignSize = (
-              827
-              393)
+              787
+              384)
             object GroupBox12: TGroupBox
               Left = 1
               Top = 3
               Width = 238
-              Height = 387
+              Height = 378
               Align = alCustom
               Anchors = [akLeft, akTop, akBottom]
               Caption = 'Lista de Fiadores para el Pr'#233'stamo'
@@ -8432,7 +8779,7 @@ inherited frmSocios: TfrmSocios
                 Left = 5
                 Top = 18
                 Width = 228
-                Height = 364
+                Height = 355
                 Align = alClient
                 DataSource = dtsCuentaFiador
                 DrawingStyle = gdsGradient
@@ -8483,8 +8830,8 @@ inherited frmSocios: TfrmSocios
             object PageControl3: TPageControl
               Left = 242
               Top = 5
-              Width = 581
-              Height = 385
+              Width = 541
+              Height = 376
               ActivePage = TabSheet11
               Anchors = [akLeft, akTop, akRight, akBottom]
               TabOrder = 1
@@ -8496,8 +8843,8 @@ inherited frmSocios: TfrmSocios
                   AlignWithMargins = True
                   Left = 3
                   Top = 44
-                  Width = 567
-                  Height = 310
+                  Width = 527
+                  Height = 301
                   Align = alClient
                   Caption = 'Informaci'#243'n del Fiador:'
                   Font.Charset = DEFAULT_CHARSET
@@ -8730,7 +9077,7 @@ inherited frmSocios: TfrmSocios
                   AlignWithMargins = True
                   Left = 3
                   Top = 3
-                  Width = 567
+                  Width = 527
                   Height = 35
                   BorderWidth = 1
                   ButtonHeight = 30
@@ -8772,8 +9119,8 @@ inherited frmSocios: TfrmSocios
           object GroupBox9: TGroupBox
             Left = 0
             Top = 0
-            Width = 827
-            Height = 393
+            Width = 787
+            Height = 384
             Align = alTop
             Anchors = [akLeft, akTop, akRight, akBottom]
             Caption = 'Movimientos de la Cuenta'
@@ -8787,7 +9134,7 @@ inherited frmSocios: TfrmSocios
             object Panel1: TPanel
               Left = 2
               Top = 15
-              Width = 823
+              Width = 783
               Height = 58
               Align = alTop
               TabOrder = 0
@@ -8937,16 +9284,16 @@ inherited frmSocios: TfrmSocios
             end
             object StatusBar3: TStatusBar
               Left = 2
-              Top = 364
-              Width = 823
+              Top = 355
+              Width = 783
               Height = 27
               Panels = <>
             end
             object gMovimientos: TDBGrid
               Left = 2
               Top = 73
-              Width = 823
-              Height = 291
+              Width = 783
+              Height = 282
               Align = alClient
               Color = clWhite
               DataSource = dts_mMovimientos
@@ -9230,8 +9577,8 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 44
-            Width = 821
-            Height = 346
+            Width = 781
+            Height = 337
             Align = alClient
             TabOrder = 0
             object Label96: TLabel
@@ -9245,8 +9592,8 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 5
               Top = 18
-              Width = 811
-              Height = 323
+              Width = 771
+              Height = 314
               Align = alClient
               DataSource = DataModulo1.dtsProductoPlanPago
               DrawingStyle = gdsGradient
@@ -9303,7 +9650,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 821
+            Width = 781
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -9354,7 +9701,7 @@ inherited frmSocios: TfrmSocios
         end
       end
     end
-    object TabSheet4: TTabSheet
+    object ts_EstadoCuentas: TTabSheet
       Caption = 'Estado de Cuenta'
       ImageIndex = 23
       TabVisible = False
@@ -9362,7 +9709,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 829
+        Width = 789
         Height = 29
         BorderWidth = 1
         ButtonHeight = 30
@@ -9392,8 +9739,8 @@ inherited frmSocios: TfrmSocios
       object CategoryPanelGroup1: TCategoryPanelGroup
         Left = 0
         Top = 35
-        Width = 835
-        Height = 552
+        Width = 795
+        Height = 543
         VertScrollBar.Tracking = True
         Align = alClient
         GradientBaseColor = clGreen
@@ -9413,7 +9760,7 @@ inherited frmSocios: TfrmSocios
           object ToolBar13: TToolBar
             Left = 0
             Top = 0
-            Width = 831
+            Width = 791
             Height = 29
             BorderWidth = 1
             ButtonHeight = 30
@@ -9438,7 +9785,7 @@ inherited frmSocios: TfrmSocios
           object ToolBar12: TToolBar
             Left = 0
             Top = 0
-            Width = 831
+            Width = 791
             Height = 29
             BorderWidth = 1
             ButtonHeight = 30
@@ -9469,7 +9816,7 @@ inherited frmSocios: TfrmSocios
           object ToolBar11: TToolBar
             Left = 0
             Top = 0
-            Width = 831
+            Width = 791
             Height = 29
             BorderWidth = 1
             ButtonHeight = 30
@@ -9488,14 +9835,14 @@ inherited frmSocios: TfrmSocios
         end
       end
     end
-    object TabSheet8: TTabSheet
+    object ts_datosFinancieros: TTabSheet
       AlignWithMargins = True
       Caption = 'Datos Financieros'
       ImageIndex = 40
       object DBGrid3: TDBGrid
         Left = 0
         Top = 35
-        Width = 829
+        Width = 789
         Height = 107
         Align = alTop
         TabOrder = 0
@@ -9533,7 +9880,7 @@ inherited frmSocios: TfrmSocios
       object GroupBox6: TGroupBox
         Left = 0
         Top = 142
-        Width = 829
+        Width = 789
         Height = 134
         Align = alTop
         Caption = 'Caracteristicas:'
@@ -9593,7 +9940,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 823
+        Width = 783
         Height = 29
         BorderWidth = 1
         ButtonHeight = 30
@@ -9621,7 +9968,7 @@ inherited frmSocios: TfrmSocios
         end
       end
     end
-    object TabSheet6: TTabSheet
+    object ts_Vaciones: TTabSheet
       Hint = 
         'Vacaciones|Establece aqui los periodos de gracia (No Facturacion' +
         ')| 47'
@@ -9633,7 +9980,7 @@ inherited frmSocios: TfrmSocios
         Left = 3
         Top = 34
         Width = 262
-        Height = 485
+        Height = 476
         Align = alCustom
         Anchors = [akLeft, akTop, akBottom]
         DataSource = dtsCuentaFiadores
@@ -9662,8 +10009,8 @@ inherited frmSocios: TfrmSocios
       object Mantenimiento: TGroupBox
         Left = 263
         Top = 34
-        Width = 569
-        Height = 485
+        Width = 529
+        Height = 476
         Hint = 
           'Vacaciones|Establece aqui los periodos de gracia (No Facturacion' +
           ')| 47'
@@ -9718,8 +10065,8 @@ inherited frmSocios: TfrmSocios
         object GroupBox5: TGroupBox
           Left = 8
           Top = 56
-          Width = 558
-          Height = 426
+          Width = 518
+          Height = 417
           Align = alCustom
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Observacion:'
@@ -9730,7 +10077,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 829
+        Width = 789
         Height = 35
         BorderWidth = 1
         ButtonHeight = 30
@@ -9758,12 +10105,274 @@ inherited frmSocios: TfrmSocios
         end
       end
     end
+    object ts_ApoyoLentes: TTabSheet
+      Caption = 'Apoyo Lentes'
+      ImageIndex = 9
+      object grp_apoyoLentes: TGroupBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 789
+        Height = 182
+        Align = alTop
+        TabOrder = 0
+        object Label112: TLabel
+          Left = 16
+          Top = 62
+          Width = 58
+          Height = 13
+          Caption = 'Tipo Apoyo:'
+        end
+        object Label113: TLabel
+          Left = 590
+          Top = 62
+          Width = 34
+          Height = 13
+          Caption = 'Monto:'
+        end
+        object Label114: TLabel
+          Left = 293
+          Top = 62
+          Width = 33
+          Height = 13
+          Caption = 'Fecha:'
+        end
+        object ToolBar25: TToolBar
+          AlignWithMargins = True
+          Left = 5
+          Top = 18
+          Width = 779
+          Height = 35
+          BorderWidth = 1
+          ButtonHeight = 30
+          ButtonWidth = 30
+          Caption = 'ToolBar1'
+          DrawingStyle = dsGradient
+          GradientEndColor = clMoneyGreen
+          Images = DataModulo1.ImageList2
+          TabOrder = 0
+          object btn_ApoyoLentes_new: TToolButton
+            Left = 0
+            Top = 0
+            Hint = 'Nuevo registro'
+            ImageIndex = 8
+            ParentShowHint = False
+            ShowHint = True
+            OnClick = btn_ApoyoLentes_newClick
+          end
+          object btn_ApoyoLentes_Salvar: TToolButton
+            Left = 30
+            Top = 0
+            ImageIndex = 6
+            OnClick = btn_ApoyoLentes_SalvarClick
+          end
+          object ToolButton52: TToolButton
+            Left = 60
+            Top = 0
+            Width = 60
+            Caption = 'ToolButton27'
+            ImageIndex = 8
+            Style = tbsSeparator
+          end
+          object ToolButton47: TToolButton
+            Left = 120
+            Top = 0
+            Caption = 'ToolButton47'
+            ImageIndex = 11
+            OnClick = ToolButton47Click
+          end
+          object ToolButton50: TToolButton
+            Left = 150
+            Top = 0
+            Caption = 'ToolButton50'
+            ImageIndex = 12
+            OnClick = ToolButton50Click
+          end
+        end
+        object DBEdit12: TDBEdit
+          Left = 668
+          Top = 59
+          Width = 131
+          Height = 21
+          DataField = 'monto'
+          DataSource = dts_SocioApoyoLentes
+          TabOrder = 1
+        end
+        object DBMemo2: TDBMemo
+          AlignWithMargins = True
+          Left = 3
+          Top = 81
+          Width = 798
+          Height = 96
+          DataField = 'nota'
+          DataSource = dts_SocioApoyoLentes
+          TabOrder = 2
+        end
+        object dp_FechaApoyoLentes: TDateTimePicker
+          Left = 343
+          Top = 58
+          Width = 203
+          Height = 21
+          Date = 42957.488233414360000000
+          Time = 42957.488233414360000000
+          DateFormat = dfLong
+          TabOrder = 3
+        end
+        object DBLookupComboBox3: TDBLookupComboBox
+          Left = 80
+          Top = 59
+          Width = 207
+          Height = 21
+          DataField = 'tipoApoyo'
+          DataSource = dts_SocioApoyoLentes
+          KeyField = 'idTipo'
+          ListField = 'Descripcion'
+          ListSource = dts_tipoApoyo
+          TabOrder = 4
+        end
+      end
+      object GroupBox23: TGroupBox
+        Left = 0
+        Top = 188
+        Width = 795
+        Height = 387
+        Align = alTop
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        TabOrder = 1
+        DesignSize = (
+          795
+          387)
+        object ToolBar26: TToolBar
+          AlignWithMargins = True
+          Left = 5
+          Top = 18
+          Width = 785
+          Height = 35
+          BorderWidth = 1
+          ButtonHeight = 30
+          ButtonWidth = 30
+          Caption = 'ToolBar1'
+          DrawingStyle = dsGradient
+          GradientEndColor = clMoneyGreen
+          Images = DataModulo1.ImageList2
+          TabOrder = 0
+          object btn_ApoyoDoc_new: TToolButton
+            Left = 0
+            Top = 0
+            Hint = 'Nuevo registro'
+            ImageIndex = 8
+            ParentShowHint = False
+            ShowHint = True
+            OnClick = btn_ApoyoDoc_newClick
+          end
+          object btn_ApoyoDoc_salvar: TToolButton
+            Left = 30
+            Top = 0
+            ImageIndex = 6
+            OnClick = btn_ApoyoDoc_salvarClick
+          end
+          object ToolButton56: TToolButton
+            Left = 60
+            Top = 0
+            Width = 60
+            Caption = 'ToolButton27'
+            ImageIndex = 8
+            Style = tbsSeparator
+          end
+          object btn_ApoyoDoc_prior: TToolButton
+            Left = 120
+            Top = 0
+            ParentCustomHint = False
+            Caption = 'ToolButton47'
+            ImageIndex = 11
+            OnClick = btn_ApoyoDoc_priorClick
+          end
+          object btn_ApoyoDoc_next: TToolButton
+            Left = 150
+            Top = 0
+            Caption = 'ToolButton50'
+            ImageIndex = 12
+            OnClick = btn_ApoyoDoc_nextClick
+          end
+        end
+        object DBImage2: TDBImage
+          Left = 313
+          Top = 58
+          Width = 474
+          Height = 326
+          Anchors = [akLeft, akTop, akBottom]
+          DataField = 'imagen'
+          DataSource = dts_SocioApoyoDoc
+          PopupMenu = ppm_Facturas
+          TabOrder = 1
+          OnDblClick = DBImage2DblClick
+          OnKeyDown = DBImage2KeyDown
+          OnKeyPress = DBImage2KeyPress
+        end
+        object GroupBox27: TGroupBox
+          Left = 5
+          Top = 58
+          Width = 303
+          Height = 326
+          Anchors = [akLeft, akTop, akBottom]
+          TabOrder = 2
+          DesignSize = (
+            303
+            326)
+          object Label115: TLabel
+            Left = 3
+            Top = 26
+            Width = 73
+            Height = 13
+            Caption = 'Fecha Factura:'
+          end
+          object Label116: TLabel
+            Left = 3
+            Top = 88
+            Width = 58
+            Height = 13
+            Caption = 'Descripcion:'
+          end
+          object dp_factura: TDateTimePicker
+            Left = 95
+            Top = 20
+            Width = 202
+            Height = 29
+            Date = 42957.604362442130000000
+            Time = 42957.604362442130000000
+            DateFormat = dfLong
+            DateMode = dmUpDown
+            TabOrder = 0
+          end
+          object DBEdit13: TDBEdit
+            Left = 3
+            Top = 104
+            Width = 294
+            Height = 21
+            Anchors = [akLeft, akTop, akRight]
+            DataField = 'descripcion'
+            DataSource = dts_SocioApoyoDoc
+            TabOrder = 1
+          end
+          object DBMemo3: TDBMemo
+            Left = 3
+            Top = 131
+            Width = 295
+            Height = 190
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            DataField = 'nota'
+            DataSource = dts_SocioApoyoDoc
+            TabOrder = 2
+          end
+        end
+      end
+    end
   end
   object GroupBox3: TGroupBox
     Left = 0
     Top = 4
     Width = 295
-    Height = 613
+    Height = 604
     Align = alCustom
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Listado de Socios'
@@ -9772,9 +10381,10 @@ inherited frmSocios: TfrmSocios
       Left = 2
       Top = 44
       Width = 291
-      Height = 567
+      Height = 558
       Align = alClient
       DataSource = Socios
+      ReadOnly = True
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -9954,11 +10564,12 @@ inherited frmSocios: TfrmSocios
     Top = 400
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 716
-    Top = 69
+    Left = 932
+    Top = 389
   end
   object dtsSocioDoc: TDataSource
     DataSet = DataModulo1.SocioDoc
+    OnDataChange = dtsSocioDocDataChange
     Left = 32
     Top = 304
   end
@@ -9975,12 +10586,12 @@ inherited frmSocios: TfrmSocios
   end
   object dts_mMovimientos: TDataSource
     DataSet = mMovimientos
-    Left = 402
-    Top = 105
+    Left = 378
+    Top = 441
   end
   object ppmImagen: TPopupMenu
-    Left = 244
-    Top = 200
+    Left = 644
+    Top = 360
     object Copiar1: TMenuItem
       Bitmap.Data = {
         F6000000424DF600000000000000760000002800000010000000100000000100
@@ -10007,7 +10618,8 @@ inherited frmSocios: TfrmSocios
         070577888887777770057F8888F7777777707F88FF88877777707FFF88998887
         77707F88AA8887708770577F88877FF0800555577F7FFFFF05555555577FFFFF
         F05555555557FFFFFF00555555557FFF77555555555557775555}
-      Caption = 'Imprimir'
+      Caption = 'Pegar'
+      OnClick = Imprimir1Click
     end
   end
   object dtsTipoCliente: TDataSource
@@ -10028,8 +10640,8 @@ inherited frmSocios: TfrmSocios
   object dtsProductosCliente: TDataSource
     DataSet = DataModulo1.ProductosCliente
     OnDataChange = dtsProductosClienteDataChange
-    Left = 493
-    Top = 562
+    Left = 485
+    Top = 514
   end
   object dtsFinalidades: TDataSource
     DataSet = DataModulo1.Finalidad
@@ -10039,8 +10651,8 @@ inherited frmSocios: TfrmSocios
   object dtsCuentaFiador: TDataSource
     DataSet = DataModulo1.CuentaFiadores
     OnDataChange = dtsCuentaFiadorDataChange
-    Left = 553
-    Top = 88
+    Left = 505
+    Top = 440
   end
   object mFiador: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -10049,8 +10661,8 @@ inherited frmSocios: TfrmSocios
     ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
-    Left = 953
-    Top = 129
+    Left = 905
+    Top = 257
     object mFiadorcuenta: TStringField
       FieldName = 'cuenta'
       Size = 12
@@ -10070,8 +10682,8 @@ inherited frmSocios: TfrmSocios
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
     StoreDefs = True
-    Left = 640
-    Top = 128
+    Left = 624
+    Top = 288
     object mMovimientostipo_documento: TWideStringField
       FieldName = 'tipo_documento'
       Origin = 'tipo_documento'
@@ -10193,15 +10805,14 @@ inherited frmSocios: TfrmSocios
   end
   object dtsSocioNacionalidades: TDataSource
     DataSet = DataModulo1.socioNacionalidades
-    OnUpdateData = dtsSocioNacionalidadesUpdateData
     Left = 1064
     Top = 24
   end
   object dtspaises2: TDataSource
     DataSet = DataModulo1.paises2
     OnDataChange = dtspaises2DataChange
-    Left = 884
-    Top = 112
+    Left = 788
+    Top = 248
   end
   object dtsProvincias: TDataSource
     DataSet = DataModulo1.provinciasTodas
@@ -10232,12 +10843,98 @@ inherited frmSocios: TfrmSocios
   end
   object dtsSocioGrupo: TDataSource
     DataSet = DataModulo1.socioComunidad
-    Left = 677
-    Top = 216
+    Left = 549
+    Top = 312
   end
   object dtsSocioAsociaciones: TDataSource
     DataSet = DataModulo1.socioAsociaciones
-    Left = 624
-    Top = 560
+    Left = 672
+    Top = 520
+  end
+  object dts_SocioApoyoLentes: TDataSource
+    DataSet = DataModulo1.socioApoyoLentes
+    OnDataChange = dts_SocioApoyoLentesDataChange
+    Left = 608
+    Top = 120
+  end
+  object dts_tipoApoyo: TDataSource
+    DataSet = DataModulo1.tipoApoyo
+    Left = 732
+    Top = 125
+  end
+  object dts_SocioApoyoDoc: TDataSource
+    DataSet = DataModulo1.socioApoyoDoc
+    OnDataChange = dts_SocioApoyoDocDataChange
+    Left = 836
+    Top = 125
+  end
+  object ppm_Facturas: TPopupMenu
+    Left = 716
+    Top = 360
+    object MenuItem1: TMenuItem
+      Bitmap.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFB88989B88989B88989B88989B88989B88989B88989B889
+        89B88989B88989FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB88989FEFEFDFE
+        FEFEFEFEFDFEFEFDFEFEFDFEFEFDFEFEFDFEFEFDB88989FF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFB88989FEFBF8B27E73B27E73B27E73B27E73B27E73B27E
+        73FEFBF8B88989FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB88989FEF8F3FE
+        FAF6FEF8F3FEF8F3FEF8F3FEF8F3FEF8F3FEF8F3B88989FF00FFB88989B88989
+        B88989B88989B88989B88989FEF6EDB27E73B27E73B27E73B27E73B27E73B27E
+        73FEF6EDB88989FF00FFB88989FEFEFDFEFEFEFEFEFDFEFEFDB88989FEF3E8FF
+        F4EAFEF3E8FEF3E8FEF3E8FEF3E8FEF3E8FEF3E8B88989FF00FFB88989FEFBF8
+        B27E73B27E73B27E73B88989FFF0E3B27E73B27E73B27E73B27E73B27E73B27E
+        73FFF0E3B88989FF00FFB88989FEF8F3FEFAF6FEF8F3FEF8F3B88989FFEDDDFF
+        EDDDFFEDDDFFEDDDFFEDDDE9D5C9E7D6C9D7C5BAB88989FF00FFB88989FEF6ED
+        B27E73B27E73B27E73B88989FFEBD8FFEAD7FFEBD8FFEBD8FFEBD8C4AAA7C5AB
+        A8CDB5B0CD9999FF00FFB88989FEF3E8FFF4EAFEF3E8FEF3E8B88989FFE8D2FF
+        E8D2FFE8D2FFE8D2FBE4CFC6ACA9FEFEFECD9999FF00FFFF00FFB88989FFF0E3
+        B27E73B27E73B27E73B88989FFE6CFFFE6CFFFE6CFFFE6CFE9CFBFD2BAB4CD99
+        99FF00FFFF00FFFF00FFB88989FFEDDDFFEDDDFFEDDDFFEDDDB88989B88989B8
+        8989B88989B88989B88989CD9999FF00FFFF00FFFF00FFFF00FFB88989FFEBD8
+        FFEAD7FFEBD8FFEBD8FFEBD8C4AAA7C5ABA8CDB5B0CD9999FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFB88989FFE8D2FFE8D2FFE8D2FFE8D2FBE4CFC6ACA9FE
+        FEFECD9999FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB88989FFE6CF
+        FFE6CFFFE6CFFFE6CFE9CFBFD2BAB4CD9999FF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFB88989B88989B88989B88989B88989B88989CD9999FF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      Caption = 'Copiar'
+      OnClick = MenuItem1Click
+    end
+    object MenuItem2: TMenuItem
+      Caption = '-'
+    end
+    object Pegar1: TMenuItem
+      Bitmap.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+        004B82004B82004B82A56F6FA56F6FA56F6FA56F6FA56F6FA56F6FA56F6FA56F
+        6FA56F6FA56F6FFF00FFFF00FF004B8225ACDA20A7D81CA3D5A56F6FFEFEFCFE
+        FEFEFEFEFCFEFEFCFEFEFCFEFEFCFEFEFCFEFEFCA56F6FFF00FFFF00FF004B82
+        2DB4DE28AFDC22AAD9A56F6FFEFAF69E64589E64589E64589E64589E64589E64
+        58FEFAF6A56F6FFF00FFFF00FF004B8234BAE22EB4E029AFDDA56F6FFEF6EFFF
+        F0E6FEF3E9FEF6EDFFF7F0FEFAF3FEFBF7FEF6EFA56F6FFF00FFFF00FF004B82
+        3CBFE736BAE331B5E1A56F6FFEF3E79E64589E64589E64589E64589E64589E64
+        58FEF3E7A56F6FFF00FFFF00FF004B8243C5EB3EC1E738BCE5A56F6FFFEBDAFF
+        EBDAFFEBDAFFEDDDFFEEDEFFEFE2FFF2E5FFEBDAA56F6FFF00FFFF00FF004B82
+        4BCBEF45C7ED40C2E9A56F6FFFE7D39E64589E64589E64589E6458BF9387BD95
+        87CBB5A7A56F6FFF00FFFF00FF004B8252D0F34CCCEF47C7EEA56F6FFFE5CCFF
+        E3CBFFE5CCFFE5CCFFE5CCB49591B59692BFA19CBF8181FF00FFFF00FF004B82
+        59D5F654D1F34FCFF0A56F6FFFE1C5FFE1C5FFE1C5FFE1C5FADCC1B69793FEFE
+        FEBF8181FF00FFFF00FFFF00FF004B825FDAF85BD8F655D3F3A56F6FFFDEC1FF
+        DEC1FFDEC1FFDEC1E2C1ADC5A7A0BF8181004B82FF00FFFF00FFFF00FF004B82
+        65DEFB60DCF85CD8F7A56F6FA56F6FA56F6FA56F6FA56F6FA56F6FBF818138BB
+        E5004B82FF00FFFF00FFFF00FF004B8269E1FE66DEFB63DDFB63DDFB5DD9F857
+        D5F650CFF249C9EE42C2EA3CBFE738BBE5004B82FF00FFFF00FFFF00FF004B82
+        6AE2FE6AE2FE58585858585858585858585858585858585858585845C7EB40C1
+        E9004B82FF00FFFF00FFFF00FF004B826AE2FE6AE2FE585858C1B0AAC1B0A9C1
+        B0A9C1B0A9C0ACA45858584DCCF047C7ED004B82FF00FFFF00FFFF00FFFF00FF
+        004B82004B82585858D9CCC6F8F7F6F7F6F4F7F6F4C2B5AD585858004B82004B
+        82FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF58585858585858
+        5858585858585858FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      Caption = 'Pegar'
+      OnClick = Pegar1Click
+    end
   end
 end

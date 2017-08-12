@@ -94,7 +94,7 @@ type
     N9: TMenuItem;
     AnulaciondeDocumentos1: TMenuItem;
     AjustedeCuentasEspeciales1: TMenuItem;
-    Caja1: TMenuItem;
+    mnu_caja: TMenuItem;
     N8: TMenuItem;
     Reportes1: TMenuItem;
     ransacciones1: TMenuItem;
@@ -139,6 +139,10 @@ type
     ToolButton16: TToolButton;
     ToolButton17: TToolButton;
     ToolButton18: TToolButton;
+    mnu_Cont_Especial: TMenuItem;
+    ToolButton19: TToolButton;
+    Migracion1: TMenuItem;
+    Migracion2: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure Encriptar2Click(Sender: TObject);
     procedure Perfil1Click(Sender: TObject);
@@ -161,10 +165,9 @@ type
     procedure Parentezcos1Click(Sender: TObject);
     procedure tipoDocumentos1Click(Sender: TObject);
     procedure DocumentosSocio1Click(Sender: TObject);
-    procedure Parametros1Click(Sender: TObject);
     procedure CargadeManifiesto1Click(Sender: TObject);
     procedure mnuPrinUtilsClick(Sender: TObject);
-    procedure Caja1Click(Sender: TObject);
+    procedure mnu_cajaClick(Sender: TObject);
     procedure iposdeCuentas1Click(Sender: TObject);
     procedure Generarmorosidad1Click(Sender: TObject);
     procedure Usuarios1Click(Sender: TObject);
@@ -182,6 +185,9 @@ type
     procedure mnuActividadesEcoClick(Sender: TObject);
     procedure mnu_Cont_ChequeClick(Sender: TObject);
     procedure mnu_cont_transferenciaClick(Sender: TObject);
+    procedure mnu_Cont_EspecialClick(Sender: TObject);
+    procedure Migracion1Click(Sender: TObject);
+    procedure Migracion2Click(Sender: TObject);
 
 
   private
@@ -205,7 +211,7 @@ uses Encripta, DM1,  Socios, GeneralesUsuario, Finalidad, Bancos, Cargos,
   MantAprobacionesCheque, ChequesCaja, MantenimientoPaises, Asociaciones,
   MantenimientoFrecuenciaPagos, MantenimientoFormasPagos,
   MantenimientoTipoIngresos, MantenimientoActividadEconomica, Cheques,
-  Transferencias;
+  Transferencias, Especiales, MigracionSocios;
 
 procedure TfrmPrincipal.mnSociosClick(Sender: TObject);
 begin
@@ -257,6 +263,12 @@ begin
   frmCheques.Show;
 end;
 
+procedure TfrmPrincipal.mnu_Cont_EspecialClick(Sender: TObject);
+begin
+  application.CreateForm(TfrmEspeciales , frmEspeciales );
+  frmEspeciales.Show;
+end;
+
 procedure TfrmPrincipal.Asociaciones1Click(Sender: TObject);
 begin
   application.CreateForm(TfrmAsociaciones , frmAsociaciones);
@@ -275,7 +287,7 @@ begin
   frmBancos.Show;
 end;
 
-procedure TfrmPrincipal.Caja1Click(Sender: TObject);
+procedure TfrmPrincipal.mnu_cajaClick(Sender: TObject);
 begin
 
   if DataModulo1._Acceso (usuario,'CA') then
@@ -509,10 +521,16 @@ begin
   frmCargos.Show;
 end;
 
-procedure TfrmPrincipal.Parametros1Click(Sender: TObject);
+procedure TfrmPrincipal.Migracion1Click(Sender: TObject);
 begin
-  application.CreateForm(TfrmEmpresa, frmEmpresa );
-  frmEmpresa.Show;
+//  application.CreateForm(TfrmEmpresa, frmEmpresa );
+//  frmEmpresa.Show;
+end;
+
+procedure TfrmPrincipal.Migracion2Click(Sender: TObject);
+begin
+  application.CreateForm(TfrmMigracion, frmMigracion);
+  frmMigracion.Show;
 end;
 
 procedure TfrmPrincipal.Parentezcos1Click(Sender: TObject);
