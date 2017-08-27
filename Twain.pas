@@ -130,14 +130,16 @@
       MO: Cleaned up style to to fit JEDI standards
 }
 
+{11/10/2009 - Ali Keshavarz: Char is replaced with AnsiChar to work properly in Delphi 2009}
+
 unit Twain;
 
 interface
 
 {$HPPEMIT '#include <twain.h>' }
 
-uses
-  Windows;
+{uses
+  Windows;}
 
 {***************************************************************************
  * TWAIN Version                                                           *
@@ -169,35 +171,36 @@ type
 * or, on the Mac, a length byte followed by the string.               *
 * TW_STR255 must hold less than 256 chars so length fits in first byte. }
 type
-  TW_STR32 = array[0..33] of Char;   // char    TW_STR32[34]
+  //Ali: Added to support Delphi 2009
+  TW_STR32 = array[0..33] of AnsiChar;   // AnsiChar    TW_STR32[34]
   {$EXTERNALSYM TW_STR32}
   pTW_STR32 = ^TW_STR32;
   {$EXTERNALSYM pTW_STR32}
   TTWStr32 = TW_STR32;
   PTWStr32 = pTW_STR32;
 
-  TW_STR64 = array[0..65] of Char;   // char    TW_STR64[66]
+  TW_STR64 = array[0..65] of AnsiChar;   // AnsiChar    TW_STR64[66]
   {$EXTERNALSYM TW_STR64}
   pTW_STR64 = ^TW_STR64;
   {$EXTERNALSYM pTW_STR64}
   TTWStr64 = TW_STR64;
   PTWStr64 = pTW_STR64;
 
-  TW_STR128 = array[0..129] of Char; // char    TW_STR128[130]
+  TW_STR128 = array[0..129] of AnsiChar; // AnsiChar    TW_STR128[130]
   {$EXTERNALSYM TW_STR128}
   pTW_STR128 = ^TW_STR128;
   {$EXTERNALSYM pTW_STR128}
   TTWStr128 = TW_STR128;
   PTWStr128 = pTW_STR128;
 
-  TW_STR255 = array[0..255] of Char; // char    TW_STR255[256]
+  TW_STR255 = array[0..255] of AnsiChar; // AnsiChar    TW_STR255[256]
   {$EXTERNALSYM TW_STR255}
   pTW_STR255 = ^TW_STR255;
   {$EXTERNALSYM pTW_STR255}
   TTWStr255 = TW_STR255;
   PTWStr255 = pTW_STR255;
 
-  TW_STR1024 = array[0..1025] of Char;   // char  TW_STR1024[1026]
+  TW_STR1024 = array[0..1025] of AnsiChar;   // AnsiChar  TW_STR1024[1026]
   {$EXTERNALSYM TW_STR1024}
   pTW_STR1024 = ^TW_STR1024;
   {$EXTERNALSYM pTW_STR1024}
@@ -212,7 +215,7 @@ type
   PTWUni512 = pTW_UNI512;
 
 { Numeric types. }
-  TW_INT8 = ShortInt;     // char TW_INT8
+  TW_INT8 = ShortInt;     // AnsiChar TW_INT8
   {$EXTERNALSYM TW_INT8}
   pTW_INT8 = ^TW_INT8;
   {$EXTERNALSYM pTW_INT8}
@@ -233,7 +236,7 @@ type
   TTWInt32 = TW_INT32;
   PTWInt32 = pTW_INT32;
 
-  TW_UINT8 = Byte;        // unsigned char TW_UINT8
+  TW_UINT8 = Byte;        // unsigned AnsiChar TW_UINT8
   {$EXTERNALSYM TW_UINT8}
   pTW_UINT8 = ^TW_UINT8;
   {$EXTERNALSYM pTW_UINT8}
@@ -247,7 +250,7 @@ type
   TTWUInt16 = TW_UINT16;
   PTWUInt16 = pTW_UINT16;
 
-  TW_UINT32 = ULONG;   // unsigned long TW_UINT32
+  TW_UINT32 = Cardinal;//ULONG;   // unsigned long TW_UINT32
   {$EXTERNALSYM TW_UINT32}
   pTW_UINT32 = ^TW_UINT32;
   {$EXTERNALSYM pTW_UINT32}
@@ -866,7 +869,7 @@ type
     NumberOfFiles: TW_UINT32;  { number of files, depends on FileType }
     NumberOfSnippets: TW_UINT32;  { number of audio snippets }
     DeviceGroupMask: TW_UINT32;   { used to group cameras (ex: front/rear bitonal, front/rear grayscale...) }
-    Reserved: array[0..507] of Char; { }
+    Reserved: array[0..507] of AnsiChar; { }
   end;
   {$EXTERNALSYM TW_FILESYSTEM}
   pTW_FILESYSTEM = ^TW_FILESYSTEM;
@@ -928,7 +931,7 @@ const
   {$EXTERNALSYM TWON_DONTCARE8}
   TWON_DONTCARE16   = $ffff;
   {$EXTERNALSYM TWON_DONTCARE16}
-  TWON_DONTCARE32   = DWORD($ffffffff);
+  TWON_DONTCARE32   = LongWord($ffffffff);//DWORD($ffffffff);
   {$EXTERNALSYM TWON_DONTCARE32}
 
 { Flags used in TW_MEMORY structure. }
@@ -1150,6 +1153,8 @@ const
   {$EXTERNALSYM TWPT_YUVK}
   TWPT_CIEXYZ  = 8;
   {$EXTERNALSYM TWPT_CIEXYZ}
+  TWPT_BGR     = 12;
+  {$EXTERNALSYM TWPT_BGR}
 
 { ICAP_SUPPORTEDSIZES values (SS_ means Supported Sizes) }
   TWSS_NONE      = 0;
@@ -1642,6 +1647,14 @@ const
   {$EXTERNALSYM TWJQ_MEDIUM}
   TWJQ_HIGH          = -1;
   {$EXTERNALSYM TWJQ_HIGH}
+
+  { ICAP_JPEGQUALITY values (JQ_ means jpeg quality) }
+  TWAS_NONE          = 0;
+  {$EXTERNALSYM TWAS_NONE}
+  TWAS_AUTO          = 1;
+  {$EXTERNALSYM TWAS_AUTO}
+  TWAS_CURRENT       = 2;
+  {$EXTERNALSYM TWAS_CURRENT}
 
 {***************************************************************************
  * Country Constants                                                       *
@@ -2871,6 +2884,8 @@ const
   {$EXTERNALSYM ICAP_AUTOMATICROTATE}
   ICAP_JPEGQUALITY                 = $1153; { Added 1.9 }
   {$EXTERNALSYM ICAP_JPEGQUALITY}
+  ICAP_AUTOSIZE                    = $1156; { Added 2.2 (?) }
+  {$EXTERNALSYM ICAP_AUTOSIZE}
 
 { image data sources MAY support these audio caps }
   ACAP_AUDIOFILEFORMAT             = $1201; { Added 1.8 }

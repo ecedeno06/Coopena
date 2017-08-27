@@ -143,6 +143,8 @@ type
     ToolButton19: TToolButton;
     Migracion1: TMenuItem;
     Migracion2: TMenuItem;
+    Escanear1: TMenuItem;
+    Migracion21: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure Encriptar2Click(Sender: TObject);
     procedure Perfil1Click(Sender: TObject);
@@ -188,10 +190,14 @@ type
     procedure mnu_Cont_EspecialClick(Sender: TObject);
     procedure Migracion1Click(Sender: TObject);
     procedure Migracion2Click(Sender: TObject);
+    procedure Escanear1Click(Sender: TObject);
+    procedure Migracion21Click(Sender: TObject);
+    procedure Clientes1Click(Sender: TObject);
 
 
   private
     { Private declarations }
+    function VentanaAbierta(Ventana : TClass) : Boolean;
   public
     { Public declarations }
   end;
@@ -211,12 +217,15 @@ uses Encripta, DM1,  Socios, GeneralesUsuario, Finalidad, Bancos, Cargos,
   MantAprobacionesCheque, ChequesCaja, MantenimientoPaises, Asociaciones,
   MantenimientoFrecuenciaPagos, MantenimientoFormasPagos,
   MantenimientoTipoIngresos, MantenimientoActividadEconomica, Cheques,
-  Transferencias, Especiales, MigracionSocios;
+  Transferencias, Especiales, MigracionSocios, Escanear, migracion2;
 
 procedure TfrmPrincipal.mnSociosClick(Sender: TObject);
 begin
-  application.CreateForm(TfrmSocios , frmSocios);
-  frmSocios.Show;
+  if not VentanaAbierta(TfrmSocios) then
+  begin
+     application.CreateForm(TfrmSocios , frmSocios);
+     frmSocios.Show;
+  end;
 end;
 
 procedure TfrmPrincipal.mnuActividadesEcoClick(Sender: TObject);
@@ -315,6 +324,11 @@ procedure TfrmPrincipal.ChequesCaja1Click(Sender: TObject);
 begin
   application.CreateForm(TfrmChequesCaja , frmChequesCaja);
   frmChequesCaja.Show;
+end;
+
+procedure TfrmPrincipal.Clientes1Click(Sender: TObject);
+begin
+
 end;
 
 //==============================================================================
@@ -436,6 +450,12 @@ begin
   frmEncripta.Show;
 end;
 
+procedure TfrmPrincipal.Escanear1Click(Sender: TObject);
+begin
+  application.CreateForm(TfrmEscanear , frmEscanear);
+  frmEscanear.Show;
+end;
+
 procedure TfrmPrincipal.Finalidades1Click(Sender: TObject);
 begin
   application.CreateForm(TfrmFinalidad , frmFinalidad);
@@ -527,6 +547,12 @@ begin
 //  frmEmpresa.Show;
 end;
 
+procedure TfrmPrincipal.Migracion21Click(Sender: TObject);
+begin
+  application.CreateForm(TfrmMigracion2, frmMigracion2);
+  frmMigracion2.Show;
+end;
+
 procedure TfrmPrincipal.Migracion2Click(Sender: TObject);
 begin
   application.CreateForm(TfrmMigracion, frmMigracion);
@@ -602,6 +628,30 @@ begin
   end
   Else
     ShowMessage('Acceso no permitido...');
+end;
+
+function TfrmPrincipal.VentanaAbierta(Ventana: TClass): Boolean;
+var
+ i: integer;
+ nada : TClass;
+ f: TForm;
+begin
+//--
+ Result := false ;
+
+ for i := screen.FormCount-1 downto 0 do
+ begin
+   f := screen.Forms[i] ;
+   if f.ClassType = Ventana then
+   begin
+     if f.WindowState = wsMinimized then
+       f.WindowState := wsMaximized ;
+
+     f.BringToFront ;
+     result := true;
+     break;
+   end;
+ end;
 end;
 
 //==============================================================================

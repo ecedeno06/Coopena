@@ -50,7 +50,11 @@ uses
   Transferencias in 'Transferencias.pas' {frmTransferencias},
   Especiales in 'Especiales.pas' {frmEspeciales},
   MigracionDM in 'MigracionDM.pas' {Migracion: TDataModule},
-  MigracionSocios in 'MigracionSocios.pas' {frmMigracion};
+  MigracionSocios in 'MigracionSocios.pas' {frmMigracion},
+  Escanear in 'Escanear.pas' {frmEscanear},
+  migracion2 in 'migracion2.pas' {frmmigracion2},
+  MigraEdw in 'MigraEdw.pas' {Migra: TDataModule},
+  ImgenCaja in 'ImgenCaja.pas' {frmImagenCaja};
 
 {$R *.res}
 
@@ -62,6 +66,5 @@ begin
   Application.CreateForm(TDM2, DM2);
   Application.CreateForm(Tds, ds);
   Application.CreateForm(TMigracion, Migracion);
-  Application.CreateForm(TfrmMigracion, frmMigracion);
   Application.Run;
 end.

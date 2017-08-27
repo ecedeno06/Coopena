@@ -19,6 +19,17 @@ type
   {Kinds of directories to be obtained with GetCustomDirectory}
   TDirectoryKind = (dkWindows, dkSystem, dkCurrent, dkApplication, dkTemp);
 
+{$IFNDEF FPC}
+  {$IF (CompilerVersion >= 23)}
+  DTNativeUInt = NativeUInt;
+  {$ELSE}
+  DTNativeUInt = Cardinal;
+  {$IFEND}
+{$ELSE}//FPC
+  DTNativeUInt = NativeUInt;
+{$ENDIF}
+  PDTNativeUInt = ^DTNativeUInt;
+
   {Class to store a list of pointers}
   TPointerList = class
   private
@@ -70,11 +81,6 @@ function FileExists(const FilePath: String): Boolean;
 {Extracts the file directory part}
 function ExtractDirectory(const FilePath: String): String;
 {Convert from integer to string}
-{$IFDEF DONTUSEVCL}function IntToStr(Value: Integer): String;{$ENDIF}
-{$IFDEF DONTUSEVCL}function StrToIntDef(Value: String;
-  Default: Integer): Integer;{$ENDIF}
-{$IFDEF DONTUSEVCL}function CompareMem(P1, P2: pChar;
-  Size: Integer): Boolean;{$ENDIF}
 {Convert from twain Fix32 to extended}
 function Fix32ToFloat(Value: TW_FIX32): Extended;
 {Convert from extended to Fix32}
@@ -82,53 +88,22 @@ function FloatToFix32 (floater: extended): TW_FIX32;
 
 implementation
 
-{Units used bellow}
+{Units used below}
 uses
   Windows;
 
-{$IFDEF DONTUSEVCL}
-  function CompareMem(P1, P2: pChar; Size: Integer): Boolean;
-  var
-    i: Integer;
-  begin
-    {Default result}
-    Result := TRUE;
-    {Search each byte}
-    FOR i := 1 TO Size DO
-    begin
-      {Compare booth bytes}
-      if P1^ <> P2^ then
-      begin
-        Result := FALSE;
-        Exit;
-      end; {if P1^ <> P2^}
-      {Move to next byte}
-      Inc(P1); Inc(P2);
-    end {FOR i}
-  end {function};
-{$ENDIF}
-
-{$IFDEF DONTUSEVCL}
-  function IntToStr(Value: Integer): String;
-  begin
-    Str(Value, Result);
-  end;
-{$ENDIF}
-
-{$IFDEF DONTUSEVCL}
-  function StrToIntDef(Value: String; Default: Integer): Integer;
-  var Code: Integer;
-  begin
-    {Try converting from string to integer}
-    Val(Value, Result, Code);
-    {If any error ocurred, returns default value}
-    if Code <> 0 then Result := Default;
-  end;
-{$ENDIF}
-
-
 {Convert from extended to Fix32}
 function FloatToFix32 (floater: extended): TW_FIX32;
+//Chad Berchek new code:
+var
+  i32: Cardinal;
+begin
+  i32 := Round(floater * 65536.0);
+  Result.Whole := i32 shr 16;
+  Result.Frac := i32 and $ffff;
+end;
+{function FloatToFix32 (floater: extended): TW_FIX32;
+//old code
 var
   fracpart : extended;
 begin
@@ -143,7 +118,7 @@ begin
   while FracPart - trunc(FracPart) <> 0 do fracpart := fracpart * 10;
   //Return fracional part
   Result.Frac := trunc(fracpart);
-end;
+end;}
 
 {Convert from twain Fix32 to extended}
 function Fix32ToFloat(Value: TW_FIX32): Extended;
@@ -183,7 +158,7 @@ var
   FindHandle: THandle;
 begin
   {Searches for the file}
-  FindHandle := FindFirstFile(PChar(FilePath), FindData);
+  FindHandle := FindFirstFile(PChar(FilePath), {%H-}FindData);
   Result := (FindHandle <> INVALID_HANDLE_VALUE);
   {In case it found, closes the FindFirstFile handle}
   if Result then FindClose(FindHandle);
@@ -208,16 +183,18 @@ end;
 {Returns the last error string from Microsoft Windows®}
 function GetLastErrorText(): String;
 var
-  Buffer: Array[Byte] of Char;
+  Buffer: Array[Byte] of WideChar;
   Len   : DWORD;
 begin
   {Calls format message to translate from the error code ID to}
   {a text understandable error}
-  Len := Windows.FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM or
+  Len := Windows.FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM or
     FORMAT_MESSAGE_ARGUMENT_ARRAY, nil, GetLastError(),
     MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), Buffer, sizeof(Buffer), nil);
   {Remove this chars from the ending of the result}
-  while (Len > 0) and (Buffer[Len - 1] in [#0..#32, '.']) do Dec(Len);
+  {$WARNINGS OFF}
+  while (Len > 0) and (Char(Buffer[Len - 1]) in [#0..#32, '.']) do Dec(Len);
+  {$WARNINGS ON}
   {Fills result}
   SetString(Result, Buffer, Len);
 end;
@@ -327,17 +304,21 @@ end;
 function TPointerList.GetItem(Index: Integer): Pointer;
 begin
   {Check item bounds and return item}
+  {$WARNINGS OFF}
   if Index in [0..Count - 1] then
-    Longint(Result) := pLongint(Longint(Data) + (Index * sizeof(Pointer)))^
+    {%H-}DTNativeUInt(Result) := pDTNativeUInt({%H-}DTNativeUInt(Data) + (Index * sizeof(Pointer)))^
   else Result := nil; {Otherwise returns nil}
+  {$WARNINGS ON}
 end;
 
 {Sets an item from the list}
 procedure TPointerList.PutItem(Index: Integer; const Value: Pointer);
 begin
   {Check item bounds and sets item}
+  {$WARNINGS OFF}
   if Index in [0..Count - 1] then
-    pLongint(Longint(Data) + (Index * sizeof(Pointer)))^ := Longint(Value);
+    {%H-}pDTNativeUInt({%H-}DTNativeUInt(Data) + (Index * sizeof(Pointer)))^ := {%H-}DTNativeUInt(Value);
+  {$WARNINGS ON}
 end;
 
 {Sets the AdditionalBlock property}

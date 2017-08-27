@@ -869,7 +869,7 @@ begin
   DBGrid1.Refresh;
 
   DataModulo1.cheque_enc.append;
-  DataModulo1.cheque_encfecha_doc.AsDateTime := _fechaSistema ;
+  DataModulo1.cheque_encfecha_doc.AsDateTime := DataModulo1.FechaSistema () ;
 
   //--- Activa los controles
   grp_chk_Detalle.Enabled   := true;
@@ -879,6 +879,7 @@ begin
   btn_chk_Undo_Enca.Enabled := true;
   btn_chk_imprimir.Visible  := false;
   dbl_chk_cuenta.SetFocus ;
+  ed_chk_Monto.Text := 'Introducir Monto';
 
 end;
 

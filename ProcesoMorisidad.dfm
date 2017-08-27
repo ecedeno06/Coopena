@@ -221,20 +221,20 @@ inherited frmProcesoMorisidad: TfrmProcesoMorisidad
         TabOrder = 0
         Value = 0
       end
-      object ToolButton2: TToolButton
+      object ToolButton3: TToolButton
         Left = 177
+        Top = 0
+        Caption = 'ToolButton3'
+        ImageIndex = 36
+        OnClick = ToolButton3Click
+      end
+      object ToolButton2: TToolButton
+        Left = 200
         Top = 0
         Width = 8
         Caption = 'ToolButton2'
         ImageIndex = 0
         Style = tbsSeparator
-      end
-      object ToolButton3: TToolButton
-        Left = 185
-        Top = 0
-        Caption = 'ToolButton3'
-        ImageIndex = 36
-        OnClick = ToolButton3Click
       end
       object ToolButton4: TToolButton
         Left = 208

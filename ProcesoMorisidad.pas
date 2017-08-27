@@ -9,7 +9,7 @@ uses
   Vcl.DBGrids, Vcl.Samples.Spin, Vcl.DBCtrls, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client,clipbrd,dateutils;
 
 type
   TfrmProcesoMorisidad = class(TfrmVentana)
@@ -86,7 +86,11 @@ procedure TfrmProcesoMorisidad.CargarPrestamos;
 var
 
  _reg : integer;
- _fechaCierre : TDateTime;
+ _fechaCierre,_fechaInicio : TDateTime;
+ _cnt,_meses : integer;
+ _cuotas , _periodo : integer;
+ _deberSer, _montoInicial,_montoCuota : Double;
+
 begin
 //---
   mCuentas.Close;
@@ -100,9 +104,6 @@ begin
   _ano := StrToInt(anio.text);
   _dia := DataModulo1._ultimoDiaMes(_ano,_mes) ;
   _FechaCierre := EncodeDate(_ano,_mes,_dia ) + EncodeTime(23,59,59,00)  ;
-//  _FechaCierre := EncodeDate(y,m,d)+EnCodeTime(hr,mn,ss,ms);
- // _fechaCierre :=
-
 
   ShowWorking('Recuperando Registros En Mora...',DataModulo1.morosidadPrestamos.RecordCount);
 
@@ -113,6 +114,35 @@ begin
       _reg := _reg + 1;
       UpdateWorking(_reg);
 
+      //----
+
+      _cuotas       := DataModulo1.morosidadPrestamosplazo.AsInteger;
+      _periodo      := DataModulo1.morosidadPrestamostipo_periodo_tasa.AsInteger;
+      _fechaInicio  := DataModulo1.morosidadPrestamosfecha_inicio.AsDateTime ;
+      _montoInicial := DataModulo1.morosidadPrestamosMonto.AsFloat ;
+      _montoCuota   := DataModulo1.morosidadPrestamosLetra.AsFloat ;
+
+      _cnt :=0;
+      while _cnt < (_cuotas/_periodo) do
+      begin
+       if _fechaInicio >= _fechacierre then
+         break
+       else
+       begin
+         _deberSer     := _montoInicial;
+         _montoInicial := _montoInicial -
+         _meses        := MonthsBetween( _fechaCierre , _fechaInicio);
+         _fechaInicio  := IncMonth(_periodo);
+
+       end;
+
+       _cnt := _cnt + 1;
+
+      end;
+//        WHILE _cnt < ( DataModulo1.morosidadPrestamosplazo.AsInteger / @periodo )
+//  BEGIN
+
+      //----
 
       DataModulo1.saldoCuenta1.Close;
       DataModulo1.saldoCuenta1.Params [0].asstring :=
@@ -121,11 +151,10 @@ begin
         _fechaCierre;
 
       DataModulo1.saldoCuenta1.Open;
-//
-//      DecodeDate(DataModulo1.saldoCuentafechaVencimiento.AsDateTime,
-//                 _ano,_mes,_dia);
 
-      if DataModulo1.saldoCuenta1atraso.AsInteger > 0  then
+ //     showMessage( datamodulo1.morosidadPrestamosnum_cuenta.AsString);
+
+      if DataModulo1.SaldoCuenta1atraso.AsFloat  > 0  then
       begin
 
         mCuentas.Append;
@@ -137,7 +166,7 @@ begin
         if _ano > 2000 then
           mCuentas_Vencimiento.AsDateTime  := DataModulo1.saldoCuenta1Vencimiento.AsDateTime
         else
-          mCuentas_Vencimiento.clear;
+         mCuentas_Vencimiento.clear;
 
         mCuentas_meses.AsInteger         := DataModulo1.saldoCuenta1Atraso.AsInteger ;
         mCuentas_periodoGraciaMeses.AsInteger :=
@@ -158,13 +187,49 @@ begin
          mCuentas_mora.Clear;
          mCuentas_meses.clear;
         end;
+        sleep(100);
+        mCuentas.post;
+        dbg_lista_Morosos.Refresh;
       end;
 
       DataModulo1.morosidadPrestamos.Next;
     end;
 
     WorkingEnd;
+{
+    mCuentas.first;
+    if Not mCuentas.eof then
+    begin
+       _reg :=0 ;
 
+       ShowWorking('Analizando Mora...',mCuentas.RecordCount);
+
+       mCuentas.first;
+       while not mCuentas.eof do
+       Begin
+         _reg := _reg + 1;
+         UpdateWorking(_reg);
+
+         mCuentas.edit;
+
+         DataModulo1.saldoCuenta1.Close;
+         DataModulo1.saldoCuenta1.Params [0].asstring :=
+             mCuentas_num_Cuenta.AsString ;
+         DataModulo1.saldoCuenta1.Params [1].AsDate := _fechaCierre;
+
+         DataModulo1.saldoCuenta1.Open;
+
+         if DataModulo1.saldoCuenta1atraso.AsInteger > 0  then
+         begin
+           //--
+         end;
+
+
+         mCuentas.next;
+       End;
+
+    end;
+            }
   end;
 
 end;
@@ -290,6 +355,18 @@ begin
 end;
 
 end.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

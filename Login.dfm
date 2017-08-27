@@ -8536,11 +8536,13 @@ object frmLogin: TfrmLogin
     0000000000000000000000000000000000000000000000000000000000000000
     0000000000000000000000000000000000000000000000000000000000000000
     00000000000000000000000000000000000000000000}
+  KeyPreview = True
   OldCreateOrder = False
   Position = poDesktopCenter
   Visible = True
   OnActivate = FormActivate
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   DesignSize = (
     638
     411)
@@ -9503,7 +9505,7 @@ object frmLogin: TfrmLogin
       end
       object SolicitarClave: TGroupBox
         Left = 19
-        Top = 220
+        Top = 216
         Width = 334
         Height = 121
         Anchors = []
@@ -9524,8 +9526,8 @@ object frmLogin: TfrmLogin
           Visible = False
         end
         object cxbOlvidoClave: TCheckBox
-          Left = 3
-          Top = 16
+          Left = -3
+          Top = 13
           Width = 197
           Height = 17
           Alignment = taLeftJustify
@@ -9586,14 +9588,11 @@ object frmLogin: TfrmLogin
     object TabSheet2: TTabSheet
       Caption = 'Informaci'#243'n'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object CategoryPanelGroup1: TCategoryPanelGroup
         Left = 0
         Top = 0
         Width = 414
+        Height = 349
         VertScrollBar.Tracking = True
         Align = alClient
         GradientBaseColor = clGreen
@@ -9610,7 +9609,6 @@ object frmLogin: TfrmLogin
           Height = 130
           Caption = 'Mision'
           TabOrder = 0
-          ExplicitWidth = 185
           object mMision: TMemo
             Left = 5
             Top = 19
@@ -9632,7 +9630,6 @@ object frmLogin: TfrmLogin
           Height = 88
           Caption = 'Vision'
           TabOrder = 1
-          ExplicitWidth = 185
           object mVision: TMemo
             Left = 5
             Top = 3
@@ -9660,7 +9657,6 @@ object frmLogin: TfrmLogin
           ExpandedImageIndex = 2
           ExpandedPressedImageIndex = 2
           TabOrder = 2
-          ExplicitWidth = 412
           object GroupBox2: TGroupBox
             Left = 5
             Top = 54
@@ -9767,7 +9763,7 @@ object frmLogin: TfrmLogin
     Left = 115
     Top = 88
     Bitmap = {
-      494C010107009802A80310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010107009802C00310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

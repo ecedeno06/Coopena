@@ -97,6 +97,8 @@ type
     Label13: TLabel;
     DBCheckBox12: TDBCheckBox;
     DBCheckBox13: TDBCheckBox;
+    DBCheckBox14: TDBCheckBox;
+    DBCheckBox15: TDBCheckBox;
     procedure FormShow(Sender: TObject);
     procedure btnNuevo1Click(Sender: TObject);
     procedure btnSalvar1Click(Sender: TObject);
@@ -112,7 +114,6 @@ type
     procedure btnSalvarCuentaClick(Sender: TObject);
     procedure dtsMaestroContableComboDataChange(Sender: TObject; Field: TField);
     procedure btnEliminarCuentaClick(Sender: TObject);
-    procedure btnPruebaClick(Sender: TObject);
     procedure btnEditarTrxClick(Sender: TObject);
     procedure rbSaldoClick(Sender: TObject);
     procedure chbIntSobreSaldoClick(Sender: TObject);
@@ -124,6 +125,19 @@ type
     procedure cbx_calcula_moraClick(Sender: TObject);
     procedure edCuentaTrxClick(Sender: TObject);
     procedure DBCheckBox8Click(Sender: TObject);
+    procedure edNombreEnter(Sender: TObject);
+    procedure edAbreEnter(Sender: TObject);
+    procedure edCuentaEnter(Sender: TObject);
+    procedure edPeriodoTasaEnter(Sender: TObject);
+    procedure edAportacionEnter(Sender: TObject);
+    procedure esPrestamoEnter(Sender: TObject);
+    procedure DBCheckBox14Click(Sender: TObject);
+    procedure DBCheckBox6Enter(Sender: TObject);
+    procedure DBCheckBox7Enter(Sender: TObject);
+    procedure DBCheckBox15Click(Sender: TObject);
+    procedure chbIntSobreSaldoEnter(Sender: TObject);
+    procedure chbIntSobrePrestamoEnter(Sender: TObject);
+    procedure dbgProfesionCellClick(Column: TColumn);
   private
     Function Siguiente() : Integer;
     Procedure CargaDisponibles;
@@ -177,6 +191,7 @@ begin
   inherited;
   edNombre.SetFocus;
   DataModulo1.TipoProducto.Append;
+  _detalleLog := '';
 end;
 
 procedure TfrmTipoProducto.btnNuevo2Click(Sender: TObject);
@@ -192,47 +207,34 @@ begin
 
 end;
 
-procedure TfrmTipoProducto.btnPruebaClick(Sender: TObject);
-var
- montoDeposito    : double;
- montoInteres     : double;
- montoInteresAcum : double;
- montoMora        : double;
- montoCapital     : double;
- montoRetiro      : double;
-
-
-begin
-  inherited;
-//---- Prueba del Comprobante
-
- montoDeposito := 1500.45;
-
-end;
-
 procedure TfrmTipoProducto.btnSalvar1Click(Sender: TObject);
 begin
   inherited;
-  if (DataModulo1.TipoProducto.State IN [dsInsert]) then
-    DataModulo1.TipoProducto.FieldByName('subCuenta').Value  := Siguiente + 1
-  else
-   if  Not (DataModulo1.TipoProducto.State IN [dsEdit,dsInsert]) then
-   Begin
-    DataModulo1.TipoProducto.edit;
-   End;
 
-//  if  Not (DataModulo1.TipoProducto.State IN [dsEdit,dsInsert]) then
-//  Begin
-//   DataModulo1.TipoProducto.edit;
-//  End;
+  if  Not (DataModulo1.TipoProducto.State IN [dsEdit,dsInsert]) then
+  Begin
+   DataModulo1.TipoProducto.edit;
+  End;
+
+  if (DataModulo1.TipoProducto.State IN [dsInsert]) then
+  begin
+    DataModulo1.TipoProducto.FieldByName('subCuenta').Value  := Siguiente + 1 ;
+    _accion := 'Inserta Nuevo Producto';
+  end
+  else
+    if DataModulo1.TipoProducto.State = dsEdit then
+      _accion := 'Modifica Producto';
+
+  _detalleLog := 'Producto ' + DataModulo1.TipoProductonombresubcuenta.AsString + _detalleLog;
 
   Try
-
    DataModulo1.TipoProducto.post;
+   DataModulo1.RegistroLog(Usuario,_accion,_detalleLog );
   except
    on E:Exception do
    begin
-    showMessage('Error al salvar el Tipo de Producto...');
+    showMessage('Error al salvar el Tipo de Producto...' + E.Message);
+    DataModulo1.RegistroLog(Usuario,'Error','Error al insertar / Moficar producto...')
    end;
   end;
 end;
@@ -415,6 +417,12 @@ begin
   end;
 end;
 
+procedure TfrmTipoProducto.chbIntSobrePrestamoEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Intereses Sobre Prestamo...';
+end;
+
 procedure TfrmTipoProducto.chbIntSobreSaldoClick(Sender: TObject);
 begin
   inherited;
@@ -425,6 +433,36 @@ begin
 
 end;
 
+procedure TfrmTipoProducto.chbIntSobreSaldoEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Intereses Sobre Saldo...';
+end;
+
+procedure TfrmTipoProducto.DBCheckBox14Click(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Es Ahorro...';
+end;
+
+procedure TfrmTipoProducto.DBCheckBox15Click(Sender: TObject);
+begin
+  inherited;
+    _detalleLog := _detalleLog + '...Calcula Interes...';
+end;
+
+procedure TfrmTipoProducto.DBCheckBox6Enter(Sender: TObject);
+begin
+  inherited;
+    _detalleLog := _detalleLog + '...Es Deposito...';
+end;
+
+procedure TfrmTipoProducto.DBCheckBox7Enter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Es Retiro...';
+end;
+
 procedure TfrmTipoProducto.DBCheckBox8Click(Sender: TObject);
 begin
   inherited;
@@ -433,6 +471,12 @@ begin
    // DataModulo1.productotrx3.Edit;
 
   end;
+end;
+
+procedure TfrmTipoProducto.dbgProfesionCellClick(Column: TColumn);
+begin
+  inherited;
+  _detalleLog := '';
 end;
 
 procedure TfrmTipoProducto.dbgTrxDrawColumnCell(Sender: TObject;
@@ -471,12 +515,42 @@ begin
 
 end;
 
+procedure TfrmTipoProducto.edAbreEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...abreviatura...';
+end;
+
+procedure TfrmTipoProducto.edAportacionEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Aportacion...';
+end;
+
+procedure TfrmTipoProducto.edCuentaEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Cuenta Principal...';
+end;
+
 procedure TfrmTipoProducto.edCuentaTrxClick(Sender: TObject);
 begin
   inherited;
   DataModulo1.productoTrx3.FieldByName('descripcion').AsString :=
        DataModulo1.maestroContableCombo.FieldByName('Nombre').AsString ;
 //---
+end;
+
+procedure TfrmTipoProducto.edNombreEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Nombre...';
+end;
+
+procedure TfrmTipoProducto.edPeriodoTasaEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Periodo tasa...';
 end;
 
 procedure TfrmTipoProducto.esPrestamoClick(Sender: TObject);
@@ -499,6 +573,12 @@ begin
 
 end;
 
+procedure TfrmTipoProducto.esPrestamoEnter(Sender: TObject);
+begin
+  inherited;
+    _detalleLog := _detalleLog + '...Es Prestamo...';
+end;
+
 procedure TfrmTipoProducto.dtsMaestroContableComboDataChange(Sender: TObject;
   Field: TField);
 begin
@@ -517,11 +597,12 @@ begin
   DataModulo1.ContraCuenta.Params[0].Value := DataModulo1.TipoProductosubcuenta.Value ;
   DataModulo1.ContraCuenta.open;
 
+
   //--- Verifica si es Prestamo, para activar el grupo de prestamo.
-  if DataModulo1.TipoProductoprestamo_s_n.AsString  = 'S' then
-    grpEsPrestamo.Enabled := true
-  else
-    grpEsPrestamo.Enabled := false;
+//  if DataModulo1.TipoProductoprestamo_s_n.AsString  = 'S' then
+//    grpEsPrestamo.Enabled := true
+//  else
+//    grpEsPrestamo.Enabled := false;
 
 
 

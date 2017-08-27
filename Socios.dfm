@@ -4,8 +4,8 @@ inherited frmSocios: TfrmSocios
   Anchors = [akLeft, akTop, akRight]
   BorderStyle = bsNone
   Caption = 'Socios'
-  ClientHeight = 628
-  ClientWidth = 1108
+  ClientHeight = 658
+  ClientWidth = 1132
   Icon.Data = {
     000001000100472E000001002000583500001600000028000000470000005C00
     0000010020000000000030350000C40E0000C40E00000000000000000000F1F0
@@ -435,12 +435,15 @@ inherited frmSocios: TfrmSocios
     0000000000000000000000000000000000000000000000000000000000000000
     0000000000000000000000000000000000000000000000000000000000000000
     0000000000000000000000000000}
+  KeyPreview = True
   Position = poDesigned
   WindowState = wsMaximized
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnMouseWheel = FormMouseWheel
   OnShow = FormShow
-  ExplicitWidth = 1124
-  ExplicitHeight = 666
+  ExplicitWidth = 1148
+  ExplicitHeight = 696
   PixelsPerInch = 96
   TextHeight = 13
   object TLabel [0]
@@ -458,17 +461,17 @@ inherited frmSocios: TfrmSocios
     ParentFont = False
   end
   inherited StatusBar1: TStatusBar
-    Top = 609
-    Width = 1108
-    ExplicitTop = 609
-    ExplicitWidth = 1108
+    Top = 639
+    Width = 1132
+    ExplicitTop = 639
+    ExplicitWidth = 1132
   end
   object pc_socio: TPageControl
     Left = 301
-    Top = 2
-    Width = 803
-    Height = 606
-    ActivePage = ts_ApoyoLentes
+    Top = 8
+    Width = 829
+    Height = 631
+    ActivePage = ts_documentos
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     MultiLine = True
@@ -481,8 +484,8 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 789
-        Height = 572
+        Width = 815
+        Height = 597
         Align = alClient
         BevelInner = bvLowered
         Color = clGradientInactiveCaption
@@ -490,11 +493,12 @@ inherited frmSocios: TfrmSocios
         ParentColor = False
         ParentCtl3D = False
         TabOrder = 0
+        OnMouseWheel = ScrollBox1MouseWheel
         object grpSocioCorreos: TGroupBox
           AlignWithMargins = True
           Left = 3
-          Top = 1118
-          Width = 764
+          Top = 1333
+          Width = 790
           Height = 101
           Align = alTop
           Caption = 'Correos'
@@ -506,9 +510,9 @@ inherited frmSocios: TfrmSocios
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 1
+          TabOrder = 3
           DesignSize = (
-            764
+            790
             101)
           object Label17: TLabel
             Left = 57
@@ -524,10 +528,10 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Image3: TImage
-            Left = 5
-            Top = 54
-            Width = 41
-            Height = 42
+            Left = 3
+            Top = 55
+            Width = 35
+            Height = 36
             Picture.Data = {
               0954474946496D616765474946383961F700EA0077000021F90400000000002C
               00000000F700EA0087FFFFFF0079C2007BC3007CC3007EC4007FC40080C50081
@@ -649,7 +653,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 5
             Top = 18
-            Width = 754
+            Width = 780
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -717,7 +721,6 @@ inherited frmSocios: TfrmSocios
             Top = 65
             Width = 422
             Height = 21
-            Anchors = [akLeft, akTop, akRight]
             DataField = 'email'
             DataSource = Correos
             Font.Charset = DEFAULT_CHARSET
@@ -729,9 +732,9 @@ inherited frmSocios: TfrmSocios
             TabOrder = 1
           end
           object DBCheckBox4: TDBCheckBox
-            Left = 491
+            Left = 569
             Top = 67
-            Width = 153
+            Width = 82
             Height = 17
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Activo'
@@ -746,11 +749,11 @@ inherited frmSocios: TfrmSocios
             TabOrder = 2
           end
           object DBCheckBox5: TDBCheckBox
-            Left = 548
+            Left = 663
             Top = 65
-            Width = 206
+            Width = 204
             Height = 21
-            Anchors = [akLeft, akTop, akRight]
+            Anchors = [akTop, akRight]
             Caption = 'Predeterminado'
             DataField = 'predeterminado'
             DataSource = Correos
@@ -766,8 +769,8 @@ inherited frmSocios: TfrmSocios
         object grpSocioDireccion: TGroupBox
           AlignWithMargins = True
           Left = 3
-          Top = 745
-          Width = 764
+          Top = 960
+          Width = 790
           Height = 260
           Align = alTop
           Caption = 'Direccion:'
@@ -779,12 +782,12 @@ inherited frmSocios: TfrmSocios
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 1
           DesignSize = (
-            764
+            790
             260)
           object Label22: TLabel
-            Left = 56
+            Left = 63
             Top = 86
             Width = 23
             Height = 13
@@ -796,27 +799,10 @@ inherited frmSocios: TfrmSocios
             Font.Style = []
             ParentFont = False
           end
-          object Label23: TLabel
-            Left = 197
-            Top = 55
-            Width = 49
-            Height = 13
-            Align = alCustom
-            Anchors = [akLeft, akTop, akRight]
-            AutoSize = False
-            Caption = 'Provincia:'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            ExplicitWidth = 54
-          end
           object Label24: TLabel
-            Left = 494
+            Left = 522
             Top = 114
-            Width = 79
+            Width = 70
             Height = 13
             Align = alCustom
             Anchors = [akTop, akRight]
@@ -828,11 +814,10 @@ inherited frmSocios: TfrmSocios
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 377
-            ExplicitWidth = 72
+            ExplicitLeft = 494
           end
           object Label26: TLabel
-            Left = 47
+            Left = 54
             Top = 139
             Width = 32
             Height = 13
@@ -845,10 +830,10 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Image5: TImage
-            Left = 4
-            Top = 51
-            Width = 46
-            Height = 46
+            Left = 3
+            Top = 73
+            Width = 36
+            Height = 35
             Picture.Data = {
               0A544A504547496D61676535500000FFD8FFE000104A46494600010001006000
               600000FFFE001F4C45414420546563686E6F6C6F6769657320496E632E205631
@@ -1496,7 +1481,7 @@ inherited frmSocios: TfrmSocios
             Stretch = True
           end
           object Label1: TLabel
-            Left = 519
+            Left = 545
             Top = 86
             Width = 47
             Height = 13
@@ -1511,7 +1496,7 @@ inherited frmSocios: TfrmSocios
             ExplicitLeft = 402
           end
           object Label25: TLabel
-            Left = 41
+            Left = 48
             Top = 114
             Width = 38
             Height = 13
@@ -1524,7 +1509,7 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Label70: TLabel
-            Left = 52
+            Left = 59
             Top = 167
             Width = 27
             Height = 13
@@ -1537,7 +1522,7 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Label71: TLabel
-            Left = 522
+            Left = 548
             Top = 139
             Width = 44
             Height = 13
@@ -1549,10 +1534,10 @@ inherited frmSocios: TfrmSocios
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 405
+            ExplicitLeft = 520
           end
           object Label72: TLabel
-            Left = 525
+            Left = 555
             Top = 167
             Width = 37
             Height = 13
@@ -1564,11 +1549,11 @@ inherited frmSocios: TfrmSocios
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 408
+            ExplicitLeft = 527
           end
           object Label27: TLabel
-            Left = 46
-            Top = 55
+            Left = 42
+            Top = 58
             Width = 44
             Height = 13
             Caption = 'Tipo Dir.:'
@@ -1580,7 +1565,7 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Label73: TLabel
-            Left = 20
+            Left = 27
             Top = 192
             Width = 59
             Height = 13
@@ -1606,7 +1591,7 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Label74: TLabel
-            Left = 528
+            Left = 546
             Top = 193
             Width = 46
             Height = 13
@@ -1618,12 +1603,12 @@ inherited frmSocios: TfrmSocios
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 411
+            ExplicitLeft = 518
           end
           object edDescripcion: TDBMemo
             Left = 91
             Top = 217
-            Width = 661
+            Width = 687
             Height = 37
             Anchors = [akLeft, akTop, akRight, akBottom]
             DataField = 'descripcion'
@@ -1634,13 +1619,13 @@ inherited frmSocios: TfrmSocios
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            TabOrder = 11
+            TabOrder = 13
           end
           object ToolBar3: TToolBar
             AlignWithMargins = True
             Left = 5
             Top = 18
-            Width = 754
+            Width = 780
             Height = 34
             BorderWidth = 1
             ButtonHeight = 30
@@ -1649,7 +1634,7 @@ inherited frmSocios: TfrmSocios
             DrawingStyle = dsGradient
             GradientEndColor = clMoneyGreen
             Images = DataModulo1.ImageList2
-            TabOrder = 12
+            TabOrder = 14
             object btnDireccionNuevo: TToolButton
               Left = 0
               Top = 0
@@ -1704,7 +1689,7 @@ inherited frmSocios: TfrmSocios
             end
           end
           object dblPais: TDBLookupComboBox
-            Left = 91
+            Left = 90
             Top = 82
             Width = 167
             Height = 21
@@ -1740,7 +1725,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 4
           end
           object dblCorregimiento: TDBLookupComboBox
-            Left = 572
+            Left = 598
             Top = 109
             Width = 180
             Height = 21
@@ -1759,7 +1744,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 5
           end
           object DBLookupComboBox1: TDBLookupComboBox
-            Left = 572
+            Left = 598
             Top = 82
             Width = 180
             Height = 21
@@ -1811,7 +1796,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 8
           end
           object edSocioEdificio: TDBEdit
-            Left = 572
+            Left = 598
             Top = 163
             Width = 180
             Height = 21
@@ -1827,7 +1812,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 9
           end
           object edBarriada: TDBEdit
-            Left = 572
+            Left = 598
             Top = 136
             Width = 180
             Height = 21
@@ -1841,21 +1826,6 @@ inherited frmSocios: TfrmSocios
             Font.Style = []
             ParentFont = False
             TabOrder = 7
-          end
-          object dbTipoDireccion: TDBLookupComboBox
-            Left = 91
-            Top = 55
-            Width = 167
-            Height = 21
-            DataField = 'tipodireccion'
-            DataSource = Direcciones
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 0
           end
           object edCasaApart: TDBEdit
             Left = 91
@@ -1891,41 +1861,65 @@ inherited frmSocios: TfrmSocios
           object dblTipoResidencia: TDBLookupComboBox
             Left = 285
             Top = 190
-            Width = 237
+            Width = 248
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            DataField = 'residencia'
+            DataField = 'tipoResidencia'
             DataSource = Direcciones
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -11
             Font.Name = 'Tahoma'
             Font.Style = []
+            KeyField = 'idtipoResidencia'
+            ListField = 'descripcion'
+            ListSource = tipoResidencia
             ParentFont = False
-            TabOrder = 13
+            TabOrder = 11
           end
-          object dblHipoteca: TDBLookupComboBox
-            Left = 572
-            Top = 191
-            Width = 181
+          object DBLookupComboBox4: TDBLookupComboBox
+            Left = 90
+            Top = 55
+            Width = 167
+            Height = 21
+            DataField = 'idtipoDireccion'
+            DataSource = Direcciones
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            KeyField = 'idTipoDireccion'
+            ListField = 'descripcion'
+            ListSource = dtsTipoDireccion
+            ParentFont = False
+            TabOrder = 0
+          end
+          object DBLookupComboBox5: TDBLookupComboBox
+            Left = 598
+            Top = 190
+            Width = 180
             Height = 21
             Anchors = [akTop, akRight]
-            DataField = '_hipoteca'
+            DataField = 'hipoteca'
             DataSource = Direcciones
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -11
             Font.Name = 'Tahoma'
             Font.Style = []
+            KeyField = 'socio'
+            ListField = 'nombreCompleto'
+            ListSource = DataModulo1.dtsProveedores
             ParentFont = False
-            TabOrder = 14
+            TabOrder = 12
           end
         end
         object grpSocioTelefonos: TGroupBox
           AlignWithMargins = True
           Left = 3
-          Top = 1011
-          Width = 764
+          Top = 1226
+          Width = 790
           Height = 101
           Align = alTop
           Caption = 'Telefonos:'
@@ -1937,9 +1931,9 @@ inherited frmSocios: TfrmSocios
           Font.Style = [fsBold]
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 3
+          TabOrder = 2
           DesignSize = (
-            764
+            790
             101)
           object Label15: TLabel
             Left = 298
@@ -1971,10 +1965,10 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
           end
           object Image4: TImage
-            Left = 5
-            Top = 53
-            Width = 41
-            Height = 42
+            Left = 3
+            Top = 55
+            Width = 36
+            Height = 35
             Picture.Data = {
               0954474946496D6167654749463839614A01310177000021F90400000000002C
               000000004A01310187FFFFFF39AD103CB5113EB51739BD103FA82040AF1441B2
@@ -2417,29 +2411,11 @@ inherited frmSocios: TfrmSocios
             Stretch = True
           end
           object dbSocioTelefono: TDBEdit
-            Left = 345
+            Left = 360
             Top = 64
-            Width = 206
+            Width = 191
             Height = 21
-            Anchors = [akLeft, akTop, akRight]
             DataField = 'idTelefono'
-            DataSource = Telefonos
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 0
-          end
-          object DBCheckBox2: TDBCheckBox
-            Left = 548
-            Top = 66
-            Width = 206
-            Height = 17
-            Anchors = [akLeft, akTop, akRight]
-            Caption = 'Predeterminado'
-            DataField = 'predeterminado'
             DataSource = Telefonos
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
@@ -2449,10 +2425,27 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
             TabOrder = 1
           end
+          object DBCheckBox2: TDBCheckBox
+            Left = 663
+            Top = 67
+            Width = 95
+            Height = 17
+            Anchors = [akTop, akRight]
+            Caption = 'Predeterminado'
+            DataField = 'predeterminado'
+            DataSource = Telefonos
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 3
+          end
           object DBCheckBox3: TDBCheckBox
-            Left = 489
-            Top = 66
-            Width = 141
+            Left = 569
+            Top = 67
+            Width = 75
             Height = 17
             Anchors = [akLeft, akTop, akRight]
             Caption = 'SMS'
@@ -2470,7 +2463,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 5
             Top = 18
-            Width = 754
+            Width = 780
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -2479,7 +2472,7 @@ inherited frmSocios: TfrmSocios
             DrawingStyle = dsGradient
             GradientEndColor = clMoneyGreen
             Images = DataModulo1.ImageList2
-            TabOrder = 3
+            TabOrder = 4
             object btnTelNuevo: TToolButton
               Left = 0
               Top = 0
@@ -2536,9 +2529,8 @@ inherited frmSocios: TfrmSocios
           object DBLookupComboBox2: TDBLookupComboBox
             Left = 129
             Top = 64
-            Width = 260
+            Width = 210
             Height = 21
-            Anchors = [akLeft, akTop, akRight]
             DataField = 'idTipoTelefono'
             DataSource = Telefonos
             Font.Charset = DEFAULT_CHARSET
@@ -2550,15 +2542,15 @@ inherited frmSocios: TfrmSocios
             ListField = 'Descripcion'
             ListSource = TipoTelefono
             ParentFont = False
-            TabOrder = 4
+            TabOrder = 0
           end
         end
         object gbGenerales: TGroupBox
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 764
-          Height = 736
+          Width = 790
+          Height = 951
           Align = alTop
           Caption = 'Generales'
           Font.Charset = DEFAULT_CHARSET
@@ -2585,7 +2577,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 4
             Top = 17
-            Width = 756
+            Width = 782
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -2594,7 +2586,7 @@ inherited frmSocios: TfrmSocios
             DrawingStyle = dsGradient
             GradientEndColor = clMoneyGreen
             Images = DataModulo1.ImageList2
-            TabOrder = 0
+            TabOrder = 6
             object btnSocioNuevo1: TToolButton
               Left = 0
               Top = 0
@@ -2631,23 +2623,30 @@ inherited frmSocios: TfrmSocios
               Top = 0
               Hint = 'Aprobar el Registro'
               Caption = 'btnSocioAprobar'
-              ImageIndex = 10
+              ImageIndex = 52
               ParentShowHint = False
               ShowHint = True
+            end
+            object ToolButton51: TToolButton
+              Left = 180
+              Top = 0
+              Caption = 'ToolButton51'
+              ImageIndex = 1
+              OnClick = ToolButton51Click
             end
           end
           object grpDatosPersonales: TGroupBox
             AlignWithMargins = True
             Left = 4
-            Top = 143
-            Width = 756
-            Height = 222
+            Top = 142
+            Width = 782
+            Height = 437
             Align = alTop
             Caption = 'Datos Personales'
             TabOrder = 1
             DesignSize = (
-              756
-              222)
+              782
+              437)
             object Label8: TLabel
               Left = 9
               Top = 23
@@ -2663,7 +2662,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label64: TLabel
-              Left = 431
+              Left = 456
               Top = 25
               Width = 86
               Height = 13
@@ -2676,10 +2675,10 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 314
+              ExplicitLeft = 425
             end
             object Label65: TLabel
-              Left = 432
+              Left = 458
               Top = 45
               Width = 86
               Height = 13
@@ -2696,7 +2695,7 @@ inherited frmSocios: TfrmSocios
             end
             object lblApellido: TLabel
               Left = 9
-              Top = 45
+              Top = 42
               Width = 74
               Height = 13
               Caption = 'Primer Apellido:'
@@ -2708,7 +2707,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label66: TLabel
-              Left = 420
+              Left = 447
               Top = 69
               Width = 95
               Height = 13
@@ -2721,7 +2720,7 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 303
+              ExplicitLeft = 416
             end
             object Label9: TLabel
               Left = 9
@@ -2737,8 +2736,8 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label7: TLabel
-              Left = 459
-              Top = 97
+              Left = 484
+              Top = 96
               Width = 58
               Height = 13
               Anchors = [akTop, akRight]
@@ -2750,13 +2749,14 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 342
+              ExplicitLeft = 453
             end
             object Label3: TLabel
-              Left = 87
-              Top = 147
+              Left = 514
+              Top = 143
               Width = 28
               Height = 13
+              Anchors = [akTop, akRight]
               Caption = 'Sexo:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -2764,13 +2764,15 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
+              ExplicitLeft = 483
             end
             object Label12: TLabel
-              Left = 445
-              Top = 148
-              Width = 56
+              Left = 8
+              Top = 145
+              Width = 82
               Height = 13
-              Anchors = [akTop, akRight]
+              Anchors = [akLeft, akTop, akRight]
+              AutoSize = False
               Caption = 'Nacimiento:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -2778,14 +2780,13 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 328
+              ExplicitWidth = 56
             end
             object Label38: TLabel
-              Left = 514
-              Top = 150
+              Left = 108
+              Top = 147
               Width = 7
               Height = 11
-              Anchors = [akTop, akRight]
               Caption = 'D'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -2793,14 +2794,12 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 490
             end
             object Label39: TLabel
-              Left = 559
-              Top = 150
+              Left = 153
+              Top = 147
               Width = 8
               Height = 11
-              Anchors = [akTop, akRight]
               Caption = 'M'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -2808,14 +2807,12 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 535
             end
             object Label40: TLabel
-              Left = 603
-              Top = 150
+              Left = 197
+              Top = 147
               Width = 7
               Height = 11
-              Anchors = [akTop, akRight]
               Caption = 'A'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -2823,7 +2820,6 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 578
             end
             object Label4: TLabel
               Left = 9
@@ -2838,24 +2834,9 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
             end
-            object Label37: TLabel
-              Left = 462
-              Top = 196
-              Width = 40
-              Height = 13
-              Anchors = [akTop, akRight]
-              Caption = 'Estatus:'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = []
-              ParentFont = False
-              ExplicitLeft = 345
-            end
             object Label67: TLabel
-              Left = 424
-              Top = 173
+              Left = 450
+              Top = 172
               Width = 92
               Height = 13
               Anchors = [akTop, akRight]
@@ -2866,7 +2847,7 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 307
+              ExplicitLeft = 419
             end
             object lblEstadoCivil: TLabel
               Left = 9
@@ -2882,22 +2863,22 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object lbEdad: TLabel
-              Left = 660
-              Top = 149
-              Width = 12
-              Height = 13
+              Left = 284
+              Top = 147
+              Width = 9
+              Height = 11
               Alignment = taCenter
               Anchors = [akTop, akRight]
               Caption = '...'
               Color = clAqua
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
-              Font.Height = -11
+              Font.Height = -9
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentColor = False
               ParentFont = False
-              ExplicitLeft = 636
+              ExplicitLeft = 258
             end
             object Label68: TLabel
               Left = 9
@@ -2913,7 +2894,7 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
             end
             object Label69: TLabel
-              Left = 456
+              Left = 481
               Top = 122
               Width = 61
               Height = 13
@@ -2926,15 +2907,152 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              ExplicitLeft = 432
+              ExplicitLeft = 450
+            end
+            object Label23: TLabel
+              Left = 474
+              Top = 197
+              Width = 68
+              Height = 13
+              Anchors = [akTop, akRight]
+              Caption = 'Seguro Social:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              ExplicitLeft = 443
+            end
+            object Label117: TLabel
+              Left = 9
+              Top = 272
+              Width = 86
+              Height = 13
+              Caption = 'Lugar de Trabajo:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label118: TLabel
+              Left = 8
+              Top = 325
+              Width = 32
+              Height = 13
+              Caption = 'Notas:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label119: TLabel
+              Left = 8
+              Top = 221
+              Width = 47
+              Height = 13
+              Caption = 'Provincia:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label120: TLabel
+              Left = 504
+              Top = 222
+              Width = 38
+              Height = 13
+              Anchors = [akTop, akRight]
+              Caption = 'Distrito:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              ExplicitLeft = 473
+            end
+            object Label121: TLabel
+              Left = 8
+              Top = 246
+              Width = 71
+              Height = 13
+              Caption = 'Corregimiento:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label122: TLabel
+              Left = 471
+              Top = 246
+              Width = 71
+              Height = 13
+              Anchors = [akTop, akRight]
+              Caption = 'Calle-Barriada:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label125: TLabel
+              Left = 346
+              Top = 299
+              Width = 54
+              Height = 13
+              Anchors = [akTop]
+              Caption = 'Ocupacion:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label128: TLabel
+              Left = 542
+              Top = 299
+              Width = 52
+              Height = 13
+              Anchors = [akTop, akRight]
+              Caption = 'Ingreso M:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label132: TLabel
+              Left = 8
+              Top = 299
+              Width = 49
+              Height = 13
+              Caption = 'Profesion:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
             end
             object dbNombre: TDBEdit
               Left = 108
-              Top = 20
+              Top = 19
               Width = 202
               Height = 19
               DataField = 'nombre'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -2942,15 +3060,17 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               TabOrder = 0
+              OnEnter = dbNombreEnter
+              OnExit = dbNombreExit
             end
             object edSegundoNombre: TDBEdit
-              Left = 523
+              Left = 549
               Top = 20
               Width = 202
               Height = 19
               Anchors = [akTop, akRight]
               DataField = 'segundoNombre'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -2958,15 +3078,17 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               TabOrder = 1
+              OnEnter = edSegundoNombreEnter
+              OnExit = edSegundoNombreExit
             end
             object edSegundoApellido: TDBEdit
-              Left = 523
+              Left = 549
               Top = 44
               Width = 202
               Height = 19
               Anchors = [akTop, akRight]
               DataField = 'segundoApellido'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -2974,6 +3096,8 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               TabOrder = 3
+              OnEnter = edSegundoApellidoEnter
+              OnExit = edSegundoApellidoExit
             end
             object dbApellido: TDBEdit
               Left = 108
@@ -2981,7 +3105,7 @@ inherited frmSocios: TfrmSocios
               Width = 202
               Height = 19
               DataField = 'apellido'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -2989,15 +3113,17 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               TabOrder = 2
+              OnEnter = dbApellidoEnter
+              OnExit = dbApellidoExit
             end
             object edApellidoCasada: TDBEdit
-              Left = 523
+              Left = 549
               Top = 69
               Width = 202
               Height = 19
               Anchors = [akTop, akRight]
               DataField = 'apellidoCasada'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -3005,6 +3131,8 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               TabOrder = 4
+              OnEnter = edApellidoCasadaEnter
+              OnExit = edApellidoCasadaExit
             end
             object dblTipoDoc: TDBLookupComboBox
               Left = 108
@@ -3012,7 +3140,7 @@ inherited frmSocios: TfrmSocios
               Width = 202
               Height = 19
               DataField = 'idTipoDoc'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -3024,64 +3152,18 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
               TabOrder = 5
               OnClick = dblTipoDocClick
+              OnEnter = dblTipoDocEnter
+              OnExit = dblTipoDocExit
             end
             object dbCed1: TDBEdit
-              Left = 523
+              Left = 549
               Top = 94
               Width = 49
               Height = 19
               Hint = 'test'
               Anchors = [akTop, akRight]
               DataField = 'ced1'
-              DataSource = Socios
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = []
-              ParentFont = False
-              TabOrder = 18
-            end
-            object dbCed2: TDBEdit
-              Left = 582
-              Top = 94
-              Width = 62
-              Height = 19
-              Anchors = [akTop, akRight]
-              DataField = 'ced2'
-              DataSource = Socios
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = []
-              ParentFont = False
-              TabOrder = 19
-            end
-            object dbCed3: TDBEdit
-              Left = 650
-              Top = 94
-              Width = 73
-              Height = 19
-              Anchors = [akTop, akRight]
-              DataField = 'ced3'
-              DataSource = Socios
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = []
-              ParentFont = False
-              TabOrder = 20
-            end
-            object edPasaporteRuc: TDBEdit
-              Left = 523
-              Top = 94
-              Width = 201
-              Height = 19
-              Anchors = [akTop, akRight]
-              DataField = 'pasaporteRuc'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -3089,13 +3171,53 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               TabOrder = 6
+              OnEnter = dbCed1Enter
+              OnExit = dbCed1Exit
             end
-            object rbMasculino: TRadioButton
-              Left = 140
-              Top = 146
-              Width = 113
-              Height = 17
-              Caption = 'Masculino'
+            object dbCed2: TDBEdit
+              Left = 608
+              Top = 94
+              Width = 62
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'ced2'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 7
+              OnEnter = dbCed2Enter
+              OnExit = dbCed2Exit
+            end
+            object dbCed3: TDBEdit
+              Left = 676
+              Top = 94
+              Width = 73
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'ced3'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 8
+              OnEnter = dbCed3Enter
+              OnExit = dbCed3Exit
+            end
+            object edPasaporteRuc: TDBEdit
+              Left = 548
+              Top = 94
+              Width = 201
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'pasaporteRuc'
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -3103,29 +3225,14 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               TabOrder = 9
-              OnClick = rbMasculinoClick
-            end
-            object rbFemenino: TRadioButton
-              Left = 235
-              Top = 146
-              Width = 113
-              Height = 16
-              Caption = 'Femenino'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = []
-              ParentFont = False
-              TabOrder = 10
-              OnClick = rbFemeninoClick
+              OnEnter = edPasaporteRucEnter
+              OnExit = edPasaporteRucExit
             end
             object ndia: TSpinEdit
-              Left = 524
-              Top = 145
+              Left = 118
+              Top = 142
               Width = 34
               Height = 22
-              Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
               Font.Charset = DEFAULT_CHARSET
@@ -3137,16 +3244,17 @@ inherited frmSocios: TfrmSocios
               MinValue = 1
               ParentCtl3D = False
               ParentFont = False
-              TabOrder = 11
+              TabOrder = 12
               Value = 1
               OnChange = ndiaChange
+              OnEnter = ndiaEnter
+              OnExit = ndiaExit
             end
             object nMes: TSpinEdit
-              Left = 568
-              Top = 145
+              Left = 163
+              Top = 142
               Width = 34
               Height = 22
-              Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
               Font.Charset = DEFAULT_CHARSET
@@ -3158,16 +3266,17 @@ inherited frmSocios: TfrmSocios
               MinValue = 1
               ParentCtl3D = False
               ParentFont = False
-              TabOrder = 12
+              TabOrder = 13
               Value = 1
               OnChange = nMesChange
+              OnEnter = nMesEnter
+              OnExit = nMesExit
             end
             object nAno: TSpinEdit
-              Left = 612
-              Top = 145
+              Left = 206
+              Top = 142
               Width = 46
               Height = 22
-              Anchors = [akTop, akRight]
               Color = clWhite
               Ctl3D = True
               Font.Charset = DEFAULT_CHARSET
@@ -3179,9 +3288,11 @@ inherited frmSocios: TfrmSocios
               MinValue = 1910
               ParentCtl3D = False
               ParentFont = False
-              TabOrder = 13
+              TabOrder = 14
               Value = 1910
               OnChange = nAnoChange
+              OnEnter = nAnoEnter
+              OnExit = nAnoExit
             end
             object cmbPaisNacimiento: TDBLookupComboBox
               Left = 108
@@ -3189,47 +3300,7 @@ inherited frmSocios: TfrmSocios
               Width = 201
               Height = 19
               DataField = 'paisNacimiento'
-              DataSource = Socios
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = []
-              KeyField = 'codigoPais'
-              ListField = 'descripcion'
-              ListSource = Paises
-              ParentFont = False
-              TabOrder = 14
-            end
-            object DBLookupComboBox6: TDBLookupComboBox
-              Left = 523
-              Top = 193
-              Width = 202
-              Height = 19
-              Anchors = [akTop, akRight]
-              Color = clYellow
-              DataField = 'Estatus'
-              DataSource = Socios
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clRed
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              KeyField = 'estatus'
-              ListField = 'descripcion'
-              ListSource = estatus
-              ParentFont = False
-              TabOrder = 17
-              OnClick = DBLookupComboBox6Click
-            end
-            object cmbPaisResidencia: TDBLookupComboBox
-              Left = 523
-              Top = 170
-              Width = 201
-              Height = 19
-              Anchors = [akTop, akRight]
-              DataField = 'paisResidencia'
-              DataSource = Socios
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -3240,29 +3311,17 @@ inherited frmSocios: TfrmSocios
               ListSource = Paises
               ParentFont = False
               TabOrder = 15
+              OnEnter = cmbPaisNacimientoEnter
+              OnExit = cmbPaisNacimientoExit
             end
-            object dblEstadoCivil: TDBLookupComboBox
-              Left = 108
-              Top = 195
+            object cmbPaisResidencia: TDBLookupComboBox
+              Left = 549
+              Top = 170
               Width = 201
               Height = 19
-              DataField = 'estadoCivil2'
-              DataSource = Socios
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = []
-              ParentFont = False
-              TabOrder = 16
-            end
-            object dblPaisPasaporte: TDBLookupComboBox
-              Left = 108
-              Top = 119
-              Width = 202
-              Height = 19
-              DataField = 'paisPasaporte'
-              DataSource = Socios
+              Anchors = [akTop, akRight]
+              DataField = 'paisResidencia'
+              DataSource = dts_mSocio
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -3272,11 +3331,33 @@ inherited frmSocios: TfrmSocios
               ListField = 'descripcion'
               ListSource = Paises
               ParentFont = False
-              TabOrder = 7
+              TabOrder = 16
+              OnEnter = cmbPaisResidenciaEnter
+              OnExit = cmbPaisResidenciaExit
+            end
+            object dblPaisPasaporte: TDBLookupComboBox
+              Left = 108
+              Top = 119
+              Width = 202
+              Height = 19
+              DataField = 'paisPasaporte'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              KeyField = 'codigoPais'
+              ListField = 'descripcion'
+              ListSource = Paises
+              ParentFont = False
+              TabOrder = 10
+              OnEnter = dblPaisPasaporteEnter
+              OnExit = dblPaisPasaporteExit
             end
             object dpExpira: TDateTimePicker
-              Left = 523
-              Top = 118
+              Left = 548
+              Top = 114
               Width = 201
               Height = 21
               Anchors = [akTop, akRight]
@@ -3290,27 +3371,293 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 8
+              TabOrder = 11
               OnChange = dpExpiraChange
+              OnEnter = dpExpiraEnter
+              OnExit = dpExpiraExit
+            end
+            object edSeguroSocial: TDBEdit
+              Left = 549
+              Top = 195
+              Width = 201
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'seguro_Social'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 18
+              OnEnter = edSeguroSocialEnter
+              OnExit = edSeguroSocialExit
+            end
+            object edLugarTrabajo: TDBEdit
+              Left = 406
+              Top = 270
+              Width = 344
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'lugar_trabajo'
+              DataSource = Socios
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 24
+              OnEnter = edLugarTrabajoEnter
+              OnExit = edLugarTrabajoExit
+            end
+            object edNota: TDBMemo
+              Left = 108
+              Top = 323
+              Width = 641
+              Height = 50
+              Anchors = [akLeft, akTop, akRight]
+              AutoDisplay = False
+              DataField = 'Observacion'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 28
+              OnEnter = edNotaEnter
+              OnExit = edNotaExit
+            end
+            object DBEdit15: TDBEdit
+              Left = 548
+              Top = 220
+              Width = 202
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'distrito'
+              DataSource = dts_mSocio
+              Enabled = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 20
+            end
+            object DBEdit14: TDBEdit
+              Left = 108
+              Top = 218
+              Width = 201
+              Height = 19
+              DataField = 'provincia'
+              DataSource = dts_mSocio
+              Enabled = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 19
+            end
+            object DBEdit16: TDBEdit
+              Left = 108
+              Top = 244
+              Width = 201
+              Height = 19
+              DataField = 'corregimiento'
+              DataSource = dts_mSocio
+              Enabled = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 21
+            end
+            object DBEdit17: TDBEdit
+              Left = 548
+              Top = 245
+              Width = 202
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'calle_barrio'
+              DataSource = dts_mSocio
+              Enabled = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 22
+            end
+            object dbl_Cargo: TDBLookupComboBox
+              Left = 406
+              Top = 296
+              Width = 130
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'idCargo'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              KeyField = 'idcargo'
+              ListField = 'nombre'
+              ListSource = DataModulo1.dtsCargos
+              ParentFont = False
+              TabOrder = 26
+            end
+            object DBRadioGroup1: TDBRadioGroup
+              Left = 548
+              Top = 136
+              Width = 201
+              Height = 32
+              Anchors = [akTop, akRight]
+              Columns = 2
+              Ctl3D = False
+              DataField = 'sexo'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              Items.Strings = (
+                'Masculino'
+                'Femenino')
+              ParentCtl3D = False
+              ParentFont = False
+              TabOrder = 29
+              Values.Strings = (
+                'M'
+                'F')
+            end
+            object ed_IngresoMensual: TDBEdit
+              Left = 600
+              Top = 296
+              Width = 150
+              Height = 19
+              Anchors = [akTop, akRight]
+              DataField = 'ingresoMensual'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 27
+            end
+            object dblEstadoCivil: TDBLookupComboBox
+              Left = 108
+              Top = 194
+              Width = 200
+              Height = 19
+              DataField = 'estadoCivil'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              KeyField = 'idEstado'
+              ListField = 'Descripcion'
+              ListSource = DataModulo1.dts_EstadoCivil
+              ParentFont = False
+              TabOrder = 17
+            end
+            object dbl_compania: TDBLookupComboBox
+              Left = 107
+              Top = 270
+              Width = 201
+              Height = 19
+              DataField = 'idEmpresa'
+              DataSource = dts_mSocio
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              KeyField = 'compania'
+              ListField = 'nombre'
+              ListSource = DataModulo1.dts_Companias
+              ParentFont = False
+              TabOrder = 23
+            end
+            object dbl_Prof: TDBLookupComboBox
+              Left = 107
+              Top = 296
+              Width = 201
+              Height = 19
+              DataField = 'idProfesion'
+              DataSource = Socios
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              KeyField = 'idProfesion'
+              ListField = 'nombre'
+              ListSource = DataModulo1.dts_Profesiones
+              ParentFont = False
+              TabOrder = 25
             end
           end
           object grpNacionalidades: TGroupBox
             AlignWithMargins = True
             Left = 4
-            Top = 371
-            Width = 756
+            Top = 585
+            Width = 782
             Height = 90
             Align = alTop
             Caption = 'Nacionalidades:'
             TabOrder = 2
             DesignSize = (
-              756
+              782
               90)
+            object Label123: TLabel
+              Left = 323
+              Top = 64
+              Width = 74
+              Height = 13
+              Anchors = [akLeft, akTop, akRight]
+              AutoSize = False
+              Caption = 'Nacionalidad:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              ExplicitWidth = 46
+            end
+            object Label124: TLabel
+              Left = 53
+              Top = 64
+              Width = 23
+              Height = 13
+              Caption = 'Pa'#237's:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
             object ToolBar16: TToolBar
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 748
+              Width = 774
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3319,7 +3666,7 @@ inherited frmSocios: TfrmSocios
               DrawingStyle = dsGradient
               GradientEndColor = clMoneyGreen
               Images = DataModulo1.ImageList2
-              TabOrder = 0
+              TabOrder = 3
               object btnNuevaNacionalidad: TToolButton
                 Left = 0
                 Top = 0
@@ -3381,11 +3728,11 @@ inherited frmSocios: TfrmSocios
               Height = 17
               DataField = 'activa'
               DataSource = dtsSocioNacionalidades
-              TabOrder = 1
+              TabOrder = 0
             end
             object dblSocioNacionalidad: TDBLookupComboBox
-              Left = 41
-              Top = 63
+              Left = 108
+              Top = 62
               Width = 204
               Height = 19
               DataField = 'pais'
@@ -3397,15 +3744,15 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ListSource = dtspaises2
               ParentFont = False
-              TabOrder = 2
+              TabOrder = 1
               OnClick = dblSocioNacionalidadClick
             end
             object DBEdit11: TDBEdit
-              Left = 251
-              Top = 63
-              Width = 479
+              Left = 408
+              Top = 62
+              Width = 341
               Height = 19
-              Anchors = [akLeft, akTop, akRight]
+              Anchors = [akTop, akRight]
               DataField = 'nacionalidad'
               DataSource = dtsSocioNacionalidades
               Font.Charset = DEFAULT_CHARSET
@@ -3414,20 +3761,20 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 3
+              TabOrder = 2
             end
           end
           object grpPasatiempos: TGroupBox
             AlignWithMargins = True
             Left = 4
-            Top = 467
-            Width = 756
+            Top = 681
+            Width = 782
             Height = 82
             Align = alTop
             Caption = 'Pasatiempos:'
             TabOrder = 3
             DesignSize = (
-              756
+              782
               82)
             object Label75: TLabel
               Left = 15
@@ -3447,7 +3794,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 748
+              Width = 774
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3456,7 +3803,7 @@ inherited frmSocios: TfrmSocios
               DrawingStyle = dsGradient
               GradientEndColor = clMoneyGreen
               Images = DataModulo1.ImageList2
-              TabOrder = 0
+              TabOrder = 2
               object btnNuevoPasatiempo: TToolButton
                 Left = 0
                 Top = 0
@@ -3511,9 +3858,9 @@ inherited frmSocios: TfrmSocios
               end
             end
             object edsocioPasatiempoDescripcion: TDBEdit
-              Left = 79
-              Top = 55
-              Width = 300
+              Left = 112
+              Top = 58
+              Width = 445
               Height = 19
               DataField = 'descripcion'
               DataSource = dtsSocioPasatiempo
@@ -3523,11 +3870,11 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 1
+              TabOrder = 0
             end
             object DBCheckBox9: TDBCheckBox
-              Left = 565
-              Top = 56
+              Left = 591
+              Top = 59
               Width = 97
               Height = 17
               Anchors = [akTop, akRight]
@@ -3540,20 +3887,20 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 2
+              TabOrder = 1
             end
           end
           object grpGrupo: TGroupBox
             AlignWithMargins = True
             Left = 4
-            Top = 555
-            Width = 756
+            Top = 769
+            Width = 782
             Height = 82
             Align = alTop
             Caption = 'Comunidad:'
             TabOrder = 4
             DesignSize = (
-              756
+              782
               82)
             object Label76: TLabel
               Left = 10
@@ -3573,7 +3920,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 748
+              Width = 774
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3582,7 +3929,7 @@ inherited frmSocios: TfrmSocios
               DrawingStyle = dsGradient
               GradientEndColor = clMoneyGreen
               Images = DataModulo1.ImageList2
-              TabOrder = 0
+              TabOrder = 2
               object btnNuevoComunidad: TToolButton
                 Left = 0
                 Top = 0
@@ -3638,9 +3985,9 @@ inherited frmSocios: TfrmSocios
               end
             end
             object dblsocioComunidad: TDBLookupComboBox
-              Left = 78
+              Left = 105
               Top = 55
-              Width = 300
+              Width = 445
               Height = 19
               DataField = 'comunidad'
               DataSource = dtsSocioGrupo
@@ -3650,11 +3997,11 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 1
+              TabOrder = 0
               OnClick = dblsocioComunidadClick
             end
             object dbkSocioesRiesgosa: TDBCheckBox
-              Left = 565
+              Left = 591
               Top = 56
               Width = 97
               Height = 17
@@ -3669,18 +4016,21 @@ inherited frmSocios: TfrmSocios
               Font.Style = []
               ParentFont = False
               ReadOnly = True
-              TabOrder = 2
+              TabOrder = 1
             end
           end
           object grpAsociaciones: TGroupBox
             AlignWithMargins = True
             Left = 4
-            Top = 643
-            Width = 756
+            Top = 857
+            Width = 782
             Height = 87
             Align = alTop
             Caption = 'Asociaciones:'
             TabOrder = 5
+            DesignSize = (
+              782
+              87)
             object Label6: TLabel
               Left = 10
               Top = 57
@@ -3698,7 +4048,7 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 4
               Top = 17
-              Width = 748
+              Width = 774
               Height = 35
               BorderWidth = 1
               ButtonHeight = 30
@@ -3707,7 +4057,7 @@ inherited frmSocios: TfrmSocios
               DrawingStyle = dsGradient
               GradientEndColor = clMoneyGreen
               Images = DataModulo1.ImageList2
-              TabOrder = 0
+              TabOrder = 2
               object btnNuevoAsociacion: TToolButton
                 Left = 0
                 Top = 0
@@ -3763,9 +4113,9 @@ inherited frmSocios: TfrmSocios
               end
             end
             object dbldescripcionAsociacion: TDBLookupComboBox
-              Left = 66
+              Left = 105
               Top = 56
-              Width = 321
+              Width = 445
               Height = 19
               DataField = 'Asociacion'
               DataSource = dtsSocioAsociaciones
@@ -3775,44 +4125,55 @@ inherited frmSocios: TfrmSocios
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 1
+              TabOrder = 0
             end
             object DBCheckBox10: TDBCheckBox
-              Left = 451
+              Left = 591
               Top = 56
               Width = 97
               Height = 17
+              Anchors = [akTop, akRight]
               Caption = 'Es Riesgosa'
               DataField = 'esRiesgosa'
               DataSource = dtsSocioAsociaciones
-              TabOrder = 2
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 1
             end
           end
           object GroupBox4: TGroupBox
             AlignWithMargins = True
             Left = 4
             Top = 58
-            Width = 756
-            Height = 79
+            Width = 782
+            Height = 78
             Align = alTop
             Caption = 'Tipo de Sujeto'
             Ctl3D = True
             ParentBackground = False
             ParentCtl3D = False
-            TabOrder = 6
+            TabOrder = 0
             object Panel2: TPanel
               AlignWithMargins = True
               Left = 5
               Top = 18
-              Width = 746
-              Height = 56
+              Width = 772
+              Height = 55
               Align = alClient
               AutoSize = True
-              Color = clYellow
+              Color = clMoneyGreen
               Ctl3D = True
               ParentBackground = False
               ParentCtl3D = False
+              ShowCaption = False
               TabOrder = 0
+              DesignSize = (
+                772
+                55)
               object Label46: TLabel
                 Left = 11
                 Top = 20
@@ -3827,7 +4188,7 @@ inherited frmSocios: TfrmSocios
                 ParentFont = False
               end
               object Label2: TLabel
-                Left = 233
+                Left = 250
                 Top = 20
                 Width = 43
                 Height = 13
@@ -3839,35 +4200,27 @@ inherited frmSocios: TfrmSocios
                 Font.Style = []
                 ParentFont = False
               end
-              object dblTipoSocio: TDBLookupComboBox
-                Left = 282
-                Top = 16
-                Width = 138
-                Height = 21
-                BevelOuter = bvNone
-                DataField = 'idTipoPersona'
-                DataSource = Socios
-                DropDownRows = 10
-                DropDownWidth = 150
+              object Label37: TLabel
+                Left = 574
+                Top = 20
+                Width = 40
+                Height = 13
+                Anchors = [akTop, akRight]
+                Caption = 'Estatus:'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clWindowText
                 Font.Height = -11
                 Font.Name = 'Tahoma'
                 Font.Style = []
-                KeyField = 'idTipoPerson'
-                ListField = 'Descripcion'
-                ListFieldIndex = 1
-                ListSource = tipoPersona
                 ParentFont = False
-                TabOrder = 0
-                OnClick = dblTipoSocioClick
+                ExplicitLeft = 546
               end
               object DBCheckBox12: TDBCheckBox
-                Left = 438
+                Left = 442
                 Top = 15
-                Width = 93
+                Width = 74
                 Height = 22
-                Caption = 'Es Proveedor'
+                Caption = 'Proveedor?'
                 DataField = 'esProveedor'
                 DataSource = Socios
                 Font.Charset = DEFAULT_CHARSET
@@ -3876,15 +4229,40 @@ inherited frmSocios: TfrmSocios
                 Font.Name = 'Tahoma'
                 Font.Style = []
                 ParentFont = False
+                TabOrder = 0
+              end
+              object DBEdit18: TDBEdit
+                Left = 720
+                Top = 16
+                Width = 17
+                Height = 21
+                DataField = 'activo'
+                DataSource = Socios
                 TabOrder = 1
+              end
+              object dbl_Estatus: TDBLookupComboBox
+                Left = 620
+                Top = 16
+                Width = 122
+                Height = 21
+                CustomHint = BalloonHint1
+                Anchors = [akTop, akRight]
+                DataField = 'activo'
+                DataSource = Socios
+                KeyField = 'estatus'
+                ListField = 'descripcion'
+                ListSource = estatus
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 2
               end
               object edTipoCliente: TDBLookupComboBox
                 Left = 77
-                Top = 15
-                Width = 138
+                Top = 16
+                Width = 167
                 Height = 21
                 DataField = 'tipoCliente'
-                DataSource = Socios
+                DataSource = dts_mSocio
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clWindowText
                 Font.Height = -11
@@ -3894,7 +4272,25 @@ inherited frmSocios: TfrmSocios
                 ListField = 'Descripcion'
                 ListSource = dtsTipoCliente
                 ParentFont = False
-                TabOrder = 2
+                TabOrder = 3
+              end
+              object dblTipoSocio: TDBLookupComboBox
+                Left = 299
+                Top = 16
+                Width = 126
+                Height = 21
+                DataField = 'idTipoPersona'
+                DataSource = dts_mSocio
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = []
+                KeyField = 'idTipoPerson'
+                ListField = 'Descripcion'
+                ListSource = tipoPersona
+                ParentFont = False
+                TabOrder = 4
               end
             end
           end
@@ -3902,8 +4298,8 @@ inherited frmSocios: TfrmSocios
         object GroupBox1: TGroupBox
           AlignWithMargins = True
           Left = 3
-          Top = 1225
-          Width = 764
+          Top = 1440
+          Width = 790
           Height = 56
           Align = alTop
           Caption = 'Credenciales'
@@ -3948,7 +4344,7 @@ inherited frmSocios: TfrmSocios
             TabOrder = 0
           end
           object Button1: TButton
-            Left = 681
+            Left = 707
             Top = 14
             Width = 73
             Height = 33
@@ -3973,8 +4369,8 @@ inherited frmSocios: TfrmSocios
       object PageControl2: TPageControl
         Left = 0
         Top = 0
-        Width = 795
-        Height = 578
+        Width = 821
+        Height = 603
         ActivePage = tsPerfilFijo
         Align = alClient
         TabOrder = 0
@@ -3984,8 +4380,8 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 781
-            Height = 544
+            Width = 807
+            Height = 569
             Align = alClient
             Caption = 'Ingresos Fijos:'
             Font.Charset = DEFAULT_CHARSET
@@ -3996,13 +4392,13 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
             TabOrder = 0
             DesignSize = (
-              781
-              544)
+              807
+              569)
             object Panel3: TPanel
               Left = 4
               Top = 18
               Width = 320
-              Height = 521
+              Height = 546
               Anchors = [akLeft, akTop, akBottom]
               BevelEdges = []
               BevelOuter = bvNone
@@ -4016,7 +4412,7 @@ inherited frmSocios: TfrmSocios
                 Left = 0
                 Top = 318
                 Width = 320
-                Height = 203
+                Height = 228
                 Align = alClient
                 Caption = 'Resumen Por Frecuencia'
                 Color = clWhite
@@ -4034,7 +4430,7 @@ inherited frmSocios: TfrmSocios
                   Left = 5
                   Top = 18
                   Width = 310
-                  Height = 180
+                  Height = 205
                   Align = alClient
                   DataSource = DataModulo1.dtsSocioTotalIngresosFijos
                   DrawingStyle = gdsGradient
@@ -4978,8 +5374,8 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 781
-            Height = 544
+            Width = 807
+            Height = 569
             Align = alClient
             Caption = 'Ingresos Variales:'
             Font.Charset = DEFAULT_CHARSET
@@ -4990,13 +5386,13 @@ inherited frmSocios: TfrmSocios
             ParentFont = False
             TabOrder = 0
             DesignSize = (
-              781
-              544)
+              807
+              569)
             object Panel4: TPanel
               Left = 4
               Top = 18
               Width = 320
-              Height = 521
+              Height = 546
               Anchors = [akLeft, akTop, akBottom]
               BevelEdges = []
               BevelOuter = bvNone
@@ -5010,7 +5406,7 @@ inherited frmSocios: TfrmSocios
                 Left = 0
                 Top = 318
                 Width = 320
-                Height = 203
+                Height = 228
                 Align = alClient
                 Caption = 'Resumen Por Frecuencia'
                 Color = clWhite
@@ -5028,7 +5424,7 @@ inherited frmSocios: TfrmSocios
                   Left = 5
                   Top = 18
                   Width = 310
-                  Height = 180
+                  Height = 205
                   Align = alClient
                   DataSource = DataModulo1.dtsSocioTotalIV
                   DrawingStyle = gdsGradient
@@ -5977,13 +6373,14 @@ inherited frmSocios: TfrmSocios
     object ts_Dependientes: TTabSheet
       Caption = 'Dependientes'
       ImageIndex = 8
+      TabVisible = False
       DesignSize = (
-        795
-        578)
+        821
+        603)
       object GroupBox18: TGroupBox
         Left = 3
         Top = 3
-        Width = 789
+        Width = 815
         Height = 110
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Dependiente:'
@@ -5996,8 +6393,8 @@ inherited frmSocios: TfrmSocios
       object Image1: TImage
         Left = -4
         Top = 229
-        Width = 111
-        Height = 110
+        Width = 101
+        Height = 82
         Picture.Data = {
           0A544A504547496D61676579830000FFD8FFE000104A46494600010001006000
           600000FFFE001F4C45414420546563686E6F6C6F6769657320496E632E205631
@@ -7058,7 +7455,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 789
+        Width = 815
         Height = 35
         BorderWidth = 1
         ButtonHeight = 30
@@ -7085,10 +7482,10 @@ inherited frmSocios: TfrmSocios
         end
       end
       object gbParentezco: TGroupBox
-        Left = 65
-        Top = 229
-        Width = 674
-        Height = 177
+        Left = 3
+        Top = 215
+        Width = 815
+        Height = 202
         Align = alCustom
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = 'Heredero'
@@ -7396,7 +7793,7 @@ inherited frmSocios: TfrmSocios
       object GroupBox8: TGroupBox
         Left = 3
         Top = 38
-        Width = 789
+        Width = 815
         Height = 171
         Align = alCustom
         Anchors = [akLeft, akTop, akRight]
@@ -7411,7 +7808,7 @@ inherited frmSocios: TfrmSocios
         object DBGrid1: TDBGrid
           Left = 5
           Top = 15
-          Width = 781
+          Width = 807
           Height = 130
           Align = alCustom
           Anchors = [akLeft, akTop, akRight]
@@ -7481,7 +7878,7 @@ inherited frmSocios: TfrmSocios
         object StatusBar2: TStatusBar
           Left = 2
           Top = 150
-          Width = 785
+          Width = 811
           Height = 19
           Anchors = [akLeft, akTop, akRight, akBottom]
           Panels = <
@@ -7503,7 +7900,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 789
+        Width = 815
         Height = 35
         BorderWidth = 1
         ButtonHeight = 30
@@ -7586,8 +7983,8 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 44
-        Width = 789
-        Height = 533
+        Width = 815
+        Height = 558
         Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = 'Imagen:'
@@ -7601,7 +7998,7 @@ inherited frmSocios: TfrmSocios
         object ScrollBox2: TScrollBox
           Left = 2
           Top = 50
-          Width = 785
+          Width = 811
           Height = 375
           HorzScrollBar.Style = ssHotTrack
           HorzScrollBar.Tracking = True
@@ -7936,7 +8333,7 @@ inherited frmSocios: TfrmSocios
           object DBImage1: TDBImage
             Left = 0
             Top = 0
-            Width = 785
+            Width = 811
             Height = 375
             Align = alClient
             Center = False
@@ -7956,7 +8353,7 @@ inherited frmSocios: TfrmSocios
         object tb1: TTrackBar
           Left = 2
           Top = 15
-          Width = 785
+          Width = 811
           Height = 35
           Align = alTop
           Max = 1000
@@ -7966,64 +8363,104 @@ inherited frmSocios: TfrmSocios
         object GroupBox2: TGroupBox
           AlignWithMargins = True
           Left = 5
-          Top = 427
-          Width = 779
+          Top = 452
+          Width = 805
           Height = 101
           Align = alBottom
           Caption = 'Informaci'#243'n del Documento:'
           Font.Charset = CHINESEBIG5_CHARSET
-          Font.Color = clRed
-          Font.Height = 20
+          Font.Color = clBlack
+          Font.Height = -13
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 2
+          DesignSize = (
+            805
+            101)
           object Label41: TLabel
-            Left = 11
-            Top = 36
-            Width = 66
-            Height = 13
+            Left = 365
+            Top = 27
+            Width = 79
+            Height = 16
+            Anchors = [akLeft, akTop, akRight]
             Caption = 'Nombre Doc.:'
             FocusControl = edNombreDoc
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
           end
           object Label42: TLabel
-            Left = 455
-            Top = 36
-            Width = 42
-            Height = 13
+            Left = 507
+            Top = 59
+            Width = 49
+            Height = 16
             Caption = 'Entrada:'
             FocusControl = edFechaRegistro
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -13
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label130: TLabel
+            Left = 72
+            Top = 120
+            Width = 48
+            Height = 16
+            Caption = 'tipodoc'
+          end
+          object Label129: TLabel
+            Left = 11
+            Top = 59
+            Width = 40
+            Height = 16
+            Caption = 'Expira:'
+            FocusControl = edNombreDoc
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label131: TLabel
+            Left = 11
+            Top = 27
+            Width = 98
+            Height = 16
+            Caption = 'Tipo Documento:'
+            FocusControl = edNombreDoc
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
           end
           object edNombreDoc: TDBEdit
-            Left = 100
-            Top = 33
-            Width = 234
-            Height = 21
+            Left = 481
+            Top = 25
+            Width = 298
+            Height = 24
+            Anchors = [akTop, akRight]
             DataField = 'NombreDoc'
             DataSource = dtsSocioDoc
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            TabOrder = 0
+            TabOrder = 1
           end
           object DBCheckBox6: TDBCheckBox
-            Left = 357
-            Top = 35
+            Left = 365
+            Top = 59
             Width = 97
             Height = 17
             Caption = 'Ver en Caja'
@@ -8031,27 +8468,164 @@ inherited frmSocios: TfrmSocios
             DataSource = dtsSocioDoc
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            TabOrder = 1
+            TabOrder = 3
           end
           object edFechaRegistro: TDBEdit
-            Left = 498
-            Top = 33
-            Width = 157
-            Height = 21
+            Left = 562
+            Top = 55
+            Width = 186
+            Height = 24
             DataField = 'fechaRegistro'
             DataSource = dtsSocioDoc
             Enabled = False
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
+            TabOrder = 4
+          end
+          object dbl_Tipodocumento: TDBLookupComboBox
+            Left = 110
+            Top = 23
+            Width = 234
+            Height = 24
+            DataField = 'tipodoc'
+            DataSource = dtsSocioDoc
+            Font.Charset = CHINESEBIG5_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            KeyField = 'idTipo'
+            ListField = 'Descripcion'
+            ListSource = DataModulo1.dts_tipoDocumentoSocio
+            ParentFont = False
+            TabOrder = 0
+          end
+          object dp_Expira: TDateTimePicker
+            Left = 110
+            Top = 55
+            Width = 234
+            Height = 24
+            Date = 42971.490694293980000000
+            Time = 42971.490694293980000000
+            ShowCheckbox = True
+            Checked = False
+            DateMode = dmUpDown
+            Font.Charset = CHINESEBIG5_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+            ParentShowHint = False
+            ShowHint = False
             TabOrder = 2
+            OnEnter = dp_ExpiraEnter
+          end
+        end
+        object pn_scaner: TPanel
+          Left = 90
+          Top = 32
+          Width = 482
+          Height = 336
+          TabOrder = 3
+          Visible = False
+          DesignSize = (
+            482
+            336)
+          object ImgHolder: TImage
+            Left = 187
+            Top = 51
+            Width = 287
+            Height = 273
+            Align = alCustom
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Proportional = True
+            Stretch = True
+          end
+          object lbs: TListBox
+            Left = 5
+            Top = 48
+            Width = 177
+            Height = 279
+            Anchors = [akLeft, akTop, akBottom]
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ItemHeight = 13
+            Items.Strings = (
+              '11111')
+            ParentFont = False
+            TabOrder = 0
+          end
+          object Panel6: TPanel
+            Left = 1
+            Top = 1
+            Width = 480
+            Height = 41
+            Align = alTop
+            Caption = 'Panel6'
+            TabOrder = 1
+            object ToolBar27: TToolBar
+              Left = 1
+              Top = 11
+              Width = 478
+              Height = 29
+              Align = alBottom
+              ButtonHeight = 29
+              ButtonWidth = 33
+              Caption = 'ToolBar1'
+              DrawingStyle = dsGradient
+              GradientEndColor = clMoneyGreen
+              Images = DataModulo1.ImageList2
+              TabOrder = 0
+              object ToolButton55: TToolButton
+                Left = 0
+                Top = 0
+                Caption = 'ToolButton1'
+                ImageIndex = 32
+                OnClick = ToolButton55Click
+              end
+              object ToolButton57: TToolButton
+                Left = 33
+                Top = 0
+                Width = 24
+                Caption = 'ToolButton2'
+                ImageIndex = 33
+                Style = tbsSeparator
+              end
+              object ToolButton58: TToolButton
+                Left = 57
+                Top = 0
+                Caption = 'ToolButton3'
+                ImageIndex = 6
+                OnClick = ToolButton58Click
+              end
+              object ToolButton59: TToolButton
+                Left = 90
+                Top = 0
+                Width = 351
+                Caption = 'ToolButton59'
+                ImageIndex = 7
+                Style = tbsSeparator
+              end
+              object ToolButton60: TToolButton
+                Left = 441
+                Top = 0
+                Caption = 'ToolButton60'
+                ImageIndex = 51
+                OnClick = ToolButton60Click
+              end
+            end
           end
         end
       end
@@ -8062,7 +8636,7 @@ inherited frmSocios: TfrmSocios
       object GroupBox10: TGroupBox
         Left = 0
         Top = 0
-        Width = 795
+        Width = 821
         Height = 166
         Align = alTop
         Caption = 'Cuentas'
@@ -8076,7 +8650,7 @@ inherited frmSocios: TfrmSocios
         object DBGrid4: TDBGrid
           Left = 2
           Top = 15
-          Width = 791
+          Width = 817
           Height = 149
           Align = alClient
           DataSource = SocioProductos
@@ -8112,6 +8686,18 @@ inherited frmSocios: TfrmSocios
             item
               Expanded = False
               FieldName = '_NombreProducto'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              Title.Alignment = taCenter
+              Title.Caption = 'Producto'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clGreen
+              Title.Font.Height = -11
+              Title.Font.Name = 'Tahoma'
+              Title.Font.Style = [fsBold]
               Width = 321
               Visible = True
             end
@@ -8149,8 +8735,8 @@ inherited frmSocios: TfrmSocios
       object pcDetalleCuenta: TPageControl
         Left = 0
         Top = 166
-        Width = 795
-        Height = 412
+        Width = 821
+        Height = 437
         ActivePage = TabSheet9
         Align = alClient
         TabOrder = 1
@@ -8161,8 +8747,8 @@ inherited frmSocios: TfrmSocios
           object GroupBox11: TGroupBox
             Left = 0
             Top = 41
-            Width = 787
-            Height = 343
+            Width = 813
+            Height = 368
             Align = alClient
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
@@ -8171,217 +8757,17 @@ inherited frmSocios: TfrmSocios
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
-            object GroupBox14: TGroupBox
-              Left = 2
-              Top = 262
-              Width = 783
-              Height = 78
-              Align = alTop
-              Anchors = [akLeft, akTop, akRight, akBottom]
-              Caption = '       Garantia'
-              TabOrder = 0
-              object Image8: TImage
-                Left = 3
-                Top = -3
-                Width = 27
-                Height = 25
-                Picture.Data = {
-                  0954506E67496D61676589504E470D0A1A0A0000000D49484452000000320000
-                  003208060000001E3F88B1000004854944415478DAED997F685B5514C7CFB9EF
-                  D566305170C28454141D6CE01F130643A8E060834D5A101495BA35794906EAF0
-                  8F41CB9A6CC527FD91A813264C3BB4E94BE23AC10D1C2CA0D0C1FEE91F1B0C56
-                  5058FF98385CC1FDD13F024E4C6ADEBB9EFB9A8CB8A669EE4D9AA4A15F28B979
-                  7DEF9EFBB939F79C73EF43681361B307B009B209D2E2AA2B48E8FCA75EE75FA7
-                  0735D88B1CBC74C9CBC1FD148616E8638123FDD9708375B0F4E4E1130B2D03E2
-                  B73EDBAE69CE31E0D003C0774B9A9FA311A4355DFFF29BBE81C5A680F812232F
-                  68A8F751B38F3AD959CB203887791AC9059BE72F24FDC3BF350C24688DBF010C
-                  27A8B9BD168032BAEF003F6AF922E97505F15BA64743CF00CDE1003DF9449D21
-                  8A43CA909B7E61F3ECE9846166EB0E625E33F57B7F745AD43CBC3E002B74BEEB
-                  D99C61EE33F3750311BF04C3C74E23E2B10641B8E29C7FE5F0A5816A7E99AA40
-                  8289D829403ED24888129AE1B83F325A33486161FFD81488822800F4AE15002A
-                  828810ABA33E4DCDBDCD0421DDC8F3FC7B954273459080356622631F2B1ACF02
-                  E2653270D7B1ED1CF5F31499EB964F9A05ADE162AB82B8199B39B7A9872715CC
-                  CEDA4EAE971669E6D17F145CF53B6A6E95EB12335A87BE63B50A605590602A36
-                  42B3704A05A2734BEED0D76F9B0FC46430B00F22722FE5865FBB9E5B4A8B701A
-                  48C5BA91F36B74AF2EC782A3F1FEA161399064EC968A1BA0C6BA443118B2A2AF
-                  710633FF1B2CC2CFF1FEF021D10C25631739F0B7247B9F8BFB865EAE1A4454B1
-                  DC76EEC9429066E3BEF0AB85E4F9277DDFF6E80D540D1F98F285AF06ADB17781
-                  B1EF5527AA2A9080157D1F194CC81AE18EF3C99471D20C24A3FBA9E399F2F780
-                  316584134672BC87015E91B7011FD0F3E7AA0209A6A2164D9D5FD60869967ABC
-                  43CFBE48EDEE7237D80EDF953022F3CA6B102141EE695405124A4667C805F62B
-                  80541477F8F129237266D975F92F2A1191067C75D2173E502DC86D5EE31EA3A0
-                  45728541049EC10EEDA6F0EDA3D6D86E4E6B43B57F1AF03C81ECAA0A24988CFE
-                  05D271BEACEED2E27FBEF4422035BA8771FD847CC47AA807D4E7E38D06A1EC0E
-                  D7DD16C79BCCB1A7BF354ECE2DDB887DEEEE6BD613A48EAEB56210E0F0237123
-                  72F9C31FCCADB97F3A7F873221BA92A45C8B40AE1048CF3A80883CF213E591D7
-                  459BA2E325BAF0A624489A407AAB02510DBFE8C03E77B00CC4DEA57B95DBF254
-                  873D2DEAB0502A16A5CDD3909C1189F0AB9A1081C18EF891F09D3572C47DF2F1
-                  67DC094B4645F128B575964A883594281FD120CFFAADF19D1A43AAD5C0B3C220
-                  E299C9FEA1E3AE1D85B52855A22CCF9652D1789D405E719F776B296DA224E965
-                  09E29CB72B3B282A60B51245B2687407A2584214EB2DD1169169E9EF2D2F391A
-                  D73D9EEC9C28ED9721A307C90D2F826C885729E36BD95821E02574ECB162CE28
-                  CACDEA9AF60E2D70913FE4F622AA1B2BA11AB7BA42E4CBB808C8338542D2ABDC
-                  93EA5657A870BE3B8D1BFDF041A82D8E831EC2B4C3019D50B38E4C4967A90A18
-                  ACDB91A9505B1C6217D516AF154AB5E15FF494AAAEAFDE688F411F8D7FF556AA
-                  0DFF32B49C36F4EBE956D12648AB6913A4D5F41F8DD63F514CCC404A00000000
-                  49454E44AE426082}
-                Stretch = True
-              end
-              object garantia: TDBMemo
-                Left = 2
-                Top = 15
-                Width = 779
-                Height = 61
-                Align = alClient
-                DataField = 'garantias'
-                DataSource = SocioProductos
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                ParentColor = True
-                ParentFont = False
-                ScrollBars = ssVertical
-                TabOrder = 0
-              end
-            end
-            object GroupBox15: TGroupBox
-              AlignWithMargins = True
-              Left = 5
-              Top = 18
-              Width = 777
-              Height = 83
-              Align = alTop
-              Caption = '       Informaci'#243'n de la Cuenta'
-              TabOrder = 1
-              object Label45: TLabel
-                Left = 10
-                Top = 21
-                Width = 47
-                Height = 13
-                Caption = 'Producto:'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                ParentFont = False
-              end
-              object Label52: TLabel
-                Left = 11
-                Top = 56
-                Width = 46
-                Height = 13
-                Caption = 'Finalidad:'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                ParentFont = False
-              end
-              object Image7: TImage
-                Left = 3
-                Top = -3
-                Width = 27
-                Height = 25
-                Picture.Data = {
-                  0954506E67496D61676589504E470D0A1A0A0000000D49484452000000320000
-                  003208060000001E3F88B10000033C4944415478DAED993F4C13511CC7DFEFEE
-                  14361DD1808B8BA302098B83E8642C899B0920D7D2E242220E35D202F14C8182
-                  C1448CC604DA5EDB00838B83755371602101746431214294C1C111B4773F7F57
-                  C13472D26BEFD1BBD67E93E6BDDCE5DEEFF7E9FBF77BBF07AC4A044E3B5003A9
-                  81B85C5C410273938DFA4FDD03226B03648DF4A81159AE340C6D51B185403F8D
-                  2D0BC7844CACFBDE966B40BCEAC30651D4FB19320F6378BE48F31FC9838C2849
-                  D3339DC16F8E80C8C9C85911A44EAA765223E7EC3881C8D6C993050DB30B29EF
-                  C8A7B281F8D5F1EB4C80E7546DB00360A26D9D619F2A8733470AE255957A11EA
-                  83F41F06E9CB139C21F65DFA4EC3F491863B53499FB2C31D445954A4CDCF752A
-                  55BB8F06E080E69ACEECFA947625CB0DC4E809018E4F01407F99207242C4673A
-                  FE085AE9194B20FEE4C430038C9413228F6624EE0D8FDA06D99BD82F1D81D813
-                  2D001D85168043418C255602699EAA6D4E829096B398ED3A6C693E14A4571D53
-                  4010EEDB74224B569618C2C9E237CC3C151862FF04F125C69A09621EC0DE6607
-                  0C5FC4E4F08D801ABD84025B2C9D83ADA3AE77A9BD436B4581F8D31311FA7AD8
-                  0E04294BB1D6D5841C7A6317E4B7B7301AEF191C290E2435F1C1D650606C8926
-                  E9E4FE24E50242B1595C1EBC6019C4886251D3374B31C440BB294A75DB7F0781
-                  7C40C88228349945CDE620E9F1DB88305DBC15F63EDE136A376D931708E240CC
-                  1B7E6209C49F8ACE1AB6ED1A354413F441C237A4F00221C5E272A8CF1A483A9A
-                  A1C0ED9A2B4180BDA65EF758020924C75711A0D98D2034B4D66868B55802A1A1
-                  F5858A536E04217DA5A175FABF0359A1A2A56093CE80AC1248AB2590402AFA8A
-                  76644FE136CB0F420E676272A8C31208EDEA33E4425FE166CB0F422ECFD2EE7E
-                  CB2AC800B9F0D8A5207708E4C0666D0AD29B1E6D055D5CA2B775AE0241B68B82
-                  7631D133BC62092407938ABEA59797DD0442F3F61D45D257CCDE1D7518CFB747
-                  4A09E373072B910E5676B3889C404A3E5819E274D4DD202B1B8E1D750DEDE577
-                  8D5EA9ECE483A1AA4807FD81A986049D21A752A6A4A79ABE7B975BCAD4505524
-                  B1F75515D70AF9AAF88B9E7C71BD7A636C9D8AF25FBDE5ABE22F43CD54D1D7D3
-                  6E510DC46DAA81B84DBF001C6AFD42C413DE7E0000000049454E44AE426082}
-                Stretch = True
-              end
-              object edTipoProducto: TDBLookupComboBox
-                Left = 63
-                Top = 18
-                Width = 228
-                Height = 21
-                DataField = 'subcuenta'
-                DataSource = SocioProductos
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                KeyField = 'subcuenta'
-                ListField = 'nombresubcuenta'
-                ListSource = dtsProductosCliente
-                ParentFont = False
-                TabOrder = 0
-                OnClick = edTipoProductoClick
-              end
-              object dblFinalidad: TDBLookupComboBox
-                Left = 63
-                Top = 55
-                Width = 228
-                Height = 21
-                DataField = 'finalidad'
-                DataSource = SocioProductos
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                KeyField = 'finalidad'
-                ListField = 'nombre'
-                ListSource = dtsFinalidades
-                ParentFont = False
-                TabOrder = 1
-              end
-              object DBEdit1: TDBEdit
-                Left = 312
-                Top = 19
-                Width = 305
-                Height = 21
-                DataField = 'num_cuenta'
-                DataSource = SocioProductos
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = []
-                ParentFont = False
-                ReadOnly = True
-                TabOrder = 2
-              end
-            end
             object GroupBox16: TGroupBox
               AlignWithMargins = True
               Left = 5
-              Top = 107
-              Width = 777
-              Height = 152
+              Top = 79
+              Width = 803
+              Height = 170
               Align = alTop
               Caption = '       Informacion del Prestamo'
               TabOrder = 2
               object Label56: TLabel
-                Left = 282
+                Left = 401
                 Top = 24
                 Width = 34
                 Height = 13
@@ -8394,7 +8780,7 @@ inherited frmSocios: TfrmSocios
                 ParentFont = False
               end
               object Label57: TLabel
-                Left = 417
+                Left = 527
                 Top = 24
                 Width = 29
                 Height = 13
@@ -8407,7 +8793,7 @@ inherited frmSocios: TfrmSocios
                 ParentFont = False
               end
               object Label58: TLabel
-                Left = 522
+                Left = 629
                 Top = 24
                 Width = 70
                 Height = 13
@@ -8446,7 +8832,7 @@ inherited frmSocios: TfrmSocios
                 ParentFont = False
               end
               object Label60: TLabel
-                Left = 280
+                Left = 399
                 Top = 56
                 Width = 36
                 Height = 13
@@ -8504,7 +8890,7 @@ inherited frmSocios: TfrmSocios
                 Stretch = True
               end
               object Label61: TLabel
-                Left = 263
+                Left = 382
                 Top = 89
                 Width = 53
                 Height = 13
@@ -8531,7 +8917,7 @@ inherited frmSocios: TfrmSocios
               end
               object Label63: TLabel
                 Left = 11
-                Top = 124
+                Top = 122
                 Width = 40
                 Height = 13
                 Caption = 'Estatus:'
@@ -8542,10 +8928,23 @@ inherited frmSocios: TfrmSocios
                 Font.Style = []
                 ParentFont = False
               end
+              object Label52: TLabel
+                Left = 389
+                Top = 120
+                Width = 46
+                Height = 13
+                Caption = 'Finalidad:'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = []
+                ParentFont = False
+              end
               object dpFechaInicio: TDateTimePicker
                 Left = 79
                 Top = 21
-                Width = 195
+                Width = 278
                 Height = 21
                 Date = 42814.387089421310000000
                 Time = 42814.387089421310000000
@@ -8560,9 +8959,9 @@ inherited frmSocios: TfrmSocios
                 OnChange = dpFechaInicioChange
               end
               object dbMonto: TDBEdit
-                Left = 320
+                Left = 439
                 Top = 21
-                Width = 81
+                Width = 84
                 Height = 21
                 DataField = 'monto'
                 DataSource = SocioProductos
@@ -8575,9 +8974,9 @@ inherited frmSocios: TfrmSocios
                 TabOrder = 1
               end
               object dbLetra: TDBEdit
-                Left = 445
+                Left = 553
                 Top = 21
-                Width = 68
+                Width = 70
                 Height = 21
                 DataField = 'letra'
                 DataSource = SocioProductos
@@ -8592,7 +8991,7 @@ inherited frmSocios: TfrmSocios
               object edPlanilla: TDBEdit
                 Left = 79
                 Top = 53
-                Width = 138
+                Width = 278
                 Height = 21
                 DataField = 'desc_planilla'
                 DataSource = SocioProductos
@@ -8605,9 +9004,9 @@ inherited frmSocios: TfrmSocios
                 TabOrder = 3
               end
               object DBLookupComboBox8: TDBLookupComboBox
-                Left = 320
+                Left = 439
                 Top = 53
-                Width = 121
+                Width = 304
                 Height = 21
                 DataField = 'periodo_planilla'
                 DataSource = SocioProductos
@@ -8623,9 +9022,9 @@ inherited frmSocios: TfrmSocios
                 TabOrder = 4
               end
               object periocidad: TDBLookupComboBox
-                Left = 320
+                Left = 439
                 Top = 85
-                Width = 121
+                Width = 304
                 Height = 21
                 DataField = 'tipo_periodo_tasa'
                 DataSource = SocioProductos
@@ -8643,7 +9042,7 @@ inherited frmSocios: TfrmSocios
               object tasa: TDBEdit
                 Left = 79
                 Top = 85
-                Width = 138
+                Width = 278
                 Height = 21
                 DataField = 'tasa'
                 DataSource = SocioProductos
@@ -8658,7 +9057,7 @@ inherited frmSocios: TfrmSocios
               object estatusProducto: TDBLookupComboBox
                 Left = 79
                 Top = 118
-                Width = 138
+                Width = 278
                 Height = 21
                 DataField = 'estado'
                 DataSource = SocioProductos
@@ -8675,9 +9074,9 @@ inherited frmSocios: TfrmSocios
                 OnClick = estatusProductoClick
               end
               object DBEdit10: TDBEdit
-                Left = 595
+                Left = 697
                 Top = 21
-                Width = 41
+                Width = 46
                 Height = 21
                 DataField = 'plazo'
                 DataSource = SocioProductos
@@ -8689,13 +9088,202 @@ inherited frmSocios: TfrmSocios
                 ParentFont = False
                 TabOrder = 8
               end
+              object dblFinalidad: TDBLookupComboBox
+                Left = 439
+                Top = 118
+                Width = 304
+                Height = 21
+                DataField = 'finalidad'
+                DataSource = SocioProductos
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = []
+                KeyField = 'finalidad'
+                ListField = 'nombre'
+                ListSource = dtsFinalidades
+                ParentFont = False
+                TabOrder = 9
+              end
+            end
+            object GroupBox14: TGroupBox
+              AlignWithMargins = True
+              Left = 5
+              Top = 255
+              Width = 803
+              Height = 97
+              Align = alTop
+              Anchors = [akLeft, akTop, akRight, akBottom]
+              Caption = '       Garantia'
+              TabOrder = 0
+              object Image8: TImage
+                Left = 3
+                Top = -3
+                Width = 27
+                Height = 25
+                Picture.Data = {
+                  0954506E67496D61676589504E470D0A1A0A0000000D49484452000000320000
+                  003208060000001E3F88B1000004854944415478DAED997F685B5514C7CFB9EF
+                  D566305170C28454141D6CE01F130643A8E060834D5A101495BA35794906EAF0
+                  8F41CB9A6CC527FD91A813264C3BB4E94BE23AC10D1C2CA0D0C1FEE91F1B0C56
+                  5058FF98385CC1FDD13F024E4C6ADEBB9EFB9A8CB8A669EE4D9AA4A15F28B979
+                  7DEF9EFBB939F79C73EF43681361B307B009B209D2E2AA2B48E8FCA75EE75FA7
+                  0735D88B1CBC74C9CBC1FD148616E8638123FDD9708375B0F4E4E1130B2D03E2
+                  B73EDBAE69CE31E0D003C0774B9A9FA311A4355DFFF29BBE81C5A680F812232F
+                  68A8F751B38F3AD959CB203887791AC9059BE72F24FDC3BF350C24688DBF010C
+                  27A8B9BD168032BAEF003F6AF922E97505F15BA64743CF00CDE1003DF9449D21
+                  8A43CA909B7E61F3ECE9846166EB0E625E33F57B7F745AD43CBC3E002B74BEEB
+                  D99C61EE33F3750311BF04C3C74E23E2B10641B8E29C7FE5F0A5816A7E99AA40
+                  8289D829403ED24888129AE1B83F325A33486161FFD81488822800F4AE15002A
+                  828810ABA33E4DCDBDCD0421DDC8F3FC7B954273459080356622631F2B1ACF02
+                  E2653270D7B1ED1CF5F31499EB964F9A05ADE162AB82B8199B39B7A9872715CC
+                  CEDA4EAE971669E6D17F145CF53B6A6E95EB12335A87BE63B50A605590602A36
+                  42B3704A05A2734BEED0D76F9B0FC46430B00F22722FE5865FBB9E5B4A8B701A
+                  48C5BA91F36B74AF2EC782A3F1FEA161399064EC968A1BA0C6BA443118B2A2AF
+                  710633FF1B2CC2CFF1FEF021D10C25631739F0B7247B9F8BFB865EAE1A4454B1
+                  DC76EEC9429066E3BEF0AB85E4F9277DDFF6E80D540D1F98F285AF06ADB17781
+                  B1EF5527AA2A9080157D1F194CC81AE18EF3C99471D20C24A3FBA9E399F2F780
+                  316584134672BC87015E91B7011FD0F3E7AA0209A6A2164D9D5FD60869967ABC
+                  43CFBE48EDEE7237D80EDF953022F3CA6B102141EE695405124A4667C805F62B
+                  80541477F8F129237266D975F92F2A1191067C75D2173E502DC86D5EE31EA3A0
+                  45728541049EC10EEDA6F0EDA3D6D86E4E6B43B57F1AF03C81ECAA0A24988CFE
+                  05D271BEACEED2E27FBEF4422035BA8771FD847CC47AA807D4E7E38D06A1EC0E
+                  D7DD16C79BCCB1A7BF354ECE2DDB887DEEEE6BD613A48EAEB56210E0F0237123
+                  72F9C31FCCADB97F3A7F873221BA92A45C8B40AE1048CF3A80883CF213E591D7
+                  459BA2E325BAF0A624489A407AAB02510DBFE8C03E77B00CC4DEA57B95DBF254
+                  873D2DEAB0502A16A5CDD3909C1189F0AB9A1081C18EF891F09D3572C47DF2F1
+                  67DC094B4645F128B575964A883594281FD120CFFAADF19D1A43AAD5C0B3C220
+                  E299C9FEA1E3AE1D85B52855A22CCF9652D1789D405E719F776B296DA224E965
+                  09E29CB72B3B282A60B51245B2687407A2584214EB2DD1169169E9EF2D2F391A
+                  D73D9EEC9C28ED9721A307C90D2F826C885729E36BD95821E02574ECB162CE28
+                  CACDEA9AF60E2D70913FE4F622AA1B2BA11AB7BA42E4CBB808C8338542D2ABDC
+                  93EA5657A870BE3B8D1BFDF041A82D8E831EC2B4C3019D50B38E4C4967A90A18
+                  ACDB91A9505B1C6217D516AF154AB5E15FF494AAAEAFDE688F411F8D7FF556AA
+                  0DFF32B49C36F4EBE956D12648AB6913A4D5F41F8DD63F514CCC404A00000000
+                  49454E44AE426082}
+                Stretch = True
+              end
+              object garantia: TDBMemo
+                Left = 35
+                Top = 15
+                Width = 740
+                Height = 53
+                Align = alCustom
+                Color = clCream
+                DataField = 'garantias'
+                DataSource = SocioProductos
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = []
+                ParentFont = False
+                ScrollBars = ssVertical
+                TabOrder = 0
+              end
+            end
+            object GroupBox15: TGroupBox
+              AlignWithMargins = True
+              Left = 5
+              Top = 18
+              Width = 803
+              Height = 55
+              Align = alTop
+              Caption = '       Informaci'#243'n de la Cuenta'
+              TabOrder = 1
+              object Label45: TLabel
+                Left = 10
+                Top = 21
+                Width = 47
+                Height = 13
+                Caption = 'Producto:'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = []
+                ParentFont = False
+              end
+              object Image7: TImage
+                Left = 3
+                Top = -3
+                Width = 27
+                Height = 25
+                Picture.Data = {
+                  0954506E67496D61676589504E470D0A1A0A0000000D49484452000000320000
+                  003208060000001E3F88B10000033C4944415478DAED993F4C13511CC7DFEFEE
+                  14361DD1808B8BA302098B83E8642C899B0920D7D2E242220E35D202F14C8182
+                  C1448CC604DA5EDB00838B83755371602101746431214294C1C111B4773F7F57
+                  C13472D26BEFD1BBD67E93E6BDDCE5DEEFF7E9FBF77BBF07AC4A044E3B5003A9
+                  81B85C5C410273938DFA4FDD03226B03648DF4A81159AE340C6D51B185403F8D
+                  2D0BC7844CACFBDE966B40BCEAC30651D4FB19320F6378BE48F31FC9838C2849
+                  D3339DC16F8E80C8C9C85911A44EAA765223E7EC3881C8D6C993050DB30B29EF
+                  C8A7B281F8D5F1EB4C80E7546DB00360A26D9D619F2A8733470AE255957A11EA
+                  83F41F06E9CB139C21F65DFA4EC3F491863B53499FB2C31D445954A4CDCF752A
+                  55BB8F06E080E69ACEECFA947625CB0DC4E809018E4F01407F99207242C4673A
+                  FE085AE9194B20FEE4C430038C9413228F6624EE0D8FDA06D99BD82F1D81D813
+                  2D001D85168043418C255602699EAA6D4E829096B398ED3A6C693E14A4571D53
+                  4010EEDB74224B569618C2C9E237CC3C151862FF04F125C69A09621EC0DE6607
+                  0C5FC4E4F08D801ABD84025B2C9D83ADA3AE77A9BD436B4581F8D31311FA7AD8
+                  0E04294BB1D6D5841C7A6317E4B7B7301AEF191C290E2435F1C1D650606C8926
+                  E9E4FE24E50242B1595C1EBC6019C4886251D3374B31C440BB294A75DB7F0781
+                  7C40C88228349945CDE620E9F1DB88305DBC15F63EDE136A376D931708E240CC
+                  1B7E6209C49F8ACE1AB6ED1A354413F441C237A4F00221C5E272A8CF1A483A9A
+                  A1C0ED9A2B4180BDA65EF758020924C75711A0D98D2034B4D66868B55802A1A1
+                  F5858A536E04217DA5A175FABF0359A1A2A56093CE80AC1248AB2590402AFA8A
+                  76644FE136CB0F420E676272A8C31208EDEA33E4425FE166CB0F422ECFD2EE7E
+                  CB2AC800B9F0D8A5207708E4C0666D0AD29B1E6D055D5CA2B775AE0241B68B82
+                  7631D133BC62092407938ABEA59797DD0442F3F61D45D257CCDE1D7518CFB747
+                  4A09E373072B910E5676B3889C404A3E5819E274D4DD202B1B8E1D750DEDE577
+                  8D5EA9ECE483A1AA4807FD81A986049D21A752A6A4A79ABE7B975BCAD4505524
+                  B1F75515D70AF9AAF88B9E7C71BD7A636C9D8AF25FBDE5ABE22F43CD54D1D7D3
+                  6E510DC46DAA81B84DBF001C6AFD42C413DE7E0000000049454E44AE426082}
+                Stretch = True
+              end
+              object edTipoProducto: TDBLookupComboBox
+                Left = 79
+                Top = 18
+                Width = 278
+                Height = 21
+                DataField = 'subcuenta'
+                DataSource = SocioProductos
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = []
+                KeyField = 'subcuenta'
+                ListField = 'nombresubcuenta'
+                ListSource = dtsProductosCliente
+                ParentFont = False
+                TabOrder = 0
+                OnClick = edTipoProductoClick
+              end
+              object DBEdit1: TDBEdit
+                Left = 439
+                Top = 18
+                Width = 304
+                Height = 21
+                DataField = 'num_cuenta'
+                DataSource = SocioProductos
+                Enabled = False
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = []
+                ParentFont = False
+                ReadOnly = True
+                TabOrder = 1
+              end
             end
           end
           object ToolBar14: TToolBar
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 781
+            Width = 807
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -8752,18 +9340,18 @@ inherited frmSocios: TfrmSocios
           object pnFiadores: TPanel
             Left = 0
             Top = 0
-            Width = 787
-            Height = 384
+            Width = 813
+            Height = 409
             Align = alClient
             TabOrder = 0
             DesignSize = (
-              787
-              384)
+              813
+              409)
             object GroupBox12: TGroupBox
               Left = 1
               Top = 3
               Width = 238
-              Height = 378
+              Height = 403
               Align = alCustom
               Anchors = [akLeft, akTop, akBottom]
               Caption = 'Lista de Fiadores para el Pr'#233'stamo'
@@ -8775,11 +9363,10 @@ inherited frmSocios: TfrmSocios
               ParentFont = False
               TabOrder = 0
               object DBGrid5: TDBGrid
-                AlignWithMargins = True
-                Left = 5
-                Top = 18
-                Width = 228
-                Height = 355
+                Left = 2
+                Top = 15
+                Width = 234
+                Height = 386
                 Align = alClient
                 DataSource = dtsCuentaFiador
                 DrawingStyle = gdsGradient
@@ -8799,13 +9386,12 @@ inherited frmSocios: TfrmSocios
                     Font.Height = -11
                     Font.Name = 'Tahoma'
                     Font.Style = []
-                    Title.Alignment = taCenter
                     Title.Font.Charset = DEFAULT_CHARSET
                     Title.Font.Color = clGreen
                     Title.Font.Height = -11
                     Title.Font.Name = 'Tahoma'
                     Title.Font.Style = [fsBold]
-                    Width = 87
+                    Width = 89
                     Visible = True
                   end
                   item
@@ -8816,13 +9402,11 @@ inherited frmSocios: TfrmSocios
                     Font.Height = -11
                     Font.Name = 'Tahoma'
                     Font.Style = []
-                    Title.Alignment = taCenter
                     Title.Font.Charset = DEFAULT_CHARSET
                     Title.Font.Color = clGreen
                     Title.Font.Height = -11
                     Title.Font.Name = 'Tahoma'
                     Title.Font.Style = [fsBold]
-                    Width = 118
                     Visible = True
                   end>
               end
@@ -8830,8 +9414,8 @@ inherited frmSocios: TfrmSocios
             object PageControl3: TPageControl
               Left = 242
               Top = 5
-              Width = 541
-              Height = 376
+              Width = 567
+              Height = 401
               ActivePage = TabSheet11
               Anchors = [akLeft, akTop, akRight, akBottom]
               TabOrder = 1
@@ -8843,8 +9427,8 @@ inherited frmSocios: TfrmSocios
                   AlignWithMargins = True
                   Left = 3
                   Top = 44
-                  Width = 527
-                  Height = 301
+                  Width = 553
+                  Height = 326
                   Align = alClient
                   Caption = 'Informaci'#243'n del Fiador:'
                   Font.Charset = DEFAULT_CHARSET
@@ -8855,9 +9439,12 @@ inherited frmSocios: TfrmSocios
                   ParentFont = False
                   TabOrder = 0
                   OnMouseMove = GroupBox13MouseMove
+                  DesignSize = (
+                    553
+                    326)
                   object Label47: TLabel
-                    Left = 16
-                    Top = 37
+                    Left = 8
+                    Top = 38
                     Width = 34
                     Height = 13
                     Caption = 'Fiador:'
@@ -8869,11 +9456,11 @@ inherited frmSocios: TfrmSocios
                     ParentFont = False
                   end
                   object Label48: TLabel
-                    Left = 16
-                    Top = 64
-                    Width = 36
+                    Left = 8
+                    Top = 68
+                    Width = 41
                     Height = 13
-                    Caption = 'nombre'
+                    Caption = 'Nombre:'
                     FocusControl = DBEdit2
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clWindowText
@@ -8883,11 +9470,11 @@ inherited frmSocios: TfrmSocios
                     ParentFont = False
                   end
                   object Label49: TLabel
-                    Left = 207
-                    Top = 64
-                    Width = 36
+                    Left = 289
+                    Top = 68
+                    Width = 41
                     Height = 13
-                    Caption = 'apellido'
+                    Caption = 'Apellido:'
                     FocusControl = DBEdit3
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clWindowText
@@ -8897,8 +9484,8 @@ inherited frmSocios: TfrmSocios
                     ParentFont = False
                   end
                   object Label50: TLabel
-                    Left = 16
-                    Top = 94
+                    Left = 8
+                    Top = 99
                     Width = 37
                     Height = 13
                     Caption = 'Cedula:'
@@ -8911,8 +9498,8 @@ inherited frmSocios: TfrmSocios
                     ParentFont = False
                   end
                   object Label51: TLabel
-                    Left = 4
-                    Top = 123
+                    Left = 281
+                    Top = 99
                     Width = 49
                     Height = 13
                     Caption = 'Profesion:'
@@ -8925,27 +9512,71 @@ inherited frmSocios: TfrmSocios
                     ParentFont = False
                   end
                   object Label53: TLabel
-                    Left = 3
-                    Top = 166
-                    Width = 83
+                    Left = 8
+                    Top = 129
+                    Width = 73
                     Height = 13
-                    Caption = 'Telefono_Casa'
+                    Caption = 'Telefono Casa:'
                     FocusControl = DBEdit7
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
                   end
                   object Label54: TLabel
-                    Left = 3
-                    Top = 198
-                    Width = 75
+                    Left = 291
+                    Top = 129
+                    Width = 57
                     Height = 13
-                    Caption = 'telefono_Ofic'
+                    Anchors = [akTop]
+                    Caption = 'Telefono O:'
                     FocusControl = DBEdit9
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
+                    ExplicitLeft = 273
+                  end
+                  object Label126: TLabel
+                    Left = 9
+                    Top = 160
+                    Width = 41
+                    Height = 13
+                    Caption = 'Trabajo:'
+                    FocusControl = DBEdit7
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
+                  end
+                  object Label127: TLabel
+                    Left = 9
+                    Top = 186
+                    Width = 47
+                    Height = 13
+                    Caption = 'Direccion:'
+                    FocusControl = DBEdit7
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
                   end
                   object edFiador: TDBLookupComboBox
-                    Left = 65
-                    Top = 33
-                    Width = 345
+                    Left = 91
+                    Top = 34
+                    Width = 445
                     Height = 21
+                    Anchors = [akLeft, akTop, akRight]
                     DataField = 'cedula'
+                    DataSource = dts_mFiador
                     Enabled = False
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clWindowText
@@ -8959,9 +9590,9 @@ inherited frmSocios: TfrmSocios
                     TabOrder = 0
                   end
                   object DBEdit2: TDBEdit
-                    Left = 64
-                    Top = 61
-                    Width = 137
+                    Left = 91
+                    Top = 64
+                    Width = 176
                     Height = 21
                     DataField = 'Nombre'
                     DataSource = fiadores
@@ -8975,10 +9606,11 @@ inherited frmSocios: TfrmSocios
                     TabOrder = 1
                   end
                   object DBEdit3: TDBEdit
-                    Left = 254
-                    Top = 61
-                    Width = 154
+                    Left = 360
+                    Top = 64
+                    Width = 176
                     Height = 21
+                    Anchors = [akTop, akRight]
                     DataField = 'Apellido'
                     DataSource = fiadores
                     Font.Charset = DEFAULT_CHARSET
@@ -8991,9 +9623,9 @@ inherited frmSocios: TfrmSocios
                     TabOrder = 2
                   end
                   object DBEdit4: TDBEdit
-                    Left = 63
-                    Top = 91
-                    Width = 30
+                    Left = 91
+                    Top = 95
+                    Width = 49
                     Height = 21
                     DataField = 'ced1'
                     DataSource = fiadores
@@ -9007,9 +9639,9 @@ inherited frmSocios: TfrmSocios
                     TabOrder = 3
                   end
                   object DBEdit5: TDBEdit
-                    Left = 99
-                    Top = 91
-                    Width = 51
+                    Left = 146
+                    Top = 95
+                    Width = 56
                     Height = 21
                     DataField = 'ced2'
                     DataSource = fiadores
@@ -9023,9 +9655,9 @@ inherited frmSocios: TfrmSocios
                     TabOrder = 4
                   end
                   object DBEdit6: TDBEdit
-                    Left = 156
-                    Top = 91
-                    Width = 51
+                    Left = 210
+                    Top = 95
+                    Width = 56
                     Height = 21
                     DataField = 'ced3'
                     DataSource = fiadores
@@ -9039,12 +9671,13 @@ inherited frmSocios: TfrmSocios
                     TabOrder = 5
                   end
                   object DBEdit8: TDBEdit
-                    Left = 66
-                    Top = 118
-                    Width = 344
+                    Left = 360
+                    Top = 95
+                    Width = 176
                     Height = 21
+                    Anchors = [akTop, akRight]
                     DataField = 'profesion'
-                    DataSource = dtsCuentaFiador
+                    DataSource = fiadores
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clWindowText
                     Font.Height = -11
@@ -9055,29 +9688,78 @@ inherited frmSocios: TfrmSocios
                     TabOrder = 6
                   end
                   object DBEdit7: TDBEdit
-                    Left = 92
-                    Top = 161
-                    Width = 199
+                    Left = 91
+                    Top = 125
+                    Width = 176
                     Height = 21
                     DataField = 'Telefono_Casa'
                     DataSource = fiadores
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
+                    ReadOnly = True
                     TabOrder = 7
                   end
                   object DBEdit9: TDBEdit
-                    Left = 96
-                    Top = 192
-                    Width = 199
+                    Left = 360
+                    Top = 125
+                    Width = 176
                     Height = 21
+                    Anchors = [akTop, akRight]
                     DataField = 'telefono_Ofic'
                     DataSource = fiadores
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
+                    ReadOnly = True
                     TabOrder = 8
+                  end
+                  object DBEdit19: TDBEdit
+                    Left = 91
+                    Top = 156
+                    Width = 445
+                    Height = 21
+                    Anchors = [akLeft, akTop, akRight]
+                    DataField = 'Trabajo'
+                    DataSource = fiadores
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
+                    ReadOnly = True
+                    TabOrder = 9
+                  end
+                  object DBEdit20: TDBEdit
+                    Left = 91
+                    Top = 186
+                    Width = 445
+                    Height = 21
+                    Anchors = [akLeft, akTop, akRight]
+                    DataField = 'Direccion'
+                    DataSource = fiadores
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clWindowText
+                    Font.Height = -11
+                    Font.Name = 'Tahoma'
+                    Font.Style = []
+                    ParentFont = False
+                    ReadOnly = True
+                    TabOrder = 10
                   end
                 end
                 object ToolBar15: TToolBar
                   AlignWithMargins = True
                   Left = 3
                   Top = 3
-                  Width = 527
+                  Width = 553
                   Height = 35
                   BorderWidth = 1
                   ButtonHeight = 30
@@ -9119,8 +9801,8 @@ inherited frmSocios: TfrmSocios
           object GroupBox9: TGroupBox
             Left = 0
             Top = 0
-            Width = 787
-            Height = 384
+            Width = 813
+            Height = 409
             Align = alTop
             Anchors = [akLeft, akTop, akRight, akBottom]
             Caption = 'Movimientos de la Cuenta'
@@ -9134,7 +9816,7 @@ inherited frmSocios: TfrmSocios
             object Panel1: TPanel
               Left = 2
               Top = 15
-              Width = 783
+              Width = 809
               Height = 58
               Align = alTop
               TabOrder = 0
@@ -9284,16 +9966,16 @@ inherited frmSocios: TfrmSocios
             end
             object StatusBar3: TStatusBar
               Left = 2
-              Top = 355
-              Width = 783
+              Top = 380
+              Width = 809
               Height = 27
               Panels = <>
             end
             object gMovimientos: TDBGrid
               Left = 2
               Top = 73
-              Width = 783
-              Height = 282
+              Width = 809
+              Height = 307
               Align = alClient
               Color = clWhite
               DataSource = dts_mMovimientos
@@ -9577,8 +10259,8 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 44
-            Width = 781
-            Height = 337
+            Width = 807
+            Height = 362
             Align = alClient
             TabOrder = 0
             object Label96: TLabel
@@ -9592,8 +10274,8 @@ inherited frmSocios: TfrmSocios
               AlignWithMargins = True
               Left = 5
               Top = 18
-              Width = 771
-              Height = 314
+              Width = 797
+              Height = 339
               Align = alClient
               DataSource = DataModulo1.dtsProductoPlanPago
               DrawingStyle = gdsGradient
@@ -9650,7 +10332,7 @@ inherited frmSocios: TfrmSocios
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 781
+            Width = 807
             Height = 35
             BorderWidth = 1
             ButtonHeight = 30
@@ -9709,7 +10391,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 789
+        Width = 815
         Height = 29
         BorderWidth = 1
         ButtonHeight = 30
@@ -9739,8 +10421,8 @@ inherited frmSocios: TfrmSocios
       object CategoryPanelGroup1: TCategoryPanelGroup
         Left = 0
         Top = 35
-        Width = 795
-        Height = 543
+        Width = 821
+        Height = 568
         VertScrollBar.Tracking = True
         Align = alClient
         GradientBaseColor = clGreen
@@ -9760,7 +10442,7 @@ inherited frmSocios: TfrmSocios
           object ToolBar13: TToolBar
             Left = 0
             Top = 0
-            Width = 791
+            Width = 817
             Height = 29
             BorderWidth = 1
             ButtonHeight = 30
@@ -9785,7 +10467,7 @@ inherited frmSocios: TfrmSocios
           object ToolBar12: TToolBar
             Left = 0
             Top = 0
-            Width = 791
+            Width = 817
             Height = 29
             BorderWidth = 1
             ButtonHeight = 30
@@ -9816,7 +10498,7 @@ inherited frmSocios: TfrmSocios
           object ToolBar11: TToolBar
             Left = 0
             Top = 0
-            Width = 791
+            Width = 817
             Height = 29
             BorderWidth = 1
             ButtonHeight = 30
@@ -9842,7 +10524,7 @@ inherited frmSocios: TfrmSocios
       object DBGrid3: TDBGrid
         Left = 0
         Top = 35
-        Width = 789
+        Width = 815
         Height = 107
         Align = alTop
         TabOrder = 0
@@ -9880,7 +10562,7 @@ inherited frmSocios: TfrmSocios
       object GroupBox6: TGroupBox
         Left = 0
         Top = 142
-        Width = 789
+        Width = 815
         Height = 134
         Align = alTop
         Caption = 'Caracteristicas:'
@@ -9940,7 +10622,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 783
+        Width = 809
         Height = 29
         BorderWidth = 1
         ButtonHeight = 30
@@ -9980,7 +10662,7 @@ inherited frmSocios: TfrmSocios
         Left = 3
         Top = 34
         Width = 262
-        Height = 476
+        Height = 501
         Align = alCustom
         Anchors = [akLeft, akTop, akBottom]
         DataSource = dtsCuentaFiadores
@@ -10009,8 +10691,8 @@ inherited frmSocios: TfrmSocios
       object Mantenimiento: TGroupBox
         Left = 263
         Top = 34
-        Width = 529
-        Height = 476
+        Width = 555
+        Height = 501
         Hint = 
           'Vacaciones|Establece aqui los periodos de gracia (No Facturacion' +
           ')| 47'
@@ -10065,8 +10747,8 @@ inherited frmSocios: TfrmSocios
         object GroupBox5: TGroupBox
           Left = 8
           Top = 56
-          Width = 518
-          Height = 417
+          Width = 544
+          Height = 442
           Align = alCustom
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Observacion:'
@@ -10077,7 +10759,7 @@ inherited frmSocios: TfrmSocios
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 789
+        Width = 815
         Height = 35
         BorderWidth = 1
         ButtonHeight = 30
@@ -10106,13 +10788,13 @@ inherited frmSocios: TfrmSocios
       end
     end
     object ts_ApoyoLentes: TTabSheet
-      Caption = 'Apoyo Lentes'
+      Caption = 'Apoyos'
       ImageIndex = 9
       object grp_apoyoLentes: TGroupBox
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 789
+        Width = 815
         Height = 182
         Align = alTop
         TabOrder = 0
@@ -10141,7 +10823,7 @@ inherited frmSocios: TfrmSocios
           AlignWithMargins = True
           Left = 5
           Top = 18
-          Width = 779
+          Width = 805
           Height = 35
           BorderWidth = 1
           ButtonHeight = 30
@@ -10197,8 +10879,9 @@ inherited frmSocios: TfrmSocios
           DataField = 'monto'
           DataSource = dts_SocioApoyoLentes
           TabOrder = 1
+          OnEnter = DBEdit12Enter
         end
-        object DBMemo2: TDBMemo
+        object db_Nota: TDBMemo
           AlignWithMargins = True
           Left = 3
           Top = 81
@@ -10207,6 +10890,7 @@ inherited frmSocios: TfrmSocios
           DataField = 'nota'
           DataSource = dts_SocioApoyoLentes
           TabOrder = 2
+          OnEnter = db_NotaEnter
         end
         object dp_FechaApoyoLentes: TDateTimePicker
           Left = 343
@@ -10217,6 +10901,7 @@ inherited frmSocios: TfrmSocios
           Time = 42957.488233414360000000
           DateFormat = dfLong
           TabOrder = 3
+          OnEnter = dp_FechaApoyoLentesEnter
         end
         object DBLookupComboBox3: TDBLookupComboBox
           Left = 80
@@ -10229,24 +10914,25 @@ inherited frmSocios: TfrmSocios
           ListField = 'Descripcion'
           ListSource = dts_tipoApoyo
           TabOrder = 4
+          OnEnter = DBLookupComboBox3Enter
         end
       end
       object GroupBox23: TGroupBox
         Left = 0
         Top = 188
-        Width = 795
-        Height = 387
+        Width = 821
+        Height = 412
         Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 1
         DesignSize = (
-          795
-          387)
+          821
+          412)
         object ToolBar26: TToolBar
           AlignWithMargins = True
           Left = 5
           Top = 18
-          Width = 785
+          Width = 811
           Height = 35
           BorderWidth = 1
           ButtonHeight = 30
@@ -10297,9 +10983,9 @@ inherited frmSocios: TfrmSocios
         end
         object DBImage2: TDBImage
           Left = 313
-          Top = 58
+          Top = 59
           Width = 474
-          Height = 326
+          Height = 351
           Anchors = [akLeft, akTop, akBottom]
           DataField = 'imagen'
           DataSource = dts_SocioApoyoDoc
@@ -10313,12 +10999,12 @@ inherited frmSocios: TfrmSocios
           Left = 5
           Top = 58
           Width = 303
-          Height = 326
+          Height = 351
           Anchors = [akLeft, akTop, akBottom]
           TabOrder = 2
           DesignSize = (
             303
-            326)
+            351)
           object Label115: TLabel
             Left = 3
             Top = 26
@@ -10358,7 +11044,7 @@ inherited frmSocios: TfrmSocios
             Left = 3
             Top = 131
             Width = 295
-            Height = 190
+            Height = 215
             Anchors = [akLeft, akTop, akRight, akBottom]
             DataField = 'nota'
             DataSource = dts_SocioApoyoDoc
@@ -10369,10 +11055,10 @@ inherited frmSocios: TfrmSocios
     end
   end
   object GroupBox3: TGroupBox
-    Left = 0
-    Top = 4
-    Width = 295
-    Height = 604
+    Left = 4
+    Top = 3
+    Width = 299
+    Height = 636
     Align = alCustom
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Listado de Socios'
@@ -10380,8 +11066,8 @@ inherited frmSocios: TfrmSocios
     object dbgSocios: TDBGrid
       Left = 2
       Top = 44
-      Width = 291
-      Height = 558
+      Width = 295
+      Height = 590
       Align = alClient
       DataSource = Socios
       ReadOnly = True
@@ -10402,6 +11088,7 @@ inherited frmSocios: TfrmSocios
           Title.Font.Height = -11
           Title.Font.Name = 'Tahoma'
           Title.Font.Style = [fsBold]
+          Width = 50
           Visible = True
         end
         item
@@ -10413,7 +11100,7 @@ inherited frmSocios: TfrmSocios
           Title.Font.Height = -11
           Title.Font.Name = 'Tahoma'
           Title.Font.Style = [fsBold]
-          Width = 98
+          Width = 90
           Visible = True
         end
         item
@@ -10425,13 +11112,14 @@ inherited frmSocios: TfrmSocios
           Title.Font.Height = -11
           Title.Font.Name = 'Tahoma'
           Title.Font.Style = [fsBold]
+          Width = 122
           Visible = True
         end>
     end
     object ToolBar7: TToolBar
       Left = 2
       Top = 15
-      Width = 291
+      Width = 295
       Height = 29
       BorderWidth = 1
       Caption = 'ToolBar1'
@@ -10440,7 +11128,7 @@ inherited frmSocios: TfrmSocios
       Images = DataModulo1.ImageList2
       TabOrder = 1
       DesignSize = (
-        287
+        291
         25)
       object ToolButton7: TToolButton
         Left = 0
@@ -10492,107 +11180,106 @@ inherited frmSocios: TfrmSocios
   object Socios: TDataSource
     DataSet = DataModulo1.tblSocios
     OnDataChange = SociosDataChange
-    Left = 32
+    Left = 8
     Top = 88
   end
   object tipoPersona: TDataSource
     DataSet = DataModulo1.tipoPersona
-    Left = 224
-    Top = 288
+    Left = 216
+    Top = 144
   end
   object tipoDocumento: TDataSource
     DataSet = DataModulo1.tipoDocumento
-    Left = 224
-    Top = 344
+    Left = 216
+    Top = 304
   end
   object Paises: TDataSource
     DataSet = DataModulo1.paises2
     OnDataChange = PaisesDataChange
-    Left = 24
-    Top = 488
+    Left = 16
+    Top = 416
   end
   object Correos: TDataSource
     DataSet = DataModulo1.SociosCorreos
-    Left = 24
-    Top = 152
+    Left = 8
+    Top = 144
   end
   object TipoTelefono: TDataSource
-    DataSet = DataModulo1.TipoTelefono
-    Left = 144
-    Top = 344
+    DataSet = DataModulo1.tipotelefono
+    Left = 216
+    Top = 248
   end
   object Telefonos: TDataSource
-    DataSet = DataModulo1.socioTelefonos
-    Left = 144
-    Top = 288
+    DataSet = DataModulo1.SocioTelefonos
+    Left = 216
+    Top = 200
   end
   object profesiones: TDataSource
     DataSet = DataModulo1.profesiones
-    Left = 152
-    Top = 232
+    Left = 104
+    Top = 144
   end
   object cargos: TDataSource
     DataSet = DataModulo1.cargos
-    Left = 112
-    Top = 104
+    Left = 56
+    Top = 144
   end
   object Herederos: TDataSource
     DataSet = DataModulo1.socioHerederos
-    Left = 240
-    Top = 96
+    Left = 456
+    Top = 240
   end
   object Direcciones: TDataSource
-    DataSet = DataModulo1.socioDireccion
+    DataSet = DataModulo1.SocioDireccion
     OnDataChange = DireccionesDataChange
-    Left = 248
-    Top = 552
+    Left = 176
+    Top = 560
   end
   object dtsParentezco: TDataSource
     DataSet = DataModulo1.Parentezco
-    Left = 184
-    Top = 152
+    Left = 152
+    Top = 144
   end
   object estatus: TDataSource
     DataSet = DataModulo1.estatus
-    Left = 184
-    Top = 104
+    Left = 192
+    Top = 88
   end
   object dtsCias: TDataSource
     DataSet = DataModulo1.MantCompany
-    OnDataChange = SociosDataChange
-    Left = 40
-    Top = 400
+    Left = 128
+    Top = 216
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 932
-    Top = 389
+    Left = 540
+    Top = 573
   end
   object dtsSocioDoc: TDataSource
     DataSet = DataModulo1.SocioDoc
     OnDataChange = dtsSocioDocDataChange
-    Left = 32
-    Top = 304
+    Left = 56
+    Top = 88
   end
   object SocioProductos: TDataSource
     DataSet = DataModulo1.SocioProductos
     OnDataChange = SocioProductosDataChange
-    Left = 1068
-    Top = 120
+    Left = 956
   end
   object dtsProductos: TDataSource
     DataSet = DataModulo1.productos
-    Left = 196
-    Top = 402
+    Left = 212
+    Top = 362
   end
   object dts_mMovimientos: TDataSource
     DataSet = mMovimientos
-    Left = 378
-    Top = 441
+    Left = 829
+    Top = 582
   end
   object ppmImagen: TPopupMenu
-    Left = 644
-    Top = 360
-    object Copiar1: TMenuItem
+    Images = DataModulo1.ImageList2
+    Left = 452
+    Top = 568
+    object docCopiar: TMenuItem
       Bitmap.Data = {
         F6000000424DF600000000000000760000002800000010000000100000000100
         0400000000008000000000000000000000001000000000000000000000000000
@@ -10603,12 +11290,12 @@ inherited frmSocios: TfrmSocios
         51550FFF0F0BFB4551550FFF00BFBF45515500000BF4444551555554BFB4B455
         51555554FBF44555515555544444555551555555555555555555}
       Caption = 'Copiar'
-      OnClick = Copiar1Click
+      OnClick = docCopiarClick
     end
     object N1: TMenuItem
       Caption = '-'
     end
-    object Imprimir1: TMenuItem
+    object docPegar: TMenuItem
       Bitmap.Data = {
         F6000000424DF600000000000000760000002800000010000000100000000100
         0400000000008000000000000000000000001000000000000000000000000000
@@ -10619,40 +11306,40 @@ inherited frmSocios: TfrmSocios
         77707F88AA8887708770577F88877FF0800555577F7FFFFF05555555577FFFFF
         F05555555557FFFFFF00555555557FFF77555555555557775555}
       Caption = 'Pegar'
-      OnClick = Imprimir1Click
+      OnClick = docPegarClick
     end
   end
   object dtsTipoCliente: TDataSource
     DataSet = DataModulo1.SocioSecuencial
-    Left = 104
-    Top = 402
+    Left = 216
+    Top = 418
   end
   object dtsCuentaFiadores: TDataSource
     DataSet = DataModulo1.mFiadores
-    Left = 986
-    Top = 75
+    Left = 1010
+    Top = 131
   end
   object fiadores: TDataSource
     DataSet = DataModulo1.Fiadores
-    Left = 887
-    Top = 33
+    Left = 23
+    Top = 273
   end
   object dtsProductosCliente: TDataSource
     DataSet = DataModulo1.ProductosCliente
     OnDataChange = dtsProductosClienteDataChange
-    Left = 485
-    Top = 514
+    Left = 213
+    Top = 530
   end
   object dtsFinalidades: TDataSource
     DataSet = DataModulo1.Finalidad
-    Left = 236
-    Top = 458
+    Left = 244
+    Top = 562
   end
   object dtsCuentaFiador: TDataSource
     DataSet = DataModulo1.CuentaFiadores
     OnDataChange = dtsCuentaFiadorDataChange
-    Left = 505
-    Top = 440
+    Left = 97
+    Top = 280
   end
   object mFiador: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -10661,8 +11348,8 @@ inherited frmSocios: TfrmSocios
     ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
-    Left = 905
-    Top = 257
+    Left = 33
+    Top = 215
     object mFiadorcuenta: TStringField
       FieldName = 'cuenta'
       Size = 12
@@ -10682,8 +11369,8 @@ inherited frmSocios: TfrmSocios
     UpdateOptions.AssignedValues = [uvCheckRequired]
     UpdateOptions.CheckRequired = False
     StoreDefs = True
-    Left = 624
-    Top = 288
+    Left = 720
+    Top = 168
     object mMovimientostipo_documento: TWideStringField
       FieldName = 'tipo_documento'
       Origin = 'tipo_documento'
@@ -10790,87 +11477,86 @@ inherited frmSocios: TfrmSocios
   end
   object dtstipoPlanilla: TDataSource
     DataSet = DataModulo1.tipoPlanilla
-    Left = 188
-    Top = 535
+    Left = 108
+    Top = 567
   end
   object dtsPeriocidad: TDataSource
     DataSet = DataModulo1.periocidad
-    Left = 1019
-    Top = 236
+    Left = 667
+    Top = 268
   end
   object dtsEstatus: TDataSource
     DataSet = DataModulo1.estatusProducto
-    Left = 786
-    Top = 561
+    Left = 940
+    Top = 430
   end
   object dtsSocioNacionalidades: TDataSource
     DataSet = DataModulo1.socioNacionalidades
-    Left = 1064
-    Top = 24
+    Left = 656
+    Top = 208
   end
   object dtspaises2: TDataSource
     DataSet = DataModulo1.paises2
-    OnDataChange = dtspaises2DataChange
-    Left = 788
-    Top = 248
+    Left = 364
+    Top = 232
   end
   object dtsProvincias: TDataSource
     DataSet = DataModulo1.provinciasTodas
     OnDataChange = PaisesDataChange
-    Left = 64
-    Top = 512
+    Left = 24
+    Top = 480
   end
   object dtsDistritos2: TDataSource
     DataSet = DataModulo1.Distritos2
     OnDataChange = PaisesDataChange
-    Left = 16
-    Top = 544
+    Left = 88
+    Top = 480
   end
   object corregimientoSocio: TDataSource
     DataSet = DataModulo1.corregimientoSocio
-    Left = 130
-    Top = 498
+    Left = 82
+    Top = 418
   end
   object dtsBarriosSocio: TDataSource
     DataSet = DataModulo1.BarriosSocio
-    Left = 130
-    Top = 546
+    Left = 34
+    Top = 570
   end
   object dtsSocioPasatiempo: TDataSource
     DataSet = DataModulo1.socioPasatiempo
-    Left = 181
-    Top = 473
+    Left = 213
+    Top = 481
   end
   object dtsSocioGrupo: TDataSource
     DataSet = DataModulo1.socioComunidad
-    Left = 549
-    Top = 312
+    Left = 461
+    Top = 400
   end
   object dtsSocioAsociaciones: TDataSource
     DataSet = DataModulo1.socioAsociaciones
-    Left = 672
-    Top = 520
+    Left = 32
+    Top = 360
   end
   object dts_SocioApoyoLentes: TDataSource
     DataSet = DataModulo1.socioApoyoLentes
     OnDataChange = dts_SocioApoyoLentesDataChange
-    Left = 608
-    Top = 120
+    Left = 576
+    Top = 144
   end
   object dts_tipoApoyo: TDataSource
     DataSet = DataModulo1.tipoApoyo
-    Left = 732
-    Top = 125
+    Left = 908
+    Top = 269
   end
   object dts_SocioApoyoDoc: TDataSource
     DataSet = DataModulo1.socioApoyoDoc
     OnDataChange = dts_SocioApoyoDocDataChange
-    Left = 836
-    Top = 125
+    Left = 1044
+    Top = 438
   end
   object ppm_Facturas: TPopupMenu
-    Left = 716
-    Top = 360
+    Left = 652
+    Top = 568
     object MenuItem1: TMenuItem
       Bitmap.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -10936,5 +11622,833 @@ inherited frmSocios: TfrmSocios
       Caption = 'Pegar'
       OnClick = Pegar1Click
     end
+  end
+  object dtsTipoDireccion: TDataSource
+    DataSet = DataModulo1.tipoDireccion
+    Left = 383
+    Top = 558
+  end
+  object tipoResidencia: TDataSource
+    DataSet = DataModulo1.tipoResidencia
+    Left = 758
+    Top = 582
+  end
+  object BalloonHint1: TBalloonHint
+    Images = DataModulo1.ImageList2
+    HideAfter = 1000
+    Left = 699
+    Top = 53
+  end
+  object dts_mFiador: TDataSource
+    DataSet = mFiador
+    Left = 72
+    Top = 212
+  end
+  object socioInsertar: TFDQuery
+    Connection = DataModulo1.cnn2
+    Left = 129
+    Top = 96
+  end
+  object mSocio: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    Left = 105
+    Top = 24
+    object mSociosocio: TIntegerField
+      FieldName = 'socio'
+      Origin = 'socio'
+    end
+    object mSociotipoCliente: TIntegerField
+      FieldName = 'tipoCliente'
+      Origin = 'tipoCliente'
+    end
+    object mSocioidSocio: TIntegerField
+      FieldName = 'idSocio'
+      Origin = 'idSocio'
+      Required = True
+    end
+    object mSocioidAhorrista: TIntegerField
+      FieldName = 'idAhorrista'
+      Origin = 'idAhorrista'
+    end
+    object mSocionombre: TWideStringField
+      FieldName = 'nombre'
+      Origin = 'nombre'
+      Size = 30
+    end
+    object mSociosegundoNombre: TStringField
+      FieldName = 'segundoNombre'
+      Origin = 'segundoNombre'
+      Size = 50
+    end
+    object mSociosegundoApellido: TStringField
+      FieldName = 'segundoApellido'
+      Origin = 'segundoApellido'
+      Size = 50
+    end
+    object mSocioapellidoCasada: TStringField
+      FieldName = 'apellidoCasada'
+      Origin = 'apellidoCasada'
+      Size = 50
+    end
+    object mSocionombreCompleto: TStringField
+      FieldName = 'nombreCompleto'
+      Origin = 'nombreCompleto'
+      Size = 100
+    end
+    object mSocioapellido: TWideStringField
+      FieldName = 'apellido'
+      Origin = 'apellido'
+      Size = 30
+    end
+    object mSociodireccion: TWideStringField
+      FieldName = 'direccion'
+      Origin = 'direccion'
+      Size = 100
+    end
+    object mSocioidTipoPersona: TStringField
+      FieldName = 'idTipoPersona'
+      Origin = 'idTipoPersona'
+      Size = 3
+    end
+    object mSocioidTipoDoc: TStringField
+      FieldName = 'idTipoDoc'
+      Origin = 'idTipoDoc'
+      Size = 2
+    end
+    object mSociocedL: TStringField
+      FieldName = 'cedL'
+      Origin = 'cedL'
+      Size = 2
+    end
+    object mSocioced1: TWideStringField
+      FieldName = 'ced1'
+      Origin = 'ced1'
+      Size = 2
+    end
+    object mSocioced2: TIntegerField
+      FieldName = 'ced2'
+      Origin = 'ced2'
+    end
+    object mSocioced3: TIntegerField
+      FieldName = 'ced3'
+      Origin = 'ced3'
+    end
+    object mSocioactivo: TWideStringField
+      FieldName = 'activo'
+      Origin = 'activo'
+      Size = 1
+    end
+    object mSociofecha_ingreso: TSQLTimeStampField
+      FieldName = 'fecha_ingreso'
+      Origin = 'fecha_ingreso'
+    end
+    object mSociofecha_salida: TSQLTimeStampField
+      FieldName = 'fecha_salida'
+      Origin = 'fecha_salida'
+    end
+    object mSociosexo: TWideStringField
+      FieldName = 'sexo'
+      Origin = 'sexo'
+      Size = 1
+    end
+    object mSociofecha_nacimiento: TSQLTimeStampField
+      FieldName = 'fecha_nacimiento'
+      Origin = 'fecha_nacimiento'
+    end
+    object mSocionDia: TIntegerField
+      FieldName = 'nDia'
+      Origin = 'nDia'
+    end
+    object mSocionMes: TIntegerField
+      FieldName = 'nMes'
+      Origin = 'nMes'
+    end
+    object mSocionAno: TIntegerField
+      FieldName = 'nAno'
+      Origin = 'nAno'
+    end
+    object mSociotelefono_casa: TWideStringField
+      FieldName = 'telefono_casa'
+      Origin = 'telefono_casa'
+      Size = 15
+    end
+    object mSociotelefono_oficina: TWideStringField
+      FieldName = 'telefono_oficina'
+      Origin = 'telefono_oficina'
+      Size = 15
+    end
+    object mSocioidProfesion: TIntegerField
+      FieldName = 'idProfesion'
+      Origin = 'idProfesion'
+    end
+    object mSocioidCargo: TIntegerField
+      FieldName = 'idCargo'
+      Origin = 'idCargo'
+    end
+    object mSociofoto: TWideStringField
+      FieldName = 'foto'
+      Origin = 'foto'
+      Size = 50
+    end
+    object mSociofecha_aud: TSQLTimeStampField
+      FieldName = 'fecha_aud'
+      Origin = 'fecha_aud'
+    end
+    object mSociousuario: TWideStringField
+      FieldName = 'usuario'
+      Origin = 'usuario'
+      Size = 10
+    end
+    object mSocioidCia: TIntegerField
+      FieldName = 'idCia'
+      Origin = 'idCia'
+    end
+    object mSocioidSucursal: TIntegerField
+      FieldName = 'idSucursal'
+      Origin = 'idSucursal'
+    end
+    object mSocioidReferidoPor: TIntegerField
+      FieldName = 'idReferidoPor'
+      Origin = 'idReferidoPor'
+    end
+    object mSociofechaRegistro: TSQLTimeStampField
+      FieldName = 'fechaRegistro'
+      Origin = 'fechaRegistro'
+    end
+    object mSociofechaActivacion: TSQLTimeStampField
+      FieldName = 'fechaActivacion'
+      Origin = 'fechaActivacion'
+    end
+    object mSociofechaDesactivacion: TSQLTimeStampField
+      FieldName = 'fechaDesactivacion'
+      Origin = 'fechaDesactivacion'
+    end
+    object mSocioSocioCodigo: TStringField
+      FieldName = 'SocioCodigo'
+      Origin = 'SocioCodigo'
+      Size = 10
+    end
+    object mSocioSocioPass: TMemoField
+      FieldName = 'SocioPass'
+      Origin = 'SocioPass'
+      BlobType = ftMemo
+      Size = 2147483647
+    end
+    object mSocioidGrupoEco: TIntegerField
+      FieldName = 'idGrupoEco'
+      Origin = 'idGrupoEco'
+    end
+    object mSocioidEtnia: TIntegerField
+      FieldName = 'idEtnia'
+      Origin = 'idEtnia'
+    end
+    object mSocioidSectorEco: TIntegerField
+      FieldName = 'idSectorEco'
+      Origin = 'idSectorEco'
+    end
+    object mSocioidNacionalidad: TStringField
+      FieldName = 'idNacionalidad'
+      Origin = 'idNacionalidad'
+      Size = 3
+    end
+    object mSocioidIdioma: TIntegerField
+      FieldName = 'idIdioma'
+      Origin = 'idIdioma'
+    end
+    object mSociofechaCambioPass: TSQLTimeStampField
+      FieldName = 'fechaCambioPass'
+      Origin = 'fechaCambioPass'
+    end
+    object mSociofechaParaCambiar: TSQLTimeStampField
+      FieldName = 'fechaParaCambiar'
+      Origin = 'fechaParaCambiar'
+    end
+    object mSocioexonerado: TBooleanField
+      FieldName = 'exonerado'
+      Origin = 'exonerado'
+    end
+    object mSocioingresoMensual: TBCDField
+      FieldName = 'ingresoMensual'
+      Origin = 'ingresoMensual'
+      DisplayFormat = '#,##0.00'
+      EditFormat = '##0.00'
+      Precision = 18
+      Size = 2
+    end
+    object mSocioEstatus: TStringField
+      FieldName = 'Estatus'
+      Origin = 'Estatus'
+      Size = 1
+    end
+    object mSociofechaSalida: TSQLTimeStampField
+      FieldName = 'fechaSalida'
+      Origin = 'fechaSalida'
+    end
+    object mSociofechaSocio: TSQLTimeStampField
+      FieldName = 'fechaSocio'
+      Origin = 'fechaSocio'
+    end
+    object mSociofechaAhorrista: TSQLTimeStampField
+      FieldName = 'fechaAhorrista'
+      Origin = 'fechaAhorrista'
+    end
+    object mSocioimagen: TBlobField
+      FieldName = 'imagen'
+      Origin = 'imagen'
+    end
+    object mSocioidEmpresa: TIntegerField
+      FieldName = 'idEmpresa'
+      Origin = 'idEmpresa'
+    end
+    object mSociopasaporteRuc: TStringField
+      FieldName = 'pasaporteRuc'
+      Origin = 'pasaporteRuc'
+      Size = 50
+    end
+    object mSocioguidSocio: TStringField
+      FieldName = 'guidSocio'
+      Origin = 'guidSocio'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 50
+    end
+    object mSocioesAhorrista: TBooleanField
+      FieldName = 'esAhorrista'
+      Origin = 'esAhorrista'
+    end
+    object mSocioesSocio: TBooleanField
+      FieldName = 'esSocio'
+      Origin = 'esSocio'
+    end
+    object mSocioesProveedor: TBooleanField
+      FieldName = 'esProveedor'
+      Origin = 'esProveedor'
+    end
+    object mSocioesPEP: TBooleanField
+      FieldName = 'esPEP'
+      Origin = 'esPEP'
+    end
+    object mSocioesRiesgo: TBooleanField
+      FieldName = 'esRiesgo'
+      Origin = 'esRiesgo'
+    end
+    object mSocioestadoCivil: TIntegerField
+      FieldName = 'estadoCivil'
+      Origin = 'estadoCivil'
+    end
+    object mSociopaisNacimiento: TStringField
+      FieldName = 'paisNacimiento'
+      Origin = 'paisNacimiento'
+      Size = 3
+    end
+    object mSociopaisResidencia: TStringField
+      FieldName = 'paisResidencia'
+      Origin = 'paisResidencia'
+      Size = 3
+    end
+    object mSociopaisPasaporte: TStringField
+      FieldName = 'paisPasaporte'
+      Origin = 'paisPasaporte'
+      Size = 3
+    end
+    object mSociofechaExpiracionDocumento: TDateField
+      FieldName = 'fechaExpiracionDocumento'
+      Origin = 'fechaExpiracionDocumento'
+    end
+    object mSocioesInstitucion: TBooleanField
+      FieldName = 'esInstitucion'
+      Origin = 'esInstitucion'
+    end
+    object mSocioesDependiente: TBooleanField
+      FieldName = 'esDependiente'
+      Origin = 'esDependiente'
+    end
+    object mSocioref_per_nombre: TStringField
+      FieldName = 'ref_per_nombre'
+      Origin = 'ref_per_nombre'
+      Size = 30
+    end
+    object mSocioref_per_telefono: TStringField
+      FieldName = 'ref_per_telefono'
+      Origin = 'ref_per_telefono'
+      Size = 15
+    end
+    object mSocioref_per_direccion: TStringField
+      FieldName = 'ref_per_direccion'
+      Origin = 'ref_per_direccion'
+      Size = 100
+    end
+    object mSocioref_fam_nombre: TStringField
+      FieldName = 'ref_fam_nombre'
+      Origin = 'ref_fam_nombre'
+      Size = 30
+    end
+    object mSocioref_fam_telefono: TStringField
+      FieldName = 'ref_fam_telefono'
+      Origin = 'ref_fam_telefono'
+      Size = 15
+    end
+    object mSocioref_fam_direccion: TStringField
+      FieldName = 'ref_fam_direccion'
+      Origin = 'ref_fam_direccion'
+      Size = 100
+    end
+    object mSocioseguro_Social: TStringField
+      FieldName = 'seguro_Social'
+      Origin = 'seguro_Social'
+    end
+    object mSociolugar_trabajo: TStringField
+      FieldName = 'lugar_trabajo'
+      Origin = 'lugar_trabajo'
+      Size = 100
+    end
+    object mSocioObservacion: TMemoField
+      FieldName = 'Observacion'
+      Origin = 'Observacion'
+      BlobType = ftMemo
+      Size = 2147483647
+    end
+    object mSociodireccion_trabajo: TStringField
+      FieldName = 'direccion_trabajo'
+      Origin = 'direccion_trabajo'
+      Size = 200
+    end
+    object mSocioprovincia: TStringField
+      FieldName = 'provincia'
+      Origin = 'provincia'
+      Size = 50
+    end
+    object mSociodistrito: TStringField
+      FieldName = 'distrito'
+      Origin = 'distrito'
+      Size = 50
+    end
+    object mSociocorregimiento: TStringField
+      FieldName = 'corregimiento'
+      Origin = 'corregimiento'
+      Size = 50
+    end
+    object mSociocalle_barrio: TStringField
+      FieldName = 'calle_barrio'
+      Origin = 'calle_barrio'
+      Size = 50
+    end
+    object mSociocompania: TWideStringField
+      FieldName = 'compania'
+      Origin = 'compania'
+      Size = 200
+    end
+  end
+  object FDMemTable1: TFDMemTable
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'socio'
+        DataType = ftInteger
+      end
+      item
+        Name = 'tipoCliente'
+        DataType = ftInteger
+      end
+      item
+        Name = 'idSocio'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'idAhorrista'
+        DataType = ftInteger
+      end
+      item
+        Name = 'nombre'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'segundoNombre'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'segundoApellido'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'apellidoCasada'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'nombreCompleto'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'apellido'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'direccion'
+        DataType = ftWideString
+        Size = 100
+      end
+      item
+        Name = 'idTipoPersona'
+        DataType = ftString
+        Size = 3
+      end
+      item
+        Name = 'idTipoDoc'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'cedL'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'ced1'
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'ced2'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ced3'
+        DataType = ftInteger
+      end
+      item
+        Name = 'activo'
+        DataType = ftWideString
+        Size = 1
+      end
+      item
+        Name = 'fecha_ingreso'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'fecha_salida'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'sexo'
+        DataType = ftWideString
+        Size = 1
+      end
+      item
+        Name = 'fecha_nacimiento'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'nDia'
+        DataType = ftInteger
+      end
+      item
+        Name = 'nMes'
+        DataType = ftInteger
+      end
+      item
+        Name = 'nAno'
+        DataType = ftInteger
+      end
+      item
+        Name = 'telefono_casa'
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = 'telefono_oficina'
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = 'idProfesion'
+        DataType = ftInteger
+      end
+      item
+        Name = 'compania'
+        DataType = ftWideString
+        Size = 200
+      end
+      item
+        Name = 'idCargo'
+        DataType = ftInteger
+      end
+      item
+        Name = 'foto'
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = 'fecha_aud'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'usuario'
+        DataType = ftWideString
+        Size = 10
+      end
+      item
+        Name = 'idCia'
+        DataType = ftInteger
+      end
+      item
+        Name = 'idSucursal'
+        DataType = ftInteger
+      end
+      item
+        Name = 'idReferidoPor'
+        DataType = ftInteger
+      end
+      item
+        Name = 'fechaRegistro'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'fechaActivacion'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'fechaDesactivacion'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'SocioCodigo'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'SocioPass'
+        DataType = ftMemo
+      end
+      item
+        Name = 'idGrupoEco'
+        DataType = ftInteger
+      end
+      item
+        Name = 'idEtnia'
+        DataType = ftInteger
+      end
+      item
+        Name = 'idSectorEco'
+        DataType = ftInteger
+      end
+      item
+        Name = 'idNacionalidad'
+        DataType = ftString
+        Size = 3
+      end
+      item
+        Name = 'idIdioma'
+        DataType = ftInteger
+      end
+      item
+        Name = 'fechaCambioPass'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'fechaParaCambiar'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'exonerado'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'ingresoMensual'
+        DataType = ftBCD
+        Precision = 18
+        Size = 2
+      end
+      item
+        Name = 'Estatus'
+        DataType = ftString
+        Size = 1
+      end
+      item
+        Name = 'fechaSalida'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'fechaSocio'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'fechaAhorrista'
+        DataType = ftTimeStamp
+      end
+      item
+        Name = 'imagen'
+        DataType = ftBlob
+      end
+      item
+        Name = 'idEmpresa'
+        DataType = ftInteger
+      end
+      item
+        Name = 'pasaporteRuc'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'guidSocio'
+        Attributes = [faRequired]
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'esAhorrista'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'esSocio'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'esProveedor'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'esPEP'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'esRiesgo'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'estadoCivil'
+        DataType = ftInteger
+      end
+      item
+        Name = 'paisNacimiento'
+        DataType = ftString
+        Size = 3
+      end
+      item
+        Name = 'paisResidencia'
+        DataType = ftString
+        Size = 3
+      end
+      item
+        Name = 'paisPasaporte'
+        DataType = ftString
+        Size = 3
+      end
+      item
+        Name = 'fechaExpiracionDocumento'
+        DataType = ftDate
+      end
+      item
+        Name = 'esInstitucion'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'esDependiente'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'ref_per_nombre'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'ref_per_telefono'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'ref_per_direccion'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'ref_fam_nombre'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'ref_fam_telefono'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'ref_fam_direccion'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'seguro_Social'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'lugar_trabajo'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'Observacion'
+        DataType = ftMemo
+      end
+      item
+        Name = 'direccion_trabajo'
+        DataType = ftString
+        Size = 200
+      end
+      item
+        Name = 'provincia'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'distrito'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'corregimiento'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'calle_barrio'
+        DataType = ftString
+        Size = 50
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    FormatOptions.AssignedValues = [fvMaxBcdPrecision, fvMaxBcdScale]
+    FormatOptions.MaxBcdPrecision = 2147483647
+    FormatOptions.MaxBcdScale = 2147483647
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    StoreDefs = True
+    Left = 272
+    Top = 192
+  end
+  object DataSource1: TDataSource
+    DataSet = mSocio
+    Left = 336
+    Top = 392
+  end
+  object dts_mSocio: TDataSource
+    DataSet = mSocio
+    OnDataChange = dts_mSocioDataChange
+    Left = 166
+    Top = 26
   end
 end

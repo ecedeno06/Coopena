@@ -295,6 +295,23 @@
             <Form>frmMigracion</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Escanear.pas">
+            <Form>frmEscanear</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="migracion2.pas">
+            <Form>frmmigracion2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="MigraEdw.pas">
+            <Form>Migra</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="ImgenCaja.pas">
+            <Form>frmImagenCaja</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -733,8 +750,8 @@
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>
-                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>
             </Deployment>
             <Platforms>

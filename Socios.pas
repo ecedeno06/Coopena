@@ -19,7 +19,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client ,SqlTimSt, Vcl.Imaging.pngimage,clipbrd,System.StrUtils,
-  axCtrls;
+  axCtrls, FireDAC.Stan.Async, FireDAC.DApt,
+  DelphiTwain, DelphiTwain_Vcl;
 
   type
   TfrmSocios = class(TfrmVentana)
@@ -32,7 +33,6 @@ uses
     Label17: TLabel;
     grpSocioDireccion: TGroupBox;
     Label22: TLabel;
-    Label23: TLabel;
     Label24: TLabel;
     Label25: TLabel;
     Label26: TLabel;
@@ -202,9 +202,9 @@ uses
     btnCuentaNueva: TToolButton;
     btnCuentaSalvar1: TToolButton;
     ppmImagen: TPopupMenu;
-    Copiar1: TMenuItem;
+    docCopiar: TMenuItem;
     N1: TMenuItem;
-    Imprimir1: TMenuItem;
+    docPegar: TMenuItem;
     tb1: TTrackBar;
     tsFiador: TTabSheet;
     Image1: TImage;
@@ -219,7 +219,6 @@ uses
     dtsFinalidades: TDataSource;
     pnFiadores: TPanel;
     GroupBox12: TGroupBox;
-    DBGrid5: TDBGrid;
     PageControl3: TPageControl;
     TabSheet11: TTabSheet;
     GroupBox13: TGroupBox;
@@ -270,8 +269,6 @@ uses
     GroupBox15: TGroupBox;
     Label45: TLabel;
     edTipoProducto: TDBLookupComboBox;
-    dblFinalidad: TDBLookupComboBox;
-    Label52: TLabel;
     DBEdit1: TDBEdit;
     GroupBox16: TGroupBox;
     dpFechaInicio: TDateTimePicker;
@@ -288,7 +285,6 @@ uses
     dtstipoPlanilla: TDataSource;
     Image2: TImage;
     Image7: TImage;
-    Image8: TImage;
     Label61: TLabel;
     periocidad: TDBLookupComboBox;
     dtsPeriocidad: TDataSource;
@@ -319,8 +315,6 @@ uses
     dbCed3: TDBEdit;
     edPasaporteRuc: TDBEdit;
     Label3: TLabel;
-    rbMasculino: TRadioButton;
-    rbFemenino: TRadioButton;
     Label12: TLabel;
     Label38: TLabel;
     ndia: TSpinEdit;
@@ -330,11 +324,8 @@ uses
     nAno: TSpinEdit;
     Label4: TLabel;
     cmbPaisNacimiento: TDBLookupComboBox;
-    DBLookupComboBox6: TDBLookupComboBox;
-    Label37: TLabel;
     Label67: TLabel;
     cmbPaisResidencia: TDBLookupComboBox;
-    dblEstadoCivil: TDBLookupComboBox;
     lblEstadoCivil: TLabel;
     lbedadh: TLabel;
     lbEdad: TLabel;
@@ -359,7 +350,6 @@ uses
     edBarriada: TDBEdit;
     Label71: TLabel;
     Label72: TLabel;
-    dbTipoDireccion: TDBLookupComboBox;
     edDescripcion: TDBMemo;
     Label73: TLabel;
     edCasaApart: TDBEdit;
@@ -368,7 +358,6 @@ uses
     dblTipoResidencia: TDBLookupComboBox;
     Label28: TLabel;
     Label74: TLabel;
-    dblHipoteca: TDBLookupComboBox;
     grpNacionalidades: TGroupBox;
     ToolBar16: TToolBar;
     btnNuevaNacionalidad: TToolButton;
@@ -422,9 +411,7 @@ uses
     Panel2: TPanel;
     Label46: TLabel;
     Label2: TLabel;
-    dblTipoSocio: TDBLookupComboBox;
     DBCheckBox12: TDBCheckBox;
-    edTipoCliente: TDBLookupComboBox;
     ToolButton27: TToolButton;
     btnSocioAprobar: TToolButton;
     dbldescripcionAsociacion: TDBLookupComboBox;
@@ -626,7 +613,7 @@ uses
     ToolButton50: TToolButton;
     dts_SocioApoyoLentes: TDataSource;
     DBEdit12: TDBEdit;
-    DBMemo2: TDBMemo;
+    db_Nota: TDBMemo;
     dp_FechaApoyoLentes: TDateTimePicker;
     Label112: TLabel;
     Label113: TLabel;
@@ -652,6 +639,155 @@ uses
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
     Pegar1: TMenuItem;
+    dtsTipoDireccion: TDataSource;
+    tipoResidencia: TDataSource;
+    DBLookupComboBox4: TDBLookupComboBox;
+    edSeguroSocial: TDBEdit;
+    Label23: TLabel;
+    edLugarTrabajo: TDBEdit;
+    Label117: TLabel;
+    Label118: TLabel;
+    edNota: TDBMemo;
+    Label52: TLabel;
+    dblFinalidad: TDBLookupComboBox;
+    Image8: TImage;
+    DBEdit15: TDBEdit;
+    DBEdit14: TDBEdit;
+    Label119: TLabel;
+    Label120: TLabel;
+    DBEdit16: TDBEdit;
+    Label121: TLabel;
+    DBEdit17: TDBEdit;
+    Label122: TLabel;
+    DBLookupComboBox5: TDBLookupComboBox;
+    Label37: TLabel;
+    Label123: TLabel;
+    Label124: TLabel;
+    DBEdit18: TDBEdit;
+    dbl_Estatus: TDBLookupComboBox;
+    BalloonHint1: TBalloonHint;
+    Label125: TLabel;
+    dbl_Cargo: TDBLookupComboBox;
+    DBGrid5: TDBGrid;
+    dts_mFiador: TDataSource;
+    DBEdit19: TDBEdit;
+    Label126: TLabel;
+    DBEdit20: TDBEdit;
+    Label127: TLabel;
+    DBRadioGroup1: TDBRadioGroup;
+    ToolButton51: TToolButton;
+    socioInsertar: TFDQuery;
+    ed_IngresoMensual: TDBEdit;
+    dblEstadoCivil: TDBLookupComboBox;
+    Label128: TLabel;
+    dbl_compania: TDBLookupComboBox;
+    mSocio: TFDMemTable;
+    FDMemTable1: TFDMemTable;
+    mSociosocio: TIntegerField;
+    mSociotipoCliente: TIntegerField;
+    mSocioidSocio: TIntegerField;
+    mSocioidAhorrista: TIntegerField;
+    mSocionombre: TWideStringField;
+    mSociosegundoNombre: TStringField;
+    mSociosegundoApellido: TStringField;
+    mSocioapellidoCasada: TStringField;
+    mSocionombreCompleto: TStringField;
+    mSocioapellido: TWideStringField;
+    mSociodireccion: TWideStringField;
+    mSocioidTipoPersona: TStringField;
+    mSocioidTipoDoc: TStringField;
+    mSociocedL: TStringField;
+    mSocioced1: TWideStringField;
+    mSocioced2: TIntegerField;
+    mSocioced3: TIntegerField;
+    mSocioactivo: TWideStringField;
+    mSociofecha_ingreso: TSQLTimeStampField;
+    mSociofecha_salida: TSQLTimeStampField;
+    mSociosexo: TWideStringField;
+    mSociofecha_nacimiento: TSQLTimeStampField;
+    mSocionDia: TIntegerField;
+    mSocionMes: TIntegerField;
+    mSocionAno: TIntegerField;
+    mSociotelefono_casa: TWideStringField;
+    mSociotelefono_oficina: TWideStringField;
+    mSocioidProfesion: TIntegerField;
+    mSocioidCargo: TIntegerField;
+    mSociofoto: TWideStringField;
+    mSociofecha_aud: TSQLTimeStampField;
+    mSociousuario: TWideStringField;
+    mSocioidCia: TIntegerField;
+    mSocioidSucursal: TIntegerField;
+    mSocioidReferidoPor: TIntegerField;
+    mSociofechaRegistro: TSQLTimeStampField;
+    mSociofechaActivacion: TSQLTimeStampField;
+    mSociofechaDesactivacion: TSQLTimeStampField;
+    mSocioSocioCodigo: TStringField;
+    mSocioSocioPass: TMemoField;
+    mSocioidGrupoEco: TIntegerField;
+    mSocioidEtnia: TIntegerField;
+    mSocioidSectorEco: TIntegerField;
+    mSocioidNacionalidad: TStringField;
+    mSocioidIdioma: TIntegerField;
+    mSociofechaCambioPass: TSQLTimeStampField;
+    mSociofechaParaCambiar: TSQLTimeStampField;
+    mSocioexonerado: TBooleanField;
+    mSocioingresoMensual: TBCDField;
+    mSocioEstatus: TStringField;
+    mSociofechaSalida: TSQLTimeStampField;
+    mSociofechaSocio: TSQLTimeStampField;
+    mSociofechaAhorrista: TSQLTimeStampField;
+    mSocioimagen: TBlobField;
+    mSocioidEmpresa: TIntegerField;
+    mSociopasaporteRuc: TStringField;
+    mSocioguidSocio: TStringField;
+    mSocioesAhorrista: TBooleanField;
+    mSocioesSocio: TBooleanField;
+    mSocioesProveedor: TBooleanField;
+    mSocioesPEP: TBooleanField;
+    mSocioesRiesgo: TBooleanField;
+    mSocioestadoCivil: TIntegerField;
+    mSociopaisNacimiento: TStringField;
+    mSociopaisResidencia: TStringField;
+    mSociopaisPasaporte: TStringField;
+    mSociofechaExpiracionDocumento: TDateField;
+    mSocioesInstitucion: TBooleanField;
+    mSocioesDependiente: TBooleanField;
+    mSocioref_per_nombre: TStringField;
+    mSocioref_per_telefono: TStringField;
+    mSocioref_per_direccion: TStringField;
+    mSocioref_fam_nombre: TStringField;
+    mSocioref_fam_telefono: TStringField;
+    mSocioref_fam_direccion: TStringField;
+    mSocioseguro_Social: TStringField;
+    mSociolugar_trabajo: TStringField;
+    mSocioObservacion: TMemoField;
+    mSociodireccion_trabajo: TStringField;
+    mSocioprovincia: TStringField;
+    mSociodistrito: TStringField;
+    mSociocorregimiento: TStringField;
+    mSociocalle_barrio: TStringField;
+    mSociocompania: TWideStringField;
+    DataSource1: TDataSource;
+    edTipoCliente: TDBLookupComboBox;
+    dts_mSocio: TDataSource;
+    dblTipoSocio: TDBLookupComboBox;
+    pn_scaner: TPanel;
+    ImgHolder: TImage;
+    lbs: TListBox;
+    Panel6: TPanel;
+    ToolBar27: TToolBar;
+    ToolButton55: TToolButton;
+    ToolButton57: TToolButton;
+    ToolButton58: TToolButton;
+    ToolButton59: TToolButton;
+    ToolButton60: TToolButton;
+    Label130: TLabel;
+    Label129: TLabel;
+    dbl_Tipodocumento: TDBLookupComboBox;
+    Label131: TLabel;
+    dp_Expira: TDateTimePicker;
+    Label132: TLabel;
+    dbl_Prof: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnSocioNuevo1Click(Sender: TObject);
     procedure dblTipoSocioClick(Sender: TObject);
@@ -659,7 +795,6 @@ uses
     Function CalculaEdadCompleta(Fecha : TDateTime) : string;
     procedure btnSocioSalvar1Click(Sender: TObject);
     procedure dbCompaniaChange(Sender: TObject);
-    procedure SociosDataChange(Sender: TObject; Field: TField);
     procedure rbMasculinoClick(Sender: TObject);
     procedure rbFemeninoClick(Sender: TObject);
     procedure btnCorreoNuevoClick(Sender: TObject);
@@ -682,7 +817,7 @@ uses
     procedure btnHerederoNuevoClick(Sender: TObject);
     procedure btnHerederoSalvarClick(Sender: TObject);
     procedure spAnio1Change(Sender: TObject);
-    procedure DBLookupComboBox6Click(Sender: TObject);
+    procedure dbl_EstatusClick(Sender: TObject);
     procedure ndiaChange(Sender: TObject);
     procedure nMesChange(Sender: TObject);
     procedure nAnoChange(Sender: TObject);
@@ -718,7 +853,7 @@ uses
     procedure gMovimientosDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure btnextractoClick(Sender: TObject);
-    procedure Copiar1Click(Sender: TObject);
+    procedure docCopiarClick(Sender: TObject);
     procedure pc_socioChange(Sender: TObject);
     procedure DBGrid4CellClick(Column: TColumn);
     procedure DBImage1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -743,7 +878,6 @@ uses
     procedure pcDetalleCuentaChange(Sender: TObject);
     procedure dtsProductosClienteDataChange(Sender: TObject; Field: TField);
     procedure dtsCuentaFiadorDataChange(Sender: TObject; Field: TField);
-    procedure dtsmFiadorDataChange(Sender: TObject; Field: TField);
     procedure btnSocioBuscarClick(Sender: TObject);
     procedure dpFechaInicioChange(Sender: TObject);
     procedure edPlazoChange(Sender: TObject);
@@ -754,7 +888,6 @@ uses
     procedure btnAnteriorNacionalidadClick(Sender: TObject);
     procedure btnSiguienteNacionalidadClick(Sender: TObject);
     procedure btnBorrarNacionalidadClick(Sender: TObject);
-    procedure dtspaises2DataChange(Sender: TObject; Field: TField);
     procedure PaisesDataChange(Sender: TObject; Field: TField);
     procedure DireccionesDataChange(Sender: TObject; Field: TField);
     procedure btnDireccionBorrarClick(Sender: TObject);
@@ -826,7 +959,6 @@ uses
     procedure btn_ppp_SalvarClick(Sender: TObject);
     procedure ToolButton37Click(Sender: TObject);
     procedure estatusProductoClick(Sender: TObject);
-    procedure dtsSocioDocDataChange(Sender: TObject; Field: TField);
     procedure ToolButton39Click(Sender: TObject);
     procedure ToolButton40Click(Sender: TObject);
     procedure ToolButton46Click(Sender: TObject);
@@ -847,8 +979,72 @@ uses
     procedure dts_SocioApoyoDocDataChange(Sender: TObject; Field: TField);
     procedure MenuItem1Click(Sender: TObject);
     procedure Pegar1Click(Sender: TObject);
-    procedure Imprimir1Click(Sender: TObject);
+    procedure docPegarClick(Sender: TObject);
+    procedure dbNombreEnter(Sender: TObject);
+    procedure dbNombreExit(Sender: TObject);
+    procedure dbApellidoExit(Sender: TObject);
+    procedure edSegundoNombreExit(Sender: TObject);
+    procedure edSegundoApellidoExit(Sender: TObject);
+    procedure dblPaisPasaporteExit(Sender: TObject);
+    procedure cmbPaisNacimientoExit(Sender: TObject);
+    procedure dbApellidoEnter(Sender: TObject);
+    procedure dblTipoDocEnter(Sender: TObject);
+    procedure dblPaisPasaporteEnter(Sender: TObject);
+    procedure cmbPaisNacimientoEnter(Sender: TObject);
+    procedure dblEstadoCivilEnter(Sender: TObject);
+    procedure dblEstadoCivilExit(Sender: TObject);
+    procedure edPasaporteRucExit(Sender: TObject);
+    procedure dpExpiraExit(Sender: TObject);
+    procedure ndiaEnter(Sender: TObject);
+    procedure ndiaExit(Sender: TObject);
+    procedure nMesEnter(Sender: TObject);
+    procedure nMesExit(Sender: TObject);
+    procedure nAnoExit(Sender: TObject);
+    procedure nAnoEnter(Sender: TObject);
+    procedure dpExpiraEnter(Sender: TObject);
+    procedure dblTipoDocExit(Sender: TObject);
+    procedure edSegundoNombreEnter(Sender: TObject);
+    procedure edSegundoApellidoEnter(Sender: TObject);
+    procedure edApellidoCasadaExit(Sender: TObject);
+    procedure edApellidoCasadaEnter(Sender: TObject);
+    procedure edPasaporteRucEnter(Sender: TObject);
+    procedure cmbPaisResidenciaExit(Sender: TObject);
+    procedure cmbPaisResidenciaEnter(Sender: TObject);
+    procedure dbCed1Exit(Sender: TObject);
+    procedure dbCed1Enter(Sender: TObject);
+    procedure dbCed2Enter(Sender: TObject);
+    procedure dbCed2Exit(Sender: TObject);
+    procedure dbCed3Exit(Sender: TObject);
+    procedure dbCed3Enter(Sender: TObject);
+    procedure edSeguroSocialExit(Sender: TObject);
+    procedure edSeguroSocialEnter(Sender: TObject);
+    procedure edLugarTrabajoExit(Sender: TObject);
+    procedure edLugarTrabajoEnter(Sender: TObject);
+    procedure edNotaExit(Sender: TObject);
+    procedure edNotaEnter(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure SociosDataChange(Sender: TObject; Field: TField);
+    procedure ToolButton51Click(Sender: TObject);
+    procedure dts_mSocioDataChange(Sender: TObject; Field: TField);
+    procedure ToolButton55Click(Sender: TObject);
+    procedure ToolButton58Click(Sender: TObject);
+    procedure ToolButton60Click(Sender: TObject);
+    procedure TwainTwainAcquire(Sender: TObject; const Index: Integer;
+      Image: TBitmap; var Cancel: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
+    procedure dtsSocioDocDataChange(Sender: TObject; Field: TField);
+    procedure dp_ExpiraEnter(Sender: TObject);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure ScrollBox1MouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure DBEdit12Enter(Sender: TObject);
+    procedure DBLookupComboBox3Enter(Sender: TObject);
+    procedure dp_FechaApoyoLentesEnter(Sender: TObject);
+    procedure db_NotaEnter(Sender: TObject);
   private
+    Twain: TDelphiTwain;
   //-----
     Procedure _Carga;
     Procedure CargarDocumentos;
@@ -872,10 +1068,49 @@ uses
     Procedure CalcularTotalIngresosVariables;
     Function  Grupos(valor : Boolean) : Boolean;
     function Paginas (valor : boolean) : boolean;
+    function _ActualizarSocio() : Boolean;
+    function _InsertarSocio(
+             id               : string;      // ID del Asociado
+             tipoCliente      : string;      // Ahorrista, Socio o Proveedor
+             tipoPersona      : String;      // Persona Natural o Juridica
+             esProveedor      : string;      // Si es proveedor
+             nombre           : string;
+             segundoNombre    : string;
+             apellido         : string;
+             segundoApellido  : string;
+             Casada           : string;
+             nombreCompleto   : string;
+             tipoDocumento    : string;     // CE=Cedula
+             ced1             : string;
+             ced2             : string;
+             ced3             : string;
+             Pasaporte_Ruc    : string;
+             activo           : string;
+             fechaIngreso     : string;
+             sexo             : string;
+             Nacimiento       : string;
+             ndia             : string;
+             nmes             : string;
+             nano             : string;
+             profecion        : string;
+             compania         : string;
+             cargo            : string;
+             estadoCivil      : string;
+             paisNacimiento   : string;
+             paisResidencia   : string;
+             paisPasaporte    : string;
+             fechaExDoc       : string;
+             seguroSocial     : string;
+             Observacion      : string;
+             lugar_Trabajo    : String;
+             MontoIngreso     : String;
+             guid             : string;
+             accion           : String
+                              ) : boolean;
     //----
     Procedure CargarPlanPago;
 
-    { Private declarations }
+      { Private declarations }
   public
     Procedure CalcularPeriodo;
     Procedure CalcularPeriodoV;
@@ -890,6 +1125,7 @@ var
   bFiadores : Boolean;
   abmFiador : string;
   dm : TDataModule;
+  _alto , _ancho : integer;
 
 const
   CRYPT_STRING_BASE64 = 1;
@@ -1022,7 +1258,7 @@ begin
 
 end;
 
-procedure TfrmSocios.Imprimir1Click(Sender: TObject);
+procedure TfrmSocios.docPegarClick(Sender: TObject);
 begin
   inherited;
   case MessageDlg('Esta Seguro de Pegar la Imagen?... Esto borrara la Actual', mtConfirmation, [mbOK, mbCancel], 0,mbCancel) of
@@ -1031,6 +1267,7 @@ begin
     // Write code here for pressing button OK
       DataModulo1.SocioDoc.Edit;
       DBImage1.PasteFromClipboard ;
+      DataModulo1.RegistroLog(usuario,'Pegar Imagen' , 'Pega Imagen Socio No. ' + mSociosocio.AsString);
     end;
     mrCancel:
     begin
@@ -1048,7 +1285,7 @@ procedure TfrmSocios.btnCorreoNuevoClick(Sender: TObject);
 begin
   inherited;
   DataModulo1.SociosCorreos.Append;
-  DataModulo1.SociosCorreosIDSocio.value := DataModulo1.tblSociosSocio.Value;
+  DataModulo1.SociosCorreosIDSocio.AsInteger  := DataModulo1.tblSociosSocio.AsInteger ;
 end;
 
 procedure TfrmSocios.btnCorreoSalvarClick(Sender: TObject);
@@ -1147,7 +1384,7 @@ begin
 
  edTipoProducto.SetFocus;
  DataModulo1.SocioProductos.Append;
-// DataModulo1.SocioProductossocio.AsInteger  := DataModulo1.tblSociosidSocio.AsInteger;
+ DataModulo1.SocioProductossocio.AsInteger  := DataModulo1.tblSociosidSocio.AsInteger;
  datamodulo1.SocioProductosestado.Value     := 'P';
  estatusProducto.Enabled := false;
  datamodulo1.SocioProductosfecha_inicio.AsDateTime  := now;
@@ -1163,6 +1400,8 @@ var
 begin
   inherited;
 //--
+  _accion     := 'Actualiza Producto ';
+  _detalleLog := 'Producto :' + DataModulo1.SocioProductosnum_cuenta.AsString;
 
   if  Not (DataModulo1.SocioProductos.State IN [dsEdit,dsInsert]) then
   Begin
@@ -1183,7 +1422,7 @@ begin
                                   ' and subcuenta = ' +
                                    DataModulo1.SocioProductossubcuenta.AsString );
 
-     Memo2.Text :=     DataModulo1.Generico.Sql.Text;
+     Clipboard.AsText :=  DataModulo1.Generico.Sql.Text;
      DataModulo1.Generico.Open;
 
      if not DataModulo1.Generico.eof then
@@ -1199,17 +1438,23 @@ begin
                    formatFloat('00' , _siguiente);   // el Consecutivo del producto
 
       DataModulo1.SocioProductosnum_cuenta.AsString := _numCuenta;
+      _accion     := 'Insertar Producto ';
+      _detalleLog := 'Insertar Producto ' + _numCuenta ;
 
     end;
 
+    if DataModulo1.SocioProductosguid.asstring = '' then
+       DataModulo1.SocioProductosguid.AsString := DataModulo1._guid();
 
     DataModulo1.SocioProductossocio.value := DataModulo1.tblSociosSocio.value;
 
     Try
        DataModulo1.SocioProductos.Post;
+       DataModulo1.RegistroLog(Usuario,_accion,_detallelog);
     Except
-       ShowMessage('Error al Insertar/Actualizar Producto del Cliente...');
-    End;
+      on E : Exception do
+         ShowMessage(E.ClassName+'Error al Actualizar Producto : '+E.Message);
+      End;
 
   End;
 
@@ -1446,6 +1691,7 @@ begin
     DataModulo1.tblSocios.Close;
     DataModulo1.tblSocios.Sql.clear;
     DataModulo1.tblSocios.Sql.Add('Select * from Socios') ;
+    DataModulo1.tblSocios.Sql.Add(' Order by Socio');
     DataModulo1.tblSocios.Open ;
   end;
 
@@ -1456,6 +1702,7 @@ begin
     DataModulo1.tblSocios.Sql.clear;
     DataModulo1.tblSocios.Sql.Add('Select * from Socios') ;
     DataModulo1.tblSocios.Sql.Add(' Where Nombre Like ' + QuotedStr('%'+edFiltro.Text+'%'));
+    DataModulo1.tblSocios.Sql.Add(' Order by Nombre,Apellido' );
     DataModulo1.tblSocios.Open ;
   end;
 
@@ -1465,6 +1712,7 @@ begin
     DataModulo1.tblSocios.Sql.clear;
     DataModulo1.tblSocios.Sql.Add('Select * from Socios') ;
     DataModulo1.tblSocios.Sql.Add(' Where Apellido Like ' + QuotedStr('%'+edFiltro.Text+'%'));
+    DataModulo1.tblSocios.Sql.Add(' Order by Apellido,nombre ');
     DataModulo1.tblSocios.Open ;
   end;
 
@@ -1476,18 +1724,37 @@ begin
     DataModulo1.tblSocios.Sql.Add(' Where socio = ' + edFiltro.Text);
     DataModulo1.tblSocios.Open ;
   end;
+
+  dbgSocios.Height :=  dbgSocios.Height + 1;
+  dbgSocios.Height :=  dbgSocios.Height - 1;
+
 end;
 
 procedure TfrmSocios.btnSocioDocSalvarClick(Sender: TObject);
+
 begin
   inherited;
+
+  docPegar.Enabled  := true;
+  docCopiar.Enabled := true;
+
   if  Not (DataModulo1.SocioDoc.State IN [dsEdit,dsInsert]) then
   Begin
     DataModulo1.SocioDoc.edit;
+  End
+  Else
+  Begin
+    if DataModulo1.SocioDoc.State = dsInsert then
+      _accion := 'Inserta Documento...';
+    if DataModulo1.SocioDoc.State = dsEdit then
+      _accion := 'Modifica Documento...';
   End;
+
+  DataModulo1.SocioDocexpira.AsDateTime := dp_Expira.Date;
 
   Try
    DataModulo1.SocioDoc.post;
+   DataModulo1.RegistroLog(Usuario,_accion,'Socio No. ' + mSociosocio.AsString );
   except
    on E:Exception do
    begin
@@ -1507,16 +1774,18 @@ begin
   grpSocioDireccion.Enabled := False;
   grpNacionalidades.Enabled := False;
   grpGrupo.Enabled          := False;
+
+  edTipoCliente.Enabled := true;
   edTipoCliente.SetFocus;
 
   paginas(false);
 
-  DataModulo1.tblSocios.Append;
-  DataModulo1.tblSociosidNacionalidad.Value    := 'PAN';
-  DataModulo1.tblSociosfechaRegistro.AsDateTime   := now;
-  DataModulo1.tblSociosfechaActivacion.AsDateTime := now;
-  rbMasculino.Checked := false;
-  rbFemenino.Checked  := false;
+  msocio.Append;
+  msocioidNacionalidad.Value       := 'PAN';
+  msociofechaRegistro.AsDateTime   := now;
+  msociofechaActivacion.AsDateTime := now;
+  mSocioidEmpresa.AsInteger        := -1;
+  msocioActivo.AsString            := 'A';
 
   //----- Deshabilita los otros grups
   grpNacionalidades.Enabled   := false;
@@ -1531,10 +1800,11 @@ end;
 procedure TfrmSocios.btnSocioSalvar1Click(Sender: TObject);
 var
  sSQL : String;
- sSec : Integer;
+ sSec,esProveedor : Integer;
  nombreCompleto,_guid : string;
  _idsocio : integer;
  _actualizaSec : boolean;
+ _Accion   : String;
 
 begin
   inherited;
@@ -1542,10 +1812,16 @@ begin
 
   _actualizaSec := false;
 
-  if (DataModulo1.tblSocios.State IN [dsInsert]) then
-  begin
+//  _InsertarSocio()
+//  _ActualizarSocio();
 
-    DataModulo1.tblSocios.edit;
+
+
+  if (msocio.State IN [dsInsert]) then
+  begin
+    _Accion := 'I';
+    mSocio.edit;
+
     DataModulo1.Generico.Close;
     DataModulo1.Generico.SQL.Clear;
     DataModulo1.Generico.SQL.Add('Select Desde,Hasta,ValorActual From SocioSecuencial') ;
@@ -1566,16 +1842,19 @@ begin
         sSec := DataModulo1.Generico.FieldByName('ValorActual').AsInteger + 1;
     End;
 
-    DataModulo1.tblSociosidsocio.Value      := sSec;
-    DataModulo1.tblSociossocio.Value        := sSec;
-    DataModulo1.tblSociosguidSocio.asstring := DataModulo1._guid ();
-    _actualizaSec := true;
-  end;
+    msocioidsocio.Value      := sSec;
+    msociosocio.Value        := sSec;
 
-  if  Not (DataModulo1.tblSocios.State IN [dsEdit,dsInsert]) then
+    msociofechaRegistro.AsDateTime := DataModulo1.FechaSistema();
+    msocioguidSocio.asstring       := DataModulo1._guid ();
+    _actualizaSec := true;
+
+  end
+  Else
+  if  (msocio.State IN [dsEdit]) then
   Begin
-   DataModulo1.tblSocios.edit;
- //  DataModulo1.tblSociosfechaExpiracionDocumento.AsDateTime := dpExpira.DateTime;
+    _Accion := 'U';
+    //msocio.edit;
   End;
 
   Try
@@ -1600,54 +1879,124 @@ begin
    end;
 
    //--- Documento Passaporte/RUC
-   if DataModulo1.tblSociosidTipoDoc.AsString = 'CE' then
+   if msocioidTipoDoc.AsString = 'CE' then
    begin
-      DataModulo1.tblSociospasaporteRuc.AsString :=
-          DataModulo1.tblSociosced1.AsString + '-' +
-          DataModulo1.tblSociosced2.AsString + '-' +
-          DataModulo1.tblSociosced3.AsString ;
+      msociopasaporteRuc.AsString :=
+          msocioced1.AsString + '-' +
+          msocioced2.AsString + '-' +
+          msocioced3.AsString ;
    end;
 
    //--- Nombre Completo
    nombreCompleto:='';
 
-   if not (VarIsNull(DataModulo1.tblSociosnombre.AsString )) and
-          (trim(DataModulo1.tblSociosnombre.AsString)<>'') then
-     nombreCompleto := Trim(nombreCompleto) + ' ' + trim(DataModulo1.tblSociosnombre.AsString);
+   if not (VarIsNull(msocionombre.AsString )) and
+          (trim(msocionombre.AsString)<>'') then
+     nombreCompleto := Trim(nombreCompleto) + ' ' + trim(msocionombre.AsString);
 
-   if not (VarIsNull(DataModulo1.tblSociossegundoNombre.AsString )) and
-          (trim(DataModulo1.tblSociossegundoNombre.AsString) <> '') then
-     nombreCompleto := trim(nombreCompleto) + ' ' + Trim(DataModulo1.tblSociossegundoNombre.AsString);
+   if not (VarIsNull(msociosegundoNombre.AsString )) and
+          (trim(msociosegundoNombre.AsString) <> '') then
+     nombreCompleto := trim(nombreCompleto) + ' ' + Trim(msociosegundoNombre.AsString);
 
-   if not (VarIsNull(DataModulo1.tblSociosapellido.AsString ))  and
-          (trim(DataModulo1.tblSociosapellido.AsString) <> '') then
-     nombreCompleto := trim(nombreCompleto) + ' ' + Trim(DataModulo1.tblSociosapellido.AsString);
+   if not (VarIsNull(msocioapellido.AsString ))  and
+          (trim(msocioapellido.AsString) <> '') then
+     nombreCompleto := trim(nombreCompleto) + ' ' + Trim(msocioapellido.AsString);
 
-   if not (VarIsNull(DataModulo1.tblSociossegundoApellido.AsString )) and
-          (trim(DataModulo1.tblSociossegundoApellido.AsString) <> '') then
-      nombreCompleto := Trim(nombreCompleto) + ' ' + Trim(DataModulo1.tblSociossegundoApellido.AsString);
+   if not (VarIsNull(msociosegundoApellido.AsString )) and
+          (trim(msociosegundoApellido.AsString) <> '') then
+      nombreCompleto := Trim(nombreCompleto) + ' ' + Trim(msociosegundoApellido.AsString);
 
-   if not (VarIsNull(DataModulo1.tblSociosapellidoCasada.AsString ))  and
-          (trim(DataModulo1.tblSociosapellidoCasada.AsString) <> '') then
-     nombreCompleto := Trim(nombreCompleto)  + ' de ' + Trim(DataModulo1.tblSociosapellidoCasada.AsString);
+   if not (VarIsNull(msocioapellidoCasada.AsString ))  and
+          (trim(msocioapellidoCasada.AsString) <> '') then
+     nombreCompleto := Trim(nombreCompleto)  + ' de ' + Trim(msocioapellidoCasada.AsString);
 
    nombreCompleto := trim(nombreCompleto);
 
-   DataModulo1.tblSociosnombreCompleto.AsString := nombreCompleto;
+   msocionombreCompleto.AsString := nombreCompleto;
+
    //--- Se asigna la Compania
    //--- en Este caso 1, Pero esto debe ser capturado en el Login,
 
-   DataModulo1.tblSociosidCia.Value := 1;
+   msocioidCia.Value := 1;
 
+   _guid := msocioguidSocio.asstring;
 
-   if  DataModulo1.tblSociosguidSocio.asstring = '' then
-       DataModulo1.tblSociosguidSocio.asstring := DataModulo1._guid ();
+   try
 
-   _guid := DataModulo1.tblSociosguidSocio.asstring;
+    if _accion = 'U' then
+    Begin
+     mSocio.Post;
+     mSocio.edit;
+     if _ActualizarSocio() then
+     Begin
+       DataModulo1.tblSocios.Close;
+       DataModulo1.tblSocios.Open;
+       DataModulo1.tblSocios.Locate('guidSocio',_guid,[]);
+       DataModulo1.RegistroLog(Usuario,'Actualizar Socio ',
+                                 ' actualiza Socio No. ' +  msociosocio.AsString);
+     End;
+    End;
 
-   DataModulo1.tblSocios.post;
+    if _Accion = 'I' then
+    begin
+      mSocio.Post;
+      mSocio.edit;
+      if msocioesProveedor.AsBoolean = true then
+        esProveedor := 1
+      else
+        esProveedor := 0;
 
-   // carga
+      If _InsertarSocio(
+       msociosocio.AsString,
+       msociotipoCliente.AsString ,
+       msocioidTipoPersona.AsString,
+       IntToStr(esProveedor),
+       msocionombre.AsString,
+       msociosegundoNombre.AsString,
+       msocioapellido.AsString,
+       msociosegundoApellido.AsString,
+       msocioapellidoCasada.AsString,
+       msocionombreCompleto.AsString,
+       msocioidTipoDoc.AsString,
+       msocioced1.AsString,
+       intToStr(msocioced2.AsInteger),
+       intToStr(msocioced3.AsInteger),
+       msociopasaporteRuc.AsString,
+       msocioactivo.AsString,
+       FormatDateTime('yyyy-mm-dd',msociofecha_nacimiento.AsDateTime),
+       msociosexo.AsString,
+       FormatDateTime('yyyy-mm-dd',DataModulo1.FechaSistema ()),                      // Fecha de Ingreso
+       IntToStr(msocionDia.AsInteger),
+       IntToStr(msocionMes.AsInteger),
+       intToStr(msocionAno.AsInteger),
+       intToStr(msocioidProfesion.AsInteger),
+       intToStr(msocioidEmpresa.AsInteger),
+       intToStr(msocioidCargo.AsInteger),
+       intToStr(msocioestadoCivil.AsInteger),
+       msociopaisNacimiento.AsString,
+       msociopaisResidencia.AsString,
+       msociopaisPasaporte.AsString,
+       FormatDateTime('yyyy-mm-dd',msociofechaExpiracionDocumento.AsDateTime ),
+       msocioseguro_Social.AsString,
+       msocioObservacion.AsString,
+       msociolugar_trabajo.AsString,
+       FloatToStr(msocioingresoMensual.AsFloat),
+       _guid,
+       'I')  then
+      Begin
+         //---
+         DataModulo1.tblSocios.Close;
+         DataModulo1.tblSocios.Open;
+         DataModulo1.tblSocios.Locate('guidSocio',_guid,[]);
+         DataModulo1.RegistroLog(Usuario,'Insertar Socio ',
+                                 ' Insertar Socio No. ' +  msociosocio.AsString);
+      End;
+    end;
+   except
+     on E : Exception do
+       ShowMessage(E.ClassName+' error raised, with message : '+E.Message);
+   end;
+   _carga;
    DataModulo1.tblSocios.Locate('guidSocio',_guid,[]);
    grpSocioCorreos.Enabled   := True;
    grpSocioTelefonos.Enabled := True;
@@ -1664,6 +2013,8 @@ begin
   paginas(true);
 
 end;
+
+
 
 function TfrmSocios.CalculaEdadCompleta(Fecha: TDateTime): string;
 var A, AA, M, MM, D, DD: Word;
@@ -1704,11 +2055,8 @@ begin
      mAnio := 'Años'
   else
      mAnio := 'Año';
-//  Result := FormatFloat('#,###0',Anio)+' '+mAnio +', '+FormatFloat('#,###0',Mes)+' '+mMes+' y '+FormatFloat('#,###0',Dia)+' '+mDia;
-  Result := Format('Años: %.0f, Meses: %.0f, Dias: %.0f', [Anio, Mes, Dia]);
-  //Result := FormatFloat('#,###0',Anio)+' '+mAnio ; //+', '+FormatFloat('#,###0',Mes)+' '+mMes+' y '+FormatFloat('#,###0',Dia)+' '+mDia;
-  //Result := Format('Años: %.0f, Meses: %.0f, Dias: %.0f', [Anio, Mes, Dia]);
 
+  Result := Format('Años: %.0f y %.0f Mes(es)', [Anio, Mes]);
 
 
 end;
@@ -1782,6 +2130,7 @@ begin
   DataModulo1.CuentaFiadores.Params[0].AsString :=
         DataModulo1.SocioProductosnum_cuenta.AsString;
   DataModulo1.CuentaFiadores.Open;
+
 end;
 
 procedure TfrmSocios.CargaMov;
@@ -1945,7 +2294,7 @@ end;
 procedure TfrmSocios.CargarDirecciones;
 begin
   DataModulo1.SocioDireccion.Close;
-  DataModulo1.SocioDireccion.Params[0].Value := DataModulo1.tblSociosSocio.Value ;
+  DataModulo1.SocioDireccion.Params [0].AsInteger := DataModulo1.tblSociosSocio.AsInteger  ;
   DataModulo1.SocioDireccion.Open;
   DataModulo1.SocioDireccion.First;
 
@@ -2019,7 +2368,7 @@ end;
 procedure TfrmSocios.CargarHerederos;
 begin
   DataModulo1.SocioHerederos.Close;
-  DataModulo1.SocioHerederos.Parameters[0].Value := DataModulo1.tblSociossocio.Value ;
+  DataModulo1.SocioHerederos.Params[0].Value := DataModulo1.tblSociossocio.Value ;
   DataModulo1.SocioHerederos.Open;
 
   if not DataModulo1.SocioHerederos.eof then
@@ -2109,9 +2458,10 @@ end;
 procedure TfrmSocios.CargarTelefonos;
 begin
   DataModulo1.SocioTelefonos.Close;
-  DataModulo1.SocioTelefonos.Parameters[0].Value := DataModulo1.tblSociossocio.Value ;
+  DataModulo1.SocioTelefonos.Params [0].Value := DataModulo1.tblSociossocio.Value ;
   DataModulo1.SocioTelefonos.Open;
   DataModulo1.SocioTelefonos.First;
+
   if DataModulo1.SocioTelefonos.RecordCount > 0  then
     grpSocioTelefonos.Caption := 'Telefonos [' + IntToStr(DataModulo1.SocioTelefonos.RecordCount) + ']:'
   Else
@@ -2121,16 +2471,23 @@ end;
 
 
 
-procedure TfrmSocios.Copiar1Click(Sender: TObject);
+procedure TfrmSocios.docCopiarClick(Sender: TObject);
 begin
   inherited;
   DBImage1.CopyToClipboard;
+  DataModulo1.RegistroLog(usuario,'Copia Imagen' , 'Socio No. ' + mSociosocio.AsString);
 end;
 
 procedure TfrmSocios.dbcVigenteVClick(Sender: TObject);
 begin
   inherited;
   CalcularPeriodoV;
+end;
+
+procedure TfrmSocios.DBEdit12Enter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Monto...';
 end;
 
 procedure TfrmSocios.dbcVigenteFijosClick(Sender: TObject);
@@ -2152,6 +2509,20 @@ begin
    DataModulo1.tblSociosfechaExpiracionDocumento.AsDateTime := dpExpira.DateTime;
 end;
 
+procedure TfrmSocios.dpExpiraEnter(Sender: TObject);
+begin
+  inherited;
+    dpExpira.ParentColor := false;
+    dpExpira.color       := clMoneyGreen  ;
+end;
+
+procedure TfrmSocios.dpExpiraExit(Sender: TObject);
+begin
+  inherited;
+    dpExpira.ParentColor := true;
+    dpExpira.color       := clWhite ;
+end;
+
 procedure TfrmSocios.dpFechaInicioChange(Sender: TObject);
 begin
   inherited;
@@ -2166,6 +2537,33 @@ begin
   CalcularPeriodoV;
 end;
 
+procedure TfrmSocios.dp_ExpiraEnter(Sender: TObject);
+begin
+  inherited;
+  dp_expira.DateMode := dmUpDown ;
+  dp_Expira.Format   := 'MM/dd/yyyy';
+end;
+
+procedure TfrmSocios.dp_FechaApoyoLentesEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Fecha...';
+end;
+
+procedure TfrmSocios.edApellidoCasadaEnter(Sender: TObject);
+begin
+  inherited;
+    edApellidoCasada.ParentColor := false;
+    edApellidoCasada.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.edApellidoCasadaExit(Sender: TObject);
+begin
+  inherited;
+    edApellidoCasada.ParentColor := true;
+    edApellidoCasada.color       := clWhite ;
+end;
+
 procedure TfrmSocios.edDesdeFijosClick(Sender: TObject);
 begin
   inherited;
@@ -2178,11 +2576,95 @@ begin
   CalcularPeriodo;
 end;
 
+procedure TfrmSocios.edLugarTrabajoEnter(Sender: TObject);
+begin
+  inherited;
+    edLugarTrabajo.ParentColor := false;
+    edLugarTrabajo.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.edLugarTrabajoExit(Sender: TObject);
+begin
+  inherited;
+    edLugarTrabajo.ParentColor := true;
+    edLugarTrabajo.color       := clWhite ;
+end;
+
+procedure TfrmSocios.edNotaEnter(Sender: TObject);
+begin
+  inherited;
+    edNota.ParentColor := false;
+    edNota.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.edNotaExit(Sender: TObject);
+begin
+  inherited;
+    edNota.ParentColor := true;
+    edNota.color       := clWhite ;
+end;
+
+procedure TfrmSocios.edPasaporteRucEnter(Sender: TObject);
+begin
+  inherited;
+    edPasaporteRuc.ParentColor := false;
+    edPasaporteRuc.color       := clMoneyGreen  ;
+end;
+
+procedure TfrmSocios.edPasaporteRucExit(Sender: TObject);
+begin
+  inherited;
+    edPasaporteRuc.ParentColor := true;
+    edPasaporteRuc.color       := clWhite ;
+end;
+
 procedure TfrmSocios.edPlazoChange(Sender: TObject);
 begin
   inherited;
 //  DataModulo1.SocioProductos.Edit;
 //  DataModulo1.SocioProductosfecha_inicio.AsDateTime := dpFechaInicio.Date  ;
+end;
+
+procedure TfrmSocios.edSegundoApellidoEnter(Sender: TObject);
+begin
+  inherited;
+    edSegundoApellido.ParentColor   := false;
+    edSegundoApellido.color         := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.edSegundoApellidoExit(Sender: TObject);
+begin
+  inherited;
+    edSegundoApellido.ParentColor:=true;
+    edSegundoApellido.color:=clWhite ;
+end;
+
+procedure TfrmSocios.edSegundoNombreEnter(Sender: TObject);
+begin
+  inherited;
+    edSegundoNombre.ParentColor := false;
+    edSegundoNombre.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.edSegundoNombreExit(Sender: TObject);
+begin
+  inherited;
+    edSegundoNombre.ParentColor := true;
+    edSegundoNombre.color       := clWhite ;
+end;
+
+procedure TfrmSocios.edSeguroSocialEnter(Sender: TObject);
+begin
+  inherited;
+    edSeguroSocial.ParentColor := false;
+    edSeguroSocial.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.edSeguroSocialExit(Sender: TObject);
+begin
+  inherited;
+    edSeguroSocial.ParentColor := true;
+    edSeguroSocial.color       := clWhite ;
 end;
 
 procedure TfrmSocios.edTipoProductoClick(Sender: TObject);
@@ -2223,6 +2705,35 @@ begin
   edfiltro.SetFocus;
 end;
 
+procedure TfrmSocios.cmbPaisNacimientoEnter(Sender: TObject);
+begin
+  inherited;
+    cmbPaisNacimiento.ParentColor := false;
+    cmbPaisNacimiento.color       := clMoneyGreen;
+end;
+
+procedure TfrmSocios.cmbPaisNacimientoExit(Sender: TObject);
+
+begin
+  inherited;
+    cmbPaisNacimiento.ParentColor := true;
+    cmbPaisNacimiento.color       := clWhite;    // este es el que tiene el foco
+end;
+
+procedure TfrmSocios.cmbPaisResidenciaEnter(Sender: TObject);
+begin
+  inherited;
+    cmbPaisResidencia.ParentColor := false;
+    cmbPaisResidencia.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.cmbPaisResidenciaExit(Sender: TObject);
+begin
+  inherited;
+    cmbPaisResidencia.ParentColor := true;
+    cmbPaisResidencia.color       := clWhite ;
+end;
+
 //------------------------------------------------------------------------------
 //     Carga los documentos del Socio
 //------------------------------------------------------------------------------
@@ -2237,6 +2748,14 @@ begin
              DataModulo1.tblSociossocio.AsString);
   DataModulo1.socioDoc.Open;
   DataModulo1.socioDoc.First;
+
+  if not DataModulo1.socioDoc.eof then
+  begin
+    _alto  := DBImage1.Height;
+    _ancho := DBImage1.Width ;
+  end;
+
+
 
 end;
 
@@ -2271,6 +2790,62 @@ begin
      btn_Egreso_IV_Siguiente.Enabled := true;
    end;
  end;
+end;
+
+procedure TfrmSocios.dbApellidoEnter(Sender: TObject);
+begin
+  inherited;
+    dbApellido.ParentColor := false;
+    dbApellido.color       := clMoneyGreen  ;
+end;
+
+procedure TfrmSocios.dbApellidoExit(Sender: TObject);
+begin
+  inherited;
+    dbApellido.ParentColor := true;
+    dbApellido.color       := clWhite;
+end;
+
+procedure TfrmSocios.dbCed1Enter(Sender: TObject);
+begin
+  inherited;
+    dbCed1.ParentColor := false;
+    dbCed1.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.dbCed1Exit(Sender: TObject);
+begin
+  inherited;
+    dbCed1.ParentColor := true;
+    dbCed1.color       := clWhite ;
+end;
+
+procedure TfrmSocios.dbCed2Enter(Sender: TObject);
+begin
+  inherited;
+    dbCed2.ParentColor := false;
+    dbCed2.color       := clMoneyGreen ;
+end;
+
+procedure TfrmSocios.dbCed2Exit(Sender: TObject);
+begin
+  inherited;
+    dbCed2.ParentColor := true;
+    dbCed2.color       := clWhite ;
+end;
+
+procedure TfrmSocios.dbCed3Enter(Sender: TObject);
+begin
+  inherited;
+    dbCed3.ParentColor := false;
+    dbCed3.color       := clMoneyGreen  ;
+end;
+
+procedure TfrmSocios.dbCed3Exit(Sender: TObject);
+begin
+  inherited;
+    dbCed3.ParentColor := true;
+    dbCed3.color       := clWhite ;
 end;
 
 procedure TfrmSocios.dbCompaniaChange(Sender: TObject);
@@ -2393,20 +2968,22 @@ end;
 procedure TfrmSocios.dbgSociosCellClick(Column: TColumn);
 begin
   inherited;
-  if (DataModulo1.tblSocios.State IN [dsInsert]) then
-  begin
-    DataModulo1.tblSocios.Cancel;
-    abort  ;
-  end;
-
-  //--- Deshabilita secciones de captura
-  grp_IF.Enabled  := false;
-  grp_IV.Enabled  := False;
-
-  //--- Deshabilita Botones de Salvar y deshacer
-  btnSalvarIngresoFijo.Enabled := false;
-  btn_IV_Salvar.Enabled        := false;
-  btn_IV_Undo.Enabled          := False;
+//  if (mSocio.State IN [dsInsert]) then
+//  begin
+//    mSocio.Cancel;
+//    abort  ;
+//  end;
+//
+//  //--- Deshabilita secciones de captura
+//  grp_IF.Enabled  := false;
+//  grp_IV.Enabled  := False;
+//
+//  //--- Deshabilita Botones de Salvar y deshacer
+//  btnSalvarIngresoFijo.Enabled := false;
+//  btn_IV_Salvar.Enabled        := false;
+//  btn_IV_Undo.Enabled          := False;
+//
+  _carga;
 
 end;
 
@@ -2519,6 +3096,20 @@ begin
        DataModulo1.AsociacionesesRiesgosa.AsBoolean;
 end;
 
+procedure TfrmSocios.dblEstadoCivilEnter(Sender: TObject);
+begin
+  inherited;
+    dblEstadoCivil.ParentColor := false;
+    dblEstadoCivil.color       := clMoneyGreen;
+end;
+
+procedure TfrmSocios.dblEstadoCivilExit(Sender: TObject);
+begin
+  inherited;
+    dblEstadoCivil.ParentColor := true;
+    dblEstadoCivil.color       := clWhite ;
+end;
+
 procedure TfrmSocios.dblFormaPagoClick(Sender: TObject);
 begin
   inherited;
@@ -2543,6 +3134,12 @@ begin
         DataModulo1.frecuenciaPagosdias.Value;
 end;
 
+procedure TfrmSocios.DBLookupComboBox3Enter(Sender: TObject);
+begin
+  inherited;
+    _detalleLog := _detalleLog + '...Tipo Apoyo...';
+end;
+
 procedure TfrmSocios.dbl_DirIF_PaisClick(Sender: TObject);
 begin
   inherited;
@@ -2552,11 +3149,60 @@ begin
   DataModulo1.direccionIF_Prov.Open;
 end;
 
-procedure TfrmSocios.DBLookupComboBox6Click(Sender: TObject);
+procedure TfrmSocios.dbNombreEnter(Sender: TObject);
+
+begin
+  inherited;
+
+    ParentColor:=false;
+    dbnombre.color:=clMoneyGreen  ;
+end;
+
+procedure TfrmSocios.dbNombreExit(Sender: TObject);
+begin
+  inherited;
+    dbNombre.ParentColor:=true;
+    dbNombre.color:=clWhite ;
+end;
+
+procedure TfrmSocios.db_NotaEnter(Sender: TObject);
+begin
+  inherited;
+  _detalleLog := _detalleLog + '...Nota...';
+end;
+
+procedure TfrmSocios.dbl_EstatusClick(Sender: TObject);
 begin
   inherited;
   DataModulo1.estatus.Close;
   DataModulo1.estatus.open;
+
+  if DataModulo1.tblSociosEstatus.AsString = 'R' then
+  begin
+    DataModulo1.tblSocios.Edit;
+    DataModulo1.tblSociosfecha_salida.AsDateTime := DataModulo1.FechaSistema();
+  end;
+
+  if DataModulo1.tblSociosEstatus.AsString = 'A' then
+  begin
+    DataModulo1.tblSocios.Edit;
+    DataModulo1.tblSociosfechaActivacion.AsDateTime := DataModulo1.FechaSistema();
+  end;
+
+end;
+
+procedure TfrmSocios.dblPaisPasaporteEnter(Sender: TObject);
+begin
+  inherited;
+    dblPaisPasaporte.ParentColor := false;
+    dblPaisPasaporte.color       := clMoneyGreen  ;
+end;
+
+procedure TfrmSocios.dblPaisPasaporteExit(Sender: TObject);
+begin
+  inherited;
+    dblPaisPasaporte.ParentColor := true;
+    dblPaisPasaporte.color       := clWhite ;
 end;
 
 procedure TfrmSocios.dblSectorFijoClick(Sender: TObject);
@@ -2604,6 +3250,20 @@ begin
 
 end;
 
+procedure TfrmSocios.dblTipoDocEnter(Sender: TObject);
+begin
+  inherited;
+    dblTipoDoc.ParentColor := false;
+    dblTipoDoc.color       := clMoneyGreen;
+end;
+
+procedure TfrmSocios.dblTipoDocExit(Sender: TObject);
+begin
+  inherited;
+    dblTipoDoc.ParentColor := true;
+    dblTipoDoc.color       := clWhite;
+end;
+
 procedure TfrmSocios.dblTipoSocioClick(Sender: TObject);
 begin
   inherited;
@@ -2615,17 +3275,17 @@ begin
 
   if DataModulo1.tipoPersonaidTipoPerson.AsString <> 'PN' then
   begin
-    rbMasculino.Checked := False;
-    rbFemenino.Checked := False;
-    rbMasculino.enabled := False;
-    rbFemenino.enabled := False;
+//    rbMasculino.Checked := False;
+//    rbFemenino.Checked := False;
+//    rbMasculino.enabled := False;
+//    rbFemenino.enabled := False;
     DataModulo1.tblSocios.Edit;
     DataModulo1.tblSociossexo.Value := '';
   end
   Else
   begin
-    rbMasculino.enabled := true;
-    rbFemenino.enabled  := true;
+//    rbMasculino.enabled := true;
+//    rbFemenino.enabled  := true;
   end;
 end;
 
@@ -2647,14 +3307,23 @@ begin
       DataModulo1.provinciasTodasguidProvincia.AsString;
   DataModulo1.Distritos2.Open;
 
+  //--- recupera los Corregimientos del distrito
+  DataModulo1.corregimientoSocio.Close;
+  DataModulo1.corregimientoSocio.params[0].AsString :=
+            DataModulo1.Distritos2guidDistrito.AsString;
+  DataModulo1.corregimientoSocio.Open;
+
+  //--- recupera los Poblados del Corregimiento
+  DataModulo1.BarriosSocio.Close;
+  DataModulo1.BarriosSocio.params[0].AsString :=
+                  DataModulo1.corregimientoSocioguidCorregimiento.AsString;
+  DataModulo1.BarriosSocio.Open;
+
+
+
+{
   if not DataModulo1.Distritos2.eof then
   begin
-    //--- recupera los Corregimientos del distrito
-    DataModulo1.corregimientoSocio.Close;
-    DataModulo1.corregimientoSocio.params[0].AsString :=
-            DataModulo1.Distritos2guidDistrito.AsString;
-    DataModulo1.corregimientoSocio.Open;
-
     //--- recupera los Barrios del Corregimiento
     if not DataModulo1.corregimientoSocio.eof then
     begin
@@ -2685,37 +3354,33 @@ begin
      DataModulo1.corregimientoSocio.Open;
   end;
 
-
+}
 
 end;
 
 procedure TfrmSocios.dtsCuentaFiadorDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
+
+  if length(trim(dataModulo1.CuentaFiadoresCedula.AsString )) > 3  then
+  begin
+  DataModulo1.Fiadores.Close;
+  DataModulo1.Fiadores.Open;
   mFiador.Close;
   mFiador.Open;
+
   mfiador.Append;
   mFiadorcuenta.AsString := DataModulo1.SocioProductosnum_cuenta.AsString;
   mFiadorcedula.AsString := DataModulo1.CuentaFiadoresCed1.AsString +
                             DataModulo1.CuentaFiadoresCed2.AsString +
                             DataModulo1.CuentaFiadoresCed3.AsString ;
-end;
-
-procedure TfrmSocios.dtsmFiadorDataChange(Sender: TObject; Field: TField);
-begin
-  inherited;
-//  DataModulo1.CuentaFiadores.Edit ;
-//  DataModulo1.CuentaFiadoresssced.AsString :=
-//       DataModulo1.Fiadoresced1.AsString +
-//       DataModulo1.Fiadoresced2.AsString +
-//       DataModulo1.Fiadoresced3.AsString ;
-end;
-
-procedure TfrmSocios.dtspaises2DataChange(Sender: TObject; Field: TField);
-begin
-  inherited;
-//  DataModulo1.socioNacionalidadesnacionalidad.AsString :=
-//     DataModulo1.paises2nacionalidad.AsString;
+  end
+  else
+  begin
+    mfiador.Close;
+    mfiador.Open;
+    DataModulo1.Fiadores.Close;
+  end;
 end;
 
 procedure TfrmSocios.dtsProductosClienteDataChange(Sender: TObject;
@@ -2735,21 +3400,51 @@ begin
 end;
 
 procedure TfrmSocios.dtsSocioDocDataChange(Sender: TObject; Field: TField);
-var
- Stream: TStream;
- imgStream : TJPEGImage ;
-
+ var
+ fileName : string;
 begin
-//  Stream:= TMemoryStream.Create;
-//  try
-//    StrToStream(DataModulo1.SocioDocimagenTxt.AsString,Stream);
-////
-//    imgStream.LoadFromStream(Stream);
-//    image9.Picture.bitmap.LoadFromStream(Stream);
-//    image9.Repaint;
-//  finally
-//    Stream.Free;
-//   end;
+  inherited;
+ // if varisnull(DataModulo1.SocioDocimagen.Value) then
+    if length(trim(datamodulo1.SocioDocruta.AsString)) > 0 then
+    begin
+       DataModulo1.SocioDoc.edit;
+       fileName := datamodulo1.SocioDocruta.AsString;
+       DBImage1.Picture.LoadFromFile(fileName);
+       DBImage1.Refresh;
+    end;
+
+    if (datamodulo1.SocioDocexpira.asstring = '') then
+      dp_expira.Format := '''Ingrese Fecha'''
+    else
+    begin
+      dp_Expira.date   := datamodulo1.SocioDocexpira.AsDateTime ;
+      dp_expira.Format := 'MM/dd/yyyy';
+    end;
+
+//    if trunc(dp_expira.Date) = 0 then
+//      dp_Expira.Date := 0;
+
+
+end;
+
+procedure TfrmSocios.dts_mSocioDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+   if Not (msocioidTipoDoc.AsString = 'CE') then
+    begin
+      dbCed1.Visible         := false;
+      dbCed2.Visible         := false;
+      dbCed3.Visible         := false;
+      edPasaporteRuc.Visible := true;
+      edPasaporteRuc.Top     := dbced1.Top;
+    end
+    else
+    Begin
+      dbCed1.Visible         := true;
+      dbCed2.Visible         := true;
+      dbCed3.Visible         := true;
+      edPasaporteRuc.Visible := false;
+    End;
 end;
 
 procedure TfrmSocios.dts_SocioApoyoDocDataChange(Sender: TObject;
@@ -2763,6 +3458,7 @@ procedure TfrmSocios.dts_SocioApoyoLentesDataChange(Sender: TObject;
   Field: TField);
 begin
   inherited;
+
   if not DataModulo1.socioApoyoLentes.eof then
   begin
    DataModulo1.socioApoyoDoc.Close;
@@ -2805,17 +3501,17 @@ var
   if Opcion  = 'W' then
   begin
    if  Not (DataModulo1.tblSocios.State IN [dsEdit, dsInsert]) then
-    DataModulo1.tblSocios.edit;
+    mSocio.edit;
 
    dFechaNacimiento := EncodeDate (nano.Value,nmes.Value ,ndia.Value );
 
    CalculaEdadCompleta(dFechaNacimiento);
 
-   DataModulo1.tblSociosfecha_nacimiento.AsDateTime  := dFechaNacimiento;
+   mSociofecha_nacimiento.AsDateTime  := dFechaNacimiento;
 
-   DataModulo1.tblSociosnDia.Value  := ndia.Value ;
-   DataModulo1.tblSociosnMes.Value  := nmes.Value ;
-   DataModulo1.tblSociosnAno.Value  := nAno.Value ;
+   mSocionDia.Value  := ndia.Value ;
+   mSocionMes.Value  := nmes.Value ;
+   mSocionAno.Value  := nAno.Value ;
 
   end;
 
@@ -2833,23 +3529,28 @@ var
 
 end;
 
+procedure TfrmSocios.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  Action := caFree;
+end;
+
 procedure TfrmSocios.FormCreate(Sender: TObject);
 begin
   inherited;
-//  showMessage('FormCreate 1');
+
   DataModulo1.Paises2.Open ;
   DataModulo1.tblSocios.Open;
   DataModulo1.tblSocios.first;
-//  showMessage('FormCreate 2');
+
   DataModulo1.cargos.Open;
   DataModulo1.Estatus.Open;
+//  DataModulo1.SocioDireccion.Open;
   DataModulo1.profesiones.Open;
   DataModulo1.SociosCorreos.Open;
   DataModulo1.socioTelefonos.Open;
-  DataModulo1.socioDireccion.Open;
   DataModulo1.Parentezco.Open;
   DataModulo1.socioHerederos.Open;
-  DataModulo1.TipoTelefono.Open;
   DataModulo1.tipoPersona.Open;
   DataModulo1.tipoDocumento.Open;
   DataModulo1.MantCompany.Open;
@@ -2860,15 +3561,60 @@ begin
   DataModulo1.Fiadores.Open;
   DataModulo1.mFiadores.Open;         //... tabla de memoria para Fiadores del Prestamo
   DataModulo1.Finalidad.Open;         //... tabla Finalidad
-  DataModulo1.socioApoyoLentes.Open;
+//  DataModulo1.socioApoyoLentes.Open;
+
+  DataModulo1.tipoResidencia.Open;
+  DataModulo1.tipotelefono.Open;
 
 
 
 end;
 
-procedure TfrmSocios.FormShow(Sender: TObject);
+procedure TfrmSocios.FormDestroy(Sender: TObject);
 begin
   inherited;
+  self := nil;
+end;
+
+procedure TfrmSocios.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+ if Key = #13 then
+ begin
+  SelectNext(ActiveControl, true, True);
+  Key := #0;
+ end;
+end;
+
+procedure TfrmSocios.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  inherited;
+
+end;
+
+{$Region '********** Incio FormShow ******************************************'}
+procedure TfrmSocios.FormShow(Sender: TObject);
+var
+ i : integer;
+begin
+  inherited;
+
+  Twain := TDelphiTwain.Create;
+  Twain.OnTwainAcquire := TwainTwainAcquire;
+
+  if Twain.LoadLibrary then
+  begin
+    //Load source manager
+    Twain.SourceManagerLoaded := TRUE;
+    lbs.Items.Clear;
+    for I := 0 to Twain.SourceCount-1 do
+       lbs.Items.Add(Twain.Source[I].ProductName);
+
+  end else begin
+    ShowMessage('Twain is not installed.');
+  end;
+
   xh := DBImage1.Height;
   xw := DBImage1.Width ;
   desde.Date := strToDate('01/01/2000');
@@ -2895,7 +3641,466 @@ begin
   DataModulo1.socioApoyoDoc.Close;
   DataModulo1.socioApoyoDoc.open;
 
+  //--- Para el comboBox de Tipo de Direccion
+  DataModulo1.Tipodireccion.close;
+  DataModulo1.Tipodireccion.Open;
+
+  //--- Para el combobox de de Hipoteca
+  DataModulo1.proveedores.Close;
+  DataModulo1.proveedores.Open;
+
+  //--- Para el ComboBox de Cargo del Cliente ----
+  DataModulo1.cargo.Close;
+  DataModulo1.cargo.Open;
+
+  //--- Para el comboBox de Estado Civil
+  DataModulo1.estadoCivil.Close;
+  DataModulo1.estadoCivil.Open;
+
+  //--- Para el ComboBox de Companias
+  DataModulo1.companias.Close;
+  DataModulo1.companias.Open;
+
+  DataModulo1.estatus.Close;
+  DataModulo1.estatus.Open;
+
+  //--- Para Manejo de socio
+  msocio.Close;
+  msocio.Open;
+
+  //--- Para el ComboBox de Tipos de Documentos del Socio
+
+  DataModulo1.tipoDocumentoSocio.Close;
+  DataModulo1.tipoDocumentoSocio.Open;
+
+  pn_scaner.Visible := false;
+
+  _carga;
+
 end;
+{$EndRegion}
+
+{$Region '********** Procedimiento de Carga de Datos del Cliente *************'}
+//==============================================================================
+//                             Nombre: Carga
+// Descripcion: LLamado a los procedimientos de carga de datos de Socio
+// LLamado Por:
+//------------------------------------------------------------------------------
+// Elavorado Por : Edwin Cedeño   |Fecha:                |Hora:
+//==============================================================================
+
+procedure TfrmSocios._Carga;
+begin
+//--
+  //---
+  if not DataModulo1.tblSocios.Eof then
+  begin
+
+    //--- Deshabilita secciones de captura
+    grp_IF.Enabled := false;
+    grp_IV.Enabled   := False;
+
+    //--- Deshabilita Botones de Salvar y deshacer
+    btnSalvarIngresoFijo.Enabled := false;
+    btn_IV_Salvar.Enabled        := false;
+    btnUndoFijos.Enabled         := False;
+    btn_IV_Undo.Enabled          := False;
+
+    CargarCorreos;
+    CargarTelefonos;
+    CargarDirecciones;
+    CargarHerederos;
+    CargarDocumentos;
+    CargarProductos;
+    CargarTipoProductos;
+    CargarNacionalidades;
+    CargarPasatiempos;
+    CargarComunidad;
+    CargarAsociaciones;
+    CargarIngresosFijos;
+//    CargarIngresosVariables;
+//    CargarDireccionIF;  // carga las direccion del Ingreso Fijo (IF)
+//    CargarEgresosFI;
+//    //---
+//    CargarDireccionV;
+//    CargarEgresosVA;
+    CargarApoyoLentes;
+
+    //---- calculo de la edad del socio.
+    FechaNacimiento(msociofecha_nacimiento.AsDateTime, 'R' );
+    lbedad.caption := CalculaEdadCompleta(msociofecha_nacimiento.AsDateTime);
+    dpExpira.Date  := msociofechaExpiracionDocumento.AsDateTime ;
+
+    //--- Calculo del tiempo vigente de la fuente de ingreso Fijo
+    edDesdeFijos.DateTime := DataModulo1.SocioFuentesIngresosFijosdesde.AsDateTime ;
+    edHastaFijos.DateTime := DataModulo1.SocioFuentesIngresosFijosHasta.AsDateTime ;
+    CalcularPeriodo;
+
+    //--- Calculo del tiempo vigente de la fuente de ingreso Variable
+    dp_IV_Desde.DateTime := DataModulo1.SocioFuentesIngresosVariablesdesde.AsDateTime ;
+    dp_IV_Hasta.DateTime := DataModulo1.SocioFuentesIngresosVariablesHasta.AsDateTime ;
+    CalcularPeriodoV;
+
+    if DataModulo1.SocioFuentesIngresosFijosactivo.AsBoolean then
+    begin
+      edHastaFijos.Enabled:=False;
+    end
+    Else
+    Begin
+      edHastaFijos.Enabled:=True;
+    End;
+  end // Validar eof
+end;
+{$EndRegion}
+
+{$Region '********** Actualizar Cliente **************************************'}
+function TfrmSocios._ActualizarSocio: Boolean;
+var
+ esproveedor : string;
+begin
+//
+  if (varisnull(msocioidtipoPersona.AsString)) or (msocioidtipoPersona.AsString = '') then
+    msocioidtipoPersona.AsString := 'PN';
+
+  if (varisnull(mSocioesProveedor.AsBoolean))  then
+    mSocioesProveedor.AsBoolean := false;
+
+  if mSocioesProveedor.AsBoolean then
+    esproveedor := '1'
+  else
+    esproveedor := '0';
+  //--- Nombre
+  if (varisnull(mSocionombre.AsString)) or (mSocionombre.AsString = '') then
+    mSocionombre.AsString := '';
+
+  //--- Segundo Nombre
+  if (varisnull(mSociosegundoNombre.AsString)) then
+    mSociosegundoNombre.AsString := '';
+  //--- Apellido
+  if (varisnull(mSocioapellido.AsString))  then
+    mSocioapellido.AsString := '';
+  //--- Segundo Apellido
+  if (varisnull(mSociosegundoApellido.AsString)) then
+    mSociosegundoApellido.AsString := '';
+  //--- Apellido Casada
+  if (varisnull(mSocioapellidoCasada.AsString)) then
+    mSocioapellidoCasada.AsString := '';
+  //--- Nombre Completo
+  if (varisnull(mSocionombreCompleto.AsString))  then
+    mSocionombreCompleto.AsString := '';
+  //--- Tipo de Documento
+  if (varisnull(mSocioidTipoDoc.AsString)) then
+    mSocioidTipoDoc.AsString := '';
+  //--- Ced1
+  if (varisnull(mSocioced1.AsString)) then
+    mSocioced1.AsString := '';
+  if (mSocioced2.AsInteger <= 0) then
+    mSocioced2.AsInteger := 0;
+  if (mSocioced3.AsInteger <= 0) then
+    mSocioced3.AsInteger := 0;
+  if (varisnull(mSociopasaporteRuc.AsString)) then
+    mSociopasaporteRuc.AsString := '';
+  if (varisnull(mSocioActivo.AsString)) then
+    mSocioActivo.AsString := '';
+  if (varisnull(mSociosexo.AsString)) then
+    mSociosexo.AsString := '';
+  if (varisnull(mSociofecha_nacimiento.AsDateTime)) then
+    mSociofecha_nacimiento.AsDateTime := strtodatetime('01/01/1900   12');
+  if (varisnull(mSociondia.AsInteger)) then
+    mSociondia.AsInteger := 0;
+  if (varisnull(mSocionmes.AsInteger )) then
+    mSocionmes.AsInteger := 0;
+  if (varisnull(mSocionano.AsInteger)) then
+    mSocionano.AsInteger := 0;
+   //--- ID Empresa Labora
+  if (mSocioidEmpresa.AsInteger <= 0) then
+    mSocioidEmpresa.AsInteger := -1;
+
+  if (mSocioidcargo.asInteger <= 0) then
+    mSocioidcargo.AsInteger := 0;
+  if (mSocioestadoCivil.AsInteger <= 0 )  then
+    mSocioestadoCivil.AsInteger := 0;
+  if (varisnull(mSociopaisNacimiento.AsString)) then
+    mSociopaisNacimiento.AsString := '';
+  if (varisnull(mSociopaisResidencia.AsString )) then
+    mSociopaisResidencia.AsString := '';
+  if (varisnull(mSociopaisPasaporte.AsString ))  then
+    mSociopaisPasaporte.AsString := '';
+  if (varisnull(mSociofechaExpiracionDocumento.AsDateTime)) then
+    mSociofechaExpiracionDocumento.AsDateTime := strtodatetime('01/01/1900   12');
+  if (varisnull(mSocioseguro_Social.AsString  )) then
+    mSocioseguro_Social.AsString := '';
+  if (varisnull(mSocioObservacion.AsString )) then
+    mSocioObservacion.AsString := '';
+  if (varisnull(mSociolugar_trabajo.AsString ))  then
+    mSociolugar_trabajo.AsString := '';
+  if (mSocioingresoMensual.AsFloat <= 0.00) then
+    mSocioingresoMensual.AsFloat := 0.00;
+
+
+  socioInsertar.Close;
+  socioInsertar.Sql.Clear;
+  socioInsertar.SQL.Add('Update Socios Set ');
+  socioInsertar.SQL.Add(' idTipoPersona   = ' + QuotedStr(mSocioidTipoPersona.AsString));
+  SocioInsertar.SQL.Add(',esProveedor     = ' + esProveedor);
+  SocioInsertar.SQL.Add(',nombre          = ' + quotedStr(mSocionombre.AsString ));
+  SocioInsertar.SQL.Add(',segundoNombre   = ' + quotedstr(mSociosegundoNombre.AsString));
+  SocioInsertar.SQL.Add(',Apellido        = ' + quotedstr(msocioApellido.AsString));
+  SocioInsertar.SQL.Add(',segundoApellido = ' + quotedStr(mSociosegundoApellido.AsString));
+  SocioInsertar.SQL.Add(',apellidoCasada  = ' + quotedStr(mSocioapellidoCasada.AsString));
+  SocioInsertar.SQL.Add(',nombreCompleto  = ' + quotedStr(mSocionombreCompleto.AsString));
+  SocioInsertar.SQL.Add(',idTipodoc       = ' + quotedStr(mSocioidTipoDoc.AsString));
+  SocioInsertar.SQL.Add(',ced1            = ' + quotedStr(mSocioced1.AsString));
+  SocioInsertar.SQL.Add(',ced2            = ' + IntToStr(mSocioCed2.AsInteger));
+  SocioInsertar.SQL.Add(',ced3            = ' + intToStr(mSocioCed3.AsInteger));
+  SocioInsertar.SQL.Add(',pasaporteRuc    = ' + quotedStr(mSociopasaporteRuc.AsString));
+  SocioInsertar.SQL.Add(',Activo          = ' + quotedStr(mSocioactivo.AsString));
+  SocioInsertar.SQL.Add(',Sexo            = ' + quotedstr(mSociosexo.AsString));
+  SocioInsertar.SQL.Add(',fecha_nacimiento= ' + QuotedStr(FormatDateTime('yyyy-mm-dd',mSociofecha_nacimiento.AsDateTime)));
+  SocioInsertar.SQL.Add(',ndia            = ' + IntToStr(mSocionDia.AsInteger));
+  SocioInsertar.SQL.Add(',nmes            = ' + intToStr(mSocionmes.AsInteger));
+  SocioInsertar.SQL.Add(',nano            = ' + intToStr(mSocionAno.AsInteger));
+  SocioInsertar.SQL.Add(',idEmpresa       = ' + intToStr(mSocioidEmpresa.AsInteger));
+  SocioInsertar.SQL.Add(',idCargo         = ' + intToStr(mSocioidCargo.AsInteger));
+  SocioInsertar.SQL.Add(',estadoCivil     = ' + intToStr(mSocioestadoCivil.AsInteger));
+  SocioInsertar.SQL.Add(',paisNacimiento  = ' + quotedStr(mSociopaisNacimiento.AsString));
+  SocioInsertar.SQL.Add(',paisResidencia  = ' + quotedstr(mSociopaisResidencia.AsString));
+  SocioInsertar.SQL.Add(',paisPasaporte   = ' + quotedStr(mSociopaisPasaporte.AsString));
+  SocioInsertar.SQL.Add(',fechaExpiracionDocumento = ' + quotedStr(FormatDateTime('yyyy-mm-dd',mSociofechaExpiracionDocumento.AsDateTime)));
+  SocioInsertar.SQL.Add(',seguro_Social   = ' + quotedStr(mSocioseguro_Social.AsString ));
+  SocioInsertar.SQL.Add(',Observacion     = ' + quotedStr(mSocioObservacion.AsString));
+  SocioInsertar.SQL.Add(',lugar_trabajo   = ' + quotedStr(mSociolugar_trabajo.AsString));
+  SocioInsertar.SQL.Add(',ingresoMensual  = ' + FloatToStr(mSocioingresoMensual.asFloat));
+  SocioInsertar.SQL.Add(',fecha_aud       = ' + quotedStr(FormatDateTime('yyyy-mm-dd',now)));
+  SocioInsertar.SQL.Add(',usuario         = ' + quotedstr(usuario));
+  SocioInsertar.SQL.Add(' where socio     = ' + mSociosocio.AsString);
+  Clipboard.AsText := SocioInsertar.SQL.text;
+  Try
+    DataModulo1.tblSocios.Close;
+    socioInsertar.ExecSQL;
+    result := true;
+  except
+      on E : Exception do
+      begin
+        ShowMessage(E.ClassName+' Error al Atualizar el Cliente : '+E.Message);
+        result := false;
+      end;
+
+  End;
+end;
+{$EndRegion}
+
+
+{$Region '********** Insertar Cliente en Base de Datos ***********************'}
+function TfrmSocios._InsertarSocio
+  (id              : String;
+  tipoCliente      : String;
+  tipoPersona      : String;
+  esProveedor      : String;
+  nombre           : string;
+  segundoNombre    : String;
+  apellido         : String;
+  segundoApellido  : string;
+  Casada           : String;
+  nombreCompleto   : string;
+  tipoDocumento    : String;
+  ced1             : string;
+  ced2             : String;
+  ced3             : String;
+  Pasaporte_Ruc    : String;
+  activo           : string;
+  fechaIngreso     : String;
+  sexo             : string;
+  Nacimiento       : String;
+  ndia             : String;
+  nmes             : String;
+  nano             : String;
+  profecion        : String;
+  compania         : string;
+  cargo            : String;
+  estadoCivil      : String;
+  paisNacimiento   : String;
+  paisResidencia   : string;
+  paisPasaporte    : string;
+  fechaExDoc       : String;
+  seguroSocial     : String;
+  Observacion      : string;
+  lugar_Trabajo    : string;
+  MontoIngreso     : string;
+  guid             : string;
+  accion           : string
+   ): boolean;
+begin
+//---
+ if accion = 'I' then
+ Begin
+
+  if (varisnull(id)) or (id = '') then
+    id := '0';
+  if (varisnull(tipoCliente)) or (tipoCliente = '') then
+    tipoCliente := '0';
+  if (varisnull(tipoPersona)) or (tipoPersona = '') then
+    tipoPersona := 'PN';
+  if (varisnull(esProveedor)) or (esProveedor = '') then
+    esProveedor := '0';
+  if (varisnull(nombre)) or (nombre = '') then
+    nombre := '';
+  if (varisnull(segundoNombre)) or (segundoNombre = '') then
+    segundoNombre := '';
+  if (varisnull(apellido)) or (apellido = '') then
+    apellido := '';
+  if (varisnull(segundoApellido)) or (segundoApellido = '') then
+    segundoApellido := '';
+  if (varisnull(Casada)) or (Casada = '') then
+    Casada := '';
+  if (varisnull(nombreCompleto)) or (nombreCompleto = '') then
+    nombreCompleto := '';
+  if (varisnull(tipoDocumento)) or (tipoDocumento = '') then
+    tipoDocumento := '';
+  if (varisnull(ced1)) or (ced1 = '') then
+    ced1 := '';
+  if (varisnull(ced2)) or (ced2 = '') then
+    ced2 := '0';
+  if (varisnull(ced3)) or (ced3 = '') then
+    ced3 := '0';
+  if (varisnull(Pasaporte_Ruc)) or (Pasaporte_Ruc = '') then
+    Pasaporte_Ruc := '';
+  if (varisnull(Activo)) or (Activo = '') then
+    Activo := '';
+  if (varisnull(fechaIngreso)) or (fechaIngreso = '') then
+    fechaIngreso := '';
+  if (varisnull(sexo)) or (sexo = '') then
+    sexo := '';
+  if (varisnull(Nacimiento)) or (Nacimiento = '') then
+    Nacimiento := '';
+  if (varisnull(ndia)) or (ndia = '') then
+    ndia := '0';
+  if (varisnull(nmes)) or (nmes = '') then
+    nmes := '0';
+  if (varisnull(nano)) or (nano = '') then
+    nano := '0';
+  if (varisnull(compania)) or (compania = '') then
+    compania := '0';
+  if (varisnull(cargo)) or (cargo = '') then
+    cargo := '0';
+  if (varisnull(estadoCivil )) or (estadoCivil = '') then
+    estadoCivil := '0';
+  if (varisnull(paisNacimiento )) or (paisNacimiento = '') then
+    paisNacimiento := '';
+  if (varisnull(paisResidencia )) or (paisResidencia = '') then
+    paisResidencia := '';
+  if (varisnull(paisPasaporte )) or (paisPasaporte = '') then
+    paisPasaporte := '';
+  if (varisnull(fechaExDoc )) or (fechaExDoc = '') then
+    fechaExDoc := '';
+  if (varisnull(seguroSocial )) or (seguroSocial = '') then
+    seguroSocial := '';
+  if (varisnull(Observacion )) or (Observacion = '') then
+    Observacion := '';
+  if (varisnull(lugar_Trabajo )) or (lugar_Trabajo = '') then
+    lugar_Trabajo := '';
+  if (varisnull(MontoIngreso )) or (MontoIngreso = '') then
+    MontoIngreso := '0.00';
+
+
+
+  socioInsertar.Close;
+  socioInsertar.Sql.Clear;
+  socioInsertar.Sql.Add('Insert Into Socios (');
+  socioInsertar.Sql.Add(' socio');
+  socioInsertar.Sql.Add(',idSocio');
+  socioInsertar.Sql.Add(',nombre');
+  socioInsertar.Sql.Add(',Segundonombre');
+  socioInsertar.Sql.Add(',Apellido');
+  socioInsertar.Sql.Add(',SegundoApellido');
+  socioInsertar.Sql.Add(',apellidoCasada');
+  socioInsertar.Sql.Add(',nombreCompleto');
+  socioInsertar.Sql.Add(',estadoCivil');
+  socioInsertar.Sql.Add(',tipoCliente');
+  socioInsertar.Sql.Add(',idTipoPersona');
+  socioInsertar.Sql.Add(',idTipoDoc');
+  socioInsertar.Sql.Add(',ced1');
+  socioInsertar.Sql.Add(',ced2');
+  socioInsertar.Sql.Add(',ced3');
+  socioInsertar.Sql.Add(',pasaporteRuc');
+  socioInsertar.Sql.Add(',fechaExpiracionDocumento');
+  socioInsertar.Sql.Add(',fecha_ingreso');
+  socioInsertar.Sql.Add(',sexo');
+  socioInsertar.Sql.Add(',fecha_nacimiento');
+  socioInsertar.Sql.Add(',paisNacimiento');
+  socioInsertar.Sql.Add(',paisResidencia');
+  socioInsertar.Sql.Add(',paisPasaporte');
+  socioInsertar.Sql.Add(',nDia');
+  socioInsertar.Sql.Add(',nmes');
+  socioInsertar.Sql.Add(',nano');
+  socioInsertar.Sql.Add(',idEmpresa');
+  socioInsertar.Sql.Add(',idCargo');
+  socioInsertar.Sql.Add(',ingresoMensual');
+  socioInsertar.Sql.Add(',lugar_Trabajo');
+  socioInsertar.Sql.Add(',seguro_Social');
+  socioInsertar.Sql.Add(',guidSocio');
+  // --- Datos de Auditoria
+  socioInsertar.Sql.Add(',fecha_aud');
+  socioInsertar.Sql.Add(',usuario');
+  socioInsertar.Sql.Add(' )');
+  //----------------------------------------------------------------------------
+  // ---                      Seccion de Valores
+  //----------------------------------------------------------------------------
+  socioInsertar.Sql.Add(' Values (');
+  socioInsertar.Sql.Add(      id);                        // ID de Socio
+  socioInsertar.Sql.Add(',' + id);                        // id de IdSocio
+  socioInsertar.Sql.Add(',' + quotedStr(nombre));         // Nombre del cliente
+  socioInsertar.Sql.Add(',' + quotedStr(segundoNombre));  // Segundo Nombre del cliente
+  socioInsertar.Sql.Add(',' + quotedStr(apellido));       // Apellido del Cliente
+  socioInsertar.Sql.Add(',' + quotedStr(segundoApellido));// Segundo Apellido del Cliente
+  socioInsertar.Sql.Add(',' + quotedStr(Casada));         // Apelldido de Casada
+  socioInsertar.Sql.Add(',' + quotedStr(nombreCompleto)); // Nombre Completo
+  socioInsertar.Sql.Add(',' + estadoCivil );              // Estado Civil
+  socioInsertar.Sql.Add(',' + tipoCliente );              // Tipo Cliente (Asociado,Ahorrista...etc)
+  socioInsertar.Sql.Add(',' + quotedstr(tipoPersona));    // Tipo Persona (Natural , Juridica ..etc)
+  socioInsertar.Sql.Add(',' + quotedStr(tipoDocumento));  // Tipo Documento (Cedula o Pasaporte)
+  socioInsertar.Sql.Add(',' + quotedStr(ced1));           // Cedula - tomo
+  socioInsertar.Sql.Add(',' + ced2 );                     // Cedula - Folio
+  socioInsertar.Sql.Add(',' + ced3 );                     // Cedula - Asiento
+  socioInsertar.Sql.Add(',' + quotedStr(Pasaporte_Ruc));  // Pasaporte-Ruc
+  socioInsertar.Sql.Add(',' + quotedStr(fechaExDoc));     // Fecha de expiracion de documento
+  socioInsertar.Sql.Add(',' + QuotedStr(fechaIngreso));   // Fecha de ingreso al sistema
+  socioInsertar.Sql.Add(',' + quotedStr(sexo));
+  socioInsertar.Sql.Add(',' + quotedStr(Nacimiento));      // Fecha de nacimiento
+  socioInsertar.Sql.Add(',' + quotedStr(paisNacimiento));  // Pais de nacimiento
+  socioInsertar.Sql.Add(',' + quotedStr(paisResidencia));  // Pais de Residencia
+  socioInsertar.Sql.Add(',' + quotedStr(paisPasaporte));   // Pais de emision de pasaporte
+  socioInsertar.Sql.Add(',' + ndia);                       // Dia de nacimiento
+  socioInsertar.Sql.Add(',' + nmes);                       // mes de nacimiento
+  socioInsertar.Sql.Add(',' + nano);                       // anio de nacimiento
+  socioInsertar.Sql.Add(',' + quotedStr(compania));        // Compania donde Labora
+  socioInsertar.Sql.Add(',' + cargo);                      // ID del cargo
+  socioInsertar.Sql.Add(',' + MontoIngreso );              // Monto - Ingreso Mensual
+  socioInsertar.Sql.Add(',' + quotedStr(lugar_Trabajo));   // Direccion del Trabajo
+  socioInsertar.Sql.Add(',' + quotedStr(seguroSocial));    // No. de Seguro Social
+  socioInsertar.Sql.Add(',' + quotedstr(guid));            // Guid del Socio
+  socioInsertar.Sql.Add(',' + QuotedStr(formatDateTime('yyyy-mm-dd',now)));   // Fecha de registro auditoria
+  socioInsertar.Sql.Add(',' + quotedStr(Usuario));
+  socioInsertar.Sql.Add(' )');   // Cierre de seccion de Valores...
+
+  Try
+    socioInsertar.ExecSQL;
+    result := true;
+  except
+      on E : Exception do
+      begin
+        ShowMessage(E.ClassName+' Error al Insertar Cliente : '+E.Message);
+        result := false;
+      end;
+  End;
+ End;
+
+ Clipboard.AsText := socioInsertar.Sql.Text;
+
+end;
+
+{$EndRegion}
+
 
 procedure TfrmSocios.gbGeneralesExit(Sender: TObject);
 begin
@@ -2936,12 +4141,24 @@ begin
   bFiadores := True;
 end;
 
-
-
 procedure TfrmSocios.nAnoChange(Sender: TObject);
 begin
   inherited;
   FechaNacimiento(encodedate(nano.Value ,nmes.Value ,ndia.value) , 'N')
+end;
+
+procedure TfrmSocios.nAnoEnter(Sender: TObject);
+begin
+  inherited;
+    nAno.ParentColor := false;
+    nAno.color       := clMoneyGreen;
+end;
+
+procedure TfrmSocios.nAnoExit(Sender: TObject);
+begin
+  inherited;
+    nAno.ParentColor := true;
+    nAno.color       := clWhite ;
 end;
 
 procedure TfrmSocios.ndiaChange(Sender: TObject);
@@ -2950,10 +4167,38 @@ begin
   FechaNacimiento(encodedate(nano.Value ,nmes.Value ,ndia.value) , 'N')
 end;
 
+procedure TfrmSocios.ndiaEnter(Sender: TObject);
+begin
+  inherited;
+    ndia.ParentColor := false;
+    ndia.color       := clMoneyGreen;
+end;
+
+procedure TfrmSocios.ndiaExit(Sender: TObject);
+begin
+  inherited;
+    ndia.ParentColor := true;
+    ndia.color       := clWhite;
+end;
+
 procedure TfrmSocios.nMesChange(Sender: TObject);
 begin
   inherited;
   FechaNacimiento(encodedate(nano.Value ,nmes.Value ,ndia.value) , 'N')
+end;
+
+procedure TfrmSocios.nMesEnter(Sender: TObject);
+begin
+  inherited;
+    nMes.ParentColor := false;
+    nMes.color       := clMoneyGreen;
+end;
+
+procedure TfrmSocios.nMesExit(Sender: TObject);
+begin
+  inherited;
+    nMes.ParentColor := true;
+    nMes.color       := clWhite ;
 end;
 
 procedure TfrmSocios.pc_socioChange(Sender: TObject);
@@ -2966,7 +4211,7 @@ begin
 
 end;
 
-
+{$Region '********** Imagen -> Pegar *****************************************'}
 procedure TfrmSocios.Pegar1Click(Sender: TObject);
 begin
   inherited;
@@ -2983,9 +4228,10 @@ begin
   end;
 
 end;
+{$EndRegion}
 
 //------------------------------------------------------------------------------
-//        Seleccina el Page de cuentas
+//        Selecciona el Page de cuentas
 //------------------------------------------------------------------------------
 procedure TfrmSocios.pcDetalleCuentaChange(Sender: TObject);
 begin
@@ -3041,16 +4287,16 @@ procedure TfrmSocios.rbFemeninoClick(Sender: TObject);
 begin
   inherited;
   DataModulo1.tblSocios.edit;
-  if rbFemenino.Checked  then
-      DataModulo1.tblSociossexo.Value := 'F';
+//  if rbFemenino.Checked  then
+//      DataModulo1.tblSociossexo.Value := 'F';
 end;
 
 procedure TfrmSocios.rbMasculinoClick(Sender: TObject);
 begin
   inherited;
   DataModulo1.tblSocios.edit;
-  if rbMasculino.Checked  then
-      DataModulo1.tblSociossexo.Value := 'M';
+//  if rbMasculino.Checked  then
+//      DataModulo1.tblSociossexo.Value := 'M';
 
 end;
 
@@ -3063,6 +4309,18 @@ begin
   ScrollBox2.HorzScrollBar.Visible := true;
   DBImage1.Height := xH + tb1.Position ;
   DBImage1.Width  := xW + tb1.Position ;
+end;
+
+procedure TfrmSocios.ScrollBox1MouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  inherited;
+  if wheelDelta > 0  then ScrollBox1.Perform(WM_VSCROLL,0,0);
+  if wheelDelta < 0  then ScrollBox1.Perform(WM_VSCROLL,1,0);
+  Handled := True;
+
+
+
 end;
 
 procedure TfrmSocios.SocioProductosDataChange(Sender: TObject; Field: TField);
@@ -3100,116 +4358,75 @@ begin
    pnNoFiadores.Visible := true;
    DataModulo1.mFiadores.Close;
    DataModulo1.mFiadores.open;
-
   end;
 
 end;
 
-//==============================================================================
-//                             Nombre: Carga
-// Descripcion: LLamado a los procedimientos de carga de datos de Socio
-// LLamado Por:
-//------------------------------------------------------------------------------
-// Elavorado Por : Edwin Cedeño   |Fecha:                |Hora:
-//==============================================================================
-procedure TfrmSocios._Carga;
-begin
-//--
-  //---
-  if not DataModulo1.tblSocios.Eof then
-  begin
-
-    //--- Deshabilita secciones de captura
-    grp_IF.Enabled := false;
-    grp_IV.Enabled   := False;
-
-    //--- Deshabilita Botones de Salvar y deshacer
-    btnSalvarIngresoFijo.Enabled := false;
-    btn_IV_Salvar.Enabled        := false;
-    btnUndoFijos.Enabled         := False;
-    btn_IV_Undo.Enabled          := False;
-
-    CargarCorreos;
-    CargarTelefonos;
-    CargarDirecciones;
-    CargarHerederos;
-    CargarDocumentos;
-    CargarProductos;
-    CargarTipoProductos;
-    CargarNacionalidades;
-    CargarPasatiempos;
-    CargarComunidad;
-    CargarAsociaciones;
-    CargarIngresosFijos;
-    CargarIngresosVariables;
-    CargarDireccionIF;  // carga las direccion del Ingreso Fijo (IF)
-    CargarEgresosFI;
-    //---
-    CargarDireccionV;
-    CargarEgresosVA;
-    CargarApoyoLentes;
-
-
-
-
-    //---- calculo de la edad del socio.
-    FechaNacimiento(DataModulo1.tblSociosfecha_nacimiento.AsDateTime, 'R' );
-    lbedad.caption := CalculaEdadCompleta(DataModulo1.tblSociosfecha_nacimiento.AsDateTime);
-    dpExpira.Date  := DataModulo1.tblSociosfechaExpiracionDocumento.AsDateTime ;
-
-    if DataModulo1.tblSociosidTipoPersona.AsString = 'PN' then
-    begin
-      rbMasculino.Enabled :=true;
-      rbFemenino.Enabled  :=true;
-
-      if DataModulo1.tblSociossexo.AsString = 'M'  then
-        rbMasculino.Checked := True
-      Else
-        if DataModulo1.tblSociossexo.AsString = 'F'  then
-           rbFemenino.Checked := True
-        Else
-        begin
-           rbMasculino.Checked := False;
-           rbFemenino.Checked  := False;
-        end;
-
-    end
-    Else //... No es Persona Natural
-    begin
-       rbMasculino.Checked := False; rbMasculino.Enabled:=False;
-       rbFemenino.Checked  := False; rbFemenino.Enabled:=False;
-    end;
-
-    //--- Calculo del tiempo vigente de la fuente de ingreso Fijo
-    edDesdeFijos.DateTime := DataModulo1.SocioFuentesIngresosFijosdesde.AsDateTime ;
-    edHastaFijos.DateTime := DataModulo1.SocioFuentesIngresosFijosHasta.AsDateTime ;
-    CalcularPeriodo;
-
-    //--- Calculo del tiempo vigente de la fuente de ingreso Variable
-    dp_IV_Desde.DateTime := DataModulo1.SocioFuentesIngresosVariablesdesde.AsDateTime ;
-    dp_IV_Hasta.DateTime := DataModulo1.SocioFuentesIngresosVariablesHasta.AsDateTime ;
-    CalcularPeriodoV;
-
-    if DataModulo1.SocioFuentesIngresosFijosactivo.AsBoolean then
-    begin
-      edHastaFijos.Enabled:=False;
-    end
-    Else
-    Begin
-      edHastaFijos.Enabled:=True;
-    End;
-
-  end // Validar eof
-end;
-
-
 procedure TfrmSocios.SociosDataChange(Sender: TObject; Field: TField);
+var
+i : integer;
 begin
+
   inherited;
+  msocio.Close;
+  msocio.Open;
 
-   _carga;
 
+  if DataModulo1.tblSociossocio.AsInteger > 0  then
+  begin
+    edTipoCliente.Enabled := false;
+    msocio.Append;
+    for i := 0 to DataModulo1.tblSocios.FieldCount - 1 do
+    begin
+      mSocio.Fields[I].Value := DataModulo1.tblSocios.Fields[i].value;
+    end;
+    msocio.Post;
+    _detalleLog := '' ;
+
+  end
+  else
+  begin
+    edTipoCliente.Enabled := true;
+  end;
+
+
+{
+
+//--- Activa el hints para mostrar la activacion / Retiro del Asocioado
+  if DataModulo1.tblSociosActivo.AsString = 'R' then
+  begin
+    dbl_Estatus.Hint := 'Salida | Fecha de Salida : ' +
+       FormatDateTime('dd-mmm-yyyy',DataModulo1.tblSociosfecha_salida.AsDateTime )
+       + '|51';
+  end
+  else
+  if DataModulo1.tblSociosActivo.AsString = 'A' Then
+    dbl_Estatus.Hint := 'Ingreso|Fecha de Ingreso : ' +
+       FormatDateTime('dd-mmm-yyyy',DataModulo1.tblSociosfecha_ingreso.AsDateTime )
+       +'|50';
+
+  dbl_Estatus.ShowHint := True;
+
+  //---
+  if Not (DataModulo1.tblSociosidTipoDoc.AsString = 'CE') then
+    begin
+      dbCed1.Visible := false;
+      dbCed2.Visible := false;
+      dbCed3.Visible := false;
+      edPasaporteRuc.Visible := true;
+      edPasaporteRuc.Top := dbced1.Top;
+    end
+    else
+    Begin
+      dbCed1.Visible := true;
+      dbCed2.Visible := true;
+      dbCed3.Visible := true;
+      edPasaporteRuc.Visible := false;
+    End;
+          }
 end;
+
+
 
 procedure TfrmSocios.SpeedButton1Click(Sender: TObject);
 begin
@@ -3236,14 +4453,37 @@ begin
 end;
 
 procedure TfrmSocios.tb1Change(Sender: TObject);
+
 begin
   inherited;
-  DBImage1.Top    := 1;
-  DBImage1.Left   := 1;
-  ScrollBox2.VertScrollBar.Visible := true;
-  ScrollBox2.HorzScrollBar.Visible := true;
-  DBImage1.Height := xH + tb1.Position ;
-  DBImage1.Width  := xW + tb1.Position ;
+//  DBImage1.Top    := 1;
+//  DBImage1.Left   := 1;
+  DBImage1.Proportional := true;
+  DBImage1.Stretch := true;
+  DBImage1.Repaint;
+//
+//  DBImage1.Height := Round(_alto * tb1.Position  / 2);
+//  Dbimage1.Width  := Round(_ancho * tb1.Position / 2);
+
+//  ScrollBox2.VertScrollBar.Visible := true;
+//  ScrollBox2.HorzScrollBar.Visible := true;
+//  DBImage1.Height := xH + tb1.Position ;
+//  DBImage1.Width  := xW + tb1.Position ;
+
+//En el zoom +
+//
+//Imagen->Height= Imagen->Picture->Height;
+//Imagen->Width=Imagen->Picture->Width;
+//Imagen->Height = Imagen->Height*2;
+//Imagen->Width = Imagen->Width*2;
+//
+//En el zoom -
+//
+//Imagen->Height= Imagen->Picture->Height;
+//Imagen->Width=Imagen->Picture->Width;
+//Imagen->Height = Imagen->Height/2;
+//Imagen->Width = Imagen->Width/2;
+
 end;
 
 procedure TfrmSocios.ToolButton11Click(Sender: TObject);
@@ -3251,31 +4491,29 @@ procedure TfrmSocios.ToolButton11Click(Sender: TObject);
     FileName : String;
 begin
   inherited;
-//---
-
+  //---
+  OpenPictureDialog1.Filter := 'Archivo de Imagen(*.bmp) |*.bmp';
   if OpenPictureDialog1.Execute  then
   begin
-
+    docPegar.Enabled  := False;
+    docCopiar.Enabled := False;
    // Image10.Picture.LoadFromFile()
     DataModulo1.SocioDoc.Append;
     DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
-    DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
+    DataModulo1.SocioDocfechaRegistro.AsDateTime := DataModulo1.FechaSistema();
     DataModulo1.SocioDocruta.AsString            := OpenPictureDialog1.FileName;
     DBImage1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
     DBImage1.Refresh;
   End
   else
-   ShowMessage('Open file was cancelled');
-
-
+   ShowMessage('Apertaru de Archivo Cancelada...');
 end;
 
 procedure TfrmSocios.ToolButton12Click(Sender: TObject);
 begin
   inherited;
-  if (DataModulo1.tblSocios.State IN [dsInsert]) then
-      DataModulo1.tblSocios.Cancel;
-  abort
+  if True then
+    DataModulo1.tblSocios.Delete;
 end;
 
 procedure TfrmSocios.ToolButton16Click(Sender: TObject);
@@ -3290,40 +4528,15 @@ procedure TfrmSocios.ToolButton19Click(Sender: TObject);
 var
   Stream: TMemoryStream;
   Texto: String;
+  I: Integer;
+  LI : TListItem;
 begin
-  inherited;
-//  Twain.SelectedSourceIndex := LBSources.ItemIndex;
-//
-//  if Assigned(Twain.SelectedSource) then begin
-//    //Load source, select transference method and enable (display interface)}
-//    Twain.SelectedSource.Loaded := True;
-//    Twain.SelectedSource.ShowUI := False;
-//    Twain.SelectedSource.Enabled := True;
-//  end;
 
-
-
-  if OpenPictureDialog1.Execute  then
-  begin
-    Stream:= TMemoryStream.Create;
-    try
-      DataModulo1.SocioDoc.Append;
-      DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
-      DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
-      Stream.LoadFromFile(OpenPictureDialog1.FileName);
-      Texto:= BinToStr(Stream.Memory,Stream.Size);
-      DataModulo1.SocioDocimagenTxt.AsString       := texto;
-      Clipboard.AsText := texto;
-    finally
-      Stream.Free;
-    end;
-//    DataModulo1.SocioDoc.Append;
-//    DataModulo1.SocioDocSocio.Value              := DataModulo1.tblSociossocio.Value;
-//    DataModulo1.SocioDocfechaRegistro.AsDateTime := now;
-//    DataModulo1.SocioDocruta.AsString            := OpenPictureDialog1.FileName;
-//    DBImage1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
-//    DBImage1.Refresh;
-  end;
+   pn_scaner.Left  := 90;
+   pn_scaner.Top   := 32;
+   pn_scaner.Width := 482;
+   pn_scaner.Height:= 336;
+   pn_scaner.Visible := true;
 
 end;
 
@@ -3402,10 +4615,16 @@ begin
   abmFiador := 'A';
   edFiador.Enabled:=true;
   edFiador.SetFocus;
-//  DataModulo1.CuentaFiadores.Append;
-//  DataModulo1.CuentaFiadoresNum_Cuenta.AsString :=
-//          DataModulo1.SocioProductosnum_cuenta.AsString
-////  DataModulo1.mFiadores.Append;
+
+  DataModulo1.CuentaFiadores.Append;
+  DataModulo1.CuentaFiadoresNum_Cuenta.AsString :=
+          DataModulo1.SocioProductosnum_cuenta.AsString;
+
+  DataModulo1.Fiadores.Close;
+  DataModulo1.Fiadores.Open;
+  mFiador.Close;
+  mFiador.Open;
+
 end;
 
 procedure TfrmSocios.ToolButton24Click(Sender: TObject);
@@ -3424,8 +4643,9 @@ begin
     DataModulo1.Generico.SQL.Add(  ',' + coma + DataModulo1.Fiadoresced1.AsString + coma );
     DataModulo1.Generico.SQL.Add(  ',' + DataModulo1.Fiadoresced2.AsString );
     DataModulo1.Generico.SQL.Add(  ',' + DataModulo1.Fiadoresced3.AsString );
-    DataModulo1.Generico.SQL.Add(  ',' + coma + DateTostr(now) + coma);
+    DataModulo1.Generico.SQL.Add(  ',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + coma);
     DataModulo1.Generico.SQL.Add(  ',' + coma + usuario + coma + ')');
+    Clipboard.AsText := DataModulo1.Generico.SQL.Text;
     DataModulo1.Generico.ExecSQL;
 
     edFiador.Enabled:=false;
@@ -3437,9 +4657,6 @@ begin
        showMessage('Error al salvar el Fiador...');
       end;
     end;
-
-
-
   End;
 
 end;
@@ -3455,9 +4672,9 @@ begin
     DataModulo1.Generico.SQL.Add('Delete maes_aux_fiador ' );
     DataModulo1.Generico.SQL.Add('Where num_Cuenta = ' ) ;
     DataModulo1.Generico.SQL.Add(  coma + DataModulo1.SocioProductosnum_cuenta.AsString + coma);
-    DataModulo1.Generico.SQL.Add(' and ced1 = ' + coma + DataModulo1.mFiadoresced1.AsString + coma );
-    DataModulo1.Generico.SQL.Add(' and ced2 = ' + DataModulo1.mFiadoresced2.AsString );
-    DataModulo1.Generico.SQL.Add(' and ced3 = ' + DataModulo1.mFiadoresced3.AsString );
+    DataModulo1.Generico.SQL.Add(' and ced1 = ' + coma + DataModulo1.CuentaFiadoresced1 .AsString + coma );
+    DataModulo1.Generico.SQL.Add(' and ced2 = ' + DataModulo1.CuentaFiadoresced2.AsString );
+    DataModulo1.Generico.SQL.Add(' and ced3 = ' + DataModulo1.CuentaFiadoresced3.AsString );
     DataModulo1.Generico.ExecSQL;
     CargaFiadores;
     abmFiador := '';
@@ -3634,6 +4851,7 @@ end;
 procedure TfrmSocios.ToolButton47Click(Sender: TObject);
 begin
   inherited;
+  _detalleLog := '' ;
   DataModulo1.socioApoyoLentes.Prior;
   dp_FechaApoyoLentes.Datetime := DataModulo1.socioApoyoLentesfechaApoyo.AsDateTime ;
 end;
@@ -3641,8 +4859,63 @@ end;
 procedure TfrmSocios.ToolButton50Click(Sender: TObject);
 begin
   inherited;
+  _detalleLog := '' ;
   DataModulo1.socioApoyoLentes.Next;
   dp_FechaApoyoLentes.Datetime := DataModulo1.socioApoyoLentesfechaApoyo.AsDateTime ;
+end;
+
+procedure TfrmSocios.ToolButton51Click(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.tblSocios.Post;
+end;
+
+procedure TfrmSocios.ToolButton55Click(Sender: TObject);
+begin
+  inherited;
+   Twain.SelectedSourceIndex := lbs.ItemIndex ;//.ItemIndex;
+
+  if Assigned(Twain.SelectedSource) then begin
+    //Load source, select transference method and enable (display interface)}
+    Twain.SelectedSource.Loaded := True;
+    Twain.SelectedSource.ShowUI := True;//display interface
+    Twain.SelectedSource.Enabled := True;
+  end;
+end;
+
+procedure TfrmSocios.ToolButton58Click(Sender: TObject);
+
+//var
+//  mask,bmp : TBitmap;
+//  bkColor : TColor;
+//  i : Integer;
+//  xloop : boolean;
+begin
+ // if not fileexists('C:\img\' + edNombre.Text + '.bmp') then
+  begin
+//   ImgHolder.Picture.Bitmap.savetofile('C:\img\' +edNombre.Text + '.bmp');
+   DataModulo1.SocioDoc.Append;
+   DataModulo1.SocioDocSocio.AsInteger := DataModulo1.tblSociossocio.Value;
+   DataModulo1.SocioDocfechaRegistro.AsDateTime  := DataModulo1.FechaSistema ();
+   DBImage1.Picture.Bitmap:=ImgHolder.Picture.Bitmap;
+   pn_scaner.Visible := false;
+   DataModulo1.SocioDoc.post;
+   DataModulo1.RegistroLog(usuario,'Inserta desde Scaner ' , 'Socio No. ' + mSociosocio.AsString);
+
+  end;
+end;
+
+procedure TfrmSocios.ToolButton60Click(Sender: TObject);
+begin
+  inherited;
+   pn_scaner.Visible := false;
+end;
+
+procedure TfrmSocios.TwainTwainAcquire(Sender: TObject; const Index: Integer;
+  Image: TBitmap; var Cancel: Boolean);
+begin
+  ImgHolder.Picture.Assign(Image);
+  Cancel := True;//Only want one image
 end;
 
 procedure TfrmSocios.btn_AnteriorEFClick(Sender: TObject);
@@ -3732,6 +5005,14 @@ begin
   inherited;
   if  Not (DataModulo1.socioApoyoLentes.State IN [dsEdit, dsInsert]) then
      DataModulo1.socioApoyoLentes.edit;
+
+  if DataModulo1.socioApoyoLentes.State = dsEdit then
+     DataModulo1.RegistroLog(Usuario,'Actualiza Apoyo ','Socio No. '
+         + DataModulo1.socioApoyoLentesidSocio.AsString + _detalleLog  );
+
+  if DataModulo1.socioApoyoLentes.State = dsInsert then
+     DataModulo1.RegistroLog(Usuario,'Inserta Apoyo ','Socio No. ' + DataModulo1.socioApoyoLentesidSocio.AsString);
+
 
     Try
 
@@ -4468,8 +5749,12 @@ end;
 procedure TfrmSocios.btnTelNuevoClick(Sender: TObject);
 begin
   inherited;
+//  DataModulo1.tipotelefono.Close;
+//  DataModulo1.tipotelefono.Open;
+//
   DataModulo1.socioTelefonos.Append;
-  DataModulo1.socioTelefonosidSocio.Value := DataModulo1.tblSociossocio.Value ;
+  DataModulo1.socioTelefonosidSocio.asInteger := DataModulo1.tblSociossocio.asInteger ;
+
 end;
 
 

@@ -144,7 +144,7 @@ uses DM1;
 procedure TfrmPaises.btnBorrarCorregimientoClick(Sender: TObject);
 begin
   inherited;
-  DataModulo1.corregimiento.Delete;
+  DataModulo1.Barrio.Delete;
 end;
 
 procedure TfrmPaises.btnBorrarDistritoClick(Sender: TObject);

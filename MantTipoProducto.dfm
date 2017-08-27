@@ -7,7 +7,6 @@ inherited frmTipoProducto: TfrmTipoProducto
   Position = poDesigned
   WindowState = wsMaximized
   OnShow = FormShow
-  ExplicitLeft = -192
   ExplicitWidth = 1072
   ExplicitHeight = 750
   PixelsPerInch = 96
@@ -44,6 +43,7 @@ inherited frmTipoProducto: TfrmTipoProducto
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = [fsBold]
+    OnCellClick = dbgProfesionCellClick
     Columns = <
       item
         Expanded = False
@@ -150,6 +150,8 @@ inherited frmTipoProducto: TfrmTipoProducto
             ParentBackground = False
             ParentColor = False
             TabOrder = 0
+            ExplicitLeft = -5
+            ExplicitTop = 2
             DesignSize = (
               773
               416)
@@ -202,8 +204,8 @@ inherited frmTipoProducto: TfrmTipoProducto
               FocusControl = edPeriodoTasa
             end
             object Label9: TLabel
-              Left = 115
-              Top = 100
+              Left = 443
+              Top = 101
               Width = 101
               Height = 13
               Caption = 'Tipo de movimientos:'
@@ -226,7 +228,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               TabOrder = 0
             end
             object edNombre: TDBEdit
-              Left = 222
+              Left = 224
               Top = 18
               Width = 484
               Height = 21
@@ -234,6 +236,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'nombresubcuenta'
               DataSource = dtsTipoProducto
               TabOrder = 1
+              OnEnter = edNombreEnter
             end
             object edAbre: TDBEdit
               Left = 70
@@ -244,6 +247,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'abreviatura'
               DataSource = dtsTipoProducto
               TabOrder = 2
+              OnEnter = edAbreEnter
             end
             object edCuenta: TDBEdit
               Left = 224
@@ -254,6 +258,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'cuenta'
               DataSource = dtsTipoProducto
               TabOrder = 3
+              OnEnter = edCuentaEnter
             end
             object edPeriodoTasa: TDBEdit
               Left = 71
@@ -263,6 +268,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'periodo_tasa'
               DataSource = dtsTipoProducto
               TabOrder = 4
+              OnEnter = edPeriodoTasaEnter
             end
             object edAportacion: TDBEdit
               Left = 224
@@ -272,11 +278,12 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'MontoAportacion'
               DataSource = dtsTipoProducto
               TabOrder = 5
+              OnEnter = edAportacionEnter
             end
             object grpEsPrestamo: TGroupBox
-              Left = 5
-              Top = 132
-              Width = 612
+              Left = 3
+              Top = 139
+              Width = 702
               Height = 109
               Align = alCustom
               Color = clWhite
@@ -284,14 +291,14 @@ inherited frmTipoProducto: TfrmTipoProducto
               ParentColor = False
               TabOrder = 7
               DesignSize = (
-                612
+                702
                 109)
               object Label7: TLabel
                 Left = 15
                 Top = 12
-                Width = 138
+                Width = 94
                 Height = 13
-                Caption = 'C'#225'lculo de Inter'#233's se aplica: '
+                Caption = 'C'#225'lculo de Inter'#233's :'
               end
               object Label8: TLabel
                 Left = 11
@@ -303,10 +310,11 @@ inherited frmTipoProducto: TfrmTipoProducto
               object Shape1: TShape
                 Left = 60
                 Top = 80
-                Width = 513
+                Width = 603
                 Height = 1
                 Anchors = [akLeft, akTop, akRight]
                 Pen.Color = cl3DLight
+                ExplicitWidth = 513
               end
               object Label11: TLabel
                 Left = 15
@@ -317,7 +325,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               end
               object chbIntSobreSaldo: TDBCheckBox
                 Left = 220
-                Top = 11
+                Top = 10
                 Width = 120
                 Height = 17
                 Caption = 'Sobre Saldo'
@@ -329,10 +337,11 @@ inherited frmTipoProducto: TfrmTipoProducto
                 ValueChecked = 'S'
                 ValueUnchecked = ''
                 OnClick = chbIntSobreSaldoClick
+                OnEnter = chbIntSobreSaldoEnter
               end
               object chbIntSobrePrestamo: TDBCheckBox
                 Left = 317
-                Top = 11
+                Top = 10
                 Width = 97
                 Height = 17
                 Caption = 'Sobre Prestamo'
@@ -342,6 +351,7 @@ inherited frmTipoProducto: TfrmTipoProducto
                 ValueChecked = 'P'
                 ValueUnchecked = ''
                 OnClick = chbIntSobrePrestamoClick
+                OnEnter = chbIntSobrePrestamoEnter
               end
               object cbGarantia: TDBCheckBox
                 Left = 60
@@ -381,7 +391,7 @@ inherited frmTipoProducto: TfrmTipoProducto
                 TabOrder = 4
               end
               object cbx_calcula_mora: TDBCheckBox
-                Left = 220
+                Left = 223
                 Top = 44
                 Width = 15
                 Height = 17
@@ -422,6 +432,16 @@ inherited frmTipoProducto: TfrmTipoProducto
                 ParentFont = False
                 TabOrder = 7
               end
+              object DBCheckBox15: TDBCheckBox
+                Left = 115
+                Top = 10
+                Width = 21
+                Height = 17
+                DataField = 'calulaInteres'
+                DataSource = dtsTipoProducto
+                TabOrder = 8
+                OnClick = DBCheckBox15Click
+              end
             end
             object esPrestamo: TDBCheckBox
               Left = 3
@@ -442,6 +462,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               ValueChecked = 'S'
               ValueUnchecked = 'N'
               OnClick = esPrestamoClick
+              OnEnter = esPrestamoEnter
             end
             object GroupBox6: TGroupBox
               Left = 2
@@ -528,7 +549,7 @@ inherited frmTipoProducto: TfrmTipoProducto
               end
             end
             object DBCheckBox6: TDBCheckBox
-              Left = 225
+              Left = 553
               Top = 99
               Width = 97
               Height = 17
@@ -536,9 +557,10 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'deposito'
               DataSource = dtsTipoProducto
               TabOrder = 9
+              OnEnter = DBCheckBox6Enter
             end
             object DBCheckBox7: TDBCheckBox
-              Left = 322
+              Left = 650
               Top = 99
               Width = 97
               Height = 17
@@ -546,6 +568,19 @@ inherited frmTipoProducto: TfrmTipoProducto
               DataField = 'retiro'
               DataSource = dtsTipoProducto
               TabOrder = 10
+              OnEnter = DBCheckBox7Enter
+            end
+            object DBCheckBox14: TDBCheckBox
+              Left = 162
+              Top = 99
+              Width = 97
+              Height = 17
+              Alignment = taLeftJustify
+              Caption = 'Es Ahorro?'
+              DataField = 'esAhorro'
+              DataSource = dtsTipoProducto
+              TabOrder = 11
+              OnClick = DBCheckBox14Click
             end
           end
         end
@@ -969,7 +1004,6 @@ inherited frmTipoProducto: TfrmTipoProducto
           Top = 0
           Caption = 'btnPrueba'
           ImageIndex = 4
-          OnClick = btnPruebaClick
         end
       end
       object grpTrx: TGroupBox

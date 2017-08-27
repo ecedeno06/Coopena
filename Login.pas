@@ -101,6 +101,7 @@ type
     procedure gbCambioEnter(Sender: TObject);
     procedure edUsuarioExit(Sender: TObject);
     procedure edClaveChange(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
 
 //    function enviarEmail (servidor : string; usuario : string; contrasena : string;
 //    puerto : integer; asunto : string; mensaje : TStringList; conAutenticacion : boolean;
@@ -347,6 +348,7 @@ begin
       //--- Validar si clave vencio ----
       if (_ahora >= dfecha) then
       begin
+         DataModulo1.RegistroLog(edusuario.Text,'Clave Vencio','');
          SolicitarClaveNueva('Clave Vencio...','Clave Vencio, debe solicitar una nueva...');
       end;
 
@@ -355,6 +357,7 @@ begin
         cxbCambiar.Visible   := true;
         cxbCambiar.Checked   := true;
         cxbCambiar.enabled   := false;
+        DataModulo1.RegistroLog(edusuario.Text,'Requiere Cambio','Requiere Cambio');
         CambiarClave1('','Requiere Cambiar la Clave...Cambie antes de que venza el tiempo...');
       end
       Else
@@ -755,6 +758,7 @@ begin
       //     DataModulo1.tblUsuarios.close;
            frmLogin.Free;
 
+           DataModulo1.RegistroLog(usuario,'Acceso Correcto','');
            application.CreateForm(TfrmPrincipal , frmPrincipal);
            frmPrincipal.Show;
          end
@@ -768,7 +772,10 @@ begin
             if DataModulo1.tblUsuariosintentos.Value >= DataModulo1.tblUsuariosintentosMax .value then
             begin
                DataModulo1.tblUsuariosbloqueado.Value  := True;
-            end
+            end;
+
+            DataModulo1.RegistroLog(edUsuario.Text,'Error Acceso',stbLogin.Panels[0].Text + ' '
+                 + stbLogin.Panels[1].Text );
 
          end;
          DataModulo1.tblUsuarios.Post;
@@ -934,6 +941,15 @@ end;
 
 
 
+procedure TfrmLogin.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+ if Key = #13 then
+    begin
+      SelectNext(ActiveControl, true, True);
+      Key := #0;
+    end;
+end;
+
 procedure TfrmLogin.gbCambioEnter(Sender: TObject);
 begin
    btnEntrar.Enabled    := false;
@@ -967,6 +983,7 @@ end;
 
 function TfrmLogin.ValidarUsuario(usuario : String): Boolean;
 begin
+  usuario := upperCase(usuario);
   result := false;
   btnEntrar.Enabled    := False;
   DataModulo1.tblUsuarios.Close;
@@ -988,11 +1005,13 @@ begin
     Begin
       result := false;
       stbLogin.Panels[0].Text := '*** Usuario Inactivo ***';
+      DataModulo1.RegistroLog(edUsuario.Text,'Error de Acceso','Usuario Inactivo');
     End;
   End
   Else  //... Usuario No Existe ....
   begin
     stbLogin.Panels[0].Text := '*** Usuario No Existe... ***'; stbLogin.Panels[1].Text :='';
+    DataModulo1.RegistroLog(edUsuario.Text,'Error de Acceso','Usuario No Existe...');
     PantallaNoExiste (0);
     result := false;
   end;
@@ -1015,7 +1034,6 @@ var
   Continuar : boolean;
 
 begin
-
   Result := False;
   DataModulo1.tblUsuarios.Close;
   DataModulo1.tblUsuarios.SQL.Clear;
@@ -1086,6 +1104,7 @@ begin
       gbCambio.Visible        := false;
       edRespuesta.Text        := '';
       stbLogin.Panels[0].Text := 'Bloqueado, Solicite nueva Clave';
+      DataModulo1.RegistroLog(edUsuario.Text,'Error de Acceso','Usuario Bloquado...');
    End
    Else
    Begin

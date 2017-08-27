@@ -42,14 +42,10 @@ type
     ToolButton2: TToolButton;
     ToolButton4: TToolButton;
     ToolButton3: TToolButton;
-    ListView1: TListView;
     pnRecientes: TCategoryPanel;
     tvHist: TTreeView;
     cpCuentas: TCategoryPanel;
     tvHB: TTreeView;
-    cpSocio: TCategoryPanel;
-    Panel2: TPanel;
-    Image1: TImage;
     Panel5: TPanel;
     Panel1: TPanel;
     GroupBox1: TGroupBox;
@@ -172,6 +168,15 @@ type
     btn_trx_det_suspenso: TToolButton;
     mMovimientossubcuenta: TSmallintField;
     mTransaccionmontoInteres: TFloatField;
+    Label6: TLabel;
+    DBImage1: TDBImage;
+    dts_CajaImagen: TDataSource;
+    pn_Imagen: TPanel;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    pn_Expira: TPanel;
+    DBImage2: TDBImage;
     procedure edFiltroRightButtonClick(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     Procedure CargarVista;
@@ -219,8 +224,6 @@ type
     Procedure movimientos;
     procedure DBGrid2DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
-    procedure c(Sender: TCustomTreeView; Node: TTreeNode;
-      State: TCustomDrawState; var DefaultDraw: Boolean);
     procedure rbDepositoClick(Sender: TObject);
     procedure rbRetiroClick(Sender: TObject);
     procedure rbPagoClick(Sender: TObject);
@@ -233,13 +236,25 @@ type
     //-------------------------------------------------
     Function Pagos (Num_Cuenta : string) : double ;
     procedure btn_trx_det_suspensoClick(Sender: TObject);
-    Procedure InsertarDetalle;
+    function  InsertarDetalle() : Boolean;
 
     //-------------------------------------------------
     Function _Documento(Operacion : String) : integer;
     procedure rbPasaporteRucClick(Sender: TObject);
     procedure ced1KeyPress(Sender: TObject; var Key: Char);
     procedure ced3Change(Sender: TObject);   //*01
+    Function  CargarImagnesCaja(nSocio : integer) : Boolean;
+    procedure ToolButton3Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure ToolButton1Click(Sender: TObject);
+    procedure ToolButton2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure pn_ImagenMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure DBImage2MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
 
 
 //    Function insertarDetalleTrx(
@@ -290,7 +305,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM1, cuentas, DesgloseCheques, ChequesCaja;
+uses DM1, cuentas, DesgloseCheques, ChequesCaja, ImgenCaja;
 
 
 //01============================================================================
@@ -354,7 +369,9 @@ procedure TfrmCaja.btnEliminarClick(Sender: TObject);
 begin
   inherited;
   if not (DBGRid1.DataSource.DataSet.FieldByName('Orden').asString = 'T' ) then
+  begin
      mTransaccion.Delete;
+  end;
 
 //  if mTransaccion.Eof then
 //  begin
@@ -406,6 +423,8 @@ end;
 //...edw:
 //------------------------------------------------------------------------------
 procedure TfrmCaja.btnSalvarClick(Sender: TObject);
+var
+  _procesar : boolean;
 begin
   inherited;
 //---
@@ -414,6 +433,11 @@ begin
  DecodeTime(now,_h1,_m1,_s1,_m2);
 
  _fechaTrx := EncodeDateTime (_a,_m,_d,_h1,_m1,_s1,_m2);
+ _procesar := True;
+
+ //--- Inicia el transaction
+ if not DataModulo1.cnn2.InTransaction then
+  DataModulo1.cnn2.StartTransaction ;
 
  mTransaccion.First;
  if not mTransaccion.eof then
@@ -422,7 +446,6 @@ begin
    if mTransaccionDocumento.AsString = '' then // Transaccion Aun no procesada
    Begin
      _Numrec := _Documento (_tipo_doc);
-
     //---------------------------------------------------------------------------
     //  Crea el registro de encabezado de transaccion en TRANSACCION_ENC
     //---------------------------------------------------------------------------
@@ -448,8 +471,19 @@ begin
     DataModulo1.actualiza.SQL.Add(',' + Coma + '1'               + coma );
     DataModulo1.actualiza.SQL.Add(',' + coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now)   + coma );
     DataModulo1.actualiza.SQL.Add(',' + coma + usuario           + coma + ')' );
-    Memo1.Text :=     DataModulo1.actualiza.SQL.text ;
-    DataModulo1.actualiza.ExecSQL;
+
+//    try
+//      DataModulo1.actualiza.ExecSQL;
+//      DataModulo1.RegistroLog(Usuario,'Crea Registro de Caja ',_tipo_doc +
+//          '...' + IntToStr(_Numrec)+'...' );
+//
+//    except
+//      on E:Exception do
+//      begin
+//        DataModulo1.RegistroLog(usuario,'Error al Insertar Transaccion Caja... ',
+//        '...Documento: ' + IntToStr(_Numrec));
+//      end;
+//    end;
 
     //--------------------------------------------------------------------------
     //  Crea  registros de Detalle  de transaccion en TRANSACCION_DET
@@ -474,9 +508,10 @@ begin
        begin
           _cuenta     := mTransaccionCuenta.AsString ;
           _naturaleza := mTransaccionNaturaleza.AsString ;
-          InsertarDetalle;
-          mTransaccionDocumento.AsInteger := _Numrec ;
-          mTransaccionTipoDoc.AsString    := _tipo_doc;
+          _procesar   := InsertarDetalle();
+//          mtra
+//          mTransaccionDocumento.AsInteger := _Numrec ;
+//          mTransaccionTipoDoc.AsString    := _tipo_doc;
        end
        Else
        Begin
@@ -511,7 +546,7 @@ begin
              if DataModulo1.transaccionTrxcampo.AsString = 'Calculado' then
                _monto := RoundTo(mTransaccionmontoInteres.AsFloat,-2);
 
-             InsertarDetalle;
+             _procesar := InsertarDetalle();
 
              DataModulo1.transacciontrx.Next;
            End;
@@ -521,7 +556,7 @@ begin
            //----Adiciona el registro manual
            _naturaleza := mTransaccionNaturaleza.AsString ;
            _cuenta     := mTransaccionCuenta.AsString;
-           InsertarDetalle
+           _procesar   := InsertarDetalle();
          End;
        End;
      end;
@@ -530,6 +565,34 @@ begin
 
     end;
    end;
+
+   if _procesar then
+   begin
+    try
+      DataModulo1.actualiza.ExecSQL;
+      DataModulo1.RegistroLog(Usuario,'Crea Registro de Caja ',_tipo_doc +
+          '...' + IntToStr(_Numrec)+'...' );
+    except
+      on E:Exception do
+      begin
+        DataModulo1.RegistroLog(usuario,'Error al Insertar Transaccion Caja... ',
+        '...Documento: ' + IntToStr(_Numrec));
+        _procesar := false;
+      end;
+     end;
+
+     if _procesar then
+     begin
+       DataModulo1.cnn2.CommitRetaining;
+       mTransaccion.Edit;
+       mTransaccionTipoDoc.AsString    := _tipo_doc;
+       mTransaccionDocumento.AsInteger := _Numrec;
+     end
+     else
+       DataModulo1.cnn2.RollbackRetaining;
+   end;
+
+
    _tipoOperacion   := '';
    rbDeposito.Enabled := true;
    rbRetiro.Enabled   := true;
@@ -548,7 +611,9 @@ begin
  rbRetiro.Checked   := false;
  tvHist.Enabled     := True;
 end;
+{$EndRegion}
 
+{$Region '********** Insertar Detalle ****************************************'}
 //------------------------------------------------------------------------------
 //                        InsertarDetalle
 //
@@ -557,47 +622,53 @@ end;
 //------------------------------------------------------------------------------
 //...edw: 2017-07-04 , 4:07pm  |
 //------------------------------------------------------------------------------
-procedure TfrmCaja.InsertarDetalle;
+Function  TfrmCaja.InsertarDetalle() : Boolean;
 begin
  //---
  if _Monto > 0.0000 then
  Begin
 
-   DataModulo1.actualiza.close;
-   DataModulo1.actualiza.SQL.Clear;
-   DataModulo1.actualiza.SQL.Add('Insert Into transaccion_det (');
+   DataModulo1.actualiza2.close;
+   DataModulo1.actualiza2.SQL.Clear;
+   DataModulo1.actualiza2.SQL.Add('Insert Into transaccion_det (');
    //----- Seccion de Campos
-   DataModulo1.actualiza.SQL.Add(' Tipo_Documento');
-   DataModulo1.actualiza.SQL.Add(',Documento'     );
-   DataModulo1.actualiza.SQL.Add(',Fecha_Doc'     );
-   DataModulo1.actualiza.SQL.Add(',num_cuenta'    );
-   DataModulo1.actualiza.SQL.Add(',cuenta'        );
-   DataModulo1.actualiza.SQL.Add(',naturaleza'    );
-   DataModulo1.actualiza.SQL.Add(',monto'         );
-   DataModulo1.actualiza.SQL.Add(',Efectivo'      );
-   DataModulo1.actualiza.SQL.Add(',Cheque'        );
-   DataModulo1.actualiza.SQL.Add(',Banco'         );
-   DataModulo1.actualiza.SQL.Add(',NumCheque'     );
-   DataModulo1.actualiza.SQL.Add(',fecha_aud'     );
-   DataModulo1.actualiza.SQL.Add(',Usuario) '     );
+   DataModulo1.actualiza2.SQL.Add(' Tipo_Documento');
+   DataModulo1.actualiza2.SQL.Add(',Documento'     );
+   DataModulo1.actualiza2.SQL.Add(',Fecha_Doc'     );
+   DataModulo1.actualiza2.SQL.Add(',num_cuenta'    );
+   DataModulo1.actualiza2.SQL.Add(',cuenta'        );
+   DataModulo1.actualiza2.SQL.Add(',naturaleza'    );
+   DataModulo1.actualiza2.SQL.Add(',monto'         );
+   DataModulo1.actualiza2.SQL.Add(',Efectivo'      );
+   DataModulo1.actualiza2.SQL.Add(',Cheque'        );
+   DataModulo1.actualiza2.SQL.Add(',Banco'         );
+   DataModulo1.actualiza2.SQL.Add(',NumCheque'     );
+   DataModulo1.actualiza2.SQL.Add(',fecha_aud'     );
+   DataModulo1.actualiza2.SQL.Add(',Usuario) '     );
 
    //----Seccion de Data
-   DataModulo1.actualiza.SQL.Add('Values (');
-   DataModulo1.actualiza.SQL.Add(QuotedStr(_tipo_doc));
-   DataModulo1.actualiza.SQL.Add(',' + Coma + IntToStr(_Numrec) + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',_FechaTrx) + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNum_Cuenta.AsString   + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + _cuenta                           + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + _naturaleza                       + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + FloatToStr(_Monto)                + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionEfectivo.AsString     + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionCheque.AsString       + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionBanco.AsString        + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + mTransaccionNumCheque.AsString    + Coma );
+   DataModulo1.actualiza2.SQL.Add('Values (');
+   DataModulo1.actualiza2.SQL.Add(QuotedStr(_tipo_doc));
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + IntToStr(_Numrec) + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',_FechaTrx) + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + mTransaccionNum_Cuenta.AsString   + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + _cuenta                           + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + _naturaleza                       + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + FloatToStr(_Monto)                + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + mTransaccionEfectivo.AsString     + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + mTransaccionCheque.AsString       + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + mTransaccionBanco.AsString        + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + mTransaccionNumCheque.AsString    + Coma );
 
-   DataModulo1.actualiza.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
-   DataModulo1.actualiza.SQL.Add(',' + Coma + usuario           + Coma          +  ' )' );
-   DataModulo1.actualiza.ExecSQL;
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + FormatDateTime('yyyy-mm-dd hh:nn:ss',now) + Coma );
+   DataModulo1.actualiza2.SQL.Add(',' + Coma + usuario           + Coma          +  ' )' );
+
+   try
+     DataModulo1.actualiza2.ExecSQL;
+     result := True;
+   except
+     result := False;
+   end;
 
    mTransaccion.Edit;
    mTransaccionTipoDoc.AsString    := _tipo_doc;
@@ -619,7 +690,7 @@ end;
 procedure TfrmCaja.btn_trx_det_suspensoClick(Sender: TObject);
 begin
   inherited;
-  //---
+
 end;
 
 //------------------------------------------------------------------------------
@@ -646,6 +717,62 @@ procedure TfrmCaja.spDiasChange(Sender: TObject);
 begin
   inherited;
   recientes;
+end;
+
+procedure TfrmCaja.SpeedButton1Click(Sender: TObject);
+begin
+  inherited;
+  pn_Imagen.Visible := false;
+end;
+
+procedure TfrmCaja.SpeedButton2Click(Sender: TObject);
+begin
+  inherited;
+  pn_Imagen.Visible := true;
+  pn_Imagen.Width   := pn_Imagen.Width - 12 ; //400;
+  pn_Imagen.Height  := pn_Imagen.Height - 10 ;//350;
+  pn_Imagen.top     := 13;
+  pn_Imagen.Left    := 323;
+end;
+
+procedure TfrmCaja.SpeedButton3Click(Sender: TObject);
+begin
+  inherited;
+  pn_Imagen.Visible := true;
+  pn_Imagen.Width   := pn_Imagen.Width + 12 ; //400;
+  pn_Imagen.Height  := pn_Imagen.Height + 10 ;//350;
+  pn_Imagen.top     := 13;
+  pn_Imagen.Left    := 323;
+end;
+
+procedure TfrmCaja.ToolButton1Click(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.cajaImage.Prior ;
+end;
+
+procedure TfrmCaja.ToolButton2Click(Sender: TObject);
+begin
+  inherited;
+  DataModulo1.cajaImage.next ;
+end;
+
+procedure TfrmCaja.ToolButton3Click(Sender: TObject);
+begin
+  inherited;
+//  pn_Imagen.Visible := true;
+//  pn_Imagen.Width   := 580;
+//  pn_Imagen.Height  := 450;
+//  pn_Imagen.top     := 13;
+//  pn_Imagen.Left    := 243;
+//  pn_Expira.Caption := 'Documento Expira : ' +
+//          FormatDatetime('dd-mmm-yyyy',DataModulo1.cajaImageexpira.asdatetime );
+
+ Application.CreateForm(TfrmImagenCaja, frmImagenCaja);
+ frmImagenCaja.ShowModal ;
+ frmImagenCaja.Label1.Caption := 'Documento Expira : ' ;
+ frmImagenCaja.Label1.Refresh ;
+// + FormatDatetime('dd-mmm-yyyy',DataModulo1.cajaImageexpira.asdatetime );
 end;
 
 //==============================================================================
@@ -685,11 +812,19 @@ begin
 end;
 
 procedure TfrmCaja.tvHBClick(Sender: TObject);
+var
+ _nSocio : integer;
 begin
   inherited;
   DataModulo1.SPC.first;
   if not DataModulo1.SPC.Eof then
   Begin
+    //--- Para mostrar las imagenes
+    if (tvHB.Selected.Level = 0) then
+    begin
+       _nsocio := StrToInt(copy(tvHB.Selected.text,1,6));
+       CargarImagnesCaja (_nSocio);
+    end;
 
     if (tvHB.Selected.Level = 2 ) then
     begin
@@ -700,6 +835,11 @@ begin
       pnlMivimientos.Height := pnlMivimientos.Height - 1;
 
       _NumCuenta := Trim(tvHB.Selected.text); // este es el seleccionado del treeview
+
+      //--- Carga las imagenes
+
+      //
+
       if DataModulo1.SPC.Locate(upperCase('num_cuenta'),_numCuenta,[]) then
       begin
 
@@ -821,19 +961,22 @@ begin
 
   if  Not DataModulo1.SPC.eof then
   Begin
-
+    CargarImagnesCaja(DataModulo1.SPC.FieldByName('socio').Asinteger);
     CargarVista;
   End
   Else
    tvHB.Items.Clear ;
 end;
 
-procedure TfrmCaja.c(Sender: TCustomTreeView; Node: TTreeNode;
-  State: TCustomDrawState; var DefaultDraw: Boolean);
-begin
-  inherited;
+Function TfrmCaja.CargarImagnesCaja(nSocio : integer) : Boolean;
+Begin
+  //---
 
-end;
+  DataModulo1.cajaImage.Close;
+  DataModulo1.cajaImage.Params [0].AsInteger := nSocio;
+  DataModulo1.cajaImage.open;
+
+End;
 
 //------------------------------------------------------------------------------
 //                      CargarVista
@@ -1149,6 +1292,14 @@ begin
     dbgrid2.DefaultDrawColumnCell(rect,DataCol,Column,State);
 end;
 
+procedure TfrmCaja.DBImage2MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  inherited;
+  ReleaseCapture;
+  Tcontrol(Sender).Perform(WM_SYSCOMMAND,$F012,0);
+end;
+
 //------------------------------------------------------------------------------
 //                   dtstransaccion DataChange
 //...edw:
@@ -1332,15 +1483,26 @@ end;
 //                         On show Formulario
 //...edw:2017-01
 //------------------------------------------------------------------------------
+procedure TfrmCaja.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+ if Key = #9 then
+ begin
+  if pn_Imagen.Visible then
+     pn_Imagen.Visible := False;
+  Key := #0;
+ end;
+end;
+
 procedure TfrmCaja.FormShow(Sender: TObject);
 begin
   inherited;
-  pnFiltro1.Top  := 44;
-  pnFiltro2.Top  := pnFiltro1.Top;
-//pnFiltro1.Left := 427;
-  pnFiltro2.Left := pnFiltro2.Left;
+  pnFiltro1.Top     := 44;
+  pnFiltro2.Top     := pnFiltro1.Top;
+//pnFiltro1.Left    := 427;
+  pnFiltro2.Left    := pnFiltro2.Left;
   pnfiltro2.Visible := false;
-
+  pn_Imagen.Visible := false;
 
   mTransaccion.Close;
   mTransaccion.Open;
@@ -1561,6 +1723,17 @@ begin
 
      end;
    end;
+end;
+
+procedure TfrmCaja.pn_ImagenMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+const
+  sc_dragmove = $F012;
+begin
+  inherited;
+  ReleaseCapture;
+  Tcontrol(Sender).Perform(WM_SYSCOMMAND,SC_DRAGMOVE,0);
+
 end;
 
 procedure TfrmCaja.rbCedulaClick(Sender: TObject);

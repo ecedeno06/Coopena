@@ -30965,10 +30965,15 @@ object frmPrincipal: TfrmPrincipal
     end
     object Clientes1: TMenuItem
       Caption = 'Socios'
+      OnClick = Clientes1Click
       object mnSocios: TMenuItem
         Caption = 'Socios'
         ImageIndex = 10
         OnClick = mnSociosClick
+      end
+      object Escanear1: TMenuItem
+        Caption = 'Escanear'
+        OnClick = Escanear1Click
       end
     end
     object N2: TMenuItem
@@ -31138,6 +31143,10 @@ object frmPrincipal: TfrmPrincipal
       object Migracion2: TMenuItem
         Caption = 'Migracion'
         OnClick = Migracion2Click
+      end
+      object Migracion21: TMenuItem
+        Caption = 'Migracion 2'
+        OnClick = Migracion21Click
       end
     end
   end

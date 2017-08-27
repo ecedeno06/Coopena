@@ -75,7 +75,7 @@ inherited frmPaises: TfrmPaises
         Top = 0
         Width = 524
         Height = 330
-        ActivePage = tpsProvincias
+        ActivePage = tpsPais
         Align = alClient
         TabOrder = 0
         OnChange = pcPaisesChange
@@ -3671,7 +3671,7 @@ inherited frmPaises: TfrmPaises
             Left = 6
             Top = 87
             Width = 507
-            Height = 209
+            Height = 208
             Align = alCustom
             Anchors = [akLeft, akTop, akRight, akBottom]
             Caption = 'Informaci'#243'n del Pais:'
@@ -7493,7 +7493,7 @@ inherited frmPaises: TfrmPaises
                 Left = 3
                 Top = 121
                 Width = 502
-                Height = 142
+                Height = 141
                 Align = alCustom
                 Anchors = [akLeft, akTop, akRight, akBottom]
                 DataSource = dtsProvincias
@@ -7684,7 +7684,7 @@ inherited frmPaises: TfrmPaises
                     Top = 0
                     Width = 500
                     Height = 246
-                    ActivePage = tpsCorregimiento
+                    ActivePage = tpsBarrio
                     Align = alClient
                     TabOrder = 0
                     object tpsCorregimiento: TTabSheet
@@ -7780,7 +7780,7 @@ inherited frmPaises: TfrmPaises
                         Left = 0
                         Top = 97
                         Width = 492
-                        Height = 112
+                        Height = 111
                         Align = alTop
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         DataSource = dtsCorregimiento
@@ -7889,7 +7889,7 @@ inherited frmPaises: TfrmPaises
                         end
                         object edBarrio: TDBEdit
                           Left = 67
-                          Top = 27
+                          Top = 29
                           Width = 437
                           Height = 21
                           Anchors = [akLeft, akTop, akRight]
@@ -7908,7 +7908,7 @@ inherited frmPaises: TfrmPaises
                         Left = 0
                         Top = 97
                         Width = 492
-                        Height = 116
+                        Height = 115
                         Align = alTop
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         DataSource = dtsBarrio
